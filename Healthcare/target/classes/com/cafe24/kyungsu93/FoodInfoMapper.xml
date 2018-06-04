@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cafe24.kyungsu93.FoodInfoMapper">
+	<insert id="insertFoodInfo" parameterType="com.cafe24.kyungsu93.FoodInfo">
+        INSERT INTO food_info(
+        	food_info_no
+        	,food_group
+        	,food_name
+        	,food_once
+        	,food_kcal
+        	,food_carbohydrate
+        	,food_protein
+        	,food_fat
+        	,food_sugar
+        	,food_natrium
+        	,food_cholesterol
+        	,food_sfa
+        	,food_transfat
+        	,food_build_year
+        )
+        VALUES(
+            #{foodInfoNo}
+            ,#{foodGroup}
+            ,#{foodName}
+            ,#{foodOnce}
+            ,#{foodKcal}
+            ,#{foodCarbohydrate}
+            ,#{foodProtein}
+            ,#{foodFat}
+            ,#{foodSugar}
+            ,#{foodNatrium}
+            ,#{foodCholesterol}
+            ,#{foodSfa}
+            ,#{foodTransfat}
+            ,#{foodBuildYear}
+        )      
+	</insert>
+</mapper>
