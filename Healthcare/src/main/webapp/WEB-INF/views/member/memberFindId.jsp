@@ -23,9 +23,10 @@
 								,"memberEmail":$("#memberEmail").val()}
 		        		,dataType:"json",
 		        		success:function(data){
-		        		
-		        				alert(data.memberId);	
-		        		
+		        			alert(data.MemberFind.memberId)
+		        			if(data.MemberFind.memberId=="없음"){
+		        				alert('df');
+		        			}
 		        		},
 		        		error:function(jqXHR, textStatus, errorThrown){
 		        			console.log("에러 발생~~ \n" + textStatus + " : " + errorThrown);

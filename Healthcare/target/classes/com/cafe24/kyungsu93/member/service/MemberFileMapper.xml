@@ -6,7 +6,7 @@
   <mapper namespace="com.cafe24.kyungsu93.MemberFileMapper">
   	<insert id="memberFile"
   			parameterType="com.cafe24.kyungsu93.member.service.MemberFile">
-  		INSERT INTO memberfile(
+  		INSERT INTO member_file(
   			member_no
   			,member_evidence_file_ext
   			,member_evidence_file_size

@@ -35,9 +35,9 @@ public class MemberController {
 	   logger.debug("MemberController.memberFindId POST");
 	   logger.debug(member.getMemberName());
 	   logger.debug(member.getMemberEmail());
-	   String memberId=memberService.memberFindId(member);
-	   Map<String,Object> map = new HashMap<String,Object>();
-	   map.put("memberId", memberId);
+	   Member memberFind=memberService.memberFindId(member);
+	   Map<String,Object> map= new HashMap<String,Object>();
+	   map.put("memberFind",memberFind);
 	   return map;
    }
    //패스워드 찾기 페이지

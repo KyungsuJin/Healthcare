@@ -138,7 +138,7 @@ public class MemberDao {
 		sqlSession.update(NS+"approvalTeacher",member);
 	}
 	//id찾기
-	public String memberFindId(Member member) {
+	public Member memberFindId(Member member) {
 		logger.debug("MemberDao.memberFindId");
 		return sqlSession.selectOne(NS+"memberFindId",member);
 	}

@@ -189,6 +189,7 @@ public class MemberService {
 	}
 	//관리자의 승인하기
 	public void approval(Member member) {
+		logger.debug("MemberService.approval");
 		int level = member.getMemberLevel();
 		if(level==3) {
 			memberDao.approvalDoctor(member);
@@ -197,15 +198,15 @@ public class MemberService {
 		}
 	}
 	//아이디 찾기
-	public String memberFindId(Member member) {
-		String memberId=memberDao.memberFindId(member);
-		logger.debug(memberId);
-		if(memberId==null) {
-			memberId="입력한 정보로 가입된 아이디가 없습니다.";
+	public Member memberFindId(Member member) {
+		logger.debug("MemberService.memberFindId");
+		Member memberFind = memberDao.memberFindId(member);
+		logger.debug(memberFind.getMemberId());
+		if(memberFind.getMemberId()==null) {
+			memberFind.setMemberId("없음");
 		}else {
-			
 		}
-		return memberId;
+		return memberFind;
 	}
 
 }
