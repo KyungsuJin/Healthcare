@@ -13,7 +13,9 @@
   	<select id="loginSession"
   			parameterType="String"
   			resultType="com.cafe24.kyungsu93.member.service.Member">
-  			SELECT member_level AS memberLevel,member_name AS memberName
+  			SELECT member_level AS memberLevel
+  				,member_name AS memberName
+  				,member_no AS memberNo
   			FROM member
   			WHERE member_id=#{id}
   	</select>

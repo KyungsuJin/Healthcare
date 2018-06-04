@@ -19,11 +19,17 @@
 							,"memberPw":$("#memberPw").val()},
 					dataType :"json",
 					success:function(data){
-						if(data==1 && confirm('정말로 회원 탈퇴 하시겠습니까?')){
-							alert('회원 탈퇴가 정상적으로 되었습니다.');
-							window.location.href='${pageContext.request.contextPath}/memberLeaveRequest?memberId='+$("#memberId").val()+'&memberLevel='+$("#memberLevel").val();
+						if(data==1){
+							if(confirm('정말로 회원 탈퇴 하시겠습니까?')){
+								alert('회원 탈퇴가 정상적으로 되었습니다.');
+								window.location.href='${pageContext.request.contextPath}/memberLeaveRequest?memberId='+$("#memberId").val()+'&memberLevel='+$("#memberLevel").val();
+							}else{
+								alert('취소되었습니다.');
+								window.location.href='${pageContext.request.contextPath}/';
+							}
+							
 						}else if(data==0){
-							alert('취소 되었습니다.');
+							alert('패스워드가 맞지 않습니다.');
 							window.location.href='${pageContext.request.contextPath}/memberLeave'
 						}else{
 							

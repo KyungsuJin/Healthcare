@@ -98,7 +98,7 @@ public class MemberController {
 	   String path = session.getServletContext().getRealPath("/resources/upload/");
 	   memberService.memberLeaveRequest(member,path);
 	   session.invalidate();
-	   return "index";
+	   return "redirect:/";
    }
    //회원정보 수정화면
    @RequestMapping(value="/memberModify",method=RequestMethod.GET)

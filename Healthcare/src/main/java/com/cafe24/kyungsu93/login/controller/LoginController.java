@@ -38,6 +38,7 @@ public class LoginController {
 			session.setAttribute("memberSessionId", member.getMemberId());
 			session.setAttribute("memberSessionLevel", result.get("memberSessionLevel"));
 			session.setAttribute("memberSessionName", result.get("memberSessionName"));
+			session.setAttribute("memberSessionNo", result.get("memberSessionNo"));
 		}else {
 			logger.debug("login fail");
 		}
