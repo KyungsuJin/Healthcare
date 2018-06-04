@@ -147,4 +147,31 @@ public class MemberDao {
 		logger.debug("MemberDao.memberFindPw");
 		return sqlSession.selectOne(NS+"memberFindPw",member);
 	}
+	//회원 리스트
+	public List<Member> memberList(Map<String,Integer> map) {
+		logger.debug("MemberDao.memberList");
+		return sqlSession.selectList(NS+"memberList",map);
+	}
+	//의사회원 리스트
+	public List<Member> memberDoctorList(Map<String,Integer> map) {
+		logger.debug("MemberDao.memberList");
+		return sqlSession.selectList(NS+"memberDoctorList",map);
+	}
+	//의사회원 총수
+	public int memberDoctorListTotal() {
+		return sqlSession.selectOne(NS+"memberDoctorListTotal");
+	}
+	//회원 총수
+	public int memberListTotal() {
+		return sqlSession.selectOne(NS+"memberListTotal");
+	}
+	//PT회원 리스트
+	public List<Member> memberPtList(Map<String,Integer> map) {
+		logger.debug("MemberDao.memberPtList");
+		return sqlSession.selectList(NS+"memberPtList",map);
+	}
+	//PT회원 총수
+	public int memberPtListTotal() {
+		return sqlSession.selectOne(NS+"memberPtListTotal");
+	}
 }

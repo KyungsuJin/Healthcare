@@ -25,6 +25,37 @@ public class MemberController {
 	@Autowired MemberService memberService;
    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
    
+   //회원 리스트
+   @RequestMapping(value="/memberList",method=RequestMethod.GET)
+   public String memberList(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
+		   					,@RequestParam(value="pagePerRow",defaultValue="10")int pagePerRow
+		   					,@RequestParam(value="memberLevel")int memberLevel
+		   					,@RequestParam(value="searchSelect",required=false)String searchSelect
+		   					,@RequestParam(value="searchText",required=false)String searchText) {
+	   logger.debug("MemberController.memberList GET");
+	   Map<String,Object> map=memberService.memberList(currentPage,pagePerRow,memberLevel);
+	   model.addAttribute("memberList",map.get("memberList"));
+	   model.addAttribute("startPage",map.get("startPage"));
+	   model.addAttribute("endPage",map.get("endPage"));
+	   model.addAttribute("lastPage",map.get("lastPage"));
+	   model.addAttribute("currentPage",currentPage);
+	   model.addAttribute("pagePerRow",pagePerRow);
+	   String result="";
+	   if(memberLevel==2) {
+		   result="member/memberList";
+	   }else if(memberLevel==3) {
+		   result="member/memberDoctorList";
+	   }else if(memberLevel==4) {
+		   result="member/memberPtList";
+	   }
+	   return result;
+   }
+   //회원검색 선택
+   @RequestMapping(value="/memberListChoice",method=RequestMethod.GET)
+   public String memberListChoice() {
+	   logger.debug("MemberController.memberListChoice GET");
+	   return "member/memberListChoice";
+   }
    //패스워드 찾기 결과 페이지
    @RequestMapping(value="/memberFindPwResult",method=RequestMethod.GET)
    public String memberFindPwResult() {

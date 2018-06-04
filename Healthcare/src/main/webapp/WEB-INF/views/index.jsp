@@ -21,6 +21,7 @@
 		<a href="${pageContext.request.contextPath}/memberModifyCheck">회원정보수정</a>
 		<a href="${pageContext.request.contextPath}/memberLeave">회원탈퇴</a>
 		<a href="${pageContext.request.contextPath}/memberApprovalList">회원승인대기리스트</a>
+		<a href="${pageContext.request.contextPath}/memberListChoice">회원리스트</a>
 	</c:if>
 	
 	<c:if test="${!empty sessionScope.memberSessionId && sessionScope.memberSessionLevel!=1}">

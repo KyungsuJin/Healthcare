@@ -23,8 +23,17 @@ public class Member {
 	private MultipartFile teacherMultipartFile;
 	private MultipartFile multipartFile;
 	private MemberFile memberFile;
+	private String memberJoinDate;
 	
 	
+
+	public String getMemberJoinDate() {
+		return memberJoinDate;
+	}
+
+	public void setMemberJoinDate(String memberJoinDate) {
+		this.memberJoinDate = memberJoinDate;
+	}
 
 	public MemberFile getMemberFile() {
 		return memberFile;

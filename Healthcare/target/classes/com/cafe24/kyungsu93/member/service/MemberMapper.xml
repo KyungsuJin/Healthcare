@@ -23,6 +23,7 @@
   		<result column="treatment_department" property="treatmentDepartment"/>
   		<result column="member_work_space" property="memberWorkSpace"/>
   		<result column="member_register_no" property="teacherRegisterNo"/>
+  		<result column="member_join_date" property="memberJoinDate"/>
   		<collection property="memberFile"   ofType="com.cafe24.kyungsu93.member.service.MemberFile">
 	  		<id column="member_no" property="memberNo"/>
 	  		<result column="member_evidence_file_ext" property="memberFileExt"/>
@@ -324,5 +325,88 @@
   				member_pw
   			FROM member
   			WHERE member_id=#{memberId} AND member_email=#{memberEmail}
+  	</select>
+  	<select id="memberList"
+  			parameterType="java.util.Map"
+  			resultMap="member">
+  			SELECT 
+	  			member_no
+	  			,member_id
+	  			,member_pw
+	  			,member_level
+	  			,member_name
+	  			,member_gender
+	  			,member_address
+	  			,member_email
+	  			,member_birth
+	  			,member_tel
+	  			,member_agree
+	  			,member_join_date
+  			FROM member 
+  			WHERE member_level=2
+  			LIMIT #{beginRow},#{pagePerRow}
+  	</select>
+  	<select id="memberListTotal"
+  			resultType="Integer">
+  			SELECT COUNT(*)
+  			FROM member
+  			WHERE member_level=2;
+  	</select>
+  	<select id="memberDoctorList"
+  			parameterType="java.util.Map"
+  			resultMap="member">
+  			SELECT 
+	  			m.member_no
+	  			,m.member_id
+	  			,m.member_pw
+	  			,m.member_level
+	  			,m.member_name
+	  			,m.member_gender
+	  			,m.member_address
+	  			,m.member_email
+	  			,m.member_birth
+	  			,m.member_tel
+	  			,m.member_agree
+	  			,m.member_join_date
+	  			,d.member_register_no
+	  			,d.member_hospital_name
+	  			,d.treatment_department
+  			FROM member m,member_doctor d
+  			WHERE m.member_no=d.member_no AND m.member_level=3
+  			LIMIT #{beginRow},#{pagePerRow}
+  	</select>
+  	<select id="memberDoctorListTotal"
+  			resultType="Integer">
+  			SELECT COUNT(*)
+  			FROM member m,member_doctor d
+  			WHERE m.member_level=3;
+  	</select>
+  	<select id="memberPtList"
+  			parameterType="java.util.Map"
+  			resultMap="member">
+  			SELECT 
+	  			m.member_no
+	  			,m.member_id
+	  			,m.member_pw
+	  			,m.member_level
+	  			,m.member_name
+	  			,m.member_gender
+	  			,m.member_address
+	  			,m.member_email
+	  			,m.member_birth
+	  			,m.member_tel
+	  			,m.member_agree
+	  			,m.member_join_date
+	  			,t.member_register_no
+	  			,t.member_work_space
+  			FROM member m,member_teacher t
+  			WHERE m.member_no=t.member_no AND m.member_level=4
+  			LIMIT #{beginRow},#{pagePerRow}
+  	</select>
+  	<select id="memberPtListTotal"
+  			resultType="Integer">
+  			SELECT COUNT(*)
+  			FROM member m,member_teacher t
+  			WHERE m.member_level=4;
   	</select>
   </mapper>

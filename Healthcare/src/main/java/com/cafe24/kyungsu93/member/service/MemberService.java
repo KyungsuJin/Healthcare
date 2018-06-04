@@ -2,6 +2,7 @@ package com.cafe24.kyungsu93.member.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +55,7 @@ public class MemberService {
 	//아이디 중복체크
 	public int memberIdCheck(String id) {
 		logger.debug("MemberService.memberIdCheck");
+		logger.debug(id);
 		return memberDao.memberIdCheck(id);
 	}
 	//파일저장
@@ -161,7 +163,7 @@ public class MemberService {
 			lastPage++;
 		}
 		int startPage=((currentPage-1)/10)*10+1;//숫자 페이징작업 밑부분 보여질 시작 범위
-		int endPage = startPage*10;//숫자 페이징 작업 밑부분 보여줄 마지막 범위
+		int endPage = startPage+pagePerRow-1;//숫자 페이징 작업 밑부분 보여줄 마지막 범위
 		if(endPage>lastPage) {
 			endPage=lastPage;
 		}
@@ -215,6 +217,40 @@ public class MemberService {
 			memberPw="0";
 		}
 		return memberPw;
+	}
+	//회원 리스트
+	public Map<String,Object> memberList(int currentPage,int pagePerRow,int memberLevel) {
+		int beginRow=(currentPage-1)*10;
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		List<Member> memberList = new ArrayList<Member>();
+		int totalCountList=0;
+		if(memberLevel==2) {
+			memberList=memberDao.memberList(map);
+			totalCountList=memberDao.memberListTotal();
+		}else if(memberLevel==3){
+			memberList=memberDao.memberDoctorList(map);
+			totalCountList=memberDao.memberDoctorListTotal();
+		}else if(memberLevel==4) {
+			memberList=memberDao.memberPtList(map);
+			totalCountList=memberDao.memberPtListTotal();
+		}
+		int lastPage=totalCountList/pagePerRow;
+		int startPage=((currentPage-1)/10)*10+1;
+		int endPage=startPage+pagePerRow-1;
+		if(totalCountList%pagePerRow>0) {//한페이지에 10개씩 보여주고 총게시물이 101개라면 페이지는 11페이지가 되어야하는데 10페이지되므로 사용해준다.
+			lastPage++;
+		}
+		if(endPage>lastPage) {
+			endPage=lastPage;
+		}
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("startPage", startPage);
+		returnMap.put("endPage", endPage);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("memberList", memberList);
+		return returnMap;
 	}
 
 }
