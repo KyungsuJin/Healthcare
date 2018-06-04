@@ -47,7 +47,7 @@
 <body>
 <div class="container">
 	<h1>addBloodsugar</h1>
-	<form id="addForm" action="${pageContext.request.contextPath}/addBloodsugar" method="POST">
+	<form id="addForm" action="${pageContext.request.contextPath}/bloodsugar/addBloodsugar" method="POST">
 		<div class="form-group">
 			<label for="Bloodsugarno">bloodsugarno : </label>
 			<input class="form-control" name = "bloodsugarno"  id="bloodsugarno" type="text"/>	

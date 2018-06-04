@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.cafe24.kyungsu93.bloodsugar.service.BloodsugarMapper.xml">  
+  <select id="getBloodsugarList" parameterType="java.util.Map" resultType="com.cafe24.kyungsu93.bloodsugar.service.Bloodsugar">
+  	SELECT 
+  		blood_sugar_no AS Bloodsugarno
+  		, member_no AS memberno
+  		, fasting_blood_sugar AS fastingbloodsugar
+	FROM blood_sugar
+	WHERE member_no = #{memberno}
+	ORDER by member_no DESC
+	LIMIT ${beginRow}, ${pagePerRow}
+
+  </select>
+  
+  <insert id="addBloodsugar" parameterType="com.cafe24.kyungsu93.bloodsugar.service.Bloodsugar">
+  
+  INSERT INTO blood_sugar(
+	blood_sugar_no
+	, member_no
+	, fasting_blood_sugar
+	, fasting_state
+	, blood_sugar_date
+	)
+	VALUES (
+	#{Bloodsugarno}
+	,#{memberno} 
+	,#{fastingbloodsugar}
+	,#{fastingstate}
+	,#{bloodsugardate}
+	)
+  
+  </insert>
+  
+  </mapper>
