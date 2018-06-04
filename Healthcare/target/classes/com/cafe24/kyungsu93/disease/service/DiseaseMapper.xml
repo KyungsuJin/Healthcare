@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cafe24.kyungsu93.disease.serivce.DiseaseMapper">
+	<select id="selectDiseaseSubCategoryNameChecked" resultType="com.cafe24.kyungsu93.disease.service.DiseaseSubCategory">
+		SELECT
+			disease_sub_category_name as diseaseSubCategoryName
+		FROM
+			disease_sub_category
+		WHERE
+			disease_sub_category_name=${diseaseSubCategory}
+	</select>
+	<select id="selectDiseaseDetail" resultType="com.cafe24.kyungsu93.disease.service.DiseaseSubCategory">
+		SELECT
+			disease_sub_category_no as diseaseSubCategoryNo
+			,disease_no as diseaseNo
+			,family_history as familyHistory
+			,disease_sub_category_name as diseaseSubCategoryName
+			,disease_sub_category_date as diseaseSubCategoryDate
+		FROM
+			disease_sub_category
+		WHERE
+			disease_no = #{diseaseNo}
+	</select>
+	
+	<select id="selectDiseaseList" resultType="com.cafe24.kyungsu93.disease.service.Disease">
+		SELECT
+			disease_no as diseaseNo
+			,disease_name as diseaseName
+		FROM
+			disease
+	</select>
+	
+	<select id="selectDiseaseSubCategoryNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(cast(SUBSTRING(disease_sub_category_no,13) as decimal)), 0)
+		FROM
+			disease_sub_category
+	</select>
+	<select id="selectDiseaseNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(cast(SUBSTRING(disease_no,9) as decimal)), 0)
+		FROM
+			disease
+	</select>
+	<insert id="insertDiseaseSubCategory" parameterType="com.cafe24.kyungsu93.disease.service.DiseaseSubCategory">
+		INSERT INTO disease_sub_category(
+			disease_sub_category_no
+			,disease_no
+			,family_history
+			,disease_sub_category_name		
+			,disease_sub_category_date			
+		)
+		VALUES(
+			#{diseaseSubCategoryNo}
+			,#{diseaseNo}
+			,#{familyHistory}
+			,#{diseaseSubCategoryName}
+			,now()
+		)
+	</insert>
+	<insert id="insertDisease" parameterType="com.cafe24.kyungsu93.disease.service.Disease">
+		INSERT INTO disease(
+			disease_no
+			,disease_name
+			,disease_date
+		)
+		VALUES(
+			#{diseaseNo}
+			,#{diseaseName}
+			,now()
+		)
+	</insert>
+</mapper>
