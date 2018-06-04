@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.cafe24.kyungsu93.MemberMapper">
+  
+  	<resultMap type="com.cafe24.kyungsu93.member.service.Member" id="member">
+  		<result column="member_no" property="memberNo"/>
+  		<result column="member_id" property="memberId"/>
+  		<result column="member_pw" property="memberPw"/>
+  		<result column="member_level" property="memberLevel"/>
+  		<result column="member_name" property="memberName"/>
+  		<result column="member_gender" property="memberGender"/>
+  		<result column="member_address" property="memberAddress"/>
+  		<result column="member_email" property="memberEmail"/>
+  		<result column="member_birth" property="memberBirth"/>
+  		<result column="member_tel" property="memberTel"/>
+  		<result column="member_point" property="memberPoint"/>
+  		<result column="member_agree" property="memberAgree"/>
+  		<result column="member_register_no" property="doctorRegisterNo"/>
+  		<result column="member_hospital_name" property="hospitalName"/>
+  		<result column="treatment_department" property="treatmentDepartment"/>
+  		<result column="member_work_space" property="memberWorkSpace"/>
+  		<result column="member_register_no" property="teacherRegisterNo"/>
+  		<collection property="memberFile"   ofType="com.cafe24.kyungsu93.member.service.MemberFile">
+	  		<id column="member_no" property="memberNo"/>
+	  		<result column="member_evidence_file_ext" property="memberFileExt"/>
+	  		<result column="member_evidence_file_size" property="memberFileSize"/>
+	  		<result column="member_evidence_file_name" property="memberFileName"/>
+	  		<result column="member_evidence_file_type" property="memberFileType"/>
+	  		<result column="member_evidence_file_real_name" property="memberFileRealName"/>
+  		</collection>
+  	</resultMap>
+  	<select id="memberModifyCheck"
+  			parameterType="com.cafe24.kyungsu93.member.service.Member"
+  			resultType="Integer">
+  			SELECT COUNT(*)
+  			FROM member
+  			WHERE member_id=#{memberId} AND member_pw=#{memberPw}
+  	</select>
+  	<insert id="memberInsertPt"
+  			parameterType="com.cafe24.kyungsu93.member.service.Member">
+  		INSERT INTO teacher(
+  			member_no
+  			,member_register_no
+  			,member_work_space
+  			,member_approval_date
+  		)VALUES(
+  			#{memberNo}
+  			,#{teacherRegisterNo}
+  			,#{memberWorkSpace}
+  			,now()
+  		)
+  	</insert>
+  	<insert id="memberInsertDoctor"
+  			parameterType="com.cafe24.kyungsu93.member.service.Member">
+  		INSERT INTO doctor(
+  			member_no
+  			,member_register_no
+  			,member_hospital_name
+  			,treatment_department
+  			,member_approval_date
+  		)VALUES(
+  			#{memberNo}
+  			,#{doctorRegisterNo}
+  			,#{hospitalName}
+  			,#{treatmentDepartment}
+  			,now()
+  		)
+  	</insert>
+  	<select id="memberIdCheck"
+  			parameterType="String"
+  			resultType="Integer">
+  			SELECT count(*)
+  			FROM member
+  			WHERE member_id = #{id}
+  	
+  	</select>
+  	<select id="memberNo"
+  			resultType="Integer">
+  			SELECT MAX(CAST(SUBSTRING(member_no,8)as decimal))
+  			FROM member	
+  	</select>
+  	<insert id="memberInsert"
+  			parameterType="com.cafe24.kyungsu93.member.service.Member">
+  		INSERT INTO member(
+  			member_no
+  			,member_id
+  			,member_pw
+  			,member_level
+  			,member_name
+  			,member_gender
+  			,member_address
+  			,member_email
+  			,member_birth
+  			,member_tel
+  			,member_agree
+  			,member_join_date
+  		)VALUES(
+  			#{memberNo}
+  			,#{memberId}
+  			,#{memberPw}
+  			,#{memberLevel}
+  			,#{memberName}
+  			,#{memberGender}
+  			,#{memberAddress}
+  			,#{memberEmail}
+  			,#{memberBirth}
+  			,#{memberTel}
+  			,#{memberAgree}
+  			,now()
+  		)
+  	</insert>
+  	<select id="memberModifySelect"
+  			parameterType="String"
+  			resultMap="member">
+  			SELECT 
+  				member_name
+  				,member_gender
+  				,member_address
+  				,member_email
+  				,member_birth
+  				,member_tel
+  			FROM member
+  			WHERE member_id=#{id}
+  	</select>
+  	<select id="memberModifySelectDoctor"
+  			parameterType="String"
+  			resultType="com.cafe24.kyungsu93.member.service.Member">
+  			SELECT 
+  				m.member_name AS memberName
+  				,m.member_gender AS memberGender
+  				,m.member_address AS memberAddress
+  				,m.member_email AS memberEmail
+  				,m.member_birth AS memberBirth
+  				,m.member_tel AS memberTel
+  				,d.member_register_no AS doctorRegisterNo
+  				,d.member_hospital_name AS hospitalName
+  				,d.treatment_department AS treatmentDepartment
+  			FROM member m,doctor d
+  			WHERE m.member_no=d.member_no AND m.member_id=#{id}
+  	</select>
+  	<select id="memberModifySelectTeacher"
+  			parameterType="String"
+  			resultType="com.cafe24.kyungsu93.member.service.Member">
+  			SELECT 
+  				m.member_name AS memberName
+  				,m.member_gender AS memberGender
+  				,m.member_address AS memberAddress
+  				,m.member_email AS memberEmail
+  				,m.member_birth AS memberBirth
+  				,m.member_tel AS memberTel
+  				,t.member_register_no AS teacherRegisterNo
+  				,t.member_work_space AS memberWorkSpace
+  			FROM member m,teacher t
+  			WHERE m.member_no=t.member_no AND m.member_id=#{id}
+  	</select>
+  	<update id="memberModify"
+  			parameterType="com.cafe24.kyungsu93.member.service.Member">
+  			UPDATE member
+  			SET
+  				member_pw = #{memberPw}
+  				,member_name = #{memberName}
+  				,member_address = #{memberAddress}
+  				,member_email = #{memberEmail}
+  				,member_birth = #{memberBirth}
+  				,member_tel = #{memberTel}
+  			WHERE member_id = #{memberId}
+  	</update>
+  	<update id="memeberModifyDoctor"
+  			parameterType="com.cafe24.kyungsu93.member.service.Member">
+  			UPDATE member m,doctor d
+  			SET
+  				m.member_pw = #{memberPw}
+  				,m.member_name = #{memberName}
+  				,m.member_address = #{memberAddress}
+  				,m.member_email = #{memberEmail}
+  				,m.member_birth = #{memberBirth}
+  				,m.member_tel = #{memberTel}
+  				,d.member_register_no = #{doctorRegisterNo}
+  				,d.member_hospital_name = #{hospitalName}
+  				,d.treatment_department = #{hospitalName}
+  				
+  			WHERE m.member_no=d.member_no AND member_id = #{memberId}
+  	</update>
+  	<update id="memeberModifyTeacher"
+  			parameterType="com.cafe24.kyungsu93.member.service.Member">
+  			UPDATE member m,teacher t
+  			SET
+  				m.member_pw = #{memberPw}
+  				,m.member_name = #{memberName}
+  				,m.member_address = #{memberAddress}
+  				,m.member_email = #{memberEmail}
+  				,m.member_birth = #{memberBirth}
+  				,m.member_tel = #{memberTel}
+  				,t.member_register_no = #{teacherRegisterNo}
+  				,t.member_work_space = #{memberWorkSpace}
+  			WHERE m.member_no=t.member_no AND member_id = #{memberId}
+  	</update>
+  	<delete id="memberLeaveRequest"
+  			parameterType="String">
+  			DELETE FROM member
+  			WHERE member_id=#{id}
+  	</delete>
+  	<delete id="memberLeaveDoctorRequest"
+  			parameterType="String">
+  			DELETE FROM doctor
+  			WHERE member_no=#{memberNo}
+  	</delete>
+  	<delete id="memberLeaveTeacherRequest"
+  			parameterType="String">
+  			DELETE FROM teacher
+  			WHERE member_no=#{memberNo}
+  	</delete>
+  	<select id="memberLeaveSelect"
+  			parameterType="String"
+  			resultType="String">
+  			SELECT member_no
+  			FROM member
+  			WHERE member_id = #{id}
+  	</select>
+  	<delete id="FileRemove"
+  			parameterType="String">
+  			DELETE FROM memberfile
+  			WHERE member_no=#{memberNo}
+  	</delete>
+  	<select id="memberFile"
+  			parameterType="String"
+  			resultType="com.cafe24.kyungsu93.member.service.MemberFile">
+  			SELECT 
+  				member_evidence_file_ext AS memberFileExt
+  				,member_evidence_file_name AS memberFileName
+  			FROM memberfile
+  			WHERE member_no=#{memberNo}
+  	</select>
+  	<select id="memberApprovalList"
+  			parameterType="java.util.Map"
+  			resultMap="member">
+  			SELECT 
+  				m.member_no
+  				,m.member_id
+  				,m.member_name
+  				,m.member_gender
+  				,m.member_birth
+  				,m.member_level
+  			FROM member m,teacher t
+  			WHERE m.member_no=t.member_no And m.member_level >=3 And t.member_join_approval='F'
+			UNION
+			SELECT 
+  				m.member_no
+  				,m.member_id
+  				,m.member_name
+  				,m.member_gender
+  				,m.member_birth
+  				,m.member_level
+  			FROM member m,doctor d
+  			WHERE m.member_no=d.member_no And m.member_level >=3 And d.member_join_approval='F'
+  			LIMIT #{beginRow},#{pagePerRow}
+  	</select>
+  	<select id="totalCountList"
+  			resultType="int">
+  			SELECT SUM(total)
+			FROM(
+					SELECT COUNT(*) AS total FROM member m,doctor d
+	  				WHERE m.member_no=d.member_no And m.member_level >=3 And d.member_join_approval='F'
+					UNION
+					SELECT COUNT(*) AS total FROM member m,teacher t
+	  				WHERE m.member_no=t.member_no And m.member_level >=3 And t.member_join_approval='F'
+  				)tb
+  	</select>
+  	<select id="memberApprovalContentLevel3"
+  			parameterType="com.cafe24.kyungsu93.member.service.Member"
+  			resultMap="member">
+  			SELECT 
+  				d.member_register_no
+  				,d.member_hospital_name
+  				,d.treatment_department
+  				,f.member_evidence_file_ext
+  				,f.member_evidence_file_name
+  				,f.member_evidence_file_real_name
+			FROM doctor d,memberfile f
+			WHERE d.member_no=f.member_no AND d.member_no =#{memberNo}
+  	</select>
+  	<select id="memberApprovalContentLevel4"
+  			parameterType="com.cafe24.kyungsu93.member.service.Member"
+  			resultMap="member">
+  			SELECT 
+  				t.member_register_no
+  				,t.member_work_space
+  				,f.member_evidence_file_ext
+  				,f.member_evidence_file_name
+  				,f.member_evidence_file_real_name
+			FROM teacher t,memberfile f
+			WHERE t.member_no=f.member_no AND t.member_no =#{memberNo}
+  	</select>
+  	<update id="approvalDoctor"
+  			parameterType="com.cafe24.kyungsu93.member.service.Member">
+  			UPDATE doctor
+			SET 
+			member_join_approval='T'
+			WHERE member_no=#{memberNo}
+  	</update>
+  	<update id="approvalTeacher"
+  			parameterType="com.cafe24.kyungsu93.member.service.Member">
+  			UPDATE teacher
+			SET 
+			member_join_approval='T'
+			WHERE member_no=#{memberNo}
+  	</update>
+  	<select id="memberFindId"
+  			parameterType="com.cafe24.kyungsu93.member.service.Member"
+  			resultType="String">
+  			SELECT member_id
+  			FROM member
+  			WHERE member_name=#{memberName} AND member_email=#{memberEmail}
+  	</select>
+  </mapper>

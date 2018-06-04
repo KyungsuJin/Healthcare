@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.cafe24.kyungsu93.MemberFileMapper">
+  	<insert id="memberFile"
+  			parameterType="com.cafe24.kyungsu93.member.service.MemberFile">
+  		INSERT INTO memberfile(
+  			member_no
+  			,member_evidence_file_ext
+  			,member_evidence_file_size
+  			,member_evidence_file_name
+  			,member_evidence_file_type
+  			,member_evidence_file_real_name
+  			,member_evidence_file_date
+  		)VALUES(
+  			#{memberNo}
+  			,#{memberFileExt}
+  			,#{memberFileSize}
+  			,#{memberFileName}
+  			,#{memberFileType}
+  			,#{memberFileRealName}
+  			,now()	
+  		)
+
+  	</insert>
+  </mapper>

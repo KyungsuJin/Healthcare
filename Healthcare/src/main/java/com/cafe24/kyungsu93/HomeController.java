@@ -21,12 +21,6 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	@Autowired
 	HomeService homeService;
-
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home() {
-		logger.debug("HomeController.home 메서드 실행");
-		return "home";
-	}
 	
 	//식품영양정보는 json 으로 받아서 DB에 등록해야 할것같아서 스크립트로 처리하려고함.
 	@RequestMapping(value = "/foodInfo", method = RequestMethod.GET)
