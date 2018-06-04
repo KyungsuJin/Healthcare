@@ -79,8 +79,9 @@
   	</select>
   	<select id="memberNo"
   			resultType="Integer">
-  			SELECT MAX(CAST(SUBSTRING(member_no,8)as decimal))
-  			FROM member	
+  			SELECT
+         	IFNULL(MAX(cast(SUBSTRING(member_no,8) as decimal)), 0)
+         	FROM member
   	</select>
   	<insert id="memberInsert"
   			parameterType="com.cafe24.kyungsu93.member.service.Member">
@@ -312,7 +313,7 @@
   			parameterType="com.cafe24.kyungsu93.member.service.Member"
   			resultMap="member">
   			SELECT 
-  				member_id
+  				ifnull(member_id,"없음")
   				,member_name
   				,member_Email
   			FROM member

@@ -6,7 +6,7 @@
 </head>
 <body>
 	<h1></h1>
-	<c:if test="${member.memberLevel==3}">
+	<c:if test="${member.memberSessionLevel==3}">
 		<table border="1" class="table">
 			<thead>
 				<tr>
@@ -30,7 +30,7 @@
 			</tbody>
 		</table>
 	</c:if>
-	<c:if test="${member.memberLevel==4}">
+	<c:if test="${member.memberSessionLevel==4}">
 		<table border="1" class="table">
 			<thead>
 				<tr>

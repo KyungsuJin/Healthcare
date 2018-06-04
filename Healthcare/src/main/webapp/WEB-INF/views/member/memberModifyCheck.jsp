@@ -35,12 +35,12 @@
 </head>
 <body>
 	<h1>회원 정보 수정</h1>
-	<form action="${pageContext.request.contextPath}/memberModifyCheck" id="ModifyCheckForm" method="post">
-		<input type="hidden" id="memberId" value="${sessionScope.memberId}">
-		<input type="hidden" id="memberLevel" value="${sessionScope.memberLevel}">
+<%-- 	<form action="${pageContext.request.contextPath}/memberModifyCheck" id="ModifyCheckForm" method="post"> --%>
+		<input type="hidden" id="memberId" value="${sessionScope.memberSessionId}">
+		<input type="hidden" id="memberLevel" value="${sessionScope.memberSessionLevel}">
 		<div>비밀번호 : <input type="text" id="memberPw"></div>
 		<div><button type="button" id="checkButton">확인</button></div>
-	</form>
+<!-- 	</form> -->
 
 </body>
 </html>

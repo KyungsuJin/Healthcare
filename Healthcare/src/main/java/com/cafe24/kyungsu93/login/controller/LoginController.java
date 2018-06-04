@@ -35,8 +35,8 @@ public class LoginController {
 		if(i==1) {
 			logger.debug("asdfasdf : "+result.get("memberSessionLevel"));
 			session.setAttribute("result", result.get("result"));
-			session.setAttribute("memberId", member.getMemberId());
-			session.setAttribute("memberLevel", result.get("memberSessionLevel"));
+			session.setAttribute("memberSessionId", member.getMemberId());
+			session.setAttribute("memberSessionLevel", result.get("memberSessionLevel"));
 			session.setAttribute("memberSessionName", result.get("memberSessionName"));
 		}else {
 			logger.debug("login fail");
@@ -47,7 +47,7 @@ public class LoginController {
 	public String logout(HttpSession session) {
 		logger.debug("LoginController.logout GET");
 		session.invalidate();
-		return "index";
+		return "redirect:/";
 	}
 
 }

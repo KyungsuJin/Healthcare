@@ -28,14 +28,14 @@
   			parameterType="String"
   			resultType="String">
   			SELECT d1.member_join_approval
-  			FROM member m1 ,doctor d1
+  			FROM member m1 ,member_doctor d1
 			WHERE m1.member_no=d1.member_no AND member_id=#{id}
 	</select>
 	<select id="loginTeacherApproval"
   			parameterType="String"
   			resultType="String">
   			SELECT t1.member_join_approval
-  			FROM member m1 ,teacher t1
+  			FROM member m1 ,member_teacher t1
 			WHERE m1.member_no=t1.member_no AND member_id=#{id}
 	</select>
   

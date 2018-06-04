@@ -117,7 +117,7 @@ public class MemberController {
 	   logger.debug("MemberController.memberModify POST");
 	   logger.debug(member.toString());
 	   memberService.memberModify(member);
-	   return "index";
+	   return "redirect:/";
    }
    //회원정보 수정전 비밀번호 체크 화면
    @RequestMapping(value="/memberModifyCheck",method=RequestMethod.GET)
@@ -148,7 +148,7 @@ public class MemberController {
 	   String path = session.getServletContext().getRealPath("/resources/upload/");
 	   memberService.memberInsert(member,path);
 	   
-	   return "index";
+	   return "redirect:/";
 	   }
    //회원가입 폼
    @RequestMapping(value="/memberJoin",method=RequestMethod.GET)

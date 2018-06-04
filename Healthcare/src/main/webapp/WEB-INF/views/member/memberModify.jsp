@@ -172,10 +172,10 @@
 		<input type="hidden" name="memberTel" id="memberTel" value="${member.memberTel}">
 		<input type="hidden" name="memberEmail" id="memberEmail" value="${member.memberEmail}">
 		<input type="hidden" name="memberAddress" id="memberAddress" value="${member.memberAddress}">
-		<input type="hidden" name="memberLevel" id="memberLevel" value="${sessionScope.memberLevel}">
+		<input type="hidden" name="memberLevel" id="memberLevel" value="${sessionScope.memberSessionLevel}">
 
 		<div>
-			아이디 :<input type="text" name="memberId" id="memberId" value="${sessionScope.memberId}" readonly>
+			아이디 :<input type="text" name="memberId" id="memberId" value="${sessionScope.memberSessionId}" readonly>
 		</div>
 		<div>
 			성명 :<input type="text" id="memberName" name="memberName" value="${member.memberName}">

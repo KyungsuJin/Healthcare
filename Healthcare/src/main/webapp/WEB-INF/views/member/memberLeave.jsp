@@ -38,10 +38,10 @@
 <body>
 	<h1>회원 탈퇴</h1>
 	<form action="${pageContext.request.contextPath}/memberModifyCheck" id="ModifyCheckForm" method="POST">
-		<input type="hidden" id="memberId" value="${sessionScope.memberId}">
-		<input type="hidden" id="memberLevel" value="${sessionScope.memberLevel}">
-		<div>비밀번호 : <input type="text" id="memberPw"></div>
-		<div><button type="button" id="checkButton">회원탈퇴</button></div>
+		<input type="hidden" id="memberId" value="${sessionScope.memberSessionId}">
+		<input type="hidden" id="memberLevel" value="${sessionScope.memberSessionLevel}">
+		<div>비밀번호 : <input type="password" id="memberPw"></div>
+		<div><input type="button" id="checkButton" value="회원탈퇴"></div>
 	</form>
 
 </body>

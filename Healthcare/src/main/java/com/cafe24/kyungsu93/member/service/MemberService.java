@@ -199,14 +199,16 @@ public class MemberService {
 	}
 	//아이디 찾기
 	public Member memberFindId(Member member) {
-		logger.debug("MemberService.memberFindId");
-		Member memberFind = memberDao.memberFindId(member);
-		logger.debug(memberFind.getMemberId());
-		if(memberFind.getMemberId()==null) {
-			memberFind.setMemberId("없음");
+		logger.debug("MemberService.approval");
+		Member MemberFind = new Member();
+		logger.debug(MemberFind.getMemberId());
+		if(memberDao.memberFindId(member)==null) {
+			MemberFind.setMemberId("없음");
+			MemberFind=memberDao.memberFindId(member);
 		}else {
+			MemberFind=memberDao.memberFindId(member);
 		}
-		return memberFind;
+		return MemberFind;
 	}
 
 }
