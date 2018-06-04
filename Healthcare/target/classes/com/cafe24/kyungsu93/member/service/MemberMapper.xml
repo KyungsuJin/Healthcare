@@ -311,12 +311,18 @@
   	</update>
   	<select id="memberFindId"
   			parameterType="com.cafe24.kyungsu93.member.service.Member"
-  			resultMap="member">
+  			resultType="String">
   			SELECT 
-  				ifnull(member_id,"없음")
-  				,member_name
-  				,member_Email
+  				member_id
   			FROM member
   			WHERE member_name=#{memberName} AND member_email=#{memberEmail}
+  	</select>
+  	<select id="memberFindPw"
+  			parameterType="com.cafe24.kyungsu93.member.service.Member"
+  			resultType="String">
+  			SELECT 
+  				member_pw
+  			FROM member
+  			WHERE member_id=#{memberId} AND member_email=#{memberEmail}
   	</select>
   </mapper>

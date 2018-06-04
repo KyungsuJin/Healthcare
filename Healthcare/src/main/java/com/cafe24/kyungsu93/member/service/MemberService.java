@@ -198,17 +198,23 @@ public class MemberService {
 		}
 	}
 	//아이디 찾기
-	public Member memberFindId(Member member) {
+	public String memberFindId(Member member) {
 		logger.debug("MemberService.approval");
-		Member MemberFind = new Member();
-		logger.debug(MemberFind.getMemberId());
-		if(memberDao.memberFindId(member)==null) {
-			MemberFind.setMemberId("없음");
-			MemberFind=memberDao.memberFindId(member);
-		}else {
-			MemberFind=memberDao.memberFindId(member);
+
+		String memberId=memberDao.memberFindId(member);
+		if(memberId==null) {
+			memberId="0";
 		}
-		return MemberFind;
+		return memberId;
+	}
+	//비밀번호 찾기
+	public String memberFindPw(Member member) {
+		logger.debug("MemberService.memberFindPw");
+		String memberPw=memberDao.memberFindPw(member);
+		if(memberPw==null) {
+			memberPw="0";
+		}
+		return memberPw;
 	}
 
 }

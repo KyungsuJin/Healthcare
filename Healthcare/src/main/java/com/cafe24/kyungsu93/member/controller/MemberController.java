@@ -3,7 +3,9 @@ package com.cafe24.kyungsu93.member.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -22,6 +24,19 @@ import com.cafe24.kyungsu93.member.service.MemberService;
 public class MemberController {
 	@Autowired MemberService memberService;
    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+   
+   //패스워드 찾기 결과 페이지
+   @RequestMapping(value="/memberFindPwResult",method=RequestMethod.GET)
+   public String memberFindPwResult() {
+	   logger.debug("MemberController.memberFindPwResult GET");
+	   return "member/memberFindPwResult";
+   }
+   //아이디 찾기 결과 페이지
+   @RequestMapping(value="/memberFindIdResult",method=RequestMethod.GET)
+   public String memberFindIdResult() {
+	   logger.debug("MemberController.memberFindIdResult GET");
+	   return "member/memberFindIdResult";
+   }
    //아이디 찾기 페이지
    @RequestMapping(value="/memberFindId",method=RequestMethod.GET)
    public String memberFindId() {
@@ -35,9 +50,9 @@ public class MemberController {
 	   logger.debug("MemberController.memberFindId POST");
 	   logger.debug(member.getMemberName());
 	   logger.debug(member.getMemberEmail());
-	   Member memberFind=memberService.memberFindId(member);
+	   String memberId=memberService.memberFindId(member);
 	   Map<String,Object> map= new HashMap<String,Object>();
-	   map.put("memberFind",memberFind);
+	   map.put("memberId",memberId);
 	   return map;
    }
    //패스워드 찾기 페이지
@@ -45,6 +60,18 @@ public class MemberController {
    public String memberFindPw() {
 	   logger.debug("MemberController.memberFindPw GET");
 	   return "member/memberFindPw";
+   }
+   //패스워드 찾기 페이지
+   @ResponseBody
+   @RequestMapping(value="/memberFindPw",method=RequestMethod.POST)
+   public Map<String,Object> memberFindPw(Member member) {
+	   logger.debug("MemberController.memberFindPw GET");
+	   logger.debug(member.getMemberId());
+	   logger.debug(member.getMemberEmail());
+	   String memberPw=memberService.memberFindPw(member);
+	   Map<String,Object> map= new HashMap<String,Object>();
+	   map.put("memberPw", memberPw);
+	   return map;
    }
    //승인요청
    @RequestMapping(value="/approval",method=RequestMethod.GET)

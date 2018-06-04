@@ -138,8 +138,13 @@ public class MemberDao {
 		sqlSession.update(NS+"approvalTeacher",member);
 	}
 	//id찾기
-	public Member memberFindId(Member member) {
+	public String memberFindId(Member member) {
 		logger.debug("MemberDao.memberFindId");
 		return sqlSession.selectOne(NS+"memberFindId",member);
+	}
+	//pw찾기
+	public String memberFindPw(Member member) {
+		logger.debug("MemberDao.memberFindPw");
+		return sqlSession.selectOne(NS+"memberFindPw",member);
 	}
 }

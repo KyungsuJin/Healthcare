@@ -6,7 +6,7 @@
 </head>
 <body>
 	<h1></h1>
-	<c:if test="${member.memberSessionLevel==3}">
+	<c:if test="${member.memberLevel==3}">
 		<table border="1" class="table">
 			<thead>
 				<tr>
@@ -25,12 +25,12 @@
 					<td>${member.hospitalName}</td>
 					<td>${member.treatmentDepartment}</td>
 					<td>${member.memberFile.memberFileRealName}</td>
-					<img src="${pageContext.request.contextPath}/src/main/webapp/resources/upload/${member.memberFile.memberFileName }.${member.memberFile.memberFileExt}">
+					<img src="${path}${member.memberFile.memberFileName }.${member.memberFile.memberFileExt}"/>
 				</tr>
 			</tbody>
 		</table>
 	</c:if>
-	<c:if test="${member.memberSessionLevel==4}">
+	<c:if test="${member.memberLevel==4}">
 		<table border="1" class="table">
 			<thead>
 				<tr>
@@ -44,7 +44,7 @@
 					<td>${member.doctorRegisterNo}</td>
 					<td>${member.memberWorkSpace}</td>
 					<td>${member.memberFile.memberFileRealName}</td>
-					<img src="${pageContext.request.contextPath}/src/main/webapp/resources/upload/${member.memberFile.memberFileName }.${member.memberFile.memberFileExt}">
+					<img src="${path}${member.memberFile.memberFileName }.${member.memberFile.memberFileExt}">
 				</tr>
 			</tbody>
 		</table>
