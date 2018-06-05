@@ -11,8 +11,15 @@
 </style>
 	<script>
 	$(document).ready(function(){
-		$("#addHealthScreenBtn").click(function(){
-			location.href="${pageContext.request.contextPath}/addHealthScreen";
+		$("#removeHealthScreenBtn").click(function(){
+			location.href="${pageContext.request.contextPath}/removeHealthScreen?healthScreenNo=${healthScreen.healthScreenNo}";
+		});
+		
+		$("#modifyHealthScreenBtn").click(function(){
+			location.href="${pageContext.request.contextPath}/modifyHealthScreen?healthScreenNo=${healthScreen.healthScreenNo}";
+		});
+		$("#getHealthScreenListBtn").click(function(){
+			location.href="${pageContext.request.contextPath}/getHealthScreenList";
 		});
 	});	
 </script>
@@ -33,13 +40,50 @@
 			</thead>
 			<tbody>
 					<tr>
-						<td>${healthScreen.healthScreen}</td>
+						<td>${healthScreen.healthScreenNo}</td>
 					</tr>
-
+					<tr>
+						<td>${healthScreen.memberNo}</td>
+					</tr>
+					<tr>
+						<td>${healthScreen.bloodSugarNo}</td>
+					</tr>
+					<tr>
+						<td>${healthScreen.bloodPressureNo}</td>
+					</tr>
+					<tr>
+						<td>${healthScreen.bodyMassIndexNo}</td>
+					</tr>
+					<tr>
+						<td>${healthScreen.totalCholesterol}</td>
+					</tr>
+					<tr>
+						<td>${healthScreen.ldlCholesterol}</td>
+					</tr>
+					<tr>
+						<td>${healthScreen.neutralFat}</td>
+					</tr>
+					<tr>
+						<td>${healthScreen.hdlCholesterol}</td>
+					</tr>
+					<tr>
+						<td>${healthScreen.proteinuria}</td>
+					</tr>
+					<tr>
+						<td>${healthScreen.hemoglobin}</td>
+					</tr>
+					<tr>
+						<td>${healthScreen.serumCreatinine}</td>
+					</tr>
+					<tr>
+						<td>${healthScreen.gfr}</td>
+					</tr>
+					<tr>
+						<td>${healthScreen.healthScreenDate}</td>
+					</tr>
 			</tbody>
 		</table>
-	
-	
+		<input id="getHealthScreenListBtn" class="btn btn-default" type="button" value="목록">
 	</div>
 </body>
 </html>

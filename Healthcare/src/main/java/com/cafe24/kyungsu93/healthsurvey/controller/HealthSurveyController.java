@@ -41,12 +41,16 @@ public class HealthSurveyController {
 	
 	@RequestMapping(value="/addHealthSurvey", method=RequestMethod.GET)
 	public String addHealthSurvey() {
-		
-		return "addHealthSurvey";
+		return "healthsurvey/addHealthSurvey";
 	}
 	
 	@RequestMapping(value="/addHealthSurvey", method=RequestMethod.POST)
 	public String addHealthSurvey(HealthSurveyRequest healthSurveyRequest, HealthSurveyQuestion healthSurveyQuestion, HealthSurveySelection healthSurveySelection) {
+		System.out.println("여기오---------------");
+		System.out.println(healthSurveyRequest.toString());
+		System.out.println(healthSurveyQuestion.toString());
+		System.out.println(healthSurveySelection.toString());
+		System.out.println("여기오---------------");
 		healthSurveyService.addHealthSurvey(healthSurveyRequest, healthSurveyQuestion, healthSurveySelection);
 		return "getHealthSurveyList";
 	}

@@ -9,6 +9,9 @@
 			$("#healthScreenBtn").click(function(){
 				$("#healthScreenForm").submit();
 			});
+			$("#getHealthScreenListBtn").click(function(){
+				location.href="${pageContext.request.contextPath}/getHealthScreenList";
+			});
 		});
 		
 	
@@ -32,7 +35,7 @@
 			<input type="text" id="gfr" name="gfr"><br>
 			<input type="button" id="healthScreenBtn" value="요청">
 		</form>
-	
+		<input id="getHealthScreenListBtn" class="btn btn-default" type="button" value="목록">
 	</div>
 </body>
 </html>

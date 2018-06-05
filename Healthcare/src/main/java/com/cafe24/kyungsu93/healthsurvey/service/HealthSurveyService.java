@@ -45,6 +45,30 @@ public class HealthSurveyService {
 	}
 	
 	public void addHealthSurvey(HealthSurveyRequest healthSurveyRequest, HealthSurveyQuestion healthSurveyQuestion, HealthSurveySelection healthSurveySelection) {
-		//healthSurveyDao.addHealthSurvey(healthSurveyRequest);
+		String healthSurveyRegisterNo = healthSurveyDao.getHealthSurveyNo();
+		healthSurveyRequest.setHealthSurveyRegisterNo(healthSurveyRegisterNo);
+		healthSurveyQuestion.setHealthSurveyRegisterNo(healthSurveyRegisterNo);
+		healthSurveyDao.addHealthSurvey(healthSurveyRequest);
+		int count = 0;
+		for(int i = 0 ; i < healthSurveyQuestion.getQuestionNoList().length ; i++) {
+			String healthSurveyQuestionNo = healthSurveyDao.getHealthSurveyQuestionNo();
+			healthSurveyQuestion.setHealthSurveyQuestionNo(healthSurveyQuestionNo);
+			healthSurveySelection.setHealthSurveyQuestionNo(healthSurveyQuestionNo);
+			healthSurveyQuestion.setQuestionNo(healthSurveyQuestion.getQuestionNoList()[i]);
+			healthSurveyQuestion.setHealthSurveyQuestion(healthSurveyQuestion.getHealthSurveyQuestionList()[i]);
+			healthSurveyDao.addHealthSurveyQuestion(healthSurveyQuestion);
+			int flag = 0;
+			for(int j = count ; j < healthSurveySelection.getSelectionNoList().length ; j++) {
+				healthSurveySelection.setHealthSurveySelectionNo(healthSurveySelection.getHealthSurveySelectionNo());
+				healthSurveySelection.setSelectionNo(healthSurveySelection.getSelectionNoList()[j]);
+				healthSurveySelection.setHealthSurveySelection(healthSurveySelection.getHealthSurveySelectionList()[j]);
+				healthSurveySelection.setHealthSurveySelectionScore(healthSurveySelection.getHealthSurveySelectionScoreList()[j]);
+				/*if(healthSurveySelection.getSelectionNo()) {
+					
+				}*/
+			}
+		}
+		
+		
 	}
 }

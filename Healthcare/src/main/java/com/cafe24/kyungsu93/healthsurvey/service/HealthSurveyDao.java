@@ -26,7 +26,25 @@ public class HealthSurveyDao {
 		return list;
 	}
 	
+	public String getHealthSurveyNo() {
+		return "health_survey_register_"+sqlSession.selectOne(NS+"getHealthSurveyNo");
+	}
+	
+	public String getHealthSurveyQuestionNo() {
+		return "health_survey_question_"+sqlSession.selectOne(NS+"getHealthSurveyQuestionNo");
+	}
+	
+	public String getHealthSurveySelectionNo() {
+		return "health_survey_selection_"+sqlSession.selectOne(NS+"getHealthSurveySelectionNo");
+	}
+	
 	public void addHealthSurvey(HealthSurveyRequest healthSurveyRequest) {
 		sqlSession.insert(NS+"addHealthSurvey", healthSurveyRequest);
 	}
+	
+	public void addHealthSurveyQuestion(HealthSurveyQuestion healthSurveyQuestion) {
+		sqlSession.insert(NS+"addHealthSurveyQuestion", healthSurveyQuestion);
+	}
+	
+	
 }
