@@ -25,30 +25,46 @@ public class MemberController {
 	@Autowired MemberService memberService;
    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
    
+   @RequestMapping(value="/memberList1",method=RequestMethod.GET)
+   public String memberLis1(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
+		   				,@RequestParam(value="memberLevel")int memberLevel/*,@RequestParam Map<String,Object> map*/) {
+/*	   logger.debug("asd"+map.get("pagePerRow"));
+	   logger.debug("MemberController.memberListChoice GET");
+	   model.addAttribute("memberList",map.get("memberList"));*/
+	   model.addAttribute("currentPage",currentPage);
+	   model.addAttribute("memberLevel",memberLevel);
+	   return "member/memberList";
+   }
    //회원 리스트
+   @ResponseBody
    @RequestMapping(value="/memberList",method=RequestMethod.GET)
-   public String memberList(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
-		   					,@RequestParam(value="pagePerRow",defaultValue="10")int pagePerRow
+   public Map<String,Object> memberList(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
+		   					,@RequestParam(value="pagePerRow",defaultValue="5")int pagePerRow
 		   					,@RequestParam(value="memberLevel")int memberLevel
 		   					,@RequestParam(value="searchSelect",required=false)String searchSelect
 		   					,@RequestParam(value="searchText",required=false)String searchText) {
 	   logger.debug("MemberController.memberList GET");
-	   Map<String,Object> map=memberService.memberList(currentPage,pagePerRow,memberLevel);
+	   logger.debug("searchSelect : "+searchSelect);
+	   logger.debug("searchText : "+searchText);
+	   logger.debug("memberLevel : "+memberLevel);
+	   Map<String,Object> map=memberService.memberList(currentPage,pagePerRow,memberLevel,searchText,searchSelect);
 	   model.addAttribute("memberList",map.get("memberList"));
 	   model.addAttribute("startPage",map.get("startPage"));
 	   model.addAttribute("endPage",map.get("endPage"));
 	   model.addAttribute("lastPage",map.get("lastPage"));
-	   model.addAttribute("currentPage",currentPage);
-	   model.addAttribute("pagePerRow",pagePerRow);
+	   map.put("currentPage", currentPage);
+	   map.put("pagePerRow", pagePerRow);
+	   model.addAttribute("currentPage",map.get("currentPage"));
+	   model.addAttribute("pagePerRow",map.get("pagePerRow"));
 	   String result="";
-	   if(memberLevel==2) {
+	  /* if(memberLevel==2) {
 		   result="member/memberList";
 	   }else if(memberLevel==3) {
 		   result="member/memberDoctorList";
 	   }else if(memberLevel==4) {
 		   result="member/memberPtList";
-	   }
-	   return result;
+	   }*/
+	   return map;
    }
    //회원검색 선택
    @RequestMapping(value="/memberListChoice",method=RequestMethod.GET)

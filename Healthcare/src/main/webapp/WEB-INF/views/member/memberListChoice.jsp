@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,8 +15,20 @@
 						,"memberListForm","width=1600, height=500,resizable=no,scrollbars=yes");
 			})
 			$("#memberPTList").click(function(){
-				window.open("${pageContext.request.contextPath}/memberList?memberLevel=4"
-						,"memberListForm","width=1600, height=500,resizable=no,scrollbars=yes");
+				/* $.ajax({
+					type : "get"
+					,url : "${pageContext.request.contextPath}/memberList"
+					,data : {"memberLevel":2}
+					,datatype : "json"
+					,success:function(data){
+						console.log(data);
+						$("#ds").append(data.memberList); */
+						window.open("${pageContext.request.contextPath}/memberList1?memberLevel=3"
+								,"memberListForm","width=1600, height=500,resizable=no,scrollbars=yes");
+				/* 	} 
+				})
+				/* window.open("${pageContext.request.contextPath}/memberList?memberLevel=4"
+						,"memberListForm","width=1600, height=500,resizable=no,scrollbars=yes"); */
 			})
 		})
 	</script>

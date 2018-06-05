@@ -172,6 +172,12 @@ public class MemberDao {
 	}
 	//PT회원 총수
 	public int memberPtListTotal() {
+		logger.debug("MemberDao.memberPtListTotal");
 		return sqlSession.selectOne(NS+"memberPtListTotal");
+	}
+	//회원 검색 리스트
+	public List<Member> memberSeachList(Map<String,Object> map) {
+		logger.debug("MemberDao.memberSeachList");
+		return sqlSession.selectList(NS+"memberSeachList",map);
 	}
 }

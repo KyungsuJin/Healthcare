@@ -409,4 +409,24 @@
   			FROM member m,member_teacher t
   			WHERE m.member_level=4;
   	</select>
+  	<select id="memberSeachList"
+  			parameterType="java.util.Map"
+  			resultMap="member">
+  			SELECT 
+	  			member_no
+	  			,member_id
+	  			,member_pw
+	  			,member_level
+	  			,member_name
+	  			,member_gender
+	  			,member_address
+	  			,member_email
+	  			,member_birth
+	  			,member_tel
+	  			,member_agree
+	  			,member_join_date
+  			FROM member 
+  			WHERE member_id=#{searchText} AND member_level=2
+  			LIMIT #{beginRow},#{pagePerRow}
+  	</select>
   </mapper>
