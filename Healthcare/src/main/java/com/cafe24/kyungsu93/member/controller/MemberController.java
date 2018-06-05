@@ -27,19 +27,35 @@ public class MemberController {
    
    @RequestMapping(value="/memberList1",method=RequestMethod.GET)
    public String memberLis1(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
-		   				,@RequestParam(value="memberLevel")int memberLevel/*,@RequestParam Map<String,Object> map*/) {
-/*	   logger.debug("asd"+map.get("pagePerRow"));
-	   logger.debug("MemberController.memberListChoice GET");
-	   model.addAttribute("memberList",map.get("memberList"));*/
+		   				,@RequestParam(value="memberLevel",defaultValue="2")int memberLevel
+		   				,@RequestParam(value="searchSelect",required=false)String searchSelect
+	   					,@RequestParam(value="searchText",required=false)String searchText) {
+	   logger.debug("MemberController.memberLis1");
 	   model.addAttribute("currentPage",currentPage);
 	   model.addAttribute("memberLevel",memberLevel);
+	   model.addAttribute("searchSelect",searchSelect);
+	   model.addAttribute("searchText",searchText);
 	   return "member/memberList";
+   }
+   @RequestMapping(value="/memberList2",method=RequestMethod.GET)
+   public String memberList2(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
+		   				,@RequestParam(value="memberLevel")int memberLevel/*,@RequestParam Map<String,Object> map*/) {
+	   model.addAttribute("currentPage",currentPage);
+	   model.addAttribute("memberLevel",memberLevel);
+	   return "member/memberDoctorList";
+   }
+   @RequestMapping(value="/memberList3",method=RequestMethod.GET)
+   public String memberList3(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
+		   				,@RequestParam(value="memberLevel")int memberLevel/*,@RequestParam Map<String,Object> map*/) {
+	   model.addAttribute("currentPage",currentPage);
+	   model.addAttribute("memberLevel",memberLevel);
+	   return "member/memberTeacherList";
    }
    //회원 리스트
    @ResponseBody
    @RequestMapping(value="/memberList",method=RequestMethod.GET)
    public Map<String,Object> memberList(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
-		   					,@RequestParam(value="pagePerRow",defaultValue="5")int pagePerRow
+		   					,@RequestParam(value="pagePerRow",defaultValue="10")int pagePerRow
 		   					,@RequestParam(value="memberLevel")int memberLevel
 		   					,@RequestParam(value="searchSelect",required=false)String searchSelect
 		   					,@RequestParam(value="searchText",required=false)String searchText) {

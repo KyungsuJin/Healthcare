@@ -9,7 +9,12 @@
 				$.ajax({
 					type : "get"
 					,url : "${pageContext.request.contextPath}/memberList"
-					,data : {"memberLevel":2 ,"currentPage":$("#currentPage").val()}
+					,data :
+							{"memberLevel":2 
+							,"currentPage":$("#currentPage").val()
+							,"searchSelect" : $("#searchSelect").val()
+							,"searchText" :$("#searchText").val()
+							}
 					,datatype : "json"
 					,success:function(data){
 						console.log(data.endPage);
@@ -27,25 +32,34 @@
 											'<td>'+val.memberAgree+'</td></tr>'
 											);
 						});
+							if(data.currentPage>1){
+								$("#ds").append('<a href="${pageContext.request.contextPath}/memberList1?currentPage=1&memberLevel=2"> << </a>');
+								$("#ds").append('<a href="${pageContext.request.contextPath}/memberList1?currentPage='+(data.currentPage-1)+'&memberLevel=2">이전</a>');
+							}
 							for(var i = data.startPage;i<=data.endPage; i++){
-								$("#ds").append('<a href="${pageContext.request.contextPath}/memberList1?currentPage='+i+'&memberLevel=2">'+i+'</a>');
+								$("#ds").append('<a href="${pageContext.request.contextPath}/memberList1?currentPage='+i+'&memberLevel=2"> ' +i+ ' </a>');
+							}
+							if(data.lastPage>data.currentPage){
+								$("#ds").append('<a href="${pageContext.request.contextPath}/memberList1?currentPage='+(data.currentPage+1)+'&memberLevel=2">다음</a>');
+								$("#ds").append('<a href="${pageContext.request.contextPath}/memberList1?currentPage='+data.lastPage+'&memberLevel=2"> >> </a>');
 							}
 					}
 				});
-			$("#searchBtn").click(function(){
-				var formData=$("#searchForm").serialize();
+			 $("#searchBtn").click(function(){
+				 window.location.href='${pageContext.request.contextPath}/memberList1?searchSelect='+$("#searchSelect").val()+'&searchText='+$("#searchText").val();
+				/* var formData=$("#searchForm").serialize();
 				console.log(formData);
 			    $.ajax({
 					type:"GET"
-					,url :"${pageContext.request.contextPath}/memberList"
+					,url :"${pageContext.request.contextPath}/memberList1"
 					,data: formData
-					,dataType:"json",
+					,dataType:"json",y
 					success :function(data){
 						console.log(data);
 					}
-					
-				});
-			});
+				}); */
+			}); 
+			
 		});
 
 	</script>
@@ -77,6 +91,7 @@
 	<form id="searchForm" method="get">
 		<input type="hidden" name="memberLevel" value="2">
 		<input type="hidden" name="currentPage" id="currentPage" value="${currentPage}">
+		
 		<div>
 			<select id="searchSelect" name="searchSelect">
 				<option value="member_id">아이디</option>

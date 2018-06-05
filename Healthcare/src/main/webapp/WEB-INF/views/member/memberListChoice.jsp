@@ -7,28 +7,16 @@
 	<script>
 		$(document).ready(function(){
 			$("#memberList").click(function(){
-				window.open("${pageContext.request.contextPath}/memberList?memberLevel=2"
-						,"memberListForm","width=1500, height=500,resizable=no,scrollbars=yes");
+				window.open("${pageContext.request.contextPath}/memberList1?memberLevel=2"
+						,"memberListForm","width=1600, height=500,resizable=no,scrollbars=yes");
 			})
 			$("#memberDoctorList").click(function(){
-				window.open("${pageContext.request.contextPath}/memberList?memberLevel=3"
+				window.open("${pageContext.request.contextPath}/memberList2?memberLevel=3"
 						,"memberListForm","width=1600, height=500,resizable=no,scrollbars=yes");
 			})
 			$("#memberPTList").click(function(){
-				/* $.ajax({
-					type : "get"
-					,url : "${pageContext.request.contextPath}/memberList"
-					,data : {"memberLevel":2}
-					,datatype : "json"
-					,success:function(data){
-						console.log(data);
-						$("#ds").append(data.memberList); */
-						window.open("${pageContext.request.contextPath}/memberList1?memberLevel=3"
+						window.open("${pageContext.request.contextPath}/memberList3?memberLevel=3"
 								,"memberListForm","width=1600, height=500,resizable=no,scrollbars=yes");
-				/* 	} 
-				})
-				/* window.open("${pageContext.request.contextPath}/memberList?memberLevel=4"
-						,"memberListForm","width=1600, height=500,resizable=no,scrollbars=yes"); */
 			})
 		})
 	</script>

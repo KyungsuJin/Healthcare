@@ -226,7 +226,7 @@ public class MemberService {
 		map.put("pagePerRow", pagePerRow);
 		List<Member> memberList = new ArrayList<Member>();
 		int totalCountList=0;
-		if(searchSelect!=null) {
+		if(!searchText.equals("")) {
 			Map<String,Object> searchMap = new HashMap<String,Object>();
 			searchMap.put("searchText", searchText);
 			searchMap.put("searchSelect", searchSelect);
@@ -236,13 +236,13 @@ public class MemberService {
 			totalCountList=memberDao.memberListTotal();
 		}
 		
-		if(memberLevel==2 && searchSelect==null) {
+		if(memberLevel==2 && searchText.equals("")) {
 			memberList=memberDao.memberList(map);
 			totalCountList=memberDao.memberListTotal();
-		}else if(memberLevel==3 && searchSelect==null){
+		}else if(memberLevel==3 && searchText==null){
 			memberList=memberDao.memberDoctorList(map);
 			totalCountList=memberDao.memberDoctorListTotal();
-		}else if(memberLevel==4 && searchSelect==null) {
+		}else if(memberLevel==4 && searchText==null) {
 			memberList=memberDao.memberPtList(map);
 			totalCountList=memberDao.memberPtListTotal();
 		}
