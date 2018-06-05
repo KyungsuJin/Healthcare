@@ -19,6 +19,11 @@ public class GroupService {
 	private GroupDao groupDao;
 	private static final Logger logger = LoggerFactory.getLogger(GroupService.class);
 	
+	public int searchGroupName(String groupName) {
+		logger.debug("GroupService - searchGroupName 실행");
+		return groupDao.checkGroupName(groupName);
+	}
+	
 	public int deleteGroup(String groupNo) {
 		logger.debug("GroupService - deleteGroup 실행");
 		return groupDao.deleteGroup(groupNo);
@@ -41,7 +46,7 @@ public class GroupService {
         logger.debug("currentPage:"+currentPage);
         logger.debug("beginRow:"+beginRow);
         logger.debug("pagePerRow:"+pagePerRow);
-        logger.debug("======================page block=========================");
+        logger.debug("====================== page block =========================");
        
         int pagePerBlock = 10; //보여줄 블록 수 
         int block = currentPage/pagePerBlock;
@@ -65,7 +70,7 @@ public class GroupService {
 		logger.debug("lastBlockPage:"+lastBlockPage);
 		logger.debug("block:"+block);
 		logger.debug("totalBlock:"+totalBlock);
-		logger.debug("======================page block=========================");
+		logger.debug("====================== page block =========================");
 		Map<String,Object> returnMap = new HashMap<String,Object>();
 		returnMap.put("list", list);
 		returnMap.put("lastPage", lastPage);

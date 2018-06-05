@@ -10,8 +10,8 @@
 	<form action="${pageContext.request.contextPath}/addBloodPressure" method="post">
 <!-- 		<input type="text" name="bloodPressureNo" placeholder=" BloodPressureId"> -->
 		<input type="text" name="memberNo" value="${member.memberNo}" readonly>
-		<input type="text" name="systolicBloodPressure" placeholder="systolicBloodPressure">
-		<input type="text" name="relaxerBloodPressure" placeholder="relaxerBloodPressure">
+		<input type="text" name="systolicPressure" placeholder="systolicPressure">
+		<input type="text" name="diastolicPressure" placeholder="diastolicPressure">
 		<input type="submit" value="등록하기">
 	</form>
 </body>

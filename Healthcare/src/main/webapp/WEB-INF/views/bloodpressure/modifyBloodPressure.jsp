@@ -11,8 +11,8 @@
 					${bloodPressure.memberId }
 	<form action="${pageContext.request.contextPath}/modifyBloodPressure" method="post">
 		<input type="hidden" name="bloodPressureNo" value="${bloodPressure.bloodPressureNo}">
-		<input type="text" name="systolicBloodPressure" placeholder="${bloodPressure.systolicBloodPressure}">
-		<input type="text" name="relaxerBloodPressure" placeholder="${bloodPressure.relaxerBloodPressure}">
+		<input type="text" name="systolicPressure" placeholder="${bloodPressure.systolicPressure}">
+		<input type="text" name="diastolicPressure" placeholder="${bloodPressure.diastolicPressure}">
 		<input type="submit" value="수정하기">
 	</form>
 

@@ -16,8 +16,8 @@
 				parameterType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
 			SELECT
 			blood_pressure_no as bloodPressureNo,
-			systolic_blood_pressure as systolicBloodPressure,
-			relaxer_blood_pressure as relaxerBloodPressure,
+			systolic_pressure as systolicPressure,
+			diastolic_pressure as diastolicPressure,
 			blood_pressure_date as bloodPressureDate,
 			member_id as memberId,
 			member_name as memberName
@@ -27,10 +27,10 @@
 			<where>
 				<choose>
 					<when test="searchType == 'relaxerBloodPressure'">
-					AND relaxer_blood_pressure as relaxerBloodPressure like CONCAT('%', #{searchValue} , '%')
+					AND diastolic_pressure as diastolicPressure like CONCAT('%', #{searchValue} , '%')
 					</when>
 					<when test="searchType == 'systolicBloodPressure'">
-					AND systolic_blood_pressure as systolicBloodPressure like CONCAT('%', #{searchValue} , '%')
+					AND systolic_pressure as systolicPressure like CONCAT('%', #{searchValue} , '%')
 					</when>
 				</choose>
 			</where>
@@ -40,8 +40,8 @@
 			resultType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
 		SELECT
 			blood_pressure_no as bloodPressureNo,
-			systolic_blood_pressure as systolicBloodPressure,
-			relaxer_blood_pressure as relaxerBloodPressure,
+			systolic_pressure as systolicPressure,
+			diastolic_pressure as diastolicPressure,
 			blood_pressure_date as bloodPressureDate,
 			member_id as memberId,
 			member_name as memberName
@@ -55,8 +55,8 @@
 			resultType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
 		SELECT
 			blood_pressure_no as bloodPressureNo,
-			systolic_blood_pressure as systolicBloodPressure,
-			relaxer_blood_pressure as relaxerBloodPressure,
+			systolic_pressure as systolicPressure,
+			diastolic_pressure as diastolicPressure,
 			blood_pressure_date as bloodPressureDate,
 			member_id as memberId,
 			member_name as memberName
@@ -68,8 +68,8 @@
 	 <update id="updateBloodPressure" parameterType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
 		UPDATE blood_pressure
 		SET
-			systolic_blood_pressure= #{systolicBloodPressure},
-			relaxer_blood_pressure= #{relaxerBloodPressure},
+			systolic_pressure= #{systolicPressure},
+			diastolic_pressure= #{relaxerBloodPressure},
 			blood_pressure_date = now()
 		WHERE blood_pressure_no = #{bloodPressureNo}
 	</update>
@@ -81,8 +81,8 @@
 			resultType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
 		SELECT
 			blood_pressure_no as bloodPressureNo,
-			systolic_blood_pressure as systolicBloodPressure,
-			relaxer_blood_pressure as relaxerBloodPressure,
+			systolic_pressure as systolicPressure,
+			diastolic_pressure as diastolicPressure,
 			blood_pressure_date as bloodPressureDate,
 			member_id as memberId,
 			member_name as memberName
@@ -105,10 +105,10 @@
 	<insert id="addBloodPressure" 
 			parameterType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
 	 	INSERT INTO blood_pressure (
-			blood_pressure_no, member_No, systolic_blood_pressure, relaxer_blood_pressure, blood_pressure_date
+			blood_pressure_no, member_No, systolic_pressure, diastolic_pressure, blood_pressure_date
 			)
 			VALUES (
-			#{bloodPressureNo}, #{memberNo}, #{systolicBloodPressure}, #{relaxerBloodPressure}, now()
+			#{bloodPressureNo}, #{memberNo}, #{systolicPressure}, #{diastolicPressure}, now()
 			)
 	</insert> 
 </mapper>

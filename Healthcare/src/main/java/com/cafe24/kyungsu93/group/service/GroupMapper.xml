@@ -23,9 +23,9 @@
 			LIMIT #{beginRow},#{pagePerRow}
 	 </select>
 	 <select id="checkGroupName"  
-				 parameterType="com.cafe24.kyungsu93.group.service.Group" 
+				 parameterType="String" 
 				 resultType="Integer">
-	 	SELECT NVL(COUNT(*),0)
+	 	SELECT COUNT(*)
 	 	FROM group_table
 	 	WHERE group_name = #{groupName}
 	 </select>
@@ -41,10 +41,10 @@
 	</select>
 	<insert id="addGroup" parameterType="com.cafe24.kyungsu93.group.service.Group">
 		INSERT INTO group_table (
-			group_no, group_kind_no, member_no, group_name, group_create_date
+			group_no, group_kind_no, member_no, group_name, group_info, group_create_date
 			)
 			VALUES (
-			#{groupNo}, #{groupKindNo}, #{memberNo}, #{groupName}, now()
+			#{groupNo}, #{groupKindNo}, #{memberNo}, #{groupName}, #{groupInfo}, now()
 			)
 	</insert>
 </mapper>

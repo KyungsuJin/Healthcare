@@ -26,8 +26,8 @@
 	<!-- 검색 -->
 	<form id="formSearch" name="formSearch"  action="${pageContext.request.contextPath}/BloodPressureSearch" method="post"> 
 		<select id="searchType" name="searchType"> 
-		<option value="systolicBloodPressure" selected="systolicBloodPressure">수축기혈압</option> 
-		<option value="relaxerBloodPressure">이완기혈압</option> 
+		<option value="systolicPressure" selected="systolicPressure">수축기혈압</option> 
+		<option value="diastolicPressure">이완기혈압</option> 
 		</select>		
 		<input type="text" id="searchValue" name="searchValue" value="${mapSearch.searchType}"/> 
 		<button type="button" id="searchBtn">검색</button> 
@@ -53,8 +53,8 @@
 						<td>${bloodPressure.memberId}</td>
 						<td>${bloodPressure.memberName}</td>
 						<td>${bloodPressure.bloodPressureDate }</td>
-						<td>${bloodPressure.systolicBloodPressure }</td>
-						<td>${bloodPressure.relaxerBloodPressure }</td>
+						<td>${bloodPressure.systolicPressure }</td>
+						<td>${bloodPressure.diastolicPressure }</td>
 						<td><a type="button" href="${pageContext.request.contextPath}/modifyBloodPressure?bloodPressureNo=${bloodPressure.bloodPressureNo}" id="buttonModify">수정</a></td>
 						<td><a type="button" href="${pageContext.request.contextPath}/deleteBloodPressure?bloodPressureNo=${bloodPressure.bloodPressureNo}" id="buttonDelete">삭제</a></td>
 					</tr>

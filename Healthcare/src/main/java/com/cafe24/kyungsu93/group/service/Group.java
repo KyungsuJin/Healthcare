@@ -8,6 +8,7 @@ public class Group {
 	private String memberNo;
 	private String memberName;
 	private String groupName;
+	private String groupInfo;
 	private String groupCreateDate;
 	public String getGroupNo() {
 		return groupNo;
@@ -51,6 +52,12 @@ public class Group {
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
+	public String getGroupInfo() {
+		return groupInfo;
+	}
+	public void setGroupInfo(String groupInfo) {
+		this.groupInfo = groupInfo;
+	}
 	public String getGroupCreateDate() {
 		return groupCreateDate;
 	}
@@ -61,7 +68,7 @@ public class Group {
 	public String toString() {
 		return "Group [groupNo=" + groupNo + ", groupKindNo=" + groupKindNo + ", groupKindName=" + groupKindName
 				+ ", memberId=" + memberId + ", memberNo=" + memberNo + ", memberName=" + memberName + ", groupName="
-				+ groupName + ", groupCreateDate=" + groupCreateDate + "]";
+				+ groupName + ", groupInfo=" + groupInfo + ", groupCreateDate=" + groupCreateDate + "]";
 	}
 	
 }

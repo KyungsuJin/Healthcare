@@ -68,10 +68,10 @@ public class BloodPressureController {
 	public String deleteBloodPressure(@RequestParam(value="bloodPressureNo") String bloodPressureNo) {
 		logger.debug("BloodPressureController - deleteBloodPressure 리다이렉트 실행.");
 		bloodPressureService.deleteBloodPressure(bloodPressureNo);
-		return "redirect:/bloodPressure";
+		return "redirect:/bloodpressure/bloodPressure";
 	}
 	
-	@RequestMapping(value="/bloodPressure", method=RequestMethod.GET)
+	@RequestMapping(value="/bloodpressure/bloodPressure", method=RequestMethod.GET)
 	public String bloodPressureList(Model model
 								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
@@ -83,20 +83,20 @@ public class BloodPressureController {
 		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 		model.addAttribute("totalBlock", map.get("totalBlock"));
-		return "bloodPressure";
+		return "bloodpressure/bloodPressure";
 	}
 		
 	@RequestMapping(value="/addBloodPressure", method=RequestMethod.POST)
 	public String addBloodPressure(HttpSession session,BloodPressure bloodPressure) {
 		logger.debug("BloodpressureController - addBloodPressure 리다이렉트 실행");
 		bloodPressureService.addBloodPressure(bloodPressure);
-		return "redirect:/bloodPressure";
+		return "redirect:/bloodpressure/bloodPressure";
 	}
 	
 	@RequestMapping(value="/addBloodPressure", method=RequestMethod.GET)
 	public String addBloodPressure() {
 		logger.debug("BloodpressureController - addBloodPressure 포워드 실행");
-		return "addBloodPressure";
+		return "bloodpressure/addBloodPressure";
 	}
 	
 }
