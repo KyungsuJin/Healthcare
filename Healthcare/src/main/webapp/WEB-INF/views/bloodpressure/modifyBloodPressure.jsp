@@ -6,7 +6,7 @@
 <title>modifyBloodPressure</title>
 </head>
 <body>
-<h1>modifyBloodPressure</h1>1
+<h1>modifyBloodPressure</h1>
 					아이디
 					${bloodPressure.memberId }
 	<form action="${pageContext.request.contextPath}/modifyBloodPressure" method="post">

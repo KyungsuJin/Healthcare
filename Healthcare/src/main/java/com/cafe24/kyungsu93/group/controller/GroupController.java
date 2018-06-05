@@ -21,12 +21,23 @@ public class GroupController {
 	@Autowired
 	private GroupService groupService;
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
+		
+	@RequestMapping(value="/invitefind", method= RequestMethod.POST)
+	public String findId(Model model,Group group) {
+		
+		logger.debug("GroupController - findId 리다이렉트 실행.");
+		Map<String,Object> map = groupService.inviteSearch(group);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("count", map.get("count"));
+		model.addAttribute("result", map.get("result"));
+		return "redirect:/invitefindResult";
+	}
 	
 	@RequestMapping(value="/deleteGroup", method= {RequestMethod.POST,RequestMethod.GET})
 	public String deleteGroup(@RequestParam(value="groupNo") String groupNo) {
 		logger.debug("GroupController - deleteGroup 리다이렉트 실행.");
 		groupService.deleteGroup(groupNo);
-		return "redirect:/groupList";
+		return "redirect:/group/groupList";
 	}
 	
 	@RequestMapping(value="/groupList", method=RequestMethod.GET)
@@ -41,20 +52,20 @@ public class GroupController {
 		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 		model.addAttribute("totalBlock", map.get("totalBlock"));
-		return "groupList";
+		return "group/groupList";
 	}
 	
 	@RequestMapping(value="/addGroup", method=RequestMethod.POST)
-	public String addGroup(HttpSession session,Group group) {
+	public String addGroup(Group group) {
 		logger.debug("GroupController - addGroup 리다이렉트 실행");
 		groupService.addGroup(group);
-		return "redirect:/groupList";
+		return "redirect:/group/groupList";
 	}
 	
 	@RequestMapping(value="/addGroup", method=RequestMethod.GET)
 	public String addGroup() {
 		logger.debug("GroupController - addGroup 포워드 실행");
-		return "addGroup";
+		return "group/addGroup";
 	}
 	
 }
