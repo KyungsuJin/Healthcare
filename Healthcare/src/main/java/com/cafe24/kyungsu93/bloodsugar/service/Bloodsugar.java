@@ -2,16 +2,16 @@ package com.cafe24.kyungsu93.bloodsugar.service;
 
 public class Bloodsugar {
 
-	private String Bloodsugarno;
+	private String bloodsugarno;
 	private String memberno;
 	private int fastingbloodsugar;
 	private String fastingstate;
 	private String bloodsugardate;
 	public String getBloodsugarno() {
-		return Bloodsugarno;
+		return bloodsugarno;
 	}
 	public void setBloodsugarno(String bloodsugarno) {
-		Bloodsugarno = bloodsugarno;
+		this.bloodsugarno = bloodsugarno;
 	}
 	public String getMemberno() {
 		return memberno;
@@ -39,7 +39,8 @@ public class Bloodsugar {
 	}
 	@Override
 	public String toString() {
-		return "Bloodsugar [Bloodsugarno=" + Bloodsugarno + ", memberno=" + memberno + ", fastingbloodsugar="
+		return "Bloodsugar [bloodsugarno=" + bloodsugarno + ", memberno=" + memberno + ", fastingbloodsugar="
 				+ fastingbloodsugar + ", fastingstate=" + fastingstate + ", bloodsugardate=" + bloodsugardate + "]";
 	}
+
 }

@@ -219,20 +219,30 @@ public class MemberService {
 		return memberPw;
 	}
 	//회원 리스트
-	public Map<String,Object> memberList(int currentPage,int pagePerRow,int memberLevel) {
+	public Map<String,Object> memberList(int currentPage,int pagePerRow,int memberLevel,String searchText,String searchSelect) {
 		int beginRow=(currentPage-1)*10;
 		Map<String,Integer> map = new HashMap<String,Integer>();
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
 		List<Member> memberList = new ArrayList<Member>();
 		int totalCountList=0;
-		if(memberLevel==2) {
+		if(searchSelect!=null) {
+			Map<String,Object> searchMap = new HashMap<String,Object>();
+			searchMap.put("searchText", searchText);
+			searchMap.put("searchSelect", searchSelect);
+			searchMap.put("beginRow", beginRow);
+			searchMap.put("pagePerRow", pagePerRow);
+			memberList=memberDao.memberSeachList(searchMap);
+			totalCountList=memberDao.memberListTotal();
+		}
+		
+		if(memberLevel==2 && searchSelect==null) {
 			memberList=memberDao.memberList(map);
 			totalCountList=memberDao.memberListTotal();
-		}else if(memberLevel==3){
+		}else if(memberLevel==3 && searchSelect==null){
 			memberList=memberDao.memberDoctorList(map);
 			totalCountList=memberDao.memberDoctorListTotal();
-		}else if(memberLevel==4) {
+		}else if(memberLevel==4 && searchSelect==null) {
 			memberList=memberDao.memberPtList(map);
 			totalCountList=memberDao.memberPtListTotal();
 		}

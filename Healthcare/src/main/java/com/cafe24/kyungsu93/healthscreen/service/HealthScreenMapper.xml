@@ -91,7 +91,7 @@
 	</delete>
 	
 	<select id="getHealthScreenOne" parameterType="com.cafe24.kyungsu93.healthscreen.service.HealthScreenRequest"
-									resultType="com.cafe24.kyungsu93.healthscreen.service.HealthScreenRequest">
+									resultType="com.cafe24.kyungsu93.healthscreen.service.HealthScreenResponse">
 		SELECT
 			health_screen_no AS healthScreenNo
 			,member_no AS memberNo
@@ -115,14 +115,14 @@
 		UPDATE
 			health_screen
 		SET
-			,total_cholesterol
-			,ldl_cholesterol
-			,neutral_fat
-			,hdl_cholesterol
-			,proteinuria
-			,hemoglobin
-			,serum_creatinine
-			,gfr
+			total_cholesterol = #{totalCholesterol}
+			,ldl_cholesterol = #{ldlCholesterol}
+			,neutral_fat = #{neutralFat}
+			,hdl_cholesterol = #{hdlCholesterol}
+			,proteinuria = #{proteinuria}
+			,hemoglobin = #{hemoglobin}
+			,serum_creatinine = #{serumCreatinine}
+			,gfr = #{gfr}
 		WHERE health_screen_no = #{healthScreenNo}
 	</update>
 	

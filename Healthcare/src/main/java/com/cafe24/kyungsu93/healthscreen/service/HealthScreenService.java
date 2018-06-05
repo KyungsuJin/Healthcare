@@ -56,15 +56,15 @@ public class HealthScreenService {
 	}
 	
 	public void removeHealthScreen(HealthScreenRequest healthScreenRequest) {
-		
+		healthScreenDao.removeHealthScreen(healthScreenRequest);
 	}
 	
-	public HealthScreenRequest getHealthScreenOne(HealthScreenRequest healthScreenRequest) {
-		return getHealthScreenOne(healthScreenRequest);
+	public HealthScreenResponse getHealthScreenOne(HealthScreenRequest healthScreenRequest) {
+		return healthScreenDao.getHealthScreenOne(healthScreenRequest);
 	}
 	
 	public void modifyHealthScreen(HealthScreenRequest healthScreenRequest) {
-		
+		healthScreenDao.modifyHealthScreen(healthScreenRequest);
 	}
 	
 	

@@ -6,22 +6,48 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
 		$(document).ready(function(){
+				$.ajax({
+					type : "get"
+					,url : "${pageContext.request.contextPath}/memberList"
+					,data : {"memberLevel":2 ,"currentPage":$("#currentPage").val()}
+					,datatype : "json"
+					,success:function(data){
+						console.log(data.endPage);
+						$.each(data.memberList,function(key,val){						 
+							$("#ds").append('<tr><td>'+val.memberNo+'</td>'+
+											'<td>'+val.memberId+'</td>'+
+											'<td>'+val.memberName+'</td>'+
+											'<td>'+val.memberGender+'</td>'+
+											'<td>'+val.memberAddress+'</td>'+
+											'<td>'+val.memberTel+'</td>'+
+											'<td>'+val.memberEmail+'</td>'+
+											'<td>'+val.memberBirth+'</td>'+
+											'<td>'+val.memberPoint+'</td>'+
+											'<td>'+val.memberJoinDate+'</td>'+
+											'<td>'+val.memberAgree+'</td></tr>'
+											);
+						});
+							for(var i = data.startPage;i<=data.endPage; i++){
+								$("#ds").append('<a href="${pageContext.request.contextPath}/memberList1?currentPage='+i+'&memberLevel=2">'+i+'</a>');
+							}
+					}
+				});
 			$("#searchBtn").click(function(){
 				var formData=$("#searchForm").serialize();
 				console.log(formData);
-			  /*  $.ajax({
+			    $.ajax({
 					type:"GET"
 					,url :"${pageContext.request.contextPath}/memberList"
 					,data: formData
 					,dataType:"json",
 					success :function(data){
-						
+						console.log(data);
 					}
 					
-				}) */
-			})
-			
-		})
+				});
+			});
+		});
+
 	</script>
 </head>
 <body>
@@ -42,43 +68,19 @@
 				<th>개인정보동의여부</th>
 			</tr>
 		</thead>
-		<tbody>
-		<c:forEach items="${memberList}" var="member">
-			<tr>
-				<td>${member.memberNo}</td>
-				<td>${member.memberId}</td>
-				<td>${member.memberName}</td>
-				<td>${member.memberGender}</td>
-				<td>${member.memberAddress}</td>
-				<td>${member.memberTel}</td>
-				<td>${member.memberEmail}</td>
-				<td>${member.memberBirth}</td>
-				<td>${member.memberPoint}</td>
-				<td>${member.memberJoinDate}</td>
-				<td>${member.memberAgree}</td>
-			</tr>
-		</c:forEach>
+		
+		<tbody id="ds">
+
 		</tbody>
 	</table>
-	<div id="pageDiv">
-		<c:if test="${currentPage>1}">
-			<a href="${pageContext.request.contextPath}/memberList?currentPage=1&memberLevel=2"></a>
-			<a href="${pageContext.request.contextPath}/memberList?currentPage=${currentPage-1}&memberLevel=2">이전</a>
-		</c:if>
-			<c:forEach begin="${startPage}" end="${endPage}" step="1" var="i">
-				<a href="${pageContext.request.contextPath}/memberList?currentPage=${i}&memberLevel=2">${i}</a>
-			</c:forEach>
-		<c:if test="${lastPage>currentPage}">
-			<a href="${pageContext.request.contextPath}/memberList?currentPage=${currentPage+1}&memberLevel=2">다음</a>
-			<a href="${pageContext.request.contextPath}/memberList?currentPage=${lastPage}&memberLevel=2"></a>
-		</c:if>
-	</div>
-	<form id="searchForm" method="post">
+	<div id="sd"></div>
+	<form id="searchForm" method="get">
 		<input type="hidden" name="memberLevel" value="2">
+		<input type="hidden" name="currentPage" id="currentPage" value="${currentPage}">
 		<div>
 			<select id="searchSelect" name="searchSelect">
-				<option value="memberId">아이디</option>
-				<option value="memberName">이름</option>
+				<option value="member_id">아이디</option>
+				<option value="member_name">이름</option>
 			</select>
 			<input type="text" id="searchText" name="searchText">
 			<button type="button" id="searchBtn">검색</button>

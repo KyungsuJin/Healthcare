@@ -44,7 +44,7 @@ public class HealthScreenDao {
 		sqlSession.delete(NS+"removeHealthScreen", healthScreenRequest);
 	}
 	
-	public HealthScreenRequest getHealthScreenOne(HealthScreenRequest healthScreenRequest) {
+	public HealthScreenResponse getHealthScreenOne(HealthScreenRequest healthScreenRequest) {
 		return sqlSession.selectOne(NS+"getHealthScreenOne", healthScreenRequest);
 	}
 	

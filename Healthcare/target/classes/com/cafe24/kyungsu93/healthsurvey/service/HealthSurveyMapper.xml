@@ -26,6 +26,24 @@
 				and survey.disease_no = disease.disease_no
   	</select>
   	
+  	<select id="getHealthSurveyNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(CAST(SUBSTRING(health_suvey_register_no,13)as decimal)),0) 
+		FROM health_survey_register
+	</select>
+  	
+  	<select id="getHealthSurveyQuestionNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(CAST(SUBSTRING(health_suvey_question_no,13)as decimal)),0) 
+		FROM health_survey_question
+	</select>
+	
+	<select id="getHealthSurveySelectionNo">
+		SELECT
+			IFNULL(MAX(CAST(SUBSTRING(health_suvey_selection_no,14)as decimal)),0) 
+		FROM health_survey_selection
+	</select>
+  	
 	<insert id="addHealthSurvey" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyRequest">
 		INSERT INTO health_survey_register(
 			health_survey_register_no
@@ -40,6 +58,29 @@
 			,health_survey_register_count
 			,health_survey_register_total
 			,health_survey_register_date
+		)
+		VALUES(
+			#{healthSurveyRegisterNo}
+			,#{memberNo}
+			,#{diseaseNo}
+			,#{healthSurveyRegisterTitle}
+			,#{healthSurveyRegisterContent}
+			,#{healthSurveyPoint}
+			,#{healthSurveyRegisterNormal}
+			,#{healthSurveyRegisterWarning}
+			,#{healthSurveyRegisterDanger}
+			,#{healthSurveyRegisterCount}
+			,#{healthSurveyRegisterTotal}
+			,#{healthSurveyRegisterDate}
+		)
+	</insert>
+	
+	<insert id="addHealthSurveyQuestion" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyQuestion">
+		INSERT INTO health_survey_question(
+			health_survey_question_no
+			,health_survey_register_no
+			,question_no
+			,health_survey_question
 		)
 		VALUES(
 			#{healthSurveyRegisterNo}

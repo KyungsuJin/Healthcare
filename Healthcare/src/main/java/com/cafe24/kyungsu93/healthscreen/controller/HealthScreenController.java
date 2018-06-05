@@ -74,7 +74,7 @@ public class HealthScreenController {
 	public String removeHealthScreen(HealthScreenRequest healthScreenRequest) {
 		logger.debug("HealthScreenController.removeHealthScreen 메서드 실행");
 		healthScreenService.removeHealthScreen(healthScreenRequest);
-		return "healthscreen/getHealthScreenList";
+		return "redirect:/getHealthScreenList";
 	}
 	
 	
@@ -82,8 +82,9 @@ public class HealthScreenController {
 	public String modifyHealthScreen(Model model
 									,HealthScreenRequest healthScreenRequest) {
 		logger.debug("HealthScreenController.modifyHealthScreen GET메서드 실행");
-		healthScreenService.getHealthScreenOne(healthScreenRequest);
-		model.addAttribute(healthScreenRequest);
+		HealthScreenResponse healthScreen = healthScreenService.getHealthScreenOne(healthScreenRequest);
+		System.out.println("modify : " + healthScreen);
+		model.addAttribute("healthScreen", healthScreen);
 		return "healthscreen/modifyHealthScreen";
 	}
 	
@@ -91,6 +92,6 @@ public class HealthScreenController {
 	public String modifyHealthScreen(HealthScreenRequest healthScreenRequest) {
 		logger.debug("HealthScreenController.modifyHealthScreen POST메서드 실행");
 		healthScreenService.modifyHealthScreen(healthScreenRequest);
-		return "healthscreen/getHealthScreenList";
+		return "redirect:/getHealthScreenList";
 	}
 }
