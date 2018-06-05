@@ -3,20 +3,52 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-  <mapper namespace="com.cafe24.kyungsu93.bloodsugar.service.BloodsugarMapper.xml">  
+  <mapper namespace="com.cafe24.kyungsu93.bloodsugar.service.BloodsugarMapper">  
+  
+  <select id="searchTable" 
+				resultType="hashmap" 
+				parameterType="com.cafe24.kyungsu93.bloodsugar.service.Bloodsugar">
+			SELECT
+				blood_sugar_no as Bloodsugarno
+				,member_no as memberno
+				FROM blood_sugar
+				INNER JOIN member b
+				ON a.member_no = b.member_no
+  </select>	
+ 
   <select id="getBloodsugarList" parameterType="java.util.Map" resultType="com.cafe24.kyungsu93.bloodsugar.service.Bloodsugar">
   	SELECT 
   		blood_sugar_no AS Bloodsugarno
   		, member_no AS memberno
   		, fasting_blood_sugar AS fastingbloodsugar
+		, fasting_state	AS fastingstate
+		, blood_sugar_date AS bloodsugardate
 	FROM blood_sugar
-	WHERE member_no = #{memberno}
-	ORDER by member_no DESC
-	LIMIT ${beginRow}, ${pagePerRow}
+			INNER JOIN member b
+			ON a.member_no = b.member_no
+			ORDER BY blood_pressure_date DESC
+			LIMIT #{beginRow},#{pagePerRow}
 
   </select>
   
   <insert id="addBloodsugar" parameterType="com.cafe24.kyungsu93.bloodsugar.service.Bloodsugar">
+<!--   
+    INSERT INTO blood_sugar(
+	blood_sugar_no
+	, member_no
+	, fasting_blood_sugar
+	, fasting_state
+	, blood_sugar_date
+	)
+	VALUES (
+	 '7'
+	,'7' 
+	, 7
+	, '7'
+	, now()
+	)
+   -->
+  
   
   INSERT INTO blood_sugar(
 	blood_sugar_no
@@ -26,11 +58,11 @@
 	, blood_sugar_date
 	)
 	VALUES (
-	#{Bloodsugarno}
-	,#{memberno} 
-	,#{fastingbloodsugar}
-	,#{fastingstate}
-	,#{bloodsugardate}
+	 #{bloodsugarno}
+	, #{memberno} 
+	, #{fastingbloodsugar}
+	, #{fastingstate}
+	, now()
 	)
   
   </insert>
