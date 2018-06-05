@@ -32,24 +32,7 @@
   </select>
   
   <insert id="addBloodsugar" parameterType="com.cafe24.kyungsu93.bloodsugar.service.Bloodsugar">
-<!--   
-    INSERT INTO blood_sugar(
-	blood_sugar_no
-	, member_no
-	, fasting_blood_sugar
-	, fasting_state
-	, blood_sugar_date
-	)
-	VALUES (
-	 '7'
-	,'7' 
-	, 7
-	, '7'
-	, now()
-	)
-   -->
-  
-  
+    
   INSERT INTO blood_sugar(
 	blood_sugar_no
 	, member_no
