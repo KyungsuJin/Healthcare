@@ -44,7 +44,7 @@ public class BloodsugarController {
 			return "redirect:/bloodsugar/bloodsugarList";
 	}
 
-/*	@RequestMapping(value="/bloodPressure", method=RequestMethod.GET)
+	@RequestMapping(value="/bloodsugar/BloodsugarList", method=RequestMethod.GET)
 	public String bloodsugarList(Model model
 								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
@@ -57,7 +57,7 @@ public class BloodsugarController {
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 		model.addAttribute("totalBlock", map.get("totalBlock"));
 		return "bloodsugarList";
-	}*/
+	}
 	
 	
   /*  public String search(HttpServletRequest request
