@@ -83,27 +83,18 @@
 			,health_survey_question
 		)
 		VALUES(
-			#{healthSurveyQuestionNo}
-			,#{healthSurveyRegisterNo}
-			,#{questionNo}
-			,#{healthSurveyQuestion}
-		)
-	</insert>
-	
-	<insert id="addHealthSurveySelection" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveySelection">
-		INSERT INTO health_survey_selection(
-			health_survey_selection_no
-			,health_survey_question_no
-			,selection_no
-			,health_survey_selection
-			,health_survey_selection_score
-		)
-		VALUE(
-			#{healthSurveySelectionNo}
-			,#{healthSurveyQuestionNo}
-			,#{selectionNo}
-			,#{healthSurveySelection}
-			,#{healthSurveySelectionScore}
+			#{healthSurveyRegisterNo}
+			,#{memberNo}
+			,#{diseaseNo}
+			,#{healthSurveyRegisterTitle}
+			,#{healthSurveyRegisterContent}
+			,#{healthSurveyPoint}
+			,#{healthSurveyRegisterNormal}
+			,#{healthSurveyRegisterWarning}
+			,#{healthSurveyRegisterDanger}
+			,#{healthSurveyRegisterCount}
+			,#{healthSurveyRegisterTotal}
+			,#{healthSurveyRegisterDate}
 		)
 	</insert>
   

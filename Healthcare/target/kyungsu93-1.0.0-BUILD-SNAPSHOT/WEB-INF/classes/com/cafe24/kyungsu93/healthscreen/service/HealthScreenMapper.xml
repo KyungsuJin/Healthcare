@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.cafe24.kyungsu93.healthscreen.service.HealthScreenMapper">
+
+	<select id="getHealthScreenList" parameterType="java.util.Map" resultType="com.cafe24.kyungsu93.healthscreen.service.HealthScreenResponse">
+		SELECT
+			health_screen_no AS healthScreenNo
+			,health_screen_date AS healthScreenDate
+		FROM health_screen
+		WHERE member_no = #{memberNo}
+		ORDER BY health_screen_no DESC
+		LIMIT #{beginRow}, #{pagePerRow}
+	</select>
+	
+	<select id="healthScreenTotalCount" parameterType="com.cafe24.kyungsu93.healthscreen.service.HealthScreenRequest" resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM health_screen
+		WHERE member_no = #{memberNo}
+	</select>
+	
+	<select id="getHealthScreenNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(CAST(SUBSTRING(health_screen_no,15)as decimal)),0) 
+		FROM health_screen
+	</select>
+
+	<insert id="addHealthScreen" parameterType="com.cafe24.kyungsu93.healthscreen.service.HealthScreenRequest">
+		INSERT INTO health_screen(
+			health_screen_no
+			,member_no
+			,blood_sugar_no
+			,blood_pressure_no
+			,body_mass_index_no
+			,total_cholesterol
+			,ldl_cholesterol
+			,neutral_fat
+			,hdl_cholesterol
+			,proteinuria
+			,hemoglobin
+			,serum_creatinine
+			,gfr
+			,health_screen_date
+		)
+		VALUES(
+			#{healthScreenNo}
+			,#{memberNo}
+			,#{bloodSugarNo}
+			,#{bloodPressureNo}
+			,#{bodyMassIndexNo}
+			,#{totalCholesterol}
+			,#{ldlCholesterol}
+			,#{neutralFat}
+			,#{hdlCholesterol}
+			,#{proteinuria}
+			,#{hemoglobin}
+			,#{serumCreatinine}
+			,#{gfr}
+			,now()
+		)
+	</insert>
+	
+	<select id="getHealthScreenResult" parameterType="com.cafe24.kyungsu93.healthscreen.service.HealthScreenRequest"
+									resultType="com.cafe24.kyungsu93.healthscreen.service.HealthScreenResponse">
+		SELECT
+			health_screen_no AS healthScreenNo
+			,member_no AS memberNo
+			,blood_sugar_no AS bloodSugarNo
+			,blood_pressure_no AS bloodPressureNo
+			,body_mass_index_no AS bodyMassIndexNo
+			,total_cholesterol AS totalCholesterol
+			,ldl_cholesterol AS ldlCholesterol
+			,neutral_fat AS neutralFat
+			,hdl_cholesterol AS hdlCholesterol
+			,proteinuria AS proteinuria
+			,hemoglobin AS hemoglobin
+			,serum_creatinine AS serumCreatinine
+			,gfr AS gfr
+			,health_screen_date AS healthScreenDate
+		FROM health_screen
+		WHERE health_screen_no = #{healthScreenNo}
+	</select>
+	
+	<delete id="removeHealthScreen" parameterType="com.cafe24.kyungsu93.healthscreen.service.HealthScreenRequest">
+		DELETE
+		FROM health_screen
+		WHERE health_screen_no = #{healthScreenNo}
+	</delete>
+	
+	<select id="getHealthScreenOne" parameterType="com.cafe24.kyungsu93.healthscreen.service.HealthScreenRequest"
+									resultType="com.cafe24.kyungsu93.healthscreen.service.HealthScreenResponse">
+		SELECT
+			health_screen_no AS healthScreenNo
+			,member_no AS memberNo
+			,blood_sugar_no AS bloodSugarNo
+			,blood_pressure_no AS bloodPressureNo
+			,body_mass_index_no AS bodyMassIndexNo
+			,total_cholesterol AS totalCholesterol
+			,ldl_cholesterol AS ldlCholesterol
+			,neutral_fat AS neutralFat
+			,hdl_cholesterol AS hdlCholesterol
+			,proteinuria AS proteinuria
+			,hemoglobin AS hemoglobin
+			,serum_creatinine AS serumCreatinine
+			,gfr AS gfr
+			,health_screen_date AS healthScreenDate
+		FROM health_screen
+		WHERE health_screen_no = #{healthScreenNo}
+	</select>
+	
+	<update id="modifyHealthScreen" parameterType="com.cafe24.kyungsu93.healthscreen.service.HealthScreenRequest">
+		UPDATE
+			health_screen
+		SET
+			total_cholesterol = #{totalCholesterol}
+			,ldl_cholesterol = #{ldlCholesterol}
+			,neutral_fat = #{neutralFat}
+			,hdl_cholesterol = #{hdlCholesterol}
+			,proteinuria = #{proteinuria}
+			,hemoglobin = #{hemoglobin}
+			,serum_creatinine = #{serumCreatinine}
+			,gfr = #{gfr}
+		WHERE health_screen_no = #{healthScreenNo}
+	</update>
+	
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.cafe24.kyungsu93.LoginMapper">
+  	<select id="login"
+  			parameterType="com.cafe24.kyungsu93.member.service.Member"
+  			resultType="Integer">
+  			SELECT COUNT(*)
+  			FROM member
+  			WHERE member_id=#{memberId} AND member_pw=#{memberPw}
+  	</select>
+  	<select id="loginSession"
+  			parameterType="String"
+  			resultType="com.cafe24.kyungsu93.member.service.Member">
+  			SELECT member_level AS memberLevel
+  				,member_name AS memberName
+  				,member_no AS memberNo
+  			FROM member
+  			WHERE member_id=#{id}
+  	</select>
+  	<select id="loginLevel"
+  			parameterType="String"
+  			resultType="Integer">
+  			SELECT member_level
+  			FROM member
+  			WHERE member_id=#{id}
+  	</select>
+  	<select id="loginDoctorApproval"
+  			parameterType="String"
+  			resultType="String">
+  			SELECT d1.member_join_approval
+  			FROM member m1 ,member_doctor d1
+			WHERE m1.member_no=d1.member_no AND member_id=#{id}
+	</select>
+	<select id="loginTeacherApproval"
+  			parameterType="String"
+  			resultType="String">
+  			SELECT t1.member_join_approval
+  			FROM member m1 ,member_teacher t1
+			WHERE m1.member_no=t1.member_no AND member_id=#{id}
+	</select>
+  
+  </mapper>

@@ -46,5 +46,9 @@ public class HealthSurveyDao {
 		sqlSession.insert(NS+"addHealthSurveyQuestion", healthSurveyQuestion);
 	}
 	
+	public void addHealthSurveySelection(HealthSurveySelection healthSurveySelection) {
+		sqlSession.insert(NS+"addHealthSurveySelection", healthSurveySelection);
+	}
+	
 	
 }
