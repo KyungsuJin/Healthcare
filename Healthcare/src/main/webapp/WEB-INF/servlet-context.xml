@@ -47,7 +47,14 @@
         <property name="mapperLocations">
             <list>
 				<value>classpath:com/cafe24/kyungsu93/healthscreen/service/HealthScreenMapper.xml</value>
+				<value>classpath:com/cafe24/kyungsu93/healthsurvey/service/HealthSurveyMapper.xml</value>
 				<value>classpath:com/cafe24/kyungsu93/disease/service/DiseaseMapper.xml</value>
+				<value>classpath:com/cafe24/kyungsu93/member/service/MemberMapper.xml</value>
+                <value>classpath:com/cafe24/kyungsu93/member/service/MemberFileMapper.xml</value>
+                <value>classpath:com/cafe24/kyungsu93/login/service/LoginMapper.xml</value>
+                <value>classpath:com/cafe24/kyungsu93/bloodpressure/service/BloodPressureMapper.xml</value>
+				<value>classpath:com/cafe24/kyungsu93/group/service/GroupMapper.xml</value>
+				<value>classpath:com/cafe24/kyungsu93/bloodsugar/service/BloodsugarMapper.xml</value>
             </list>
         </property>
     </bean>

@@ -16,9 +16,9 @@ public class HealthScreenService {
 
 	@Autowired HealthScreenDao healthScreenDao;
 	
-	public Map<String,Object> getHealthScreenList(int currentPage, int pagePerRow, HealthScreen heatlhScreen){
+	public Map<String,Object> getHealthScreenList(int currentPage, int pagePerRow, HealthScreenRequest heatlhScreenRequest){
 		logger.debug("HealthScreenService.getHealthScreenList 호출");
-		int totalRow = healthScreenDao.healthScreenTotalCount(heatlhScreen);
+		int totalRow = healthScreenDao.healthScreenTotalCount(heatlhScreenRequest);
 		int firstPage = 1;
 		int lastPage = totalRow/pagePerRow;
 		if(totalRow%pagePerRow != 0) {
@@ -27,12 +27,13 @@ public class HealthScreenService {
 		int beforePage = ((currentPage-1)/10)*10;
 		int afterPage = ((currentPage-1)/10)*10 +11;
 		
-		Map pageMap = new HashMap<String, Integer>();
+		Map pageMap = new HashMap<String, Object>();
+		pageMap.put("memberNo", heatlhScreenRequest.getMemberNo());
 		pageMap.put("beginRow", (currentPage-1)*10);
 		pageMap.put("pagePerRow", pagePerRow);
 		
 		Map map = new HashMap<String, Object>();
-		List<HealthScreen> list = healthScreenDao.getHealthScreenList(pageMap);
+		List<HealthScreenResponse> list = healthScreenDao.getHealthScreenList(pageMap);
 		map.put("list", list);
 		map.put("firstPage", firstPage);
 		map.put("lastPage", lastPage);
@@ -41,19 +42,28 @@ public class HealthScreenService {
 		return map;
 	}
 	
-	public void addHealthScreen(HealthScreen healthScreen) {
-		healthScreenDao.addHealthScreen(healthScreen);
+	public void addHealthScreen(HealthScreenRequest healthScreenRequest) {
+		//여기에서 체질량, 혈당, 혈압을 먼저 insert 한다음 key값을 healthScreenRequest에 넣고, insert 한다.
+		
+		
+		int number = healthScreenDao.getHealthScreenNo() +1;
+		healthScreenRequest.setHealthScreenNo("health_screen_"+number);
+		healthScreenDao.addHealthScreen(healthScreenRequest);
 	}
 	
-	public void removeHealthScreen(HealthScreen healthScreen) {
+	public HealthScreenResponse getHealthScreenResult(HealthScreenRequest healthScreenRequest) {
+		return healthScreenDao.getHealthScreenResult(healthScreenRequest);
+	}
+	
+	public void removeHealthScreen(HealthScreenRequest healthScreenRequest) {
 		
 	}
 	
-	public HealthScreen getHealthScreenOne(HealthScreen healthScreen) {
-		return getHealthScreenOne(healthScreen);
+	public HealthScreenRequest getHealthScreenOne(HealthScreenRequest healthScreenRequest) {
+		return getHealthScreenOne(healthScreenRequest);
 	}
 	
-	public void modifyHealthScreen(HealthScreen healthScreen) {
+	public void modifyHealthScreen(HealthScreenRequest healthScreenRequest) {
 		
 	}
 	

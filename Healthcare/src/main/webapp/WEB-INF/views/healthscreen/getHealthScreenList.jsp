@@ -6,13 +6,13 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<jsp:include page="../include/header.jsp"></jsp:include>
 	<style>
-		writeHealthScreenBtn{ float: right; }
-		healthScreenContainer{ width: 1000px; margin: auto; }
+		addHealthScreenBtn{ float: right; }
+		healthScreenContainer{ width: 800px; margin: auto; }
 </style>
 	<script>
 	$(document).ready(function(){
-		$("#writeHealthScreenBtn").click(function(){
-			
+		$("#addHealthScreenBtn").click(function(){
+			location.href="${pageContext.request.contextPath}/addHealthScreen";
 		});
 	});	
 </script>
@@ -22,7 +22,7 @@
 	<div id="healthScreenContainer" align="center">
 		<h1>HealthScreenList</h1>
 		
-		<input id="writeHealthScreenBtn" class="btn btn-default" type="button" value="작성">
+		<input id="addHealthScreenBtn" class="btn btn-default" type="button" value="작성">
 		<table border="1" class="table">
 			<thead>
 				<tr>
@@ -31,10 +31,9 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var = "article" items = "${list}">
+				<c:forEach var = "healthScreen" items = "${list}">
 					<tr>
-						<td>${healthScreen.healthScreenNo}</td>
-						<td><a href="${pageContext.request.contextPath}/addHealthScreen?healthScreenNo=${healthScreen.healthScreenNo}">${healthScreen.healthScreenDate}</td>
+						<td><a href="${pageContext.servletContext.contextPath}/getHealthScreenResult?healthScreenNo=${healthScreen.healthScreenNo}">${sessionScope.memberSessionName}님의 ${healthScreen.healthScreenDate} 건강검진표</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
