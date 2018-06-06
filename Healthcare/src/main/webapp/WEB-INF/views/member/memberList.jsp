@@ -30,7 +30,8 @@
 											'<td>'+val.memberBirth+'</td>'+
 											'<td>'+val.memberPoint+'</td>'+
 											'<td>'+val.memberJoinDate+'</td>'+
-											'<td>'+val.memberAgree+'</td></tr>'
+											'<td>'+val.memberAgree+'</td>'+
+											'<td><a href="${pageContext.request.contextPath}/memberExpulsion?memberId='+val.memberId+'&memberLevel='+val.memberLevel+'">강퇴</a></td></tr>'
 											);
 						});
 							if(data.currentPage>1){
@@ -70,6 +71,7 @@
 				<th>포인트</th>
 				<th>가입날짜</th>
 				<th>개인정보동의여부</th>
+				<th>강퇴</th>
 			</tr>
 		</thead>
 		

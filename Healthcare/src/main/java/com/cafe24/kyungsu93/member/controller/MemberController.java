@@ -25,6 +25,24 @@ public class MemberController {
 	@Autowired MemberService memberService;
    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
    
+ //회원 강퇴
+   @RequestMapping(value="/memberExpulsion",method=RequestMethod.GET)
+   public String memberExpulsion(Member member,HttpSession session) {
+	   logger.debug("MemberController.memberExpulsion GET");
+	   logger.debug(member.getMemberNo());
+	   logger.debug("asd"+member.getMemberLevel());
+	   String path = session.getServletContext().getRealPath("/resources/upload/");
+	   memberService.memberLeaveRequest(member,path);
+	   String result="";
+	   if(member.getMemberLevel()==2) {
+		   result="member/memberList";
+	   }else if(member.getMemberLevel()==3) {
+		   result="member/memberDoctorList";
+	   }else if(member.getMemberLevel()==4) {
+		   result="member/memberPtList";
+	   }
+	   return result;
+   }
    //기본회원 리스트 폼 출력
    @RequestMapping(value="/basicMemberLis",method=RequestMethod.GET)
    public String basicMemberLis(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
