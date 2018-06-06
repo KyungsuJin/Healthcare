@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="com.cafe24.kyungsu93.LoginMapper">
+  	<!-- 로그인 아이디,패스워드 존재여부확인-->
   	<select id="login"
   			parameterType="com.cafe24.kyungsu93.member.service.Member"
   			resultType="Integer">
@@ -10,6 +11,7 @@
   			FROM member
   			WHERE member_id=#{memberId} AND member_pw=#{memberPw}
   	</select>
+  	<!-- 세션 처리 -->
   	<select id="loginSession"
   			parameterType="String"
   			resultType="com.cafe24.kyungsu93.member.service.Member">
@@ -19,6 +21,7 @@
   			FROM member
   			WHERE member_id=#{id}
   	</select>
+  	<!-- 로그인 성공시 레벨확인 -->
   	<select id="loginLevel"
   			parameterType="String"
   			resultType="Integer">
@@ -26,6 +29,7 @@
   			FROM member
   			WHERE member_id=#{id}
   	</select>
+  	<!-- 의사회원의 승인여부 파악 -->
   	<select id="loginDoctorApproval"
   			parameterType="String"
   			resultType="String">
@@ -33,6 +37,7 @@
   			FROM member m1 ,member_doctor d1
 			WHERE m1.member_no=d1.member_no AND member_id=#{id}
 	</select>
+	<!-- pt회원의 승인여부 파악 -->
 	<select id="loginTeacherApproval"
   			parameterType="String"
   			resultType="String">

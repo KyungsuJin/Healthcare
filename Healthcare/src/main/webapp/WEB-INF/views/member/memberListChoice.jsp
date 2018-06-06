@@ -7,15 +7,15 @@
 	<script>
 		$(document).ready(function(){
 			$("#memberList").click(function(){
-				window.open("${pageContext.request.contextPath}/memberList1?memberLevel=2"
+				window.open("${pageContext.request.contextPath}/basicMemberLis"
 						,"memberListForm","width=1600, height=500,resizable=no,scrollbars=yes");
 			})
 			$("#memberDoctorList").click(function(){
-				window.open("${pageContext.request.contextPath}/memberList2?memberLevel=3"
+				window.open("${pageContext.request.contextPath}/DoctorMemberList"
 						,"memberListForm","width=1600, height=500,resizable=no,scrollbars=yes");
 			})
 			$("#memberPTList").click(function(){
-						window.open("${pageContext.request.contextPath}/memberList3?memberLevel=3"
+						window.open("${pageContext.request.contextPath}/PtMemberList"
 								,"memberListForm","width=1600, height=500,resizable=no,scrollbars=yes");
 			})
 		})

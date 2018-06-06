@@ -23,11 +23,19 @@ public class MemberService {
 	@Autowired MemberDao memberDao;
 	@Autowired MemberFileDao memberFileDao;
 	private static final Logger logger = LoggerFactory.getLogger(MemberService.class);
+	
+	/* 회원레벨 level
+	 * Level 1: 관리자
+	 * Level 2: 일반(기본)회원
+	 * Level 3: 의사회원
+	 * Level 4: PT 회원
+	 */
+	
 	//회원가입 과정
-	public String memberInsert(Member member,String path) {
+	public void memberInsert(Member member,String path) {
 		logger.debug("MemberService.memberInsert");
-		int result = (memberDao.memberNo())+1;
-		int level = member.getMemberLevel();
+		int result = (memberDao.memberNo())+1;//회원번호 등록
+		int level = member.getMemberLevel();//레벨에따라 테이블이 다르므로 분기
 		logger.debug("result:"+result);
 		String memberNo = "member_";
 		member.setMemberNo(memberNo+result);
@@ -46,11 +54,7 @@ public class MemberService {
 			memberDao.memberInsert(member);
 			memberDao.memberInsertPt(member);
 			memberfile(member.getTeacherMultipartFile(),path);
-		}else {
-			
 		}
-		
-		return "";
 	}
 	//아이디 중복체크
 	public int memberIdCheck(String id) {
@@ -218,37 +222,47 @@ public class MemberService {
 		}
 		return memberPw;
 	}
-	//회원 리스트
+	//회원(의사,PT) 리스트,검색,페이징
 	public Map<String,Object> memberList(int currentPage,int pagePerRow,int memberLevel,String searchText,String searchSelect) {
+		logger.debug("MemberService.memberList");
 		int beginRow=(currentPage-1)*10;
-		Map<String,Integer> map = new HashMap<String,Integer>();
+		int totalCountList=0;
+		List<Member> memberList = new ArrayList<Member>();//회원 리스트를 담을 list
+		Map<String,Integer> map = new HashMap<String,Integer>();//페이징 게시물 보여줄 개수를 등록하기위한 map
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
-		List<Member> memberList = new ArrayList<Member>();
-		int totalCountList=0;
-		if(!searchText.equals("")) {
-			Map<String,Object> searchMap = new HashMap<String,Object>();
-			searchMap.put("searchText", searchText);
-			searchMap.put("searchSelect", searchSelect);
-			searchMap.put("beginRow", beginRow);
-			searchMap.put("pagePerRow", pagePerRow);
-			memberList=memberDao.memberSeachList(searchMap);
-			totalCountList=memberDao.memberListTotal();
+		Map<String,Object> searchMap = new HashMap<String,Object>();//검색한정보+페이징 정보를 담기위한 map
+		searchMap.put("searchText", searchText);
+		searchMap.put("searchSelect", searchSelect);
+		searchMap.put("beginRow", beginRow);
+		searchMap.put("pagePerRow", pagePerRow);
+		
+		if(memberLevel==2 && !searchText.equals("")) {//레빌이 기본회원이고 검색정보가 공백이 아니면
+			memberList=memberDao.memberSeachList(searchMap);//검색한 리스트를 가져와 memberㅣist에 담는다
+			totalCountList=memberDao.memberSearchListTotal(searchMap);//검색한 리스트의 총 count
+		}else if(memberLevel==3 && !searchText.equals("")) {
+			memberList=memberDao.DoctorMemberSeachList(searchMap);
+			totalCountList=memberDao.DoctorMemberSearchListTotal(searchMap);
+		}else if(memberLevel==4 && !searchText.equals("")) {
+			memberList=memberDao.PtMemberSeachList(searchMap);
+			totalCountList=memberDao.PtMemberSearchListTotal(searchMap);
+			
 		}
 		
-		if(memberLevel==2 && searchText.equals("")) {
-			memberList=memberDao.memberList(map);
-			totalCountList=memberDao.memberListTotal();
-		}else if(memberLevel==3 && searchText==null){
+		
+		if(memberLevel==2 && searchText.equals("")) {//레벨이 기본회원이고 검색한정보가 공배이면
+			memberList=memberDao.memberList(map);//기본회원의 리스트를 가져와 memberList 담는다
+			totalCountList=memberDao.memberListTotal();//기본회원 리스트의 총count 
+		}else if(memberLevel==3 && searchText.equals("")){
 			memberList=memberDao.memberDoctorList(map);
 			totalCountList=memberDao.memberDoctorListTotal();
-		}else if(memberLevel==4 && searchText==null) {
+		}else if(memberLevel==4 && searchText.equals("")) {
 			memberList=memberDao.memberPtList(map);
 			totalCountList=memberDao.memberPtListTotal();
 		}
-		int lastPage=totalCountList/pagePerRow;
-		int startPage=((currentPage-1)/10)*10+1;
-		int endPage=startPage+pagePerRow-1;
+		int lastPage=totalCountList/pagePerRow; //마지막 페이지 count
+		int startPage=((currentPage-1)/10)*10+1; //페이징 작업에 보여줄 시작 페이지
+		int endPage=startPage+pagePerRow-1; //페이징 작업에 보여줄 끝 페이지
 		if(totalCountList%pagePerRow>0) {//한페이지에 10개씩 보여주고 총게시물이 101개라면 페이지는 11페이지가 되어야하는데 10페이지되므로 사용해준다.
 			lastPage++;
 		}

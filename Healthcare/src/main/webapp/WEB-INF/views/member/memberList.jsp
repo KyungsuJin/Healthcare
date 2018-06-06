@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
 		$(document).ready(function(){
@@ -19,7 +20,7 @@
 					,success:function(data){
 						console.log(data.endPage);
 						$.each(data.memberList,function(key,val){						 
-							$("#ds").append('<tr><td>'+val.memberNo+'</td>'+
+							$("#tbody").append('<tr><td>'+val.memberNo+'</td>'+
 											'<td>'+val.memberId+'</td>'+
 											'<td>'+val.memberName+'</td>'+
 											'<td>'+val.memberGender+'</td>'+
@@ -33,31 +34,20 @@
 											);
 						});
 							if(data.currentPage>1){
-								$("#ds").append('<a href="${pageContext.request.contextPath}/memberList1?currentPage=1&memberLevel=2"> << </a>');
-								$("#ds").append('<a href="${pageContext.request.contextPath}/memberList1?currentPage='+(data.currentPage-1)+'&memberLevel=2">이전</a>');
+								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberLis?currentPage=1&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> << </a>');
+								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberLis?currentPage='+(data.currentPage-1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">이전</a>');
 							}
 							for(var i = data.startPage;i<=data.endPage; i++){
-								$("#ds").append('<a href="${pageContext.request.contextPath}/memberList1?currentPage='+i+'&memberLevel=2"> ' +i+ ' </a>');
+								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberLis?currentPage='+i+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> ' +i+ ' </a>');
 							}
 							if(data.lastPage>data.currentPage){
-								$("#ds").append('<a href="${pageContext.request.contextPath}/memberList1?currentPage='+(data.currentPage+1)+'&memberLevel=2">다음</a>');
-								$("#ds").append('<a href="${pageContext.request.contextPath}/memberList1?currentPage='+data.lastPage+'&memberLevel=2"> >> </a>');
+								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberLis?currentPage='+(data.currentPage+1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">다음</a>');
+								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberLis?currentPage='+data.lastPage+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> >> </a>');
 							}
 					}
 				});
 			 $("#searchBtn").click(function(){
-				 window.location.href='${pageContext.request.contextPath}/memberList1?searchSelect='+$("#searchSelect").val()+'&searchText='+$("#searchText").val();
-				/* var formData=$("#searchForm").serialize();
-				console.log(formData);
-			    $.ajax({
-					type:"GET"
-					,url :"${pageContext.request.contextPath}/memberList1"
-					,data: formData
-					,dataType:"json",y
-					success :function(data){
-						console.log(data);
-					}
-				}); */
+				 window.location.href='${pageContext.request.contextPath}/basicMemberLis?searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchTextTest").val();
 			}); 
 			
 		});
@@ -83,21 +73,22 @@
 			</tr>
 		</thead>
 		
-		<tbody id="ds">
+		<tbody id="tbody">
 
 		</tbody>
 	</table>
-	<div id="sd"></div>
-	<form id="searchForm" method="get">
-		<input type="hidden" name="memberLevel" value="2">
+	<div id="page"></div>
+	<form>
 		<input type="hidden" name="currentPage" id="currentPage" value="${currentPage}">
+		<input type="hidden" name="searchText" id="searchText" value="${searchText}">
 		
 		<div>
 			<select id="searchSelect" name="searchSelect">
 				<option value="member_id">아이디</option>
-				<option value="member_name">이름</option>
+				<option <c:out value="${searchSelect eq 'member_name' ? 'selected=selected':''}"/> value="member_name">이름</option>
+				<option <c:out value="${searchSelect eq 'member_no' ? 'selected=selected':''}"/> value="member_no">회원번호</option>
 			</select>
-			<input type="text" id="searchText" name="searchText">
+			<input type="text" id="searchTextTest" name="searchTextTest">
 			<button type="button" id="searchBtn">검색</button>
 		</div>
 	</form>

@@ -19,11 +19,12 @@ import com.cafe24.kyungsu93.member.service.Member;
 public class LoginController {
 	@Autowired LoginService loginService;
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
-	
+	//로그인 폼
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String login() {
 		return "login/login";
 	}
+	//로그인 처리 controller
 	@ResponseBody
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public int login(Member member,HttpSession session) {
@@ -44,6 +45,7 @@ public class LoginController {
 		}
 		return i;
 	}
+	//로그아웃
 	@RequestMapping(value="/logout",method=RequestMethod.GET)
 	public String logout(HttpSession session) {
 		logger.debug("LoginController.logout GET");

@@ -25,40 +25,53 @@ public class MemberController {
 	@Autowired MemberService memberService;
    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
    
-   @RequestMapping(value="/memberList1",method=RequestMethod.GET)
-   public String memberLis1(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
-		   				,@RequestParam(value="memberLevel",defaultValue="2")int memberLevel
+   //기본회원 리스트 폼 출력
+   @RequestMapping(value="/basicMemberLis",method=RequestMethod.GET)
+   public String basicMemberLis(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
 		   				,@RequestParam(value="searchSelect",required=false)String searchSelect
-	   					,@RequestParam(value="searchText",required=false)String searchText) {
-	   logger.debug("MemberController.memberLis1");
+	   					,@RequestParam(value="searchTextTest",required=false)String searchText) {
+	   logger.debug("MemberController.basicMemberLis");
+	   logger.debug("searchSelect : " +searchSelect);
+	   logger.debug("searchText : " +searchText);
 	   model.addAttribute("currentPage",currentPage);
-	   model.addAttribute("memberLevel",memberLevel);
 	   model.addAttribute("searchSelect",searchSelect);
 	   model.addAttribute("searchText",searchText);
 	   return "member/memberList";
    }
-   @RequestMapping(value="/memberList2",method=RequestMethod.GET)
-   public String memberList2(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
-		   				,@RequestParam(value="memberLevel")int memberLevel/*,@RequestParam Map<String,Object> map*/) {
+   //의사회원 리스트 폼 출력
+   @RequestMapping(value="/DoctorMemberList",method=RequestMethod.GET)
+   public String DoctorMemberList(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
+		   				,@RequestParam(value="searchSelect",required=false)String searchSelect
+		   				,@RequestParam(value="searchTextTest",required=false)String searchText) {
+	   logger.debug("MemberController.DoctorMemberList");
+	   logger.debug("searchSelect : " +searchSelect);
+	   logger.debug("searchText : " +searchText);
 	   model.addAttribute("currentPage",currentPage);
-	   model.addAttribute("memberLevel",memberLevel);
+	   model.addAttribute("searchSelect",searchSelect);
+	   model.addAttribute("searchText",searchText);
 	   return "member/memberDoctorList";
    }
-   @RequestMapping(value="/memberList3",method=RequestMethod.GET)
-   public String memberList3(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
-		   				,@RequestParam(value="memberLevel")int memberLevel/*,@RequestParam Map<String,Object> map*/) {
+   //pt 회원 리스트  폼 출력
+   @RequestMapping(value="/PtMemberList",method=RequestMethod.GET)
+   public String PtMemberList(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
+		   				,@RequestParam(value="searchSelect",required=false)String searchSelect
+						,@RequestParam(value="searchTextTest",required=false)String searchText) {
+	   logger.debug("MemberController.PtMemberList");
+	   logger.debug("searchSelect : " +searchSelect);
+	   logger.debug("searchText : " +searchText);
 	   model.addAttribute("currentPage",currentPage);
-	   model.addAttribute("memberLevel",memberLevel);
-	   return "member/memberTeacherList";
+	   model.addAttribute("searchSelect",searchSelect);
+	   model.addAttribute("searchText",searchText);
+	   return "member/memberPtList";
    }
-   //회원 리스트
+   //회원 리스트,페이징,검색
    @ResponseBody
    @RequestMapping(value="/memberList",method=RequestMethod.GET)
    public Map<String,Object> memberList(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
 		   					,@RequestParam(value="pagePerRow",defaultValue="10")int pagePerRow
 		   					,@RequestParam(value="memberLevel")int memberLevel
-		   					,@RequestParam(value="searchSelect",required=false)String searchSelect
-		   					,@RequestParam(value="searchText",required=false)String searchText) {
+		   					,@RequestParam(value="searchSelect",required=false ,defaultValue="")String searchSelect
+		   					,@RequestParam(value="searchText",required=false, defaultValue="")String searchText) {
 	   logger.debug("MemberController.memberList GET");
 	   logger.debug("searchSelect : "+searchSelect);
 	   logger.debug("searchText : "+searchText);
@@ -72,14 +85,6 @@ public class MemberController {
 	   map.put("pagePerRow", pagePerRow);
 	   model.addAttribute("currentPage",map.get("currentPage"));
 	   model.addAttribute("pagePerRow",map.get("pagePerRow"));
-	   String result="";
-	  /* if(memberLevel==2) {
-		   result="member/memberList";
-	   }else if(memberLevel==3) {
-		   result="member/memberDoctorList";
-	   }else if(memberLevel==4) {
-		   result="member/memberPtList";
-	   }*/
 	   return map;
    }
    //회원검색 선택
