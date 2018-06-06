@@ -19,20 +19,7 @@ public class BloodPressureService {
 	@Autowired
 	private BloodPressureDao bloodPressureDao;
 	private static final Logger logger = LoggerFactory.getLogger(BloodPressureService.class);
-	
-	public Map<String,Object> getSearch(HttpServletRequest request, Model model,String searchType,String searchValue){		
-		searchType = request.getParameter(searchType);
-		searchValue = request.getParameter(searchValue);
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("searchType", searchType); 
-		map.put("searchValue", searchValue);
-		model.addAttribute("map", map);
-		List<BloodPressure> list = this.bloodPressureDao.searchBloodPressure(map);
-		Map<String,Object> returnMap = new HashMap<String,Object>();
-		returnMap.put("list", list);
-		return returnMap;
-	}
-	
+		
 	public void updateBloodPressure(String bloodPressureNo) {
 		logger.debug("BloodPressureService - updateBloodPressure 실행");
 		BloodPressure bloodPressure = new BloodPressure();
@@ -48,16 +35,7 @@ public class BloodPressureService {
 	
 	public BloodPressure selectBloodPressureOne(String bloodPressureNo) {
 		logger.debug("BloodPressureService - selectBloodPressureOne 실행");
-		bloodPressureDao.selectBloodPressureOne(bloodPressureNo);
-		BloodPressure bloodPressure = new BloodPressure();
-		int systolicBloodPressure = bloodPressure.getSystolicBloodPressure();
-		int relaxerBloodPressure = bloodPressure.getRelaxerBloodPressure();
-
-		bloodPressure.setRelaxerBloodPressure(relaxerBloodPressure);
-		bloodPressure.setSystolicBloodPressure(systolicBloodPressure);
-		
-		bloodPressure.setBloodPressureNo(bloodPressureNo);
-		return bloodPressure;
+		return bloodPressureDao.selectBloodPressureOne(bloodPressureNo);
 	}
 	public int deleteBloodPressure(String bloodPressureNo) {
 		logger.debug("BloodPressureService - deleteBloodPressure 실행");

@@ -22,7 +22,7 @@ public class GroupController {
 	private GroupService groupService;
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 		
-	@RequestMapping(value="/invitefind", method= RequestMethod.POST)
+	@RequestMapping(value="/invitefind",method= {RequestMethod.POST,RequestMethod.GET})
 	public String findId(Model model,Group group) {
 		
 		logger.debug("GroupController - findId 리다이렉트 실행.");
@@ -30,8 +30,14 @@ public class GroupController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("count", map.get("count"));
 		model.addAttribute("result", map.get("result"));
-		return "redirect:/invitefindResult";
+		return "redirect:/group/inviteSearchList";
 	}
+	
+	@RequestMapping(value="/inviteGroupMember", method=RequestMethod.GET)
+	public String inviteGroupMember() {
+		logger.debug("GroupController - inviteGroupMember 포워드 실행");
+		return "group/inviteGroupMember";
+	}	
 	
 	@RequestMapping(value="/deleteGroup", method= {RequestMethod.POST,RequestMethod.GET})
 	public String deleteGroup(@RequestParam(value="groupNo") String groupNo) {

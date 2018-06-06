@@ -10,17 +10,18 @@
 	 	SELECT
 			group_no as groupNo,
 			group_name as groupName,
+			group_info as groupInfo,
 			group_create_date as groupCreateDate,
 			member_id as memberId,
 			member_name as memberName,
 			group_kind_name as groupKindName
-			FROM group_table a		
-			INNER JOIN member b
-			ON a.member_no = b.member_no
-			INNER JOIN group_kind c
-			ON a.group_kind_no = c.group_kind_no			
-			ORDER BY group_create_date DESC
-			LIMIT #{beginRow},#{pagePerRow}
+		FROM group_table a		
+		INNER JOIN member b
+		ON a.member_no = b.member_no
+		INNER JOIN group_kind c
+		ON a.group_kind_no = c.group_kind_no			
+		ORDER BY group_create_date DESC
+		LIMIT #{beginRow},#{pagePerRow}
 	 </select>
 	 <select id="findNameOne"  
 				 parameterType="com.cafe24.kyungsu93.group.service.Group" 
@@ -31,11 +32,11 @@
 			member_id as memberId,
 			member_name as memberName,
 			group_kind_name as groupKindName
-			FROM group_table a		
-			INNER JOIN member b
-			ON a.member_no = b.member_no
-			INNER JOIN group_kind c
-			ON a.group_kind_no = c.group_kind_no			
+		FROM group_table a		
+		INNER JOIN member b
+		ON a.member_no = b.member_no
+		INNER JOIN group_kind c
+		ON a.group_kind_no = c.group_kind_no			
 	 	WHERE member_name = #{memberName}
 	</select>
 	<select id="findIdOne"  
@@ -57,7 +58,8 @@
 	<select id="findName"  
 				 parameterType="String" 
 				 resultType="Integer">
-	 	SELECT COUNT(*)
+	 	SELECT 
+	 	COUNT(*)
 	 	FROM group_table a		
 		INNER JOIN member b
 		ON a.member_no = b.member_no
@@ -66,7 +68,8 @@
 	 <select id="findId"  
 				 parameterType="String" 
 				 resultType="Integer">
-	 	SELECT COUNT(*)
+	 	SELECT 
+	 	COUNT(*)
 	 	FROM group_table a		
 		INNER JOIN member b
 		ON a.member_no = b.member_no
@@ -75,7 +78,8 @@
 	 <select id="checkGroupName"  
 				 parameterType="String" 
 				 resultType="Integer">
-	 	SELECT COUNT(*)
+	 	SELECT 
+	 	COUNT(*)
 	 	FROM group_table
 	 	WHERE group_name = #{groupName}
 	 </select>
