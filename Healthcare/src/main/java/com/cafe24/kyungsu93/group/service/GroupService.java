@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.cafe24.kyungsu93.bloodpressure.service.BloodPressure;
 
 @Service
 @Transactional
@@ -19,9 +19,47 @@ public class GroupService {
 	private GroupDao groupDao;
 	private static final Logger logger = LoggerFactory.getLogger(GroupService.class);
 	
-	public int searchGroupName(String groupName) {
-		logger.debug("GroupService - searchGroupName 실행");
-		return groupDao.checkGroupName(groupName);
+	public Map<String, Object> inviteSearch(Group group){
+		logger.debug("GroupService - inviteSearch 실행");
+		String memberName = group.getMemberName();
+		String memberId = group.getMemberId();
+		logger.debug("memberName:"+memberName);
+		logger.debug("memberId:"+memberId);
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		if(memberName != null) {
+			int count = 0;
+			count = groupDao.findName(memberName);
+			returnMap.put("memberName", memberName);
+			if(count > 0) {
+				int result = 4;
+				List<Group> list = groupDao.findNameOne(memberName);
+				returnMap.put("list", list);
+				returnMap.put("result", result);
+				returnMap.put("count", count);
+				logger.debug("list:"+list);
+				logger.debug("count:"+count);
+			}else {
+				int result = 2;
+				returnMap.put("result", result);
+			}
+		}else if(memberId != null) {
+			int count = 0;
+			count = groupDao.findId(memberId);
+			returnMap.put("memberId", memberId);
+			if(count > 0) {
+				int result = 3;
+				returnMap.put("list", groupDao.findIdOne(memberId));
+				returnMap.put("count", count);
+				returnMap.put("result", result);
+				logger.debug("list:"+ groupDao.findIdOne(memberId));
+				logger.debug("memberId:"+memberId);
+				logger.debug("count:"+count);
+			}else {
+				int result = 1;
+				returnMap.put("result", result);
+			}
+		}
+		return returnMap;
 	}
 	
 	public int deleteGroup(String groupNo) {
@@ -80,9 +118,20 @@ public class GroupService {
 		return returnMap;
 	}
 	
-	public int checkGroupName(String groupName) {
-		logger.debug("GroupService - addGroup실행");		
-		return groupDao.checkGroupName(groupName);
+	public  Map<String, Object> checkGroupName(String groupName) {
+		logger.debug("GroupService - checkGroupName실행");	
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		int count = 0;
+		count = groupDao.groupTotalCount();
+		int result = 0;
+		if(count >0) {
+			result = groupDao.checkGroupName(groupName);
+			returnMap.put("result", result);
+		}else {
+			result = 0;
+			returnMap.put("result", result);
+		}
+		return returnMap;
 	}
 	
 	public void addGroup(Group group) {

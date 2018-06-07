@@ -1,40 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cafe24.kyungsu93.bloodpressure.service.BloodPressureMapper">
-		<select id="searchDate" 
-				resultType="hashmap" 
-				parameterType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
-			SELECT
-			*
-			FROM blood_pressure
-			WHERE blood_pressure_no = #{bloodPressureNo}
-			AND blood_pressure_date >= #{from_date} AND #{to_date} >= blood_pressure_date 
-			ORDER BY blood_pressure_no DESC
-		</select>
-		<select id="searchTable" 
-				resultType="hashmap" 
-				parameterType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
-			SELECT
-			blood_pressure_no as bloodPressureNo,
-			systolic_pressure as systolicPressure,
-			diastolic_pressure as diastolicPressure,
-			blood_pressure_date as bloodPressureDate,
-			member_id as memberId,
-			member_name as memberName
-			FROM blood_pressure
-			INNER JOIN member b
-			ON a.member_no = b.member_no
-			<where>
-				<choose>
-					<when test="searchType == 'relaxerBloodPressure'">
-					AND diastolic_pressure as diastolicPressure like CONCAT('%', #{searchValue} , '%')
-					</when>
-					<when test="searchType == 'systolicBloodPressure'">
-					AND systolic_pressure as systolicPressure like CONCAT('%', #{searchValue} , '%')
-					</when>
-				</choose>
-			</where>
-		</select>	
 		<select id="bloodPressurechart"
 			 parameterType="String"
 			resultType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
@@ -43,11 +9,7 @@
 			systolic_pressure as systolicPressure,
 			diastolic_pressure as diastolicPressure,
 			blood_pressure_date as bloodPressureDate,
-			member_id as memberId,
-			member_name as memberName
-			FROM blood_pressure a		
-			INNER JOIN member b
-			ON a.member_no = b.member_no
+			FROM blood_pressure 	
 		WHERE member_id = #{memberId}
 	 </select>
 	 	 <select id="bloodPressureOne"
@@ -58,18 +20,14 @@
 			systolic_pressure as systolicPressure,
 			diastolic_pressure as diastolicPressure,
 			blood_pressure_date as bloodPressureDate,
-			member_id as memberId,
-			member_name as memberName
-			FROM blood_pressure a		
-			INNER JOIN member b
-			ON a.member_no = b.member_no
+			FROM blood_pressure 		
 		WHERE blood_pressure_no = #{bloodPressureNo}
 	 </select>
 	 <update id="updateBloodPressure" parameterType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
 		UPDATE blood_pressure
 		SET
 			systolic_pressure= #{systolicPressure},
-			diastolic_pressure= #{relaxerBloodPressure},
+			diastolic_pressure= #{diastolicPressure},
 			blood_pressure_date = now()
 		WHERE blood_pressure_no = #{bloodPressureNo}
 	</update>
@@ -84,11 +42,7 @@
 			systolic_pressure as systolicPressure,
 			diastolic_pressure as diastolicPressure,
 			blood_pressure_date as bloodPressureDate,
-			member_id as memberId,
-			member_name as memberName
-			FROM blood_pressure a		
-			INNER JOIN member b
-			ON a.member_no = b.member_no
+			FROM blood_pressure 		
 			ORDER BY blood_pressure_date DESC
 			LIMIT #{beginRow},#{pagePerRow}
 	</select>

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,25 +23,43 @@ public class GroupController {
 	@Autowired
 	private GroupService groupService;
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
+		
+	@RequestMapping(value="/invitefind",method= {RequestMethod.POST,RequestMethod.GET})
+	public String findId(Model model,Group group) {
+		
+		logger.debug("GroupController - findId 리다이렉트 실행.");
+		Map<String,Object> map = groupService.inviteSearch(group);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("count", map.get("count"));
+		model.addAttribute("result", map.get("result"));
+		return "redirect:/group/inviteSearchList";
+	}
 	
+	@RequestMapping(value="/inviteGroupMember", method=RequestMethod.GET)
+	public String inviteGroupMember() {
+		logger.debug("GroupController - inviteGroupMember");
+		return "group/inviteGroupMember";
+	}	
+	
+	@RequestMapping(value="/checkGroupName", method={RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
-	@RequestMapping(value = "/checkGroupName", method = RequestMethod.GET)
-    public Map<Object, Object> checkGroupName(HttpServletRequest request,Model model) {
-		Map<Object, Object> map = new HashMap<Object, Object>();
-		String groupName = request.getParameter("groupName");
-		int result = groupService.checkGroupName(groupName);
-		map.put("cnt", result);
-        return map;
+    public Map<String, Object> checkGroupName(Model model,@RequestParam(value="groupName") String groupName) {
+		logger.debug("GroupController - checkGroupName ajax");
+		logger.debug("groupName:"+groupName);
+		Map<String,Object> map = groupService.checkGroupName(groupName);
+		map.get("result");
+		logger.debug("result:"+map.get("result"));
+		return map;
     }
 	
-	@RequestMapping(value="/deleteGroup", method= {RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(value="/deleteGroup", method=RequestMethod.GET)
 	public String deleteGroup(@RequestParam(value="groupNo") String groupNo) {
 		logger.debug("GroupController - deleteGroup 리다이렉트 실행.");
 		groupService.deleteGroup(groupNo);
 		return "redirect:/group/groupList";
 	}
 	
-	@RequestMapping(value="/group/groupList", method=RequestMethod.GET)
+	@RequestMapping(value="/groupList", method=RequestMethod.GET)
 	public String groupList(Model model
 								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
@@ -54,17 +71,14 @@ public class GroupController {
 		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 		model.addAttribute("totalBlock", map.get("totalBlock"));
-		return "groupList";
+		return "group/groupList";
 	}
 	
-	@RequestMapping(value="group/addGroup", method=RequestMethod.POST)
-	public String addGroup(HttpSession session,Group group,HttpServletRequest request,Model model) {
+
+	@RequestMapping(value="/addGroup", method=RequestMethod.POST)
+	public String addGroup(Group group,HttpServletRequest request) {
 		logger.debug("GroupController - addGroup 리다이렉트 실행");
 		groupService.addGroup(group);
-		Map<Object, Object> map = new HashMap<Object, Object>();
-		String groupName = request.getParameter("groupName");
-		int result = groupService.checkGroupName(groupName);
-		map.put("cnt", result);
 		return "redirect:/group/groupList";
 	}
 	

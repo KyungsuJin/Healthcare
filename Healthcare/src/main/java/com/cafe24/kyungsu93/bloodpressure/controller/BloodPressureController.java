@@ -2,7 +2,6 @@ package com.cafe24.kyungsu93.bloodpressure.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -23,30 +22,7 @@ public class BloodPressureController {
 	@Autowired
 	private BloodPressureService bloodPressureService;
 	private static final Logger logger = LoggerFactory.getLogger(BloodPressureController.class);
-	
-/*	@RequestMapping(value="/chartData", method=RequestMethod.POST)
-	@ResponseBody
-    public List<BloodPressure> chartData(@RequestParam(value="memberId") String memberId) {
-        bloodPressureService.selectBloodPressureOne(memberId);
-        String[] item = {"test1", "test2", "test3", "test4", "test5", "test6"};
-        Random ran = new Random();
-        for (int i = 0; i < 6; i++) {
-            lists.add(new GoogleChartDto(itme[i], ran.nextInt(50)));
-        }
-        return item;
-    }*/
-	
-	@RequestMapping(value="/BloodPressureSearch", method=RequestMethod.POST)
-    public String search(HttpServletRequest request
-    						, Model model
-				    		,@RequestParam(value="searchType") String searchType
-				    		,@RequestParam(value="searchValue") String searchValue) {
-	logger.debug("BloodpressureController - search 리다이렉트 실행");
-	Map<String,Object> map = bloodPressureService.getSearch(request, model, searchType, searchValue);
-	model.addAttribute("list", map.get("list"));
-		return "bloodPressure";
-	}
-	
+			
 	@RequestMapping(value="/modifyBloodPressure", method=RequestMethod.POST)
 	public String updateBloodPressure(@RequestParam(value="bloodPressureNo", required=true) String bloodPressureNo) {
 		logger.debug("BloodpressureController - updateBloodPressure 리다이렉트 실행");

@@ -6,34 +6,45 @@
 <title>addGroup</title>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
-function checkName(){
-			groupName = $("#groupName").val();
-			if(groupName == "" || groupName == null){
-				$('#Name').html('공백 또는 특수문자가 포함된 아이디는 사용할 수 없습니다.');
-				groupForm.groupName.focus();
-			}
-	        $.ajax({
-	            type: 'GET',
-	            url: '${pageContext.request.contextPath}/checkGroupName',
-	            data: groupName,
-	            success: function(data){
-	                if(data.cnt == 0){
-	                    $('#Name').html('사용가능');
-	                }
-	                else{
-	                    $('#Name').html('사용불가');
-	                }
-	            }
-	        });  
+	var count = 0;
+	function checkName(){		
+		var groupName = $('#groupName').val();
+		var checkCHar = /[!#$%^&*()?+=\/]/;
+		if(groupName == "" || groupName == null ||checkCHar.test(groupName)){
+			$('#Name').html('공백 또는 특수문자가 포함된 아이디는 사용할 수 없습니다.');
+			groupForm.groupName.focus();
+			return false;
 		}
+       var checkName = $.ajax({
+            type : "GET",
+            data : {groupName : groupName},
+            url : "${pageContext.request.contextPath}/checkGroupName",
+            dataType : "json",
+            contentType: "application/json; charset=UTF-8",
+            success : function(data){
+            	console.log(data);   
+            	if(data.result> 0){
+            		$('#Name').html('입력하신 그룹명은 현재 사용중이므로 사용할 수 없습니다. 다시 입력해주세요.');
+            		return count = 0;
+            	}else if(data.result == 0){
+            		$('#Name').html('사용가능한 그룹명입니다.');
+            		return count = 1;
+            	}
+            }
+        });       
+       checkName.fail(function(jqXHR, textStatus){
+    	   alert( "Request failed: " + textStatus );
+		});
+	}
 
-	function check(){
+	function check() {
+	if(confirm("그룹을 생성하시겠습니까?")){
 		if(groupForm.groupName.value == "") {
 			alert("그룹명을 입력해주세요.");
 			groupForm.groupName.focus();
 			return false;
-    	  }
-		if(groupForm.groupInfo.value != 1){
+		  }
+		if(groupForm.groupInfo.value == ""){
 			alert("그룹 소개글을 해주세요.");
 			groupForm.groupInfo.focus();
 			return false;
@@ -42,16 +53,17 @@ function checkName(){
 			return true;
 		}
 	}
-    function cancleBtn() {
-        location.href="${pageContext.request.contextPath}/groupMain";
-    }   
+}
 
+function cancleBtn() {
+    location.href="${pageContext.request.contextPath}/groupMain";
+}   
 </script>
 
 </head>
 <body>
 <h1>addBloodPressure</h1>
-	<form name="groupForm" onsubmit="return check()" action="${pageContext.request.contextPath}/addGroup" method="post">
+	<form name="groupForm" id="groupForm" onsubmit="return check()" action="${pageContext.request.contextPath}/addGroup" method="post">
 		<div>
 			그룹 종류를 선택해주세요.
 			<select name="groupKindNo">
@@ -66,7 +78,7 @@ function checkName(){
 		</div>
 		<div>
 			그룹명 :
-				<input type="text" id="groupName" name="groupName" maxlength="10" onchange="checkName()">&nbsp;<span id="Name"></span>
+				<input type="text" id="groupName" name="groupName" required class="groupName" maxlength="10" onchange="checkName()">&nbsp;<span id="Name"></span>
 		</div>
 		<div>
 			그룹 소개:
