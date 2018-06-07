@@ -4,14 +4,35 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyMapper">
-  
+
+	<select id="healthSurveyTotalCount" resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM health_survey_register
+	</select>
+	
   	<select id="getHealthSurveyList" resultType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResponse">
+		SELECT
+  			survey.health_survey_register_no AS healthSurveyRegisterNo
+  			,member.member_name AS memberName
+  			,disease.disease_name AS diseaseName
+  			,survey.health_survey_register_title AS healthSurveyRegisterTitle
+  			,survey.health_survey_register_date AS healthSurveyRegisterDate
+  		FROM health_survey_register AS survey
+			,health_survey_average_grade AS grade
+			,member AS member
+			,disease AS disease
+		WHERE survey.health_survey_register_no = grade.health_survey_register_no
+				and survey.member_no = member.member_no
+				and survey.disease_no = disease.disease_no
+  	</select>
+  	
+  	<select id="getHealthSurveyContent" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyRequest" resultType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResponse">
   		SELECT
   			survey.health_survey_register_no AS healthSurveyRegisterNo
   			,member.member_name AS memberName
   			,disease.disease_name AS diseaseName
-  			,grade.health_survey_evaluation_average_grade AS surveyGrade
-  			,grade.health_survey_people_number AS peopleNumber
+  			,grade.health_survey_evaluation_average_grade/grade.health_survey_people_number AS surveyGrade
   			,survey.health_survey_register_title AS healthSurveyRegisterTitle
   			,survey.health_survey_register_content AS healthSurveyRegisterContent
   			,survey.health_survey_point AS healthSurveyPoint
@@ -24,23 +45,24 @@
 		WHERE survey.health_survey_register_no = grade.health_survey_register_no
 				and survey.member_no = member.member_no
 				and survey.disease_no = disease.disease_no
+				and survey.health_survey_register_no = #{healthSurveyRegisterNo}
   	</select>
   	
   	<select id="getHealthSurveyNo" resultType="Integer">
 		SELECT
-			IFNULL(MAX(CAST(SUBSTRING(health_suvey_register_no,13)as decimal)),0) 
+			IFNULL(MAX(CAST(SUBSTRING(health_survey_register_no,24)as decimal)),0) 
 		FROM health_survey_register
 	</select>
   	
   	<select id="getHealthSurveyQuestionNo" resultType="Integer">
 		SELECT
-			IFNULL(MAX(CAST(SUBSTRING(health_suvey_question_no,13)as decimal)),0) 
+			IFNULL(MAX(CAST(SUBSTRING(health_survey_question_no,24)as decimal)),0) 
 		FROM health_survey_question
 	</select>
 	
-	<select id="getHealthSurveySelectionNo">
+	<select id="getHealthSurveySelectionNo" resultType="Integer">
 		SELECT
-			IFNULL(MAX(CAST(SUBSTRING(health_suvey_selection_no,14)as decimal)),0) 
+			IFNULL(MAX(CAST(SUBSTRING(health_survey_selection_no,25)as decimal)),0) 
 		FROM health_survey_selection
 	</select>
   	
@@ -71,7 +93,7 @@
 			,#{healthSurveyRegisterDanger}
 			,#{healthSurveyRegisterCount}
 			,#{healthSurveyRegisterTotal}
-			,#{healthSurveyRegisterDate}
+			,now()
 		)
 	</insert>
 	
@@ -83,19 +105,49 @@
 			,health_survey_question
 		)
 		VALUES(
-			#{healthSurveyRegisterNo}
-			,#{memberNo}
-			,#{diseaseNo}
-			,#{healthSurveyRegisterTitle}
-			,#{healthSurveyRegisterContent}
-			,#{healthSurveyPoint}
-			,#{healthSurveyRegisterNormal}
-			,#{healthSurveyRegisterWarning}
-			,#{healthSurveyRegisterDanger}
-			,#{healthSurveyRegisterCount}
-			,#{healthSurveyRegisterTotal}
-			,#{healthSurveyRegisterDate}
+			#{healthSurveyQuestionNo}
+			,#{healthSurveyRegisterNo}
+			,#{questionNo}
+			,#{healthSurveyQuestion}
 		)
 	</insert>
+	
+	<insert id="addHealthSurveySelection" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveySelection">
+		INSERT INTO health_survey_selection(
+			health_survey_selection_no
+			,health_survey_question_no
+			,selection_no
+			,health_survey_selection
+			,health_survey_selection_score
+		)
+		VALUES(
+			#{healthSurveySelectionNo}
+			,#{healthSurveyQuestionNo}
+			,#{selectionNo}
+			,#{healthSurveySelection}
+			,#{healthSurveySelectionScore}
+		)
+	</insert>
+	
+	<select id="getHealthSurveyQuestion" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyRequest"
+											resultType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyQuestion">
+		SELECT
+			health_survey_register_no AS healthSurveyRegisterNo
+			,health_survey_question_no AS healthSurveyQuestionNo
+			,question_no AS questionNo
+			,health_survey_question AS healthSurveyQuestion
+		FROM health_survey_question
+		WHERE health_survey_register_no = #{healthSurveyRegisterNo} 
+	</select>
   
+	<select id="getHealthSurveySelection" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyQuestion"
+											resultType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveySelection">
+		SELECT
+			health_survey_selection_no AS healthSurveySelectionNo
+			,selection_no AS selectionNo
+			,health_survey_selection AS healthSurveySelection
+			,health_survey_selection_score AS healthSurveySelectionScore
+		FROM health_survey_selection
+		WHERE health_survey_question_no = #{healthSurveyQuestionNo}
+	</select>
 </mapper>

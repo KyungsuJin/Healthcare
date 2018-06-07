@@ -26,16 +26,21 @@ public class HealthSurveyDao {
 		return list;
 	}
 	
-	public String getHealthSurveyNo() {
-		return "health_survey_register_"+sqlSession.selectOne(NS+"getHealthSurveyNo");
+	public HealthSurveyResponse getHealthSurveyContent(HealthSurveyRequest healthSurveyRequest) {
+		return sqlSession.selectOne(NS+"getHealthSurveyContent", healthSurveyRequest);
 	}
 	
-	public String getHealthSurveyQuestionNo() {
-		return "health_survey_question_"+sqlSession.selectOne(NS+"getHealthSurveyQuestionNo");
+	
+	public int getHealthSurveyNo() {
+		return sqlSession.selectOne(NS+"getHealthSurveyNo");
 	}
 	
-	public String getHealthSurveySelectionNo() {
-		return "health_survey_selection_"+sqlSession.selectOne(NS+"getHealthSurveySelectionNo");
+	public int getHealthSurveyQuestionNo() {
+		return sqlSession.selectOne(NS+"getHealthSurveyQuestionNo");
+	}
+	
+	public int getHealthSurveySelectionNo() {
+		return sqlSession.selectOne(NS+"getHealthSurveySelectionNo");
 	}
 	
 	public void addHealthSurvey(HealthSurveyRequest healthSurveyRequest) {
@@ -46,5 +51,16 @@ public class HealthSurveyDao {
 		sqlSession.insert(NS+"addHealthSurveyQuestion", healthSurveyQuestion);
 	}
 	
+	public void addHealthSurveySelection(HealthSurveySelection healthSurveySelection) {
+		sqlSession.insert(NS+"addHealthSurveySelection", healthSurveySelection);
+	}
+	
+	public List<HealthSurveyQuestion> getHealthSurveyQuestion(HealthSurveyRequest healthSurveyRequest) {
+		return sqlSession.selectList(NS+"getHealthSurveyQuestion", healthSurveyRequest);
+	}
+	
+	public List<HealthSurveySelection> getHealthSurveySelection(HealthSurveyQuestion healthSurveyQuestion) {
+		return sqlSession.selectList(NS+"getHealthSurveySelection", healthSurveyQuestion);
+	}
 	
 }

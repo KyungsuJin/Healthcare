@@ -1,16 +1,15 @@
 package com.cafe24.kyungsu93.healthsurvey.service;
 
 public class HealthSurveyResponse {
-	private String healthSurveyRegisterNo;
-	private String memberName;
-	private String diseaseName;
-	private double surveyGrade;
-	private int peopleNumber;
-	private String healthSurveyRegisterTitle;
-	private String healthSurveyRegisterContent;
-	private int healthSurveyPoint;
-	private int healthSurveyRegisterCount;
-	private String healthSurveyRegisterDate;
+	private String healthSurveyRegisterNo; //설문 등록 번호
+	private String memberName; //설문 올린 의사 이름
+	private String diseaseName; //질병 이름
+	private double surveyGrade; //설문 평균 평가 점수
+	private String healthSurveyRegisterTitle; //설문 이름
+	private String healthSurveyRegisterContent; //설문 을 통해서 얻고자하는 것 내용
+	private int healthSurveyPoint; //설문 차감 포인트
+	private int healthSurveyRegisterCount; //총 설문한사람 숫자
+	private String healthSurveyRegisterDate; //설문 등록 날짜
 	
 	public String getHealthSurveyRegisterNo() {
 		return healthSurveyRegisterNo;
@@ -35,12 +34,6 @@ public class HealthSurveyResponse {
 	}
 	public void setSurveyGrade(double surveyGrade) {
 		this.surveyGrade = surveyGrade;
-	}
-	public int getPeopleNumber() {
-		return peopleNumber;
-	}
-	public void setPeopleNumber(int peopleNumber) {
-		this.peopleNumber = peopleNumber;
 	}
 	public String getHealthSurveyRegisterTitle() {
 		return healthSurveyRegisterTitle;
@@ -75,11 +68,10 @@ public class HealthSurveyResponse {
 	@Override
 	public String toString() {
 		return "HealthSurveyResponse [healthSurveyRegisterNo=" + healthSurveyRegisterNo + ", memberName=" + memberName
-				+ ", diseaseName=" + diseaseName + ", surveyGrade=" + surveyGrade + ", peopleNumber=" + peopleNumber
-				+ ", healthSurveyRegisterTitle=" + healthSurveyRegisterTitle + ", healthSurveyRegisterContent="
-				+ healthSurveyRegisterContent + ", healthSurveyPoint=" + healthSurveyPoint
-				+ ", healthSurveyRegisterCount=" + healthSurveyRegisterCount + ", healthSurveyRegisterDate="
-				+ healthSurveyRegisterDate + "]";
+				+ ", diseaseName=" + diseaseName + ", surveyGrade=" + surveyGrade + ", healthSurveyRegisterTitle="
+				+ healthSurveyRegisterTitle + ", healthSurveyRegisterContent=" + healthSurveyRegisterContent
+				+ ", healthSurveyPoint=" + healthSurveyPoint + ", healthSurveyRegisterCount="
+				+ healthSurveyRegisterCount + ", healthSurveyRegisterDate=" + healthSurveyRegisterDate + "]";
 	}
 	
 }

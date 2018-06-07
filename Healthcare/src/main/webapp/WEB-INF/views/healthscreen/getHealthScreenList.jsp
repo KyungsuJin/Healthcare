@@ -26,14 +26,13 @@
 		<table border="1" class="table">
 			<thead>
 				<tr>
-					<th>번호</th>
 					<th>건강검진 날짜</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var = "healthScreen" items = "${list}">
 					<tr>
-						<td><a href="${pageContext.servletContext.contextPath}/getHealthScreenResult?healthScreenNo=${healthScreen.healthScreenNo}">${sessionScope.memberSessionName}님의 ${healthScreen.healthScreenDate} 건강검진표</a></td>
+						<td><a href="${pageContext.request.contextPath}/getHealthScreenResult?healthScreenNo=${healthScreen.healthScreenNo}">${sessionScope.memberSessionName}님의 ${healthScreen.healthScreenDate} 건강검진표</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>

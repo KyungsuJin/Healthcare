@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.cafe24.kyungsu93.healthscreen.service.HealthScreenRequest;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyQuestion;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyRequest;
+import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResponse;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveySelection;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyService;
 
@@ -36,7 +37,14 @@ public class HealthSurveyController {
 		model.addAttribute("afterPage", map.get("afterPage"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("pagePerRow", pagePerRow);
-		return "getHealthSurveyList";
+		return "healthsurvey/getHealthSurveyList";
+	}
+	
+	@RequestMapping(value="getHealthSurveyContent", method=RequestMethod.GET)
+	public String getHealthSurveyContent(Model model, HealthSurveyRequest healthSurveyRequest) {
+		HealthSurveyResponse healthSurveyResponse = healthSurveyService.getHealthSurveyContent(healthSurveyRequest);
+		model.addAttribute("healthSurveyContent", healthSurveyResponse);
+		return "healthsurvey/getHealthSurveyContent";
 	}
 	
 	@RequestMapping(value="/addHealthSurvey", method=RequestMethod.GET)
@@ -53,6 +61,19 @@ public class HealthSurveyController {
 		System.out.println("여기오---------------");
 		healthSurveyService.addHealthSurvey(healthSurveyRequest, healthSurveyQuestion, healthSurveySelection);
 		return "getHealthSurveyList";
+	}
+	
+	@RequestMapping(value="/getHealthSurveyQuestion", method=RequestMethod.GET)
+	public String addHealthSurveyResult(Model model, HealthSurveyRequest healthSurveyRequest) {
+		System.out.println(healthSurveyRequest.toString());
+		Map<String, Object> map = healthSurveyService.getHealthSurveyQuestion(healthSurveyRequest);
+		for(String name : map.keySet()) {
+			model.addAttribute(name, map.get(name));
+			System.out.println("1 : " + name);
+			System.out.println("2 : " + map.get(name));
+		}
+		
+		return "healthsurvey/addHealthSurveyResult";
 	}
 
 }

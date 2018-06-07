@@ -20,7 +20,7 @@
 <body>
 	<jsp:include page="../include/body.jsp"></jsp:include>
 	<div id="healthScreenContainer" align="center">
-		<form id="healthScreenForm" method="POST" action="${pageContext.servletContext.contextPath}/addHealthScreen">
+		<form id="healthScreenForm" method="POST" action="${pageContext.request.contextPath}/addHealthScreen">
 			<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}"><br>
 			<input type="text" id="bloodSugarNo" name="bloodSugarNo"><br>
 			<input type="text" id="bloodPressureNo" name="bloodPressureNo"><br>

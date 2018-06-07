@@ -1,6 +1,7 @@
 package com.cafe24.kyungsu93.healthsurvey.service;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class HealthSurveyQuestion {
 	private String healthSurveyQuestionNo;
@@ -9,6 +10,7 @@ public class HealthSurveyQuestion {
 	private int questionNo;
 	private String[] healthSurveyQuestionList;
 	private String healthSurveyQuestion;
+	private List<HealthSurveySelection> healthSurveySelection;
 	
 	public String getHealthSurveyQuestionNo() {
 		return healthSurveyQuestionNo;
@@ -46,12 +48,19 @@ public class HealthSurveyQuestion {
 	public void setHealthSurveyQuestion(String healthSurveyQuestion) {
 		this.healthSurveyQuestion = healthSurveyQuestion;
 	}
+	public List<HealthSurveySelection> getHealthSurveySelection() {
+		return healthSurveySelection;
+	}
+	public void setHealthSurveySelection(List<HealthSurveySelection> healthSurveySelection) {
+		this.healthSurveySelection = healthSurveySelection;
+	}
 	@Override
 	public String toString() {
 		return "HealthSurveyQuestion [healthSurveyQuestionNo=" + healthSurveyQuestionNo + ", healthSurveyRegisterNo="
 				+ healthSurveyRegisterNo + ", questionNoList=" + Arrays.toString(questionNoList) + ", questionNo="
 				+ questionNo + ", healthSurveyQuestionList=" + Arrays.toString(healthSurveyQuestionList)
-				+ ", healthSurveyQuestion=" + healthSurveyQuestion + "]";
+				+ ", healthSurveyQuestion=" + healthSurveyQuestion + ", healthSurveySelection=" + healthSurveySelection
+				+ "]";
 	}
 	
 }
