@@ -13,9 +13,10 @@
 			<tr>
 				<th>번호</th>
 				<th>그룹명</th>
+				<th>회원명</th>
+				<th>회원아이디</th>
 				<th>그룹종류</th>
-				<th>그룹상세</th>
-				<th>날짜</th>
+				<th>생성날짜</th>
 				<th>수정</th>
 				<th>삭제</th>
 			</tr>
@@ -25,17 +26,16 @@
 			<tr>
 				<td>${group.groupNo }</td>
 				<td>${group.groupName }</td>
-				<td>${group.groupInFo }</td>
+				<td>${group.memberName }</td>
+				<td>${group.memberId }</td>
 				<td>${group.groupKindName }</td>
 				<td>${group.groupCreateDate }</td>
-				<td><a type="button" href="${pageContext.request.contextPath}/modifyGroup?groupNo=${group.groupNo}" id="buttonModify">수정</a></td>
-				<td><a type="button" href="${pageContext.request.contextPath}/deleteGroup?groupNo=${group.groupNo}" id="buttonDelete">삭제</a></td>
+				<td><a type="button" href="${pageContext.request.contextPath}/modifyGroup?groupeNo=${group.groupNo}" id="buttonModify">수정</a></td>
+				<td><a type="button" href="${pageContext.request.contextPath}/deleteGroup?groupeNo=${group.groupNo}" id="buttonDelete">삭제</a></td>
 				
 			</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-		<a href="${pageContext.request.contextPath}/addGroup">그룹생성하기</a>
-		<a href="${pageContext.request.contextPath}/groupJoin?memberNo=${group.memberNo}">내가 생성한 그룹</a>
 </body>
 </html>

@@ -3,11 +3,9 @@ package com.cafe24.kyungsu93.bloodpressure.service;
 public class BloodPressure {
 	private String bloodPressureNo;
 	private String memberNo;
-	private int systolicBloodPressure;
-	private int relaxerBloodPressure;
+	private int systolicPressure;
+	private int diastolicPressure;
 	private String bloodPressureDate;
-	private String memberId;
-	private String memberName;
 	public String getBloodPressureNo() {
 		return bloodPressureNo;
 	}
@@ -20,17 +18,17 @@ public class BloodPressure {
 	public void setMemberNo(String memberNo) {
 		this.memberNo = memberNo;
 	}
-	public int getSystolicBloodPressure() {
-		return systolicBloodPressure;
+	public int getSystolicPressure() {
+		return systolicPressure;
 	}
-	public void setSystolicBloodPressure(int systolicBloodPressure) {
-		this.systolicBloodPressure = systolicBloodPressure;
+	public void setSystolicPressure(int systolicPressure) {
+		this.systolicPressure = systolicPressure;
 	}
-	public int getRelaxerBloodPressure() {
-		return relaxerBloodPressure;
+	public int getDiastolicPressure() {
+		return diastolicPressure;
 	}
-	public void setRelaxerBloodPressure(int relaxerBloodPressure) {
-		this.relaxerBloodPressure = relaxerBloodPressure;
+	public void setDiastolicPressure(int diastolicPressure) {
+		this.diastolicPressure = diastolicPressure;
 	}
 	public String getBloodPressureDate() {
 		return bloodPressureDate;
@@ -38,23 +36,10 @@ public class BloodPressure {
 	public void setBloodPressureDate(String bloodPressureDate) {
 		this.bloodPressureDate = bloodPressureDate;
 	}
-	public String getMemberId() {
-		return memberId;
-	}
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
-	}
-	public String getMemberName() {
-		return memberName;
-	}
-	public void setMemberName(String memberName) {
-		this.memberName = memberName;
-	}
 	@Override
 	public String toString() {
-		return "BloodPressure [bloodPressureNo=" + bloodPressureNo + ", memberNo=" + memberNo
-				+ ", systolicBloodPressure=" + systolicBloodPressure + ", relaxerBloodPressure=" + relaxerBloodPressure
-				+ ", bloodPressureDate=" + bloodPressureDate + ", memberId=" + memberId + ", memberName=" + memberName
-				+ "]";
+		return "BloodPressure [bloodPressureNo=" + bloodPressureNo + ", memberNo=" + memberNo + ", systolicPressure="
+				+ systolicPressure + ", diastolicPressure=" + diastolicPressure + ", bloodPressureDate="
+				+ bloodPressureDate + "]";
 	}
 }

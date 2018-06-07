@@ -1,6 +1,5 @@
 package com.cafe24.kyungsu93.group.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cafe24.kyungsu93.group.service.Group;
 import com.cafe24.kyungsu93.group.service.GroupService;
@@ -32,7 +30,7 @@ public class GroupController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("count", map.get("count"));
 		model.addAttribute("result", map.get("result"));
-		return "redirect:/group/inviteSearchList";
+		return "redirect:/inviteSearchList";
 	}
 	
 	@RequestMapping(value="/inviteGroupMember", method=RequestMethod.GET)
@@ -41,22 +39,29 @@ public class GroupController {
 		return "group/inviteGroupMember";
 	}	
 	
-	@RequestMapping(value="/checkGroupName", method={RequestMethod.POST,RequestMethod.GET})
-	@ResponseBody
-    public Map<String, Object> checkGroupName(Model model,@RequestParam(value="groupName") String groupName) {
-		logger.debug("GroupController - checkGroupName ajax");
-		logger.debug("groupName:"+groupName);
-		Map<String,Object> map = groupService.checkGroupName(groupName);
-		map.get("result");
-		logger.debug("result:"+map.get("result"));
-		return map;
-    }
+	@RequestMapping(value="/modifyGroup",method=RequestMethod.POST)
+	public String modifyGroup(@RequestParam(value="groupNo") String groupNo
+							,@RequestParam(value="groupKindNo") String groupKindNo
+							,@RequestParam(value="groupInfo") String groupInfo
+							,@RequestParam(value="groupName") String groupName) {
+		logger.debug("GroupController - modifyGroup 리다이렉트 실행.");
+		groupService.modifyGroupResult(groupNo, groupInfo, groupKindNo, groupName);
+		return "redirect:/groupList";
+	}
 	
+	@RequestMapping(value="/modifyGroup", method=RequestMethod.GET)
+	public String modifyGroup(Model model,@RequestParam(value="groupNo") String groupNo) {
+		logger.debug("GroupController - modifyGroup 포워드 실행.");
+		Group groupTable = groupService.modifyGroup(groupNo);
+		model.addAttribute("groupTable", groupTable);
+		return "group/modifyGroup";
+	}	
+		
 	@RequestMapping(value="/deleteGroup", method=RequestMethod.GET)
 	public String deleteGroup(@RequestParam(value="groupNo") String groupNo) {
 		logger.debug("GroupController - deleteGroup 리다이렉트 실행.");
 		groupService.deleteGroup(groupNo);
-		return "redirect:/group/groupList";
+		return "redirect:/groupList";
 	}
 	
 	@RequestMapping(value="/groupList", method=RequestMethod.GET)
@@ -79,7 +84,7 @@ public class GroupController {
 	public String addGroup(Group group,HttpServletRequest request) {
 		logger.debug("GroupController - addGroup 리다이렉트 실행");
 		groupService.addGroup(group);
-		return "redirect:/group/groupList";
+		return "redirect:/groupList";
 	}
 	
 	@RequestMapping(value="/addGroup", method=RequestMethod.GET)

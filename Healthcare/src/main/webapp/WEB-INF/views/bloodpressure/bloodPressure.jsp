@@ -36,8 +36,6 @@
 			<thead>
 				<tr>
 					<th>번호</th>
-					<th>회원아이디</th>
-					<th>회원명</th>
 					<th>수축기</th>
 					<th>이완기</th>
 					<th>날짜</th>
@@ -50,8 +48,6 @@
 				<c:forEach var="bloodPressure" items="${list}">
 					<tr>
 						<td>${bloodPressure.bloodPressureNo }</td>
-						<td>${bloodPressure.memberId}</td>
-						<td>${bloodPressure.memberName}</td>
 						<td>${bloodPressure.bloodPressureDate }</td>
 						<td>${bloodPressure.systolicPressure }</td>
 						<td>${bloodPressure.diastolicPressure }</td>

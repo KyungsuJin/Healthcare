@@ -43,6 +43,16 @@ public class GroupDao{
 		return sqlSession.delete(NS+"deleteGroup", groupNo);
 	}
 	
+	public int modifyGroupResult(Group group) {
+		logger.debug("Group - modifyGroupResult 실행");
+		return sqlSession.update(NS+"modifyGroupResult",group);
+	}
+	
+	public Group modifyGroup(String groupNo) {
+		logger.debug("Group - modifyGroup 실행");
+		return sqlSession.selectOne(NS+"modifyGroup",groupNo);
+	}
+	
 	public List<Group> groupList(Map<String,Integer> map) {
 		logger.debug("GroupDao - groupList 실행");
 		 List<Group> list = sqlSession.selectList(NS+"groupList",map);

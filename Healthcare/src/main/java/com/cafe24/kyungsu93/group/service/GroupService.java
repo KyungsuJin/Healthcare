@@ -1,5 +1,6 @@
 package com.cafe24.kyungsu93.group.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,22 @@ public class GroupService {
 			}
 		}
 		return returnMap;
+	}
+	
+	public void modifyGroupResult(String groupNo, String groupInfo,String groupKindNo,String groupName) {
+		logger.debug("GroupService - modifyGroupResult실행");
+		Group group = new Group();
+		group.setGroupInfo(groupInfo);
+		group.setGroupKindNo(groupKindNo);
+		group.setGroupName(groupName);
+		group.setGroupNo(groupNo);
+		groupDao.modifyGroupResult(group);
+	}
+	
+	public Group modifyGroup(String groupNo) {
+		logger.debug("GroupService - modifyGroup 실행");
+		Group group = groupDao.modifyGroup(groupNo);
+		return group;
 	}
 	
 	public int deleteGroup(String groupNo) {

@@ -23,19 +23,18 @@ public class BloodPressureService {
 	public void updateBloodPressure(String bloodPressureNo) {
 		logger.debug("BloodPressureService - updateBloodPressure 실행");
 		BloodPressure bloodPressure = new BloodPressure();
-		int systolicBloodPressure = bloodPressure.getSystolicBloodPressure();
-		int relaxerBloodPressure = bloodPressure.getRelaxerBloodPressure();
-
-		bloodPressure.setRelaxerBloodPressure(relaxerBloodPressure);
-		bloodPressure.setSystolicBloodPressure(systolicBloodPressure);
-		
+		int diastolicPressure = bloodPressure.getDiastolicPressure();
+		int systolicPressure = bloodPressure.getSystolicPressure();
+		bloodPressure.setDiastolicPressure(diastolicPressure);
+		bloodPressure.setSystolicPressure(systolicPressure);
 		bloodPressure.setBloodPressureNo(bloodPressureNo);
 		bloodPressureDao.updateBloodPressure(bloodPressure);		
 	}
 	
 	public BloodPressure selectBloodPressureOne(String bloodPressureNo) {
 		logger.debug("BloodPressureService - selectBloodPressureOne 실행");
-		return bloodPressureDao.selectBloodPressureOne(bloodPressureNo);
+		BloodPressure bloodPressure = bloodPressureDao.selectBloodPressureOne(bloodPressureNo);
+		return bloodPressure;
 	}
 	public int deleteBloodPressure(String bloodPressureNo) {
 		logger.debug("BloodPressureService - deleteBloodPressure 실행");

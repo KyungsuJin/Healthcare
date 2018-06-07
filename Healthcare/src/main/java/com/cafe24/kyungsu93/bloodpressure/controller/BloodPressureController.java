@@ -25,19 +25,19 @@ public class BloodPressureController {
 			
 	@RequestMapping(value="/modifyBloodPressure", method=RequestMethod.POST)
 	public String updateBloodPressure(@RequestParam(value="bloodPressureNo", required=true) String bloodPressureNo) {
-		logger.debug("BloodpressureController - updateBloodPressure 리다이렉트 실행");
+		logger.debug("BloodpressureController - modifyBloodPressure 리다이렉트 실행");
 		bloodPressureService.updateBloodPressure(bloodPressureNo);
 		return "redirect:/bloodPressure";
 	}
 	
 	@RequestMapping(value="/modifyBloodPressure", method=RequestMethod.GET)
-	public String updateBloodPressureone(Model model
+	public String modifyBloodPressure(Model model
 											,@RequestParam(value="bloodPressureNo") String bloodPressureNo) {
-		logger.debug("BloodPressureController - updateBloodPressure 포워드 실행");
+		logger.debug("BloodPressureController - modifyBloodPressure 포워드 실행");
 		BloodPressure bloodPressure = bloodPressureService.selectBloodPressureOne(bloodPressureNo);
-		model.addAttribute("bloodPressre", bloodPressure);
+		model.addAttribute("bloodPressure", bloodPressure);
 		logger.debug("BloodPressureController - bloodPressure :"+ bloodPressure);
-		return "modifyBloodPressure";
+		return "bloodpressure/modifyBloodPressure";
 	}
 	
 	@RequestMapping(value="/deleteBloodPressure", method= {RequestMethod.POST,RequestMethod.GET})
@@ -47,7 +47,7 @@ public class BloodPressureController {
 		return "redirect:/bloodpressure/bloodPressure";
 	}
 	
-	@RequestMapping(value="/bloodpressure/bloodPressure", method=RequestMethod.GET)
+	@RequestMapping(value="/bloodPressure", method=RequestMethod.GET)
 	public String bloodPressureList(Model model
 								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
@@ -66,7 +66,7 @@ public class BloodPressureController {
 	public String addBloodPressure(HttpSession session,BloodPressure bloodPressure) {
 		logger.debug("BloodpressureController - addBloodPressure 리다이렉트 실행");
 		bloodPressureService.addBloodPressure(bloodPressure);
-		return "redirect:/bloodpressure/bloodPressure";
+		return "redirect:/bloodPressure";
 	}
 	
 	@RequestMapping(value="/addBloodPressure", method=RequestMethod.GET)
