@@ -16,8 +16,47 @@ public class DiseaseService {
 	DiseaseDao diseaseDao;
 	private static final Logger logger = LoggerFactory.getLogger(DiseaseService.class);
 	
-	public DiseaseSubCategory diseaseSubCategoryNameChecked(String diseaseSCName) {
-		logger.debug("DiseaseService_diseaseSubCategoryNameChecked");		
+	
+	public List<MyDiseaseDetail> getMyDiseaseLsit(String memberNo) {
+		logger.debug("DiseaseService_getMyDiseaseLsit");
+		MyDisease myDisease =  diseaseDao.selectDiseaseNoForGetMyDiseaseList(memberNo);
+		System.out.println("1111111etmyDiseaseNo : " + myDisease.getMyDiseaseNo());
+		List<MyDiseaseDetail>list = diseaseDao.getMyDiseaseLsit(myDisease.getMyDiseaseNo());
+		return list;
+	}
+	public int addMyDisease(MyDisease myDisease, MyDiseaseDetail myDiseaseDetail) {	
+		logger.debug("DiseaseService_addMyDisease");
+		String myDiseaseNo = diseaseDao.selectForMemberCheck(myDisease);
+		System.out.println("myDiseaseNo : "+myDiseaseNo);
+		if( myDiseaseNo == null) {
+			int result = (diseaseDao.selectMyDiseaseNo())+1;
+			logger.debug("DiseaseService_addMyDisease", result);
+			String myDisease_temp = "my_disease_";
+			myDiseaseNo = myDisease_temp+result;
+			myDisease.setMyDiseaseNo(myDiseaseNo);
+			
+			diseaseDao.addMyDisease(myDisease);
+		}
+			myDiseaseDetail.setMyDiseaseNo(myDiseaseNo);
+		return diseaseDao.addMyDiseaseDateil(myDiseaseDetail);
+	}
+	//ajax 다중셀렉트 대분류가 선택되면 No값을 받아와 소분류를 뿌려준다.
+	public List<DiseaseSubCategory> selectBoxDisease(String diseaseNo) {
+		logger.debug("DiseaseService_selectBoxDisease");
+		List<DiseaseSubCategory> list = diseaseDao.selectBoxDisease(diseaseNo);
+		return list;
+	}
+	public List<Disease> selectListForAdd() {
+		logger.debug("DiseaseService_selectListForAdd");
+		List<Disease> list = diseaseDao.selectListForAdd();
+		return list;
+	}
+	public int removeDiseaseSubCategory(String diseaseSubCategoryNo) {
+		logger.debug("DiseaseService_removeDiseaseSubCategory");
+		return diseaseDao.removeDiseaseSubCategory(diseaseSubCategoryNo);
+	}
+	public int diseaseSubCategoryNameChecked(String diseaseSCName) {
+		logger.debug("DiseaseService_diseaseSubCategoryNameChecked");
 		return diseaseDao.diseaseSubCategoryNameChecked(diseaseSCName);
 	}
 	public int addDiseaseSubCategory(DiseaseSubCategory diseaseSubCategory) {
@@ -45,7 +84,7 @@ public class DiseaseService {
 	public int addDisease(Disease disease) {
 		logger.debug("DiseaseService_addDisease");
 		int result = (diseaseDao.selectDiseaseNo())+1;
-		logger.debug("DiseaseService_addDisease");
+		logger.debug("DiseaseService_addDisease", result);
 		String disease_temp = "disease_";
 		String diseaseNo = disease_temp+result;
 		disease.setDiseaseNo(diseaseNo);

@@ -15,14 +15,13 @@
 	<title>Insert title here</title>
 	<script>
 		$(document).ready(function(){
-			$('#addDiseaseSubCategory').click(function() {								
-				location.href='addDiseaseSubCategory?diseaseNo=${diseaseNo}';
-			});
-		});
+			$('#addDisease').click(function() {
+				location.href='addDisease';
+			}) 
+		})
 	</script>
 </head>
-<body>
-
+<body>	
 	<div align="center">
 		<h1>DiseaseList</h1>
 		<table border="1" class="table">
@@ -30,27 +29,22 @@
 				<tr>
 					<th>No</th>
 					<th>질병명</th>
-					<th>질병소분류</th>
-					<th>가족력</th>
-					<th>등록일</th>
-					<th>삭제하기</th>
+					<th>상세정보</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${list}" var="diseaseSubCategory" varStatus="status">
+				<c:forEach items="${list}" var="disease" varStatus="status">
 					<tr>
 						<td>${status.count}</td>
-						<td>${diseaseSubCategory.diseaseNo}</td>
-						<td>${diseaseSubCategory.diseaseSubCategoryName}</td>
-						<td>${diseaseSubCategory.familyHistory}</td>
-						<td>${diseaseSubCategory.diseaseSubCategoryDate}</td>
-						<td><a href="${pageContext.request.contextPath}/removeDiseaseSubCategory?diseaseSubCategoryNo=${diseaseSubCategory.diseaseSubCategoryNo}&diseaseNo=${diseaseSubCategory.diseaseNo}">삭제하기</a></td>
-					</tr>	
+						<td><a href="${pageContext.request.contextPath}/getDiseaseDetail?diseaseNo=${disease.diseaseNo}">${disease.diseaseName}</a></td>
+						<td><a href="${pageContext.request.contextPath}/getDiseaseDetail?diseaseNo=${disease.diseaseNo}">삭제하기</a></td>		
+					</tr>
+	
 				</c:forEach>		
 			</tbody>
 		</table>
 		<div>
-			<input type="button" id="addDiseaseSubCategory" value="소분류질병등록">
+			<input type="button" id="addDisease" value="질병등록">
 		</div>
 	</div>
 </body>

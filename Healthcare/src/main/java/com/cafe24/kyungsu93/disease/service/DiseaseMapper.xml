@@ -4,15 +4,89 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cafe24.kyungsu93.disease.serivce.DiseaseMapper">
-	<select id="selectDiseaseSubCategoryNameChecked" resultType="com.cafe24.kyungsu93.disease.service.DiseaseSubCategory">
+	<select id="selectDiseaseNoForGetMyDiseaseList"
+			parameterType="String"
+			resultType="com.cafe24.kyungsu93.disease.service.MyDisease">
 		SELECT
-			disease_sub_category_name as diseaseSubCategoryName
+			my_disease_no as myDiseaseNo
+		FROM
+			my_disease
+		WHERE
+			member_no=#{memberNo}
+	</select>
+	<select id="selectMyDiseaseList"
+			parameterType="String"
+			resultType="com.cafe24.kyungsu93.disease.service.MyDiseaseDetail">
+		SELECT
+			a.disease_sub_category_no as diseaseSubCategory
+			,d.disease_no as diseaseNo
+			,c.family_history as familyHitory
+			,c.disease_sub_category_name as diseaseSubCategory
+			,d.disease_name as diseaseName
+		FROM
+			my_disease_detail a, my_disease b, disease_sub_category c, disease d
+		WHERE
+			a.my_disease_no=b.my_disease_no and 
+			a.disease_sub_category_no=c.disease_sub_category_no and 
+			c.disease_no = d.disease_no and
+			a.my_disease_no = #{myDiseaseNo}
+	</select>
+	<select id="selectForMemberCheck" 
+			parameterType="com.cafe24.kyungsu93.disease.service.MyDisease"
+			resultType="String">
+		SELECT
+			my_disease_no
+		FROM
+			my_disease
+		WHERE
+			member_no=#{memberNo}
+	</select>
+	<select id="selectMyDiseaseNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(cast(SUBSTRING(my_disease_no, 12) as decimal)), 0)
+		FROM
+			my_disease
+	</select>
+	<insert id="insertMyDiseaseDetail">
+		INSERT INTO my_disease_detail(
+			disease_sub_category_no
+			,my_disease_no
+			,my_disease_detail_date
+		)
+		VALUES(
+			#{diseaseSubCategoryNo}
+			,#{myDiseaseNo}
+			,now()
+		)
+	</insert>
+	<insert id="insertMyDisease" parameterType="com.cafe24.kyungsu93.disease.service.MyDisease">
+		INSERT INTO my_disease(
+			my_disease_no
+			,member_no
+		)
+		VALUES(
+			#{myDiseaseNo}
+			,#{memberNo}
+		)
+	</insert>
+	<delete id="deleteDiseaseSubCategory" parameterType="String">
+		DELETE			
 		FROM
 			disease_sub_category
 		WHERE
-			disease_sub_category_name=${diseaseSubCategory}
+		disease_sub_category_No=#{diseaseSubCategoryNo}
+	</delete>
+	<select id="selectDiseaseSubCategoryNameChecked" 
+			parameterType="String"
+			resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			disease_sub_category
+		WHERE
+			disease_sub_category_name=#{diseaseSCName}
 	</select>
-	<select id="selectDiseaseDetail" resultType="com.cafe24.kyungsu93.disease.service.DiseaseSubCategory">
+	<select id="selectDiseaseSubCategory" resultType="com.cafe24.kyungsu93.disease.service.DiseaseSubCategory">
 		SELECT
 			disease_sub_category_no as diseaseSubCategoryNo
 			,disease_no as diseaseNo

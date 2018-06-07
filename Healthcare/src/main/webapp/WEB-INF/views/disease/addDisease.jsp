@@ -17,7 +17,6 @@
 				<button type="submit">질병등록하기</button>
 				<button type="button">취소하기</button>
 			</div>
-			
 		</form>
 	</div>
 </body>
