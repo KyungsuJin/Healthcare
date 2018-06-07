@@ -17,18 +17,28 @@ import com.cafe24.kyungsu93.disease.service.DiseaseSubCategory;
 import com.cafe24.kyungsu93.disease.service.MyDisease;
 import com.cafe24.kyungsu93.disease.service.MyDiseaseDetail;
 
-
-
 @Controller
 public class DiseaseController {
 	private static final Logger logger = LoggerFactory.getLogger(DiseaseController.class);
 	@Autowired
 	DiseaseService diseaseService;
 	
+	@RequestMapping(value="removeMyDieseaseDetail", method=RequestMethod.GET)
+	public String removeMyDisease(@RequestParam(value="myDiseaseDetailNo") String myDiseaseDetailNo) {
+		/*
+		 * 세션 맴버 아이디 받아와서  getMyDiseaseList로 리다이렉트 시키기
+		 */
+		logger.debug("DiseaseController_removeMyDisease");
+		diseaseService.removeMyDisease(myDiseaseDetailNo);
+		return "redirect:/";
+	}
 	@RequestMapping(value="/getMyDiseaseList", method=RequestMethod.GET)
 	public String getMyDiseaseList(Model model
 									,@RequestParam(value="memberNo") String memberNo) {
 		logger.debug("DiseaseController_myDiseaseDetailList");
+		/*
+		 * 세션아이디를 받아와서 memberNo처리 하기
+		 */
 		System.out.println("3dfgdfgfgdfg : " +memberNo);
 		List<MyDiseaseDetail> list = diseaseService.getMyDiseaseLsit(memberNo);
 		model.addAttribute("list", list);

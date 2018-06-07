@@ -24,28 +24,28 @@
 <body>	
 	<div align="center">
 		<h1>DiseaseList</h1>
-		<table border="1" class="table">
+		<table border="1" class="table" width="80%">
 			<thead>
 				<tr>
 					<th>No</th>
 					<th>질병명</th>
-					<th>상세정보</th>
+					<th>질병하위분류</th>
+					<th>가족력유무</th>
+					<th>삭제하기</th>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${list}" var="disease" varStatus="status">
+				<c:forEach items="${list}" var="myDiseaseDetail" varStatus="status">
 					<tr>
 						<td>${status.count}</td>
-						<td><a href="${pageContext.request.contextPath}/getDiseaseDetail?diseaseNo=${disease.diseaseNo}">${disease.diseaseName}</a></td>
-						<td><a href="${pageContext.request.contextPath}/getDiseaseDetail?diseaseNo=${disease.diseaseNo}">삭제하기</a></td>		
+						<td>${myDiseaseDetail.diseaseName}</td>
+						<td>${myDiseaseDetail.diseaseSubCategoryName}</td>
+						<td>${myDiseaseDetail.familyHistory}</td>
+						<td><a href="${pageContext.request.contextPath}/removeMyDieseaseDetail?myDiseaseDetailNo=${myDiseaseDetail.myDiseaseDetailNo}">삭제하기</a></td>
 					</tr>
-	
 				</c:forEach>		
 			</tbody>
 		</table>
-		<div>
-			<input type="button" id="addDisease" value="질병등록">
-		</div>
 	</div>
 </body>
 </html>

@@ -17,32 +17,50 @@ public class DiseaseDao {
 	SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.disease.serivce.DiseaseMapper.";
 	
+	//나의 질병정보를 삭제하기 위한 delete
+	public int removeMyDisease(String myDiseaseDetailNo) {
+		logger.debug("DiseaseDao_removeMyDisease");
+		return sqlSession.delete(NS+"deleteMyDisease", myDiseaseDetailNo);
+	}
+	//나의질병디테일 pk를 구하기위한 select
+	public int selectMyDiseaseDetailNo() {
+		logger.debug("DiseaseDao_selectMyDiseaseDetailNo");
+		return sqlSession.selectOne(NS+"selectMyDiseaseDetailNo");
+	}
+	//나의질병을 보기위해 세션에서 회원정보를 받아와서 myDiseaseNo를 확인하기 위한 select
 	public MyDisease selectDiseaseNoForGetMyDiseaseList(String memberNo) {
 		logger.debug("DiseaseDao_selectDiseaseNoForGetMyDiseaseList");
 		return sqlSession.selectOne(NS+"selectDiseaseNoForGetMyDiseaseList", memberNo);
 	}
+	//myDiseaseNo를 조회하여 나의질병정보를 확인할수 있다.
 	public List<MyDiseaseDetail> getMyDiseaseLsit(String myDiseaseNo) {
 		logger.debug("DiseaseDao_getMyDiseaseLsit");
 		return sqlSession.selectList(NS+"selectMyDiseaseList", myDiseaseNo);
 	}
+	//대분류질병추가후 소분류 질병을 추가한다.
 	public int addMyDiseaseDateil(MyDiseaseDetail myDiseaseDetail) {
 		logger.debug("DiseaseDao_addmyDiseaseDetail");
 		return sqlSession.insert(NS+"insertMyDiseaseDetail", myDiseaseDetail);
 	}
-	//나의질병 pk를 구하기위한 select
+	/*
+	 * 한사람이 여러개의 질병을 갖기위해 하나의 myDiseaseNo를 갖는다.
+	 * if문을 사용하여 이미 가지고잇으면 질병을 추가하고 없다면 myDiseaseNo를 생성한다.
+	 */
 	public String selectForMemberCheck(MyDisease myDisease) {
 		logger.debug("DiseaseDao_selectMyDiseaseNo");
 		return sqlSession.selectOne(NS+"selectForMemberCheck", myDisease);
 	}
+	//나의질병 pk를 구하기위한 select
 	public int selectMyDiseaseNo() {
 		logger.debug("DiseaseDao_selectMyDiseaseNo");
 		return sqlSession.selectOne(NS+"selectMyDiseaseNo");
 	}
+	//대분류 질병을 추가한다.
 	public int addMyDisease(MyDisease myDisease) {
 		logger.debug("DiseaseDao_addMyDisease");
 		return sqlSession.insert(NS+"insertMyDisease", myDisease);
 	}
-	
+	//질병하위분류의 리스트를 볼수 있다.
 	public List<DiseaseSubCategory> selectBoxDisease(String diseaseNo) {
 		logger.debug("DiseaseDao_selectBoxDisease");
 		List<DiseaseSubCategory> list = sqlSession.selectList(NS+"selectDiseaseSubCategory", diseaseNo);

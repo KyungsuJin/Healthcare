@@ -1,4 +1,4 @@
-package com.cafe24.kyungsu93.disease.controller;
+package com.cafe24.kyungsu93.disease.controller.rest;
 
 import java.util.List;
 
@@ -14,8 +14,8 @@ import com.cafe24.kyungsu93.disease.service.DiseaseService;
 import com.cafe24.kyungsu93.disease.service.DiseaseSubCategory;
 
 @RestController
-public class RestDiseaseController {
-	private static final Logger logger = LoggerFactory.getLogger(RestDiseaseController.class);
+public class DiseaseRestController {
+	private static final Logger logger = LoggerFactory.getLogger(DiseaseRestController.class);
 	@Autowired
 	DiseaseService diseaseService;
 	

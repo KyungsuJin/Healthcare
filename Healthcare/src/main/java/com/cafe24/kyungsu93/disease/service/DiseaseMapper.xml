@@ -4,6 +4,19 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cafe24.kyungsu93.disease.serivce.DiseaseMapper">
+	<delete id="deleteMyDisease" parameterType="String">
+		DELETE
+		FROM
+			my_disease_detail
+		WHERE
+			my_disease_detail_no = #{myDiseaseDetailNo}
+	</delete>
+	<select id="selectMyDiseaseDetailNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(cast(SUBSTRING(my_disease_detail_no, 19) as decimal)), 0)
+		FROM
+			my_disease_detail
+	</select>
 	<select id="selectDiseaseNoForGetMyDiseaseList"
 			parameterType="String"
 			resultType="com.cafe24.kyungsu93.disease.service.MyDisease">
@@ -18,10 +31,11 @@
 			parameterType="String"
 			resultType="com.cafe24.kyungsu93.disease.service.MyDiseaseDetail">
 		SELECT
-			a.disease_sub_category_no as diseaseSubCategory
+			a.my_disease_detail_no as myDiseaseDetailNo
+			,a.disease_sub_category_no as diseaseSubCategory
 			,d.disease_no as diseaseNo
-			,c.family_history as familyHitory
-			,c.disease_sub_category_name as diseaseSubCategory
+			,c.family_history as familyHistory
+			,c.disease_sub_category_name as diseaseSubCategoryName
 			,d.disease_name as diseaseName
 		FROM
 			my_disease_detail a, my_disease b, disease_sub_category c, disease d
@@ -35,7 +49,8 @@
 			parameterType="com.cafe24.kyungsu93.disease.service.MyDisease"
 			resultType="String">
 		SELECT
-			my_disease_no
+			my_disease_no as myDiseaeNo
+			,member_no as memberNo
 		FROM
 			my_disease
 		WHERE
@@ -47,28 +62,7 @@
 		FROM
 			my_disease
 	</select>
-	<insert id="insertMyDiseaseDetail">
-		INSERT INTO my_disease_detail(
-			disease_sub_category_no
-			,my_disease_no
-			,my_disease_detail_date
-		)
-		VALUES(
-			#{diseaseSubCategoryNo}
-			,#{myDiseaseNo}
-			,now()
-		)
-	</insert>
-	<insert id="insertMyDisease" parameterType="com.cafe24.kyungsu93.disease.service.MyDisease">
-		INSERT INTO my_disease(
-			my_disease_no
-			,member_no
-		)
-		VALUES(
-			#{myDiseaseNo}
-			,#{memberNo}
-		)
-	</insert>
+
 	<delete id="deleteDiseaseSubCategory" parameterType="String">
 		DELETE			
 		FROM
@@ -119,6 +113,30 @@
 		FROM
 			disease
 	</select>
+	<insert id="insertMyDiseaseDetail">
+		INSERT INTO my_disease_detail(
+			my_disease_detail_no
+			,disease_sub_category_no
+			,my_disease_no
+			,my_disease_detail_date
+		)
+		VALUES(
+			#{myDiseaseDetailNo}
+			,#{diseaseSubCategoryNo}
+			,#{myDiseaseNo}
+			,now()
+		)
+	</insert>
+	<insert id="insertMyDisease" parameterType="com.cafe24.kyungsu93.disease.service.MyDisease">
+		INSERT INTO my_disease(
+			my_disease_no
+			,member_no
+		)
+		VALUES(
+			#{myDiseaseNo}
+			,#{memberNo}
+		)
+	</insert>
 	<insert id="insertDiseaseSubCategory" parameterType="com.cafe24.kyungsu93.disease.service.DiseaseSubCategory">
 		INSERT INTO disease_sub_category(
 			disease_sub_category_no

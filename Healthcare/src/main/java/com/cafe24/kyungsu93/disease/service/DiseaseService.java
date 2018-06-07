@@ -17,10 +17,14 @@ public class DiseaseService {
 	private static final Logger logger = LoggerFactory.getLogger(DiseaseService.class);
 	
 	
+	public int removeMyDisease(String myDiseaseDetailNo) {
+		logger.debug("DiseaseService_removeMyDisease");
+		System.out.println("myDiseaseDetailNo : " + myDiseaseDetailNo);
+		return diseaseDao.removeMyDisease(myDiseaseDetailNo);
+	}
 	public List<MyDiseaseDetail> getMyDiseaseLsit(String memberNo) {
 		logger.debug("DiseaseService_getMyDiseaseLsit");
 		MyDisease myDisease =  diseaseDao.selectDiseaseNoForGetMyDiseaseList(memberNo);
-		System.out.println("1111111etmyDiseaseNo : " + myDisease.getMyDiseaseNo());
 		List<MyDiseaseDetail>list = diseaseDao.getMyDiseaseLsit(myDisease.getMyDiseaseNo());
 		return list;
 	}
@@ -37,7 +41,12 @@ public class DiseaseService {
 			
 			diseaseDao.addMyDisease(myDisease);
 		}
-			myDiseaseDetail.setMyDiseaseNo(myDiseaseNo);
+		int result = (diseaseDao.selectMyDiseaseDetailNo())+1;
+		String myDiseaseDetail_temp = "my_disease_detail_";
+		String myDiseaseDetailNo = myDiseaseDetail_temp+result;
+		myDiseaseDetail.setMyDiseaseDetailNo(myDiseaseDetailNo);
+		myDiseaseDetail.setMyDiseaseNo(myDiseaseNo);
+		
 		return diseaseDao.addMyDiseaseDateil(myDiseaseDetail);
 	}
 	//ajax 다중셀렉트 대분류가 선택되면 No값을 받아와 소분류를 뿌려준다.
