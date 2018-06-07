@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.cafe24.kyungsu93.MessageMapper">
+  <resultMap type="com.cafe24.kyungsu93.message.service.Message" id="message">
+  	<result column="send_message_no" property="sendMessageNo"/>
+  	<result column="send_member_id" property="sendMessageId"/>
+  	<result column="member_send_no" property="memberSendNo"/>
+  	<result column="member_receive_no" property="memberReceiveNo"/>
+  	<result column="message_date" property="messageDate"/>
+  	<result column="message_title" property="messageTitle"/>
+  	<result column="message_content" property="messageContent"/>
+  </resultMap>
+  <!-- 아이디 존재 유무체크 -->
+  	<select id="messageIdChk"
+  			parameterType="String"
+  			resultType="Integer">
+  			SELECT count(*)
+  			FROM member
+  			WHERE member_id = #{memberId}
+  	
+  	</select>
+  	<!-- 메시지번호 -->
+  	<select id="messageNo"
+  			resultType="Integer">
+  			SELECT
+         	IFNULL(MAX(cast(SUBSTRING(send_message_no,9) as decimal)), 0)
+         	FROM send_message
+  	</select>
+  	<!-- 메시지번호 -->
+  	<select id="memberReceiveNo"
+  			resultType="String">
+  			SELECT member_no
+         	FROM member
+         	WHERE member_id=#{memberId}
+  	</select>
+  	<insert id="sendMessage"
+  			parameterType="com.cafe24.kyungsu93.message.service.Message">
+  			INSERT INTO send_message(
+  				send_message_no
+  				,member_send_no
+  				,member_receive_no
+  				,message_date
+  			)VALUES(
+  				#{sendMessageNo}
+  				,#{memberSendNo}
+  				,#{memberReceiveNo}
+  				,now()
+  			
+  			)
+  	</insert>
+  	<insert id="sendMessageContent"
+  			parameterType="com.cafe24.kyungsu93.message.service.Message">
+  			INSERT INTO send_message_content(
+  				send_message_no
+  				,send_member_id
+  				,message_title
+  				,message_content
+  			)VALUES(
+  				#{sendMessageNo}
+  				,#{sendMessageId}
+  				,#{messageTitle}
+  				,#{messageContent}
+  			)
+  	</insert>
+  	<insert id="receiveMessageContent"
+  			parameterType="com.cafe24.kyungsu93.message.service.Message">
+  			INSERT INTO receive_message(
+  				send_message_no
+  				,send_member_id
+  				,message_title
+  				,message_content
+  			)VALUES(
+  				#{sendMessageNo}
+  				,#{sendMessageId}
+  				,#{messageTitle}
+  				,#{messageContent}
+  			)
+  	</insert>
+  	<select id="messageReceiveList"
+  			parameterType="String"
+  			resultMap="message">
+  			SELECT 
+  				rs.send_message_no
+  				,rs.send_member_id
+				,rs.message_title
+				,sm.message_date
+			FROM send_message sm,receive_message rs
+			WHERE sm.send_message_no=rs.send_message_no AND sm.member_receive_no=#{memberNo}
+  	</select>
+  </mapper>

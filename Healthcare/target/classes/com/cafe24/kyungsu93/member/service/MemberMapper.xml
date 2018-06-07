@@ -33,6 +33,7 @@
 	  		<result column="member_evidence_file_real_name" property="memberFileRealName"/>
   		</collection>
   	</resultMap>
+  	<!--회원정보 수정전 아이디비밀번호 체크  -->
   	<select id="memberModifyCheck"
   			parameterType="com.cafe24.kyungsu93.member.service.Member"
   			resultType="Integer">
@@ -40,6 +41,7 @@
   			FROM member
   			WHERE member_id=#{memberId} AND member_pw=#{memberPw}
   	</select>
+  	<!-- PT 회원 회원가입 -->
   	<insert id="memberInsertPt"
   			parameterType="com.cafe24.kyungsu93.member.service.Member">
   		INSERT INTO member_teacher(
@@ -54,6 +56,7 @@
   			,now()
   		)
   	</insert>
+  	<!-- 의사회원의 회원가입 -->
   	<insert id="memberInsertDoctor"
   			parameterType="com.cafe24.kyungsu93.member.service.Member">
   		INSERT INTO member_doctor(
@@ -70,6 +73,7 @@
   			,now()
   		)
   	</insert>
+  	<!-- 아이디 중복확인의 아이디체크 -->
   	<select id="memberIdCheck"
   			parameterType="String"
   			resultType="Integer">
@@ -78,12 +82,14 @@
   			WHERE member_id = #{id}
   	
   	</select>
+  	<!-- 회원 번호  -->
   	<select id="memberNo"
   			resultType="Integer">
   			SELECT
          	IFNULL(MAX(cast(SUBSTRING(member_no,8) as decimal)), 0)
          	FROM member
   	</select>
+  	<!-- 기본회원 회원가입 -->
   	<insert id="memberInsert"
   			parameterType="com.cafe24.kyungsu93.member.service.Member">
   		INSERT INTO member(
@@ -114,6 +120,7 @@
   			,now()
   		)
   	</insert>
+  	<!-- 기본회원 회원정보 수정창 정보 출력 -->
   	<select id="memberModifySelect"
   			parameterType="String"
   			resultMap="member">
@@ -127,6 +134,7 @@
   			FROM member
   			WHERE member_id=#{id}
   	</select>
+  	<!-- 의사회원 회원정보 수정창 정보 출력 -->
   	<select id="memberModifySelectDoctor"
   			parameterType="String"
   			resultType="com.cafe24.kyungsu93.member.service.Member">
@@ -143,6 +151,7 @@
   			FROM member m,member_doctor d
   			WHERE m.member_no=d.member_no AND m.member_id=#{id}
   	</select>
+  	<!-- PT회원 회원정보 수정창 정보 출력 -->
   	<select id="memberModifySelectTeacher"
   			parameterType="String"
   			resultType="com.cafe24.kyungsu93.member.service.Member">
@@ -158,6 +167,7 @@
   			FROM member m,member_teacher t
   			WHERE m.member_no=t.member_no AND m.member_id=#{id}
   	</select>
+  	<!-- 기본회원의 회원정보 수정 -->
   	<update id="memberModify"
   			parameterType="com.cafe24.kyungsu93.member.service.Member">
   			UPDATE member
@@ -170,6 +180,7 @@
   				,member_tel = #{memberTel}
   			WHERE member_id = #{memberId}
   	</update>
+  	<!-- 의사회원의 회원정보 수정 -->
   	<update id="memeberModifyDoctor"
   			parameterType="com.cafe24.kyungsu93.member.service.Member">
   			UPDATE member m,member_doctor d
@@ -186,6 +197,7 @@
   				
   			WHERE m.member_no=d.member_no AND member_id = #{memberId}
   	</update>
+  	<!-- PT 회원의 회원정보 수정 -->
   	<update id="memeberModifyTeacher"
   			parameterType="com.cafe24.kyungsu93.member.service.Member">
   			UPDATE member m,member_teacher t
@@ -200,21 +212,25 @@
   				,t.member_work_space = #{memberWorkSpace}
   			WHERE m.member_no=t.member_no AND member_id = #{memberId}
   	</update>
+  	<!-- 기본회원 회원탈퇴 -->
   	<delete id="memberLeaveRequest"
   			parameterType="String">
   			DELETE FROM member
   			WHERE member_id=#{id}
   	</delete>
+  	<!-- 의사회원 회원탈퇴 -->
   	<delete id="memberLeaveDoctorRequest"
   			parameterType="String">
   			DELETE FROM member_doctor
   			WHERE member_no=#{memberNo}
   	</delete>
+  	<!-- PT 회원 회원탈퇴 -->
   	<delete id="memberLeaveTeacherRequest"
   			parameterType="String">
   			DELETE FROM member_teacher
   			WHERE member_no=#{memberNo}
   	</delete>
+  	<!-- 회원 탈퇴 전 아이디 검색-->
   	<select id="memberLeaveSelect"
   			parameterType="String"
   			resultType="String">
@@ -222,11 +238,13 @@
   			FROM member
   			WHERE member_id = #{id}
   	</select>
+  	<!-- 파일삭제 -->
   	<delete id="FileRemove"
   			parameterType="String">
   			DELETE FROM member_file
   			WHERE member_no=#{memberNo}
   	</delete>
+  	<!-- 의사,PT 회원의 파일 셀렉트 -->
   	<select id="memberFile"
   			parameterType="String"
   			resultType="com.cafe24.kyungsu93.member.service.MemberFile">
@@ -236,6 +254,7 @@
   			FROM member_file
   			WHERE member_no=#{memberNo}
   	</select>
+  	<!-- 승인대기 리스트 출력 -->
   	<select id="memberApprovalList"
   			parameterType="java.util.Map"
   			resultMap="member">
@@ -260,6 +279,7 @@
   			WHERE m.member_no=d.member_no And m.member_level >=3 And d.member_join_approval='F'
   			LIMIT #{beginRow},#{pagePerRow}
   	</select>
+  	<!-- 승인대기리스트 총  COUNT -->
   	<select id="totalCountList"
   			resultType="int">
   			SELECT SUM(total)
@@ -271,6 +291,7 @@
 	  				WHERE m.member_no=t.member_no And m.member_level >=3 And t.member_join_approval='F'
   				)tb
   	</select>
+  	<!-- 의사회원의 승인대기 리스트의 상세정보 보기 -->
   	<select id="memberApprovalContentLevel3"
   			parameterType="com.cafe24.kyungsu93.member.service.Member"
   			resultMap="member">
@@ -284,6 +305,7 @@
 			FROM member_doctor d,member_file f
 			WHERE d.member_no=f.member_no AND d.member_no =#{memberNo}
   	</select>
+  	<!-- PT회원 승인대기 리스트의 상세정보 보기-->
   	<select id="memberApprovalContentLevel4"
   			parameterType="com.cafe24.kyungsu93.member.service.Member"
   			resultMap="member">
@@ -296,6 +318,7 @@
 			FROM member_teacher t,member_file f
 			WHERE t.member_no=f.member_no AND t.member_no =#{memberNo}
   	</select>
+  	<!-- 의사회원 회원가입 승인 UPDATE -->
   	<update id="approvalDoctor"
   			parameterType="com.cafe24.kyungsu93.member.service.Member">
   			UPDATE member_doctor
@@ -303,6 +326,7 @@
 			member_join_approval='T'
 			WHERE member_no=#{memberNo}
   	</update>
+  	<!-- PT 회원 회원가입 승인 UPDATE -->
   	<update id="approvalTeacher"
   			parameterType="com.cafe24.kyungsu93.member.service.Member">
   			UPDATE member_teacher
@@ -310,6 +334,7 @@
 			member_join_approval='T'
 			WHERE member_no=#{memberNo}
   	</update>
+  	<!-- 전체회원 아이디 찾기 -->
   	<select id="memberFindId"
   			parameterType="com.cafe24.kyungsu93.member.service.Member"
   			resultType="String">
@@ -318,6 +343,7 @@
   			FROM member
   			WHERE member_name=#{memberName} AND member_email=#{memberEmail}
   	</select>
+  	<!-- 전체회원 비밀번호 찾기 -->
   	<select id="memberFindPw"
   			parameterType="com.cafe24.kyungsu93.member.service.Member"
   			resultType="String">
@@ -326,6 +352,7 @@
   			FROM member
   			WHERE member_id=#{memberId} AND member_email=#{memberEmail}
   	</select>
+  	<!-- 기본회원 리스트 -->
   	<select id="memberList"
   			parameterType="java.util.Map"
   			resultMap="member">
@@ -346,12 +373,14 @@
   			WHERE member_level=2
   			LIMIT #{beginRow},#{pagePerRow}
   	</select>
+  	<!-- 기본회원 리스트 총 COUNT 수 -->
   	<select id="memberListTotal"
   			resultType="Integer">
   			SELECT COUNT(*)
   			FROM member
   			WHERE member_level=2;
   	</select>
+  	<!-- 의사회원 의 리스트 -->
   	<select id="memberDoctorList"
   			parameterType="java.util.Map"
   			resultMap="member">
@@ -375,12 +404,14 @@
   			WHERE m.member_no=d.member_no AND m.member_level=3
   			LIMIT #{beginRow},#{pagePerRow}
   	</select>
+  	<!-- 의사회원의 총 리스트 COUNT -->
   	<select id="memberDoctorListTotal"
   			resultType="Integer">
   			SELECT COUNT(*)
   			FROM member m,member_doctor d
-  			WHERE m.member_level=3;
+  			WHERE m.member_no=d.member_no AND m.member_level=3;
   	</select>
+  	<!-- PT 회원의 리스트  출력-->
   	<select id="memberPtList"
   			parameterType="java.util.Map"
   			resultMap="member">
@@ -403,12 +434,14 @@
   			WHERE m.member_no=t.member_no AND m.member_level=4
   			LIMIT #{beginRow},#{pagePerRow}
   	</select>
+  	<!--  pt회원의 리스트 총 COUNT 수-->
   	<select id="memberPtListTotal"
   			resultType="Integer">
   			SELECT COUNT(*)
   			FROM member m,member_teacher t
-  			WHERE m.member_level=4;
+  			WHERE m.member_no=t.member_no AND m.member_level=4;
   	</select>
+  	<!--  기본회원 검색후 리스트 출력-->
   	<select id="memberSeachList"
   			parameterType="java.util.Map"
   			resultMap="member">
@@ -426,7 +459,78 @@
 	  			,member_agree
 	  			,member_join_date
   			FROM member 
-  			WHERE member_id=#{searchText} AND member_level=2
+  			WHERE ${searchSelect}  LIKE '%${searchText}%' AND member_level=2
+  				LIMIT #{beginRow},#{pagePerRow}
+  	</select>
+  	<!-- 기본회원 검색후 총 COUNT -->
+  	<select id="memberSearchListTotal"
+  			resultType="Integer"
+  			parameterType="java.util.Map">
+  			SELECT COUNT(*)
+  			FROM member
+  			WHERE ${searchSelect}  LIKE '%${searchText}%' AND member_level=2;
+  	</select>
+  	<!-- 의사회원 검색 리스트 출력-->
+  	<select id="DoctorMemberSeachList"
+  			parameterType="java.util.Map"
+  			resultMap="member">
+  			SELECT 
+	  			m.member_no
+	  			,m.member_id
+	  			,m.member_pw
+	  			,m.member_level
+	  			,m.member_name
+	  			,m.member_gender
+	  			,m.member_address
+	  			,m.member_email
+	  			,m.member_birth
+	  			,m.member_tel
+	  			,m.member_agree
+	  			,m.member_join_date
+	  			,d.member_register_no
+	  			,d.member_hospital_name
+	  			,d.treatment_department
+  			FROM member m,member_doctor d
+  			WHERE m.member_no=d.member_no AND ${searchSelect}  LIKE '%${searchText}%' AND m.member_level=3
   			LIMIT #{beginRow},#{pagePerRow}
+  	</select>
+  	<!-- 의사회원 검색 후 총 COUNT 수 -->
+  	<select id="DoctorMemberSearchListTotal"
+  			resultType="Integer"
+  			parameterType="java.util.Map">
+  			SELECT COUNT(*)
+  			FROM member m,member_doctor d
+  			WHERE m.member_no=d.member_no AND ${searchSelect}  LIKE '%${searchText}%' AND m.member_level=3;
+  	</select>
+  	<!--pt 회원 검색 리스트-->
+  	<select id="PtMemberSeachList"
+  			parameterType="java.util.Map"
+  			resultMap="member">
+  			SELECT 
+	  			m.member_no
+	  			,m.member_id
+	  			,m.member_pw
+	  			,m.member_level
+	  			,m.member_name
+	  			,m.member_gender
+	  			,m.member_address
+	  			,m.member_email
+	  			,m.member_birth
+	  			,m.member_tel
+	  			,m.member_agree
+	  			,m.member_join_date
+	  			,t.member_register_no
+	  			,t.member_work_space
+  			FROM member m,member_teacher t
+  			WHERE m.member_no=t.member_no AND ${searchSelect}  LIKE '%${searchText}%' AND m.member_level=4
+  			LIMIT #{beginRow},#{pagePerRow}
+  	</select>
+  	<!--회원 검색 리스트 count  -->
+  	<select id="PtMemberSearchListTotal"
+  			resultType="Integer"
+  			parameterType="java.util.Map">
+  			SELECT COUNT(*)
+  			FROM member m,member_teacher t
+  			WHERE m.member_no=t.member_no AND ${searchSelect}  LIKE '%${searchText}%' AND m.member_level=4;
   	</select>
   </mapper>

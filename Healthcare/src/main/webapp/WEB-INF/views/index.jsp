@@ -3,6 +3,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$("#messageList").click(function(){
+				window.open("${pageContext.request.contextPath}/messageList"
+						,"messageList","width=700, height=700,resizable=no,scrollbars=yes");
+			});
+		});
+	</script>
 </head>
 <body>
 	<h1>hello word</h1>
@@ -30,6 +39,7 @@
 		${sessionScope.memberSessionLevel}
 		<a href="${pageContext.request.contextPath}/logout">logout</a>
 		<a href="${pageContext.request.contextPath}/memberModifyCheck">회원정보수정</a>
+		<a href="#" id="messageList">메세지</a>
 		<a href="${pageContext.request.contextPath}/memberLeave">회원탈퇴</a>
 	</c:if>
 </body>

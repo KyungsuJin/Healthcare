@@ -147,7 +147,7 @@ public class MemberDao {
 		logger.debug("MemberDao.memberFindPw");
 		return sqlSession.selectOne(NS+"memberFindPw",member);
 	}
-	//회원 리스트
+	//기본회원 리스트
 	public List<Member> memberList(Map<String,Integer> map) {
 		logger.debug("MemberDao.memberList");
 		return sqlSession.selectList(NS+"memberList",map);
@@ -161,7 +161,7 @@ public class MemberDao {
 	public int memberDoctorListTotal() {
 		return sqlSession.selectOne(NS+"memberDoctorListTotal");
 	}
-	//회원 총수
+	//기본회원 총수
 	public int memberListTotal() {
 		return sqlSession.selectOne(NS+"memberListTotal");
 	}
@@ -175,9 +175,34 @@ public class MemberDao {
 		logger.debug("MemberDao.memberPtListTotal");
 		return sqlSession.selectOne(NS+"memberPtListTotal");
 	}
-	//회원 검색 리스트
+	//기본회원 검색 리스트
 	public List<Member> memberSeachList(Map<String,Object> map) {
 		logger.debug("MemberDao.memberSeachList");
 		return sqlSession.selectList(NS+"memberSeachList",map);
 	}
+	//기본회원 검색 한값의 토탈
+	public int memberSearchListTotal(Map<String,Object> map) {
+		return sqlSession.selectOne(NS+"memberSearchListTotal",map);
+	}
+	//의사 검색 리스트
+	public List<Member> DoctorMemberSeachList(Map<String,Object> map) {
+		logger.debug("MemberDao.DoctorMemberSeachList");
+		return sqlSession.selectList(NS+"DoctorMemberSeachList",map);
+	}
+	//의사회원 검색 한값의 토탈
+	public int DoctorMemberSearchListTotal(Map<String,Object> map) {
+		logger.debug("MemberDao.DoctorMemberSearchListTotal");
+		return sqlSession.selectOne(NS+"DoctorMemberSearchListTotal",map);
+	}
+	//pt 검색 리스트
+	public List<Member> PtMemberSeachList(Map<String,Object> map) {
+		logger.debug("MemberDao.PtMemberSeachList");
+		return sqlSession.selectList(NS+"PtMemberSeachList",map);
+	}
+	//PT회원 검색 한값의 토탈
+	public int PtMemberSearchListTotal(Map<String,Object> map) {
+		logger.debug("MemberDao.PtMemberSearchListTotal");
+		return sqlSession.selectOne(NS+"PtMemberSearchListTotal",map);
+	}
+	
 }

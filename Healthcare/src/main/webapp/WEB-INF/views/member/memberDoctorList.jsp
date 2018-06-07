@@ -3,6 +3,60 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$.ajax({
+				type : "GET"
+				,url : "${pageContext.request.contextPath}/memberList"
+				,data : {"memberLevel" :3
+						,"currentPage":$("#currentPage").val()
+						,"searchSelect" : $("#searchSelect").val()
+						,"searchText" :$("#searchText").val()
+						}
+				,dataType : "json"
+				,success:function(data){
+					console.log(data);
+					$.each(data.memberList,function(key,val){
+						$("#tbody").append('<tr><td>'+val.memberNo+'</td>'+
+											'<td>'+val.memberId+'</td>'+
+											'<td>'+val.memberName+'</td>'+
+											'<td>'+val.teacherRegisterNo+'</td>'+
+											'<td>'+val.hospitalName+'</td>'+
+											'<td>'+val.treatmentDepartment+'</td>'+
+											'<td>'+val.memberGender+'</td>'+
+											'<td>'+val.memberAddress+'</td>'+
+											'<td>'+val.memberTel+'</td>'+
+											'<td>'+val.memberEmail+'</td>'+
+											'<td>'+val.memberBirth+'</td>'+
+											'<td>'+val.memberPoint+'</td>'+
+											'<td>'+val.memberJoinDate+'</td>'+
+											'<td>'+val.memberAgree+'</td>'+
+											'<td><a href="${pageContext.request.contextPath}/memberExpulsion?memberId='+val.memberId+'&memberLevel='+val.memberLevel+'">강퇴</a></td></tr>'
+											);
+					});
+						if(data.currentPage>1){
+							$("#page").append('<a href="${pageContext.request.contextPath}/DoctorMemberList?currentPage=1&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> << </a>');
+							$("#page").append('<a href="${pageContext.request.contextPath}/DoctorMemberList?currentPage='+(data.currentPage-1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> 이전 </a>');
+						}
+						for(i=data.startPage;i<=data.endPage;i++){
+							$("#page").append('<a href="${pageContext.request.contextPath}/DoctorMemberList?currentPage='+i+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> ' +i+ ' </a>');
+						}
+						
+						if(data.lastPage>data.currentPage){
+							$("#page").append('<a href="${pageContext.request.contextPath}/DoctorMemberList?currentPage='+(data.currentPage+1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> 다음 </a>');
+							$("#page").append('<a href="${pageContext.request.contextPath}/DoctorMemberList?currentPage='+data.lastPage+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> >> </a>');
+						}
+					
+					
+				}
+			});
+			$("#searchBtn").click(function(){
+				window.location.href='${pageContext.request.contextPath}/DoctorMemberList?searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchTextTest").val();
+			})
+		});
+	</script>
 
 </head>
 <body>
@@ -24,41 +78,26 @@
 				<th>포인트</th>
 				<th>가입날짜</th>
 				<th>개인정보동의여부</th>
+				<th>강퇴</th>
 			</tr>
 		</thead>
-		<tbody>
-		<c:forEach items="${memberList}" var="member">
-			<tr>
-				<td>${member.memberNo}</td>
-				<td>${member.memberId}</td>
-				<td>${member.memberName}</td>
-				<td>${member.doctorRegisterNo}</td>
-				<td>${member.hospitalName}</td>
-				<td>${member.treatmentDepartment}</td>
-				<td>${member.memberGender}</td>
-				<td>${member.memberAddress}</td>
-				<td>${member.memberTel}</td>
-				<td>${member.memberEmail}</td>
-				<td>${member.memberBirth}</td>
-				<td>${member.memberPoint}</td>
-				<td>${member.memberJoinDate}</td>
-				<td>${member.memberAgree}</td>
-			</tr>
-		</c:forEach>
+		<tbody id="tbody">
 		</tbody>
 	</table>
-	<div id="pageDiv">
-		<c:if test="${currentPage>1}">
-			<a href="${pageContext.request.contextPath}/memberList?currentPage=1&memberLevel=3"></a>
-			<a href="${pageContext.request.contextPath}/memberList?currentPage=${currentPage-1}&memberLevel=3">이전</a>
-		</c:if>
-			<c:forEach begin="${startPage}" end="${endPage}" step="1" var="i">
-				<a href="${pageContext.request.contextPath}/memberList?currentPage=${i}&memberLevel=3">${i}</a>
-			</c:forEach>
-		<c:if test="${lastPage>currentPage}">
-			<a href="${pageContext.request.contextPath}/memberList?currentPage=${currentPage+1}&memberLevel=3">다음</a>
-			<a href="${pageContext.request.contextPath}/memberList?currentPage=${lastPage}&memberLevel=3"></a>
-		</c:if>
+	<div id=page>
 	</div>
+	<input type="hidden" name="currentPage" id="currentPage" value="${currentPage}">
+	<input type="hidden" id="searchText" name="searchText" value="${searchText}">
+	<form>
+		<select id="searchSelect" name="searchSelect">
+			<option value="member_id">아이디</option>
+			<option <c:out value="${searchSelect eq 'member_name' ? 'selected=selected' :'' }"/> value="member_name">이름</option>
+			<option <c:out value="${searchSelect eq 'm.member_no' ? 'selected=selected' :'' }"/> value="m.member_no">회원번호</option>
+			<option <c:out value="${searchSelect eq 'member_hospital_name' ? 'selected=selected' :'' }"/> value="member_hospital_name">소속병원</option>
+			<option <c:out value="${searchSelect eq 'treatment_department' ? 'selected=selected' :'' }"/> value="treatment_department">진료과목</option>
+		</select>
+		<input type="text" id="searchTextTest" name="searchTextTest">
+		<button type="button" id="searchBtn">검색</button>
+	</form>
 </body>
 </html>

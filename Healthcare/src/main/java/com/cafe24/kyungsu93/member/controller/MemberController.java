@@ -25,47 +25,64 @@ public class MemberController {
 	@Autowired MemberService memberService;
    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
    
-   @RequestMapping(value="/memberList1",method=RequestMethod.GET)
-   public String memberLis1(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
-		   				,@RequestParam(value="memberLevel")int memberLevel/*,@RequestParam Map<String,Object> map*/) {
-/*	   logger.debug("asd"+map.get("pagePerRow"));
-	   logger.debug("MemberController.memberListChoice GET");
-	   model.addAttribute("memberList",map.get("memberList"));*/
+ //회원 강퇴
+   @RequestMapping(value="/memberExpulsion",method=RequestMethod.GET)
+   public String memberExpulsion(Member member,HttpSession session) {
+	   logger.debug("MemberController.memberExpulsion GET");
+	   logger.debug(member.getMemberNo());
+	   logger.debug("asd"+member.getMemberLevel());
+	   String path = session.getServletContext().getRealPath("/resources/upload/");
+	   memberService.memberLeaveRequest(member,path);
+	   String result="";
+	   if(member.getMemberLevel()==2) {
+		   result="member/memberList";
+	   }else if(member.getMemberLevel()==3) {
+		   result="member/memberDoctorList";
+	   }else if(member.getMemberLevel()==4) {
+		   result="member/memberPtList";
+	   }
+	   return result;
+   }
+   //기본회원 리스트 폼 출력
+   @RequestMapping(value="/basicMemberLis",method=RequestMethod.GET)
+   public String basicMemberLis(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
+		   				,@RequestParam(value="searchSelect",required=false)String searchSelect
+	   					,@RequestParam(value="searchTextTest",required=false)String searchText) {
+	   logger.debug("MemberController.basicMemberLis");
+	   logger.debug("searchSelect : " +searchSelect);
+	   logger.debug("searchText : " +searchText);
 	   model.addAttribute("currentPage",currentPage);
-	   model.addAttribute("memberLevel",memberLevel);
+	   model.addAttribute("searchSelect",searchSelect);
+	   model.addAttribute("searchText",searchText);
 	   return "member/memberList";
    }
-   //회원 리스트
-   @ResponseBody
-   @RequestMapping(value="/memberList",method=RequestMethod.GET)
-   public Map<String,Object> memberList(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
-		   					,@RequestParam(value="pagePerRow",defaultValue="5")int pagePerRow
-		   					,@RequestParam(value="memberLevel")int memberLevel
-		   					,@RequestParam(value="searchSelect",required=false)String searchSelect
-		   					,@RequestParam(value="searchText",required=false)String searchText) {
-	   logger.debug("MemberController.memberList GET");
-	   logger.debug("searchSelect : "+searchSelect);
-	   logger.debug("searchText : "+searchText);
-	   logger.debug("memberLevel : "+memberLevel);
-	   Map<String,Object> map=memberService.memberList(currentPage,pagePerRow,memberLevel,searchText,searchSelect);
-	   model.addAttribute("memberList",map.get("memberList"));
-	   model.addAttribute("startPage",map.get("startPage"));
-	   model.addAttribute("endPage",map.get("endPage"));
-	   model.addAttribute("lastPage",map.get("lastPage"));
-	   map.put("currentPage", currentPage);
-	   map.put("pagePerRow", pagePerRow);
-	   model.addAttribute("currentPage",map.get("currentPage"));
-	   model.addAttribute("pagePerRow",map.get("pagePerRow"));
-	   String result="";
-	  /* if(memberLevel==2) {
-		   result="member/memberList";
-	   }else if(memberLevel==3) {
-		   result="member/memberDoctorList";
-	   }else if(memberLevel==4) {
-		   result="member/memberPtList";
-	   }*/
-	   return map;
+   //의사회원 리스트 폼 출력
+   @RequestMapping(value="/DoctorMemberList",method=RequestMethod.GET)
+   public String DoctorMemberList(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
+		   				,@RequestParam(value="searchSelect",required=false)String searchSelect
+		   				,@RequestParam(value="searchTextTest",required=false)String searchText) {
+	   logger.debug("MemberController.DoctorMemberList");
+	   logger.debug("searchSelect : " +searchSelect);
+	   logger.debug("searchText : " +searchText);
+	   model.addAttribute("currentPage",currentPage);
+	   model.addAttribute("searchSelect",searchSelect);
+	   model.addAttribute("searchText",searchText);
+	   return "member/memberDoctorList";
    }
+   //pt 회원 리스트  폼 출력
+   @RequestMapping(value="/PtMemberList",method=RequestMethod.GET)
+   public String PtMemberList(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
+		   				,@RequestParam(value="searchSelect",required=false)String searchSelect
+						,@RequestParam(value="searchTextTest",required=false)String searchText) {
+	   logger.debug("MemberController.PtMemberList");
+	   logger.debug("searchSelect : " +searchSelect);
+	   logger.debug("searchText : " +searchText);
+	   model.addAttribute("currentPage",currentPage);
+	   model.addAttribute("searchSelect",searchSelect);
+	   model.addAttribute("searchText",searchText);
+	   return "member/memberPtList";
+   }
+   
    //회원검색 선택
    @RequestMapping(value="/memberListChoice",method=RequestMethod.GET)
    public String memberListChoice() {
@@ -90,36 +107,14 @@ public class MemberController {
 	   logger.debug("MemberController.memberFindId GET");
 	   return "member/memberFindId";
    }
-   //아이디찾기
-   @ResponseBody
-   @RequestMapping(value="/memberFindId",method=RequestMethod.POST)
-   public Map<String,Object> memberFindId(Member member) {
-	   logger.debug("MemberController.memberFindId POST");
-	   logger.debug(member.getMemberName());
-	   logger.debug(member.getMemberEmail());
-	   String memberId=memberService.memberFindId(member);
-	   Map<String,Object> map= new HashMap<String,Object>();
-	   map.put("memberId",memberId);
-	   return map;
-   }
+   
    //패스워드 찾기 페이지
    @RequestMapping(value="/memberFindPw",method=RequestMethod.GET)
    public String memberFindPw() {
 	   logger.debug("MemberController.memberFindPw GET");
 	   return "member/memberFindPw";
    }
-   //패스워드 찾기 페이지
-   @ResponseBody
-   @RequestMapping(value="/memberFindPw",method=RequestMethod.POST)
-   public Map<String,Object> memberFindPw(Member member) {
-	   logger.debug("MemberController.memberFindPw GET");
-	   logger.debug(member.getMemberId());
-	   logger.debug(member.getMemberEmail());
-	   String memberPw=memberService.memberFindPw(member);
-	   Map<String,Object> map= new HashMap<String,Object>();
-	   map.put("memberPw", memberPw);
-	   return map;
-   }
+   
    //승인요청
    @RequestMapping(value="/approval",method=RequestMethod.GET)
    public String approval(Member member) {
@@ -134,8 +129,8 @@ public class MemberController {
    public String memberApprovalContent(Model model,Member member
 		   							,HttpSession session) {
 	   logger.debug("MemberController.memberApprovalContent GET");
-	   logger.debug("asdfasdfasdf : "+member.getMemberNo());
-	   logger.debug("asdfasdfasdf : "+member.getMemberLevel());
+	   logger.debug("MemberNo : "+member.getMemberNo());
+	   logger.debug("MemberLevel : "+member.getMemberLevel());
 	   Member memberContent=memberService.memberApprovalContent(member);
 	   String path = session.getServletContext().getRealPath("/resources/upload/");
 	   model.addAttribute("member",memberContent);
@@ -199,15 +194,7 @@ public class MemberController {
 	   logger.debug("MemberController.memberModifyCheck GET");
 	   return "member/memberModifyCheck";
    }
-   //회원정보 수정전 비밀번호 체크
-   @ResponseBody
-   @RequestMapping(value="/memberModifyCheck",method=RequestMethod.POST)
-   public int memberModifyCheck(Member member) {
-	   logger.debug("MemberController.memberModifyCheck POST");
-	   logger.debug("id : "+member.getMemberId());
-	   logger.debug("pw : "+member.getMemberPw());
-	   return memberService.memberModifyCheck(member);
-   }
+   
    //기본화면
    @RequestMapping(value="/",method=RequestMethod.GET)
    public String index() {
@@ -236,14 +223,6 @@ public class MemberController {
 	   logger.debug("MemberController.memberCheck GET");
 	   return "member/memberIdChk";
 	   }
-   //아이디 중복확인 메서드
-   @ResponseBody
-   @RequestMapping(value = "/memberIdCheck", method = RequestMethod.POST)
-   public String memberIdCheck(@RequestParam(value="id")String id) {
-	   logger.debug("MemberController.memberIdCheck POST");
-	   int rowcount= memberService.memberIdCheck(id);
-	   logger.debug("row:"+rowcount);
-      return String.valueOf(rowcount);
-   }
+  
 
 }
