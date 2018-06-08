@@ -23,13 +23,13 @@ public class MessageController {
 		logger.debug("messageController.message");
 		return "message/message";
 	}
-	//메시지폼
+	//메시지리스트
 	@RequestMapping(value="/messageList",method=RequestMethod.GET)
 	public String messageList() {
 		logger.debug("messageController.messageList");
 		return "message/messageList";
 	}
-	//메시지폼
+	//메시지 전송
 	@RequestMapping(value="/sendMessage",method=RequestMethod.POST)
 	public String sendMessage(Message message) {
 		logger.debug("messageController.sendMessage");
@@ -38,6 +38,14 @@ public class MessageController {
 		logger.debug("받는사람 : "+message.getMemberReceiveNo());
 		messageService.sendMessage(message);
 	return "message/message";
+	}
+	//메시지폼
+	@RequestMapping(value="/messageContext",method=RequestMethod.GET)
+	public String messageContext(@RequestParam(value="messageNo")String messageNo) {
+		logger.debug("messageController.messageContext");
+		logger.debug("messageNo : "+messageNo);
+		messageService.messageContext(messageNo);
+	return "message/messageList";
 	}
 
 }

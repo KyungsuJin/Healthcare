@@ -43,5 +43,10 @@ public class MessageService {
 		logger.debug("MessageService.messageReceiveList");
 		return messageDao.messageReceiveList(memberNo);
 	}
+	public String messageContext(String messageNo) {
+		logger.debug("MessageService.messageContext");
+		messageDao.messageContext(messageNo);
+		return "";
+	}
 
 }

@@ -47,5 +47,9 @@ public class MessageDao {
 		logger.debug("MessageDao.messageReceiveList");
 		return sqlSession.selectList(NS+"messageReceiveList",memberNo);
 	}
+	public String messageContext(String messageNo) {
+		logger.debug("MessageDao.messageContext");
+		return sqlSession.selectOne(NS+"messageContext",messageNo);
+	}
 
 }

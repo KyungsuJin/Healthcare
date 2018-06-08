@@ -19,16 +19,20 @@
 					,dataType:"json"
 					,success:function(data){
 						console.log(data.list);
+						$("#tb").empty();
 						$("#tb").append('<tr><td>보낸사람</td><td>내용</td><td>날짜</td></tr>');
 						$.each(data.list,function(key,val){
 							$("#tb").append(
 											'<tr><td>'+val.sendMessageId+'</td>'+
-											'<td>'+val.messageTitle+'</td>'+
+											'<td><a href="${pageContext.request.contextPath}/messageContext?messageNo='+val.sendMessageNo+'" class="messageContent">'+val.messageTitle+'</a></td>'+
 											'<td>'+val.messageDate+'</td></tr>'
 											);
 						});
 					}
 				});
+			});
+			$(document).on("click",".messageContent",function(){
+				console.log($(this).val());
 			});
 			
 		});
@@ -40,11 +44,7 @@
 	<button type="button" id="messageWrite">메시지 작성</button>
 	<button type="button">보낸 메시지</button>
 	<button type="button" id="messageReceive">받은 메시지</button>
-	<div id="list">
-		<table border="1" class="table" id="tb">
-	
-			
-		</table>
-	</div>
+	<table border="1" class="table" id="tb">
+	</table>
 </body>
 </html>

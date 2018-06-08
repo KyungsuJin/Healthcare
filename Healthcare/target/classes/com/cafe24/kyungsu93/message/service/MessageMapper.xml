@@ -36,6 +36,7 @@
          	FROM member
          	WHERE member_id=#{memberId}
   	</select>
+  	<!-- send_message 테이블 보낸 메시지  인설트-->
   	<insert id="sendMessage"
   			parameterType="com.cafe24.kyungsu93.message.service.Message">
   			INSERT INTO send_message(
@@ -51,6 +52,7 @@
   			
   			)
   	</insert>
+  	<!--send_message_content 테이블 보낸 메시지  인설트-->
   	<insert id="sendMessageContent"
   			parameterType="com.cafe24.kyungsu93.message.service.Message">
   			INSERT INTO send_message_content(
@@ -65,6 +67,7 @@
   				,#{messageContent}
   			)
   	</insert>
+  	<!--receive_message 테이블 받은메시지 내용인설트  -->
   	<insert id="receiveMessageContent"
   			parameterType="com.cafe24.kyungsu93.message.service.Message">
   			INSERT INTO receive_message(
@@ -79,6 +82,7 @@
   				,#{messageContent}
   			)
   	</insert>
+  	<!-- 메시지 받은리스트  -->
   	<select id="messageReceiveList"
   			parameterType="String"
   			resultMap="message">
