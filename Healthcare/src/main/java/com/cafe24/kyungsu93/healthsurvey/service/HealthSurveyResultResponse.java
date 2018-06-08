@@ -13,7 +13,7 @@ public class HealthSurveyResultResponse {
 	private int healthSurveyRegisterWarning;
 	private int healthSurveyRegisterDanger;
 	private int healthSurveyRegisterTotal;
-	private int healthSurveyRegisterDate;
+	private String healthSurveyRegisterDate;
 	
 	public String getHealthSurveyResultNo() {
 		return healthSurveyResultNo;
@@ -87,10 +87,10 @@ public class HealthSurveyResultResponse {
 	public void setHealthSurveyRegisterTotal(int healthSurveyRegisterTotal) {
 		this.healthSurveyRegisterTotal = healthSurveyRegisterTotal;
 	}
-	public int getHealthSurveyRegisterDate() {
+	public String getHealthSurveyRegisterDate() {
 		return healthSurveyRegisterDate;
 	}
-	public void setHealthSurveyRegisterDate(int healthSurveyRegisterDate) {
+	public void setHealthSurveyRegisterDate(String healthSurveyRegisterDate) {
 		this.healthSurveyRegisterDate = healthSurveyRegisterDate;
 	}
 	@Override

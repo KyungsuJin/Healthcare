@@ -29,7 +29,7 @@
 			        data : param,
 			        dataType : 'text',
 			        success : function(data) {
-			        	location.href="${pageContext.request.contextPath}/getHealthSurveyResult?healthSurveyResult="+data;
+			        	location.href="${pageContext.request.contextPath}/getHealthSurveyResult?healthSurveyResultNo="+data;
 			        },
 			        error : function() { console.log('error');}
 				});
