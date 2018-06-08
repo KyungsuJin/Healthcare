@@ -22,8 +22,7 @@ public class BloodPressureService {
 	
 	public List<BloodPressure> selectBloodPressureChart(String memberNo) {
 		logger.debug("BloodPressureService - selectBloodPressureChart 실행");
-		List<BloodPressure> list = bloodPressureDao.selectBloodPressureChart(memberNo);
-		return list;
+		return bloodPressureDao.selectBloodPressureChart(memberNo);
 	}
 	
 	public void updateBloodPressure(String bloodPressureNo) {

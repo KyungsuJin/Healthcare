@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.cafe24.kyungsu93.bloodpressure.service.BloodPressure;
 import com.cafe24.kyungsu93.bloodpressure.service.BloodPressureService;
@@ -23,7 +24,7 @@ public class BloodPressureController {
 	@Autowired
 	private BloodPressureService bloodPressureService;
 	private static final Logger logger = LoggerFactory.getLogger(BloodPressureController.class);
-	
+		
 	@RequestMapping(value="/bloodPressureChart", method=RequestMethod.GET)
 	public String bloodPressureChart() {
 		logger.debug("BloodpressureController - bloodPressureChart 포워드 실행");

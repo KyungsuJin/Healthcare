@@ -15,39 +15,24 @@
 	$.ajax({
 		type : "POST",
 		url : "${pageContext.request.contextPath}/bloodPressureChart?memberNo="+memberNo,
-
-		success : function(list){
-			console.log(list);   
-			google.charts.load('current', {'packages':['line']});
+		success : function(msg){
+			console.log("listSet:"+msg);   
+			google.charts.load('current', {'packages':['line', 'corechart']});
 			google.charts.setOnLoadCallback(drawChart);
 			function drawChart() {
-				var data = new google.visualization.DataTable();					
-				data.addColumn('datetime', '날짜');
+				var data = new google.visualization.arraytodataTable(msg);
+/* 				data.addColumn('number', '등록날짜');
 				data.addColumn('number', '이완기혈압');
-				data.addColumn('number', '수축기혈압');
-					
-				var dataRow = [];
-				
-				for(var i=0; i<=list.length; i++){
-					console.log(list.length); 
-					var date = list[i].bloodPressureDate;
-					console.log(date); 
-					var systolic = list[i].systolicPressure;
-					console.log(systolic); 
-					var diastolic = list[i].diastolicPressure;
-					console.log(diastolic); 
-					dataRow = [date,systolic,diastolic];
-				}
-				
-				data.addRow(dataRow);
+				data.addColumn('number', '수축기혈압'); */
+
 				var options = {
-					chart:{title : '내혈압그래프'},
+					chart:{title : '혈압그래프'},
 					width: 900, // 넓이 옵션
-					height: 300 // 높이 옵션
+					height: 300, // 높이 옵션
 					};
 				      
-				var chart = new google.charts.Line(document.getElementById('linechart_material'));
-				chart.draw(data, google.charts.Line.convertOptions(options));
+				 var chart = new google.charts.Line(document.getElementById('linechart_material'));
+			      chart.draw(data, google.charts.Line.convertOptions(options));
             	}
             }
         });   
