@@ -2,18 +2,17 @@ package com.cafe24.kyungsu93.healthsurvey.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.cafe24.kyungsu93.healthscreen.service.HealthScreenRequest;
-import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyDao;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyQuestion;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyRequest;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResponse;
@@ -21,6 +20,7 @@ import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultRequest;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultResponse;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveySelection;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyService;
+import com.cafe24.kyungsu93.member.service.Member;
 
 @Controller
 public class HealthSurveyController {
@@ -79,6 +79,12 @@ public class HealthSurveyController {
 		return "healthsurvey/addHealthSurveyResult";
 	}
 	
+	@RequestMapping(value="/removeHealthSurvey", method=RequestMethod.GET)
+	public String addHealthSurveyResult(HealthSurveyRequest healthSurveyRequest) {
+		healthSurveyService.removeHealthSurvey(healthSurveyRequest);
+		return "redirect:/getHealthSurveyList";
+	}
+	
 	@RequestMapping(value="/getHealthSurveyResult", method=RequestMethod.GET)
 	public String getHealthSurveyResult(Model model, HealthSurveyResultRequest healthSurveyResultRequest) {
 		System.out.println("11111"+healthSurveyResultRequest.toString());
@@ -87,6 +93,31 @@ public class HealthSurveyController {
 		System.out.println("22222"+healthSurveyResultResponse.toString());
 		
 		return "healthsurvey/getHealthSurveyResult";
+	}
+	
+	@RequestMapping(value="/getHealthSurveyResultList", method=RequestMethod.GET)
+	public String getHealthSurveyResultList(Model model, HttpSession session
+			,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+			,@RequestParam(value="pagePerRow", defaultValue="10") int pagePerRow
+			,Member member) {
+		if(member.getMemberNo() == null) {
+			if(session.getAttribute("memberSessionNo") != null) {
+				member.setMemberNo(session.getAttribute("memberSessionNo").toString());
+			} else {
+				return "redirect:/";
+			}
+			
+		}
+		logger.debug("HealthSurveyController.getHealthSurveyResultList 메서드 실행");
+		Map map = healthSurveyService.getHealthSurveyResultList(currentPage, pagePerRow, member);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("firstPage", map.get("firstPage"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("beforePage", map.get("beforePage"));
+		model.addAttribute("afterPage", map.get("afterPage"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("pagePerRow", pagePerRow);
+		return "healthsurvey/getHealthSurveyResultList";
 	}
 
 }

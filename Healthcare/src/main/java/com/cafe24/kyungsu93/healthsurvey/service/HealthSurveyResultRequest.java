@@ -3,6 +3,7 @@ package com.cafe24.kyungsu93.healthsurvey.service;
 public class HealthSurveyResultRequest {
 	private String healthSurveyResultNo;
 	private String healthSurveyRegisterNo;
+	private int healthSurveyEvaluationDo;
 	private String memberNo;
 	
 	public String getHealthSurveyResultNo() {
@@ -17,6 +18,12 @@ public class HealthSurveyResultRequest {
 	public void setHealthSurveyRegisterNo(String healthSurveyRegisterNo) {
 		this.healthSurveyRegisterNo = healthSurveyRegisterNo;
 	}
+	public int getHealthSurveyEvaluationDo() {
+		return healthSurveyEvaluationDo;
+	}
+	public void setHealthSurveyEvaluationDo(int healthSurveyEvaluationDo) {
+		this.healthSurveyEvaluationDo = healthSurveyEvaluationDo;
+	}
 	public String getMemberNo() {
 		return memberNo;
 	}
@@ -25,8 +32,9 @@ public class HealthSurveyResultRequest {
 	}
 	@Override
 	public String toString() {
-		return "HealthSurveyResult [healthSurveyResultNo=" + healthSurveyResultNo + ", healthSurveyRegisterNo="
-				+ healthSurveyRegisterNo + ", memberNo=" + memberNo + "]";
+		return "HealthSurveyResultRequest [healthSurveyResultNo=" + healthSurveyResultNo + ", healthSurveyRegisterNo="
+				+ healthSurveyRegisterNo + ", healthSurveyEvaluationDo=" + healthSurveyEvaluationDo + ", memberNo="
+				+ memberNo + "]";
 	}
 	
 }

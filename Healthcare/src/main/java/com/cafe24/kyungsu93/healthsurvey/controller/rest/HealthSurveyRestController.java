@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyAverageGrade;
+import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultRequest;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyService;
 
 @RestController
@@ -24,6 +26,16 @@ public class HealthSurveyRestController {
 										,@RequestParam(value="healthSurveyRegisterNo") String healthSurveyRegisterNo
 										,@RequestParam(value="healthSurveyTotalGrade") int healthSurveyTotalGrade) {
 		return healthSurveyService.addHealthSurveyResult(session.getAttribute("memberSessionNo").toString(), healthSurveySelectionNo, healthSurveyRegisterNo, healthSurveyTotalGrade);
+	}
+	
+	@RequestMapping(value="/addHealthSurveyEvaluation", method=RequestMethod.POST)
+	public String addHealthSurveyEvaluation(@RequestParam(value="healthSurveyResultNo") String healthSurveyResultNo
+											,@RequestParam(value="healthSurveyRegisterNo") String healthSurveyRegisterNo
+											,@RequestParam(value="healthSurveyEvaluationAverageGrade") int healthSurveyEvaluationAverageGrade) {
+		System.out.println("값 1 : " + healthSurveyResultNo);
+		System.out.println("값 2 : " + healthSurveyEvaluationAverageGrade);
+		healthSurveyService.addHealthSurveyEvaluation(healthSurveyResultNo, healthSurveyRegisterNo, healthSurveyEvaluationAverageGrade);
+		return "";
 	}
 	
 }

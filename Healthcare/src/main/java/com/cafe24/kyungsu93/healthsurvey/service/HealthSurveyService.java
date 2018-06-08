@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.cafe24.kyungsu93.healthscreen.service.HealthScreenRequest;
+import com.cafe24.kyungsu93.member.service.Member;
+import com.sun.xml.internal.fastinfoset.algorithm.HexadecimalEncodingAlgorithm;
 
 
 
@@ -76,6 +78,7 @@ public class HealthSurveyService {
 				}
 			}
 		}
+		healthSurveyDao.addHealthSurveyAverageGrade(healthSurveyRegisterNo);
 	}
 	
 	public Map<String, Object> getHealthSurveyQuestion(HealthSurveyRequest healthSurveyRequest){
@@ -91,6 +94,21 @@ public class HealthSurveyService {
 			questionList.get(i).setHealthSurveySelection(selectionList);
 		}
 		return map;
+	}
+	
+	//설문 삭제를 위한 메서드. 총 7개의 테이블에 걸쳐서 삭제를 해야함.
+	public void removeHealthSurvey(HealthSurveyRequest healthSurveyRequest) {
+		healthSurveyDao.removeHealthSurveyAverageGrade(healthSurveyRequest);
+		for(HealthSurveyQuestion healthSurveyQuestion : healthSurveyDao.getHealthSurveyQuestion(healthSurveyRequest)) {
+			healthSurveyDao.removeHealthSurveySelection(healthSurveyQuestion);
+		}
+		healthSurveyDao.removeHealthSurveyQuestion(healthSurveyRequest);
+		for(HealthSurveyResultRequest healthSurveyResultRequest : healthSurveyDao.getHealthSurveyResultNoList(healthSurveyRequest)) {
+			healthSurveyDao.removeHealthSurveyTotalGrade(healthSurveyResultRequest);
+			healthSurveyDao.removeHealthSurveyRecord(healthSurveyResultRequest);
+		}
+		healthSurveyDao.removeHealthSurveyResult(healthSurveyRequest);
+		healthSurveyDao.removeHealthSurvey(healthSurveyRequest);
 	}
 	
 	public String addHealthSurveyResult(String memberNo, List<String> healthSurveySelectionNo, String healthSurveyRegisterNo, int totalGrade) {
@@ -115,4 +133,41 @@ public class HealthSurveyService {
 	public HealthSurveyResultResponse getHealthSurveyResultOne(HealthSurveyResultRequest healthSurveyResultRequest) {
 		return healthSurveyDao.getHealthSurveyResultOne(healthSurveyResultRequest);
 	}
+	
+	public Map<String, Object> getHealthSurveyResultList(int currentPage, int pagePerRow, Member member){
+		logger.debug("HealthScreenService.getHealthSurveyResultList 호출");
+		int totalRow = healthSurveyDao.healthSurveyResultTotalCount(member);
+		int firstPage = 1;
+		int lastPage = totalRow/pagePerRow;
+		if(totalRow%pagePerRow != 0) {
+			lastPage++;
+		}
+		int beforePage = ((currentPage-1)/10)*10;
+		int afterPage = ((currentPage-1)/10)*10 +11;
+		
+		Map pageMap = new HashMap<String, Object>();
+		pageMap.put("beginRow", (currentPage-1)*10);
+		pageMap.put("pagePerRow", pagePerRow);
+		pageMap.put("memberNo", member.getMemberNo());
+		
+		Map map = new HashMap<String, Object>();
+		List<HealthSurveyResultResponse> list = healthSurveyDao.getHealthSurveyResultList(pageMap);
+		map.put("list", list);
+		map.put("firstPage", firstPage);
+		map.put("lastPage", lastPage);
+		map.put("beforePage", beforePage);
+		map.put("afterPage", afterPage);
+		return map;
+	}
+	
+	public void addHealthSurveyEvaluation(String healthSurveyResultNo,String healthSurveyRegisterNo, int healthSurveyEvaluationAverageGrade) {
+		HealthSurveyResultRequest healthSurveyResultRequest = new HealthSurveyResultRequest();
+		HealthSurveyAverageGrade healthSurveyAverageGrade = new HealthSurveyAverageGrade();
+		healthSurveyResultRequest.setHealthSurveyResultNo(healthSurveyResultNo);
+		healthSurveyAverageGrade.setHealthSurveyRegisterNo(healthSurveyRegisterNo);
+		healthSurveyAverageGrade.setHealthSurveyEvaluationAverageGrade(healthSurveyEvaluationAverageGrade);
+		healthSurveyDao.addHealthSurveyEvaluation(healthSurveyResultRequest);
+		healthSurveyDao.updateHealthSurveyAverageGrade(healthSurveyAverageGrade);
+	}
+	
 }

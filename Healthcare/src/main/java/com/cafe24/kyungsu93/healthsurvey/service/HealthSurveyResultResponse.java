@@ -13,6 +13,7 @@ public class HealthSurveyResultResponse {
 	private int healthSurveyRegisterWarning;
 	private int healthSurveyRegisterDanger;
 	private int healthSurveyRegisterTotal;
+	private int healthSurveyEvaluationDo;
 	private String healthSurveyRegisterDate;
 	
 	public String getHealthSurveyResultNo() {
@@ -87,6 +88,12 @@ public class HealthSurveyResultResponse {
 	public void setHealthSurveyRegisterTotal(int healthSurveyRegisterTotal) {
 		this.healthSurveyRegisterTotal = healthSurveyRegisterTotal;
 	}
+	public int getHealthSurveyEvaluationDo() {
+		return healthSurveyEvaluationDo;
+	}
+	public void setHealthSurveyEvaluationDo(int healthSurveyEvaluationDo) {
+		this.healthSurveyEvaluationDo = healthSurveyEvaluationDo;
+	}
 	public String getHealthSurveyRegisterDate() {
 		return healthSurveyRegisterDate;
 	}
@@ -102,7 +109,8 @@ public class HealthSurveyResultResponse {
 				+ ", healthSurveyRegisterContent=" + healthSurveyRegisterContent + ", healthSurveyRegisterNormal="
 				+ healthSurveyRegisterNormal + ", healthSurveyRegisterWarning=" + healthSurveyRegisterWarning
 				+ ", healthSurveyRegisterDanger=" + healthSurveyRegisterDanger + ", healthSurveyRegisterTotal="
-				+ healthSurveyRegisterTotal + ", healthSurveyRegisterDate=" + healthSurveyRegisterDate + "]";
+				+ healthSurveyRegisterTotal + ", healthSurveyEvaluationDo=" + healthSurveyEvaluationDo
+				+ ", healthSurveyRegisterDate=" + healthSurveyRegisterDate + "]";
 	}
 	
 }

@@ -28,6 +28,7 @@
 				<tr>
 					<th>설문 타이틀</th>
 					<th>질병 명</th>
+					<th>설문 평가 점수</th>
 					<th>설문 등록자</th>
 					<th>설문 등록 날짜</th>
 				</tr>
@@ -37,6 +38,7 @@
 					<tr>
 						<td><a href="${pageContext.request.contextPath}/getHealthSurveyContent?healthSurveyRegisterNo=${healthSurvey.healthSurveyRegisterNo}">${healthSurvey.healthSurveyRegisterTitle}</a></td>
 						<td>${healthSurvey.diseaseName}</td>
+						<td>${healthSurvey.surveyGrade}</td>
 						<td>${healthSurvey.memberName}</td>
 						<td>${healthSurvey.healthSurveyRegisterDate}</td>
 					</tr>

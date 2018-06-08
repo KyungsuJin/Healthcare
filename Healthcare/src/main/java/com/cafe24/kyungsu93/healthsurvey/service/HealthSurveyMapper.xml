@@ -11,13 +11,15 @@
 		FROM health_survey_register
 	</select>
 	
-  	<select id="getHealthSurveyList" resultType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResponse">
+  	<select id="getHealthSurveyList"  parameterType="java.util.Map"
+  										resultType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResponse">
 		SELECT
   			survey.health_survey_register_no AS healthSurveyRegisterNo
   			,member.member_name AS memberName
   			,disease.disease_name AS diseaseName
   			,survey.health_survey_register_title AS healthSurveyRegisterTitle
   			,survey.health_survey_register_date AS healthSurveyRegisterDate
+  			,grade.health_survey_evaluation_average_grade/grade.health_survey_people_number AS surveyGrade
   		FROM health_survey_register AS survey
 			,health_survey_average_grade AS grade
 			,member AS member
@@ -25,6 +27,8 @@
 		WHERE survey.health_survey_register_no = grade.health_survey_register_no
 				and survey.member_no = member.member_no
 				and survey.disease_no = disease.disease_no
+		ORDER BY survey.health_survey_register_date DESC
+		LIMIT ${beginRow}, ${pagePerRow}
   	</select>
   	
   	<select id="getHealthSurveyContent" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyRequest" resultType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResponse">
@@ -129,6 +133,65 @@
 		)
 	</insert>
 	
+	<insert id="addHealthSurveyAverageGrade" parameterType="String">
+		INSERT INTO health_survey_average_grade (
+			health_survey_register_no
+		)
+		VALUES(
+			#{healthSurveyRegisterNo}
+		)
+	</insert>
+	
+	<delete id="removeHealthSurveyAverageGrade" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyAverageGrade">
+		DELETE
+		FROM health_survey_average_grade
+		WHERE health_survey_register_no = #{healthSurveyRegisterNo}
+	</delete>
+	
+	<delete id="removeHealthSurveySelection" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyQuestion">
+		DELETE
+		FROM health_survey_selection
+		WHERE health_survey_question_no = #{healthSurveyQuestionNo}
+	</delete>
+	
+	<delete id="removeHealthSurveyQuestion" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyRequest">
+		DELETE
+		FROM health_survey_question
+		WHERE health_survey_register_no = #{healthSurveyRegisterNo}
+	</delete>
+	
+	<select id="getHealthSurveyResultNoList" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyRequest"
+												resultType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultRequest">
+		SELECT
+			health_survey_result_no AS healthSurveyResultNo
+		FROM health_survey_result
+		WHERE health_survey_register_no = #{healthSurveyRegisterNo}
+	</select>
+	
+	<delete id="removeHealthSurveyTotalGrade" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultRequest">
+		DELETE
+		FROM health_survey_total_grade
+		WHERE health_survey_result_no = #{healthSurveyResultNo}
+	</delete>
+	
+	<delete id="removeHealthSurveyRecord" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultRequest">
+		DELETE
+		FROM health_survey_record
+		WHERE health_survey_result_no = #{healthSurveyResultNo}
+	</delete>
+	
+	<delete id="removeHealthSurveyResult" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyRequest">
+		DELETE
+		FROM health_survey_result
+		WHERE health_survey_register_no = #{healthSurveyRegisterNo}
+	</delete>
+	
+	<delete id="removeHealthSurvey" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyRequest">
+		DELETE 
+		FROM health_survey_register
+		WHERE health_survey_register_no = #{healthSurveyRegisterNo}
+	</delete>
+	
 	<select id="getHealthSurveyQuestion" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyRequest"
 											resultType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyQuestion">
 		SELECT
@@ -209,6 +272,7 @@
 			,register.health_survey_register_warning AS healthSurveyRegisterWarning
 			,register.health_survey_register_danger AS healthSurveyRegisterDanger
 			,register.health_survey_register_total AS healthSurveyRegisterTotal
+			,result.health_survey_evaluation_do AS healthSurveyEvaluationDo
 			,register.health_survey_register_date AS healthSurveyRegisterDate
 		FROM health_survey_result AS result
 			,health_survey_total_grade AS grade
@@ -222,4 +286,58 @@
 				and register.disease_no = disease.disease_no
 	</select>
 	
+	<select id="healthSurveyResultTotalCount" parameterType="com.cafe24.kyungsu93.member.service.Member"
+												resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM health_survey_result
+		WHERE member_no = #{memberNo}
+	</select>
+	
+	<select id="getHealthSurveyResultList" parameterType="java.util.Map"
+											resultType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultResponse">
+		SELECT
+			result.health_survey_result_no AS  healthSurveyResultNo
+			,result.health_survey_register_no AS healthSurveyRegisterNo
+			,result.health_survey_result_date AS healthSurveyResultDate
+			,grade.health_survey_total_grade AS healthSurveyTotalGrade
+			,member.member_name AS memberName
+			,disease.disease_name AS diseaseName
+			,register.health_survey_register_title AS healthSurveyRegisterTitle
+			,register.health_survey_register_content AS healthSurveyRegisterContent
+			,register.health_survey_register_normal AS healthSurveyRegisterNormal
+			,register.health_survey_register_warning AS healthSurveyRegisterWarning
+			,register.health_survey_register_danger AS healthSurveyRegisterDanger
+			,register.health_survey_register_total AS healthSurveyRegisterTotal
+			,register.health_survey_register_date AS healthSurveyRegisterDate
+		FROM health_survey_result AS result
+			,health_survey_total_grade AS grade
+			,health_survey_register AS register
+			,member
+			,disease
+		WHERE result.member_no = #{memberNo}
+				and result.health_survey_register_no = register.health_survey_register_no
+				and result.health_survey_result_no = grade.health_survey_result_no
+				and result.member_no = member.member_no
+				and register.disease_no = disease.disease_no
+		ORDER BY result.health_survey_result_date DESC
+		LIMIT ${beginRow}, ${pagePerRow}
+  	</select>
+	
+	<update id="addHealthSurveyEvaluation" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultRequest">
+		UPDATE
+			health_survey_result
+		SET
+			health_survey_evaluation_do = 1
+		WHERE health_survey_result_no = #{healthSurveyResultNo}
+	</update>
+	
+	<update id="updateHealthSurveyAverageGrade" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyAverageGrade">
+		UPDATE
+			health_survey_average_grade
+		SET
+			health_survey_evaluation_average_grade = health_survey_evaluation_average_grade + #{healthSurveyEvaluationAverageGrade}
+			,health_survey_people_number = health_survey_people_number + 1
+		WHERE health_survey_register_no = #{healthSurveyRegisterNo}
+	</update>
 </mapper>

@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cafe24.kyungsu93.member.service.Member;
+
 
 @Repository
 public class HealthSurveyDao {
@@ -55,6 +57,42 @@ public class HealthSurveyDao {
 		sqlSession.insert(NS+"addHealthSurveySelection", healthSurveySelection);
 	}
 	
+	public void addHealthSurveyAverageGrade(String healthSurveyRegisterNo) {
+		sqlSession.insert(NS+"addHealthSurveyAverageGrade", healthSurveyRegisterNo);
+	}
+	
+	public void removeHealthSurveyAverageGrade(HealthSurveyRequest healthSurveyRequest){
+		sqlSession.delete(NS+"removeHealthSurveyAverageGrade", healthSurveyRequest);
+	}
+	
+	public void removeHealthSurveySelection(HealthSurveyQuestion healthSurveyQuestion) {
+		sqlSession.delete(NS+"removeHealthSurveySelection", healthSurveyQuestion);
+	}
+	
+	public void removeHealthSurveyQuestion(HealthSurveyRequest healthSurveyRequest) {
+		sqlSession.delete(NS+"removeHealthSurveyQuestion", healthSurveyRequest);
+	}
+	
+	public List<HealthSurveyResultRequest> getHealthSurveyResultNoList(HealthSurveyRequest healthSurveyRequest){
+		return sqlSession.selectList(NS+"getHealthSurveyResultNoList", healthSurveyRequest);
+	}
+	
+	public void removeHealthSurveyTotalGrade(HealthSurveyResultRequest healthSurveyResultRequest) {
+		sqlSession.delete(NS+"removeHealthSurveyTotalGrade", healthSurveyResultRequest);
+	}
+	
+	public void removeHealthSurveyRecord(HealthSurveyResultRequest healthSurveyResultRequest) {
+		sqlSession.delete(NS+"removeHealthSurveyRecord", healthSurveyResultRequest);
+	}
+	
+	public void removeHealthSurveyResult(HealthSurveyRequest healthSurveyRequest) {
+		sqlSession.delete(NS+"removeHealthSurveyResult", healthSurveyRequest);
+	}
+	
+	public void removeHealthSurvey(HealthSurveyRequest healthSurveyRequest) {
+		sqlSession.delete(NS+"removeHealthSurvey", healthSurveyRequest);
+	}
+	
 	public List<HealthSurveyQuestion> getHealthSurveyQuestion(HealthSurveyRequest healthSurveyRequest) {
 		return sqlSession.selectList(NS+"getHealthSurveyQuestion", healthSurveyRequest);
 	}
@@ -82,4 +120,23 @@ public class HealthSurveyDao {
 	public HealthSurveyResultResponse getHealthSurveyResultOne(HealthSurveyResultRequest healthSurveyResultRequest) {
 		return sqlSession.selectOne(NS+"getHealthSurveyResultOne", healthSurveyResultRequest);
 	}
+	
+	public int healthSurveyResultTotalCount(Member member) {
+		return sqlSession.selectOne(NS+"healthSurveyResultTotalCount", member);
+	}
+	
+	public List<HealthSurveyResultResponse> getHealthSurveyResultList(Map<String, Object> map){
+		logger.debug("HealthSurveyDao.getHealthSurveyResultList 메서드 실행");
+		List<HealthSurveyResultResponse> list = sqlSession.selectList(NS+"getHealthSurveyResultList", map);
+		return list;
+	}
+	
+	public void addHealthSurveyEvaluation(HealthSurveyResultRequest healthSurveyResultRequest) {
+		sqlSession.update(NS+"addHealthSurveyEvaluation", healthSurveyResultRequest);
+	}
+	
+	public void updateHealthSurveyAverageGrade(HealthSurveyAverageGrade healthSurveyAverageGrade) {
+		sqlSession.update(NS+"updateHealthSurveyAverageGrade", healthSurveyAverageGrade);
+	}
+	
 }
