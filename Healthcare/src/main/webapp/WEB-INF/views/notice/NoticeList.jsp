@@ -1,4 +1,4 @@
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -24,16 +24,16 @@
  -->
 </head>
 <body>
-	<h1>bloodsugaList</h1>
+	<h1>NoticeList</h1>
 	<form id="NoticeList" action="${pageContext.request.contextPath}/NoticeList" method="POST">
-	<!-- 검색 -->
+	<%-- <!-- 검색 -->
 	 <form id="formSearch" name="formSearch"  action="${pageContext.request.contextPath}/BloodsugarSearch" method="post"> 
 		<select id="searchCode" name="searchCode"> 
 		<option value="fastingbloodsugar" selected="Bloodsugarno">혈당코드</option> 
 		<option value="memberno">회원코드</option> 
 		</select>		
 		<input type="text" id="searchValue" name="searchValue" value="${mapSearch.searchCode}"/> 
-		<button type="button" id="searchBtn">검색</button> 
+		<button type="button" id="searchBtn">검색</button>  --%>
 	</form>	
 	 
 	<table>
@@ -56,39 +56,39 @@
 					<td>${notice.noticecontent }</td>
 					<td>${notice.noticecount }</td>
 					<td>${notice.noticedate }</td>
-					<td><a type="button" href="${pageContext.request.contextPath}/modifyBloodsugar?bloodsugarno=${bloodsugar.bloodsugarno}" id="buttonModify">수정</a></td>
-					<td><a type="button" href="${pageContext.request.contextPath}/deleteBloodsugar?bloodsugarno=${bloodsugar.bloodsugarno}" id="buttonDelete">삭제</a></td>  
+					 <%-- <td><a type="button" href="${pageContext.request.contextPath}/modifyNotice?noticeno=${notice.noticeno}" id="buttonModify">수정</a></td> --%>
+					<%-- <td><a type="button" href="${pageContext.request.contextPath}/deleteBloodsugar?bloodsugarno=${bloodsugar.bloodsugarno}" id="buttonDelete">삭제</a></td>  --%>
 				</tr>
 			</c:forEach>	
 		</tbody>
 	</table>
-	<a id="addBloodsugar" href="${pageContext.request.contextPath}/addBloodsugar">혈당등록하기</a>
+	<a id="addNotice" href="${pageContext.request.contextPath}/addNotice">공지 등록하기</a>
 
 	<nav>
-			<ul class="pagination pagination-sm">
+			<ul class="pagination pagination-sm1">
 				<c:if test="${currentPage > 10}">
 					<li>
-						<a aria-label="first" href="${pageContext.request.contextPath }/bloodsugar/bloodsugarList?currentPage=1">&laquo;</a>
+						<a aria-label="first" href="${pageContext.request.contextPath }/notice/NoticeList?currentPage=1">&laquo;</a>
 					</li>
 				</c:if>
 				<c:if test="${firstBlockPage > 2}">
 					<li>
-						<a aria-label="first" href="${pageContext.request.contextPath }/bloodsugar/bloodsugarList?currentPage=${firstBlockPage-1}">&lsaquo;</a>
+						<a aria-label="first" href="${pageContext.request.contextPath }/notice/NoticeList?currentPage=${firstBlockPage-1}">&lsaquo;</a>
 					</li>
 				</c:if>
 					<li>
 					<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
-						<a href="${pageContext.request.contextPath}/bloodsugar/bloodsugarList?currentPage=${i}">${i}</a>				
+						<a href="${pageContext.request.contextPath}/Notice/noticeList?currentPage=${i}">${i}</a>				
 					</c:forEach>		
 					</li>
 				<c:if test="${lastBlockPage < totalBlock}">
 					<li>
-						<a aria-label="last" href="${pageContext.request.contextPath}/bloodsugar/bloodsugarList?currentPage=${lastBlockPage+1}">&rsaquo;</a>
+						<a aria-label="last" href="${pageContext.request.contextPath}/Notice/noticeList?currentPage=${lastBlockPage+1}">&rsaquo;</a>
 					</li>
 				</c:if>
 				<c:if test="${currentPage < lastPage}">
 					<li>
-						<a aria-label="last" href="${pageContext.request.contextPath}/bloodsugar/bloodsugarList?currentPage=${lastPage}">&raquo;</a>
+						<a aria-label="last" href="${pageContext.request.contextPath}/Notice/noticeList?currentPage=${lastPage}">&raquo;</a>
 					</li>
 				</c:if>
 			</ul>
@@ -96,4 +96,4 @@
 
 
 </body>
-</html> --%>
+</html>

@@ -1,4 +1,4 @@
-/*package com.cafe24.kyungsu93.notice.controller;
+package com.cafe24.kyungsu93.notice.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -42,7 +42,9 @@ public class NoticeController {
 		public String NoticeList(HttpSession session,Notice notice) {
 			System.out.println("NoticeList 추가 후 List");
 			System.out.println("NoticeList 추가 후 Notice "+ notice.toString());
+			System.out.println("--------------1번"+notice);
 			noticeService.addNotice(notice);
+			System.out.println("===========6번"+notice);
 			return "redirect:/NoticeList";
 	}
 
@@ -50,7 +52,7 @@ public class NoticeController {
 	public String bloodsugarList(Model model
 								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
-		logger.debug("BloodsugarController 에서 BloodsugarList 실행");
+		logger.debug("NoticeController 에서 NoticeList 실행");
 		Map<String,Object> map = noticeService.noticeList(currentPage, pagePerRow);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
@@ -58,29 +60,31 @@ public class NoticeController {
 		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 		model.addAttribute("totalBlock", map.get("totalBlock"));
-		return "Notice/NoticeList";
+		return "notice/NoticeList";
 	}
-	@RequestMapping(value="/modifyBloodsugar", method=RequestMethod.POST)
-	public String updateBloodsugar(HttpSession session ,Bloodsugar bloodsugar) {				
-		logger.debug("BloodsugarController 에서 updateBloodPressure 리다이렉트 실행");
-		logger.debug("---------------------------------1번"+bloodsugar);
-		bloodsugarService.updateBloodsugar(bloodsugar);
-		return "redirect:/BloodsugarList";
-	}
+	/*@RequestMapping(value="/modifyNotice", method=RequestMethod.POST)
+	public String updateNotice(HttpSession session ,Notice notice) {				
+		logger.debug("NoticeController 에서 updateNotice 리다이렉트 실행");
+		logger.debug("---------------------------------10번"+notice);
+		noticeService.updatenotice(notice);
+		logger.debug("==================13번"+notice);
+		return "redirect:/modifyNotice";
+	}*/
 	
-	@RequestMapping(value="/modifyBloodsugar", method=RequestMethod.GET)
-	public String updateBloodsugarone(Model model
-											,@RequestParam(value="bloodsugarno") String bloodsugarno) {
-		
-		logger.debug("BloodsugarController 에서 updateBloodsugar 포워드 실행 ");
-		Bloodsugar bloodsugar = bloodsugarService.selectBloodsugarOne(bloodsugarno);
-		model.addAttribute("bloodsugar", bloodsugar);
-		logger.debug("bloodsugarController - bloodbloodsugar :"+ bloodsugar);
-		logger.debug("+++++++++++++++++988"+bloodsugar);
-		return "/bloodsugar/modifyBloodsugar";
-	}
+	/*@RequestMapping(value="/modifyNotice", method=RequestMethod.GET)
+	public String updateNoticeone(Model model
+											,@RequestParam(value="noticeno") String noticeno) {
+		logger.debug("-------------14번"+noticeno);
+		logger.debug("NoticeController 에서 updateNotice 포워드 실행 ");
+		Notice notice = noticeService.selectNoticeOne(noticeno);
+		logger.debug("===============7번"+noticeno);
+		model.addAttribute("notice", notice);
+		logger.debug("noticeController - notice :"+ notice);
+		logger.debug("+++++++++++++++++988"+notice);
+		return "/notice/NoticeList";
+	}*/
 	
-	@RequestMapping(value="/deleteBloodsugar", method= {RequestMethod.POST,RequestMethod.GET})
+	/*@RequestMapping(value="/deleteBloodsugar", method= {RequestMethod.POST,RequestMethod.GET})
 	public String deleteBloodsugar(@RequestParam(value="bloodsugarno") String bloodsugarno) {
 		logger.debug("BloodsugarController 에서 deleteBloodsugar 리다이렉트 실행.");
 		bloodsugarService.deleteBloodsugar(bloodsugarno);
@@ -97,7 +101,5 @@ public class NoticeController {
 	Map<String,Object> map = bloodsugarService.getSearch(request, model, searchCode, searchValue);
 	model.addAttribute("list", map.get("list"));
 		return "/bloodsugar/bloodsugarList";
-	}
+	}*/
 }
-
-*/

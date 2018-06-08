@@ -1,4 +1,4 @@
-/*package com.cafe24.kyungsu93.notice.service;
+package com.cafe24.kyungsu93.notice.service;
 
 public class Notice {
 
@@ -50,4 +50,4 @@ public class Notice {
 				+ ", noticecontent=" + noticecontent + ", noticecount=" + noticecount + ", noticedate=" + noticedate
 				+ "]";
 	}	
-}*/
+}

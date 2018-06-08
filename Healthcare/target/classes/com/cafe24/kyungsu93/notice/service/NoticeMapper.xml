@@ -5,4 +5,73 @@
   
   <mapper namespace="com.cafe24.kyungsu93.notice.service.NoticeMapper">  
   
+  <select id="noticeList" parameterType="java.util.Map" resultType="com.cafe24.kyungsu93.notice.service.Notice">
+ 	SELECT 
+ 		notice_no AS noticeno
+ 		,member_no AS memberno
+ 		,notice_title AS noticetitle
+ 		,notice_content AS noticecontent
+ 		,notice_count AS noticecount
+ 		,notice_date AS noticedate
+	FROM notice
+
+  </select>
+  
+  <select id="noticeCount" resultType="Integer">
+		SELECT
+		count(*)
+		FROM notice
+	</select> 
+  
+  <insert id="addnotice" parameterType="com.cafe24.kyungsu93.notice.service.Notice">
+    
+   INSERT INTO notice(
+	 notice_no
+	, member_no
+	, notice_title
+	, notice_content
+	, notice_count
+	, notice_date
+	)
+	VALUES (
+	 #{noticeno}
+	, #{memberno} 
+	, #{noticetitle}
+	, #{noticecontent}
+	, #{noticecount}
+	, now()
+	)
+  
+  </insert>
+  
+  <select id="NoticeOne"
+			 parameterType="String"
+			resultType="com.cafe24.kyungsu93.notice.service.Notice">
+		SELECT
+			notice_no as noticeno
+			,n.member_no as memberno
+			,notice_title as noticetitle
+			,notice_content as noticecontent
+			,notice_count as noticecount
+			,notice_date as noticedate
+			FROM notice AS n		
+			INNER JOIN member AS m
+			ON n.member_no = m.member_no
+		WHERE notice_no = #{noticeno}
+		
+	 </select>
+	 <update id="updateNotice" parameterType="com.cafe24.kyungsu93.notice.service.Notice">
+		UPDATE notice
+	SET
+		notice_no = #{noticeno}
+		,member_no = #{memberno}
+		,notice_title = #{noticetitle}
+		,notice_content = #{noticecontent}
+		,notice_count = #{noticecount}
+		,notice_date = #{noticedate}
+	WHERE notice_no = #{noticeno}
+
+	</update>
+  
+  
   </mapper>

@@ -1,4 +1,4 @@
-/*package com.cafe24.kyungsu93.notice.service;
+package com.cafe24.kyungsu93.notice.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 
 import com.cafe24.kyungsu93.bloodpressure.service.BloodPressure;
 import com.cafe24.kyungsu93.bloodsugar.controller.BloodsugarController;
+import com.cafe24.kyungsu93.bloodsugar.service.Bloodsugar;
 
 @Service
 public class NoticeService {
@@ -21,21 +22,7 @@ public class NoticeService {
 	
 	@Autowired
 	private NoticeDao noticeDao;
-	
-	public Map<String,Object> getSearch(HttpServletRequest request, Model model,String searchCode,String searchValue){		
-		searchCode = request.getParameter(searchCode);
-		searchValue = request.getParameter(searchValue);
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("searchCode", searchCode); 
-		map.put("searchValue", searchValue);
-		model.addAttribute("map", map);
-		List<Notice> list = this.noticeDao.searchBloodsugar(map);
-		Map<String,Object> returnMap = new HashMap<String,Object>();
-		returnMap.put("list", list);
-		return returnMap;
-	
-	}
-	
+		
 	public  Map<String, Object> noticeList(int currentPage, int pagePerRow) {
 		logger.debug("Bloodsugar service BloodsugarList 실행 부분");
 		Map<String,Integer> map = new HashMap<String,Integer>();
@@ -89,24 +76,25 @@ public class NoticeService {
 
 	public void addNotice (Notice notice) {
 		logger.debug("addNotice NoticeService");
-		
-		noticeDao.addNotice(notice);	
+		logger.debug("=============2번"+notice);
+		noticeDao.addNotice(notice);
+		logger.debug("----------5번"+notice);
 	}
 	
 	
-	public Notice selectBloodsugarOne(String bloodsugarno) {
-		logger.debug("BloodsugarService 에서 selectBloodsugarOne 실행");
-		return bloodsugarDao.selectBloodsugarOne(bloodsugarno);
-		
+	/*public Notice selectNoticeOne(String noticeno) {
+		logger.debug("NoticeService 에서 selectNoticeOne 실행");
+		logger.debug("==========8번"+noticeno);
+		return noticeDao.selectNoticeOne(noticeno);
 	}
 	
-	public void updateBloodsugar (Notice bloodsugar) {
+	public void updatenotice (Notice notice) {
 		logger.debug("updateBloodsugar BloodsugarService");
-		logger.debug("88888888888888888888888888"+bloodsugar);
-		bloodsugarDao.updateBloodsugar(bloodsugar);
+		logger.debug("-----------11번"+notice);
+		noticeDao.updateNotice(notice);*/
 	}
 	
-	public int deleteBloodsugar(String bloodsugarno) {
+/*	public int deleteBloodsugar(String bloodsugarno) {
 		logger.debug("BloodPressureService 에서 deleteBloodsugar 실행");
 		return bloodsugarDao.deletesugarCount(bloodsugarno);
 	}
@@ -126,7 +114,7 @@ public class NoticeService {
 		logger.debug("zzzzzzzzzzzzzzzzzzzz"+bloodsugarno);
 		bloodsugarDao.updateBloodsugar(bloodsugar);	
 
-	}
+	}*/
 	
-	
+/*	
 }*/

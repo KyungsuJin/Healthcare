@@ -1,4 +1,4 @@
-/*package com.cafe24.kyungsu93.notice.service;
+package com.cafe24.kyungsu93.notice.service;
 
 import java.util.List;
 import java.util.Map;
@@ -17,7 +17,7 @@ public class NoticeDao {
 	private static final Logger logger = LoggerFactory.getLogger(BloodsugarController.class);
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	final String NS = "com.cafe24.kyungsu93.bloodsugar.service.BloodsugarMapper.";
+	final String NS = "com.cafe24.kyungsu93.notice.service.NoticeMapper.";
 
 	public List<Notice> noticeList(Map<String,Integer> map) {
 		logger.debug("NoticeDao 에서 NoticeList 실행");
@@ -30,25 +30,26 @@ public class NoticeDao {
 	}
 	
 	public int addNotice(Notice notice) {
-	
-		int row = sqlSession.insert(NS+"notice",notice);
-		
+		logger.debug("--------------3번"+notice);
+		int row = sqlSession.insert(NS+"addnotice",notice);
+		logger.debug("===========4번"+notice);
 		return row;
 	}
-	
-	public int updateBloodsugar(Notice bloodsugar) {
-		logger.debug("BloodsugarDao 에서 updateBloodsugar 실행------------------3번"+bloodsugar);
-		return sqlSession.update(NS+"updateBloodsugar",bloodsugar);
+/*	
+	public int updateNotice(Notice notice) {
+		logger.debug("BloodsugarDao 에서 updateBloodsugar 실행------------------3번"+notice);
+		logger.debug("-------------12번"+notice);
+		return sqlSession.update(NS+"updateNotice",notice);
     }
 	
-	public Notice selectBloodsugarOne(String bloodsugarno) {
-		logger.debug("BloodsugarDao 에서 selectBloodsugarOne 실행"+bloodsugarno);
-		return sqlSession.selectOne(NS+"BloodsugarOne",bloodsugarno);
-	}
-	
+	public Notice selectNoticeOne(String noticeno) {
+		logger.debug("BloodsugarDao 에서 selectBloodsugarOne 실행"+noticeno);
+		logger.debug("------------3번"+noticeno);
+		return sqlSession.selectOne(NS+"NoticeOne",noticeno);
+	}*/
+	/*
 	public int deletesugarCount(String bloodsugarno) {
 		logger.debug("BloodPressureDao 에서 deletePressureCount 실행");
 		return sqlSession.delete(NS+"deleteBloodsugar",bloodsugarno);
-	}
+	}*/
 }
-*/
