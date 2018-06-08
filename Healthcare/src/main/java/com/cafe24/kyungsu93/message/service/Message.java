@@ -5,6 +5,7 @@ public class Message {
 	private String sendMessageId;
 	private String memberSendNo;
 	private String memberReceiveNo;
+	private String memberReceiveId;
 	private String messageDate;
 	private String messageTitle;
 	private String messageContent;
@@ -12,6 +13,12 @@ public class Message {
 	
 	
 	
+	public String getMemberReceiveId() {
+		return memberReceiveId;
+	}
+	public void setMemberReceiveId(String memberReceiveId) {
+		this.memberReceiveId = memberReceiveId;
+	}
 	public String getSendMessageId() {
 		return sendMessageId;
 	}

@@ -8,10 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cafe24.kyungsu93.message.controller.MessageController;
 
 @Service
+@Transactional
 public class MessageService {
 	@Autowired MessageDao messageDao;
 	private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
@@ -19,8 +21,8 @@ public class MessageService {
 	public Map<String,Object> messageIdChk(String memberId) {
 		logger.debug("MessageService.messageIdChk");
 		Map<String,Object> map = new HashMap<String,Object>();
-		int count =messageDao.messageIdChk(memberId);
-		String memberReceiveNo =messageDao.memberReceiveNo(memberId);
+		int count =messageDao.messageIdChk(memberId);//아이디가 있는지 체크
+		String memberReceiveNo =messageDao.memberReceiveNo(memberId);//받은 아이디의 memberNo를 구함
 		logger.debug("count : "+count);
 		logger.debug("memberReceiveNo : "+memberReceiveNo);
 		map.put("count", count);
@@ -30,23 +32,63 @@ public class MessageService {
 	//메시지 전송
 	public String sendMessage(Message message) {
 		logger.debug("MessageService.sendMessage");
-		int result = (messageDao.messageNo())+1;
+		int result = (messageDao.messageNo())+1;//메시지의 no 를 구함
 		String messageNo = "message_";
 		message.setSendMessageNo(messageNo+result);
 		logger.debug("messageNo : "+message.getSendMessageNo());
-		messageDao.sendMessage(message);
-		messageDao.sendMessageContent(message);
-		messageDao.receiveMessageContent(message);
+		messageDao.sendMessage(message);//send_Message 테이블 에 데이트를 셋
+		messageDao.sendMessageContent(message);//발신자 테이블에 데이터 셋
+		messageDao.receiveMessageContent(message);//수신자 테이블에 데이터 셋
 		return "";
 	}
+	//받은 메시지함 리스트 출력
 	public List<Message> messageReceiveList(String memberNo) {
 		logger.debug("MessageService.messageReceiveList");
-		return messageDao.messageReceiveList(memberNo);
+		List<Message> list=messageDao.messageReceiveList(memberNo);
+		return list;
 	}
-	public String messageContext(String messageNo) {
-		logger.debug("MessageService.messageContext");
-		messageDao.messageContext(messageNo);
-		return "";
+	//메시지 읽음 표시
+	public void messageContent(String messageNo) {
+		logger.debug("MessageService.messageContent");
+		int result =messageDao.selectMessageContent(messageNo);
+		if(result==0) {
+			messageDao.messageContent(messageNo);
+		}
 	}
-
+	//보낸메시지 리스트 출력 함
+	public List<Message> sendMessageList(String memberNo) {
+		logger.debug("MessageService.sendMessageList");
+		List<Message> list=messageDao.sendMessageList(memberNo);
+		for(Message list1 : list) {
+			logger.debug(list1.getMemberReceiveNo());
+			list1.setMemberReceiveId(messageDao.ReceivemessageId(list1.getMemberReceiveNo()));
+		}
+		return list;
+	}
+	//받은 메시지 삭제
+	public void ReceiveMessageDelete(String deleteMessageNo) {
+		logger.debug("MessageService.ReceiveMessageDelete");
+		messageDao.ReceiveMessageDelete(deleteMessageNo);
+	}
+	//받은 메시지 여러개 삭제
+	public void deleteMessageList(List<String> sendMessageNo) {
+		logger.debug("MessageService.deleteMessageList");
+		for(String i : sendMessageNo) {
+			String result =i;
+			messageDao.ReceiveMessageDelete(result);
+		}
+	}
+	//보낸 메시지 삭제
+	public void SendMessageDelete(String deleteMessageNo) {
+		logger.debug("MessageService.SendMessageDelete");
+		messageDao.SendMessageDelete(deleteMessageNo);
+	}
+	// 받은 메시지 여러개 삭제
+	public void deleteSendMessageList(List<String> sendMessageNo) {
+		logger.debug("MessageService.deleteSendMessageList");
+		for (String i : sendMessageNo) {
+			String result = i;
+			messageDao.SendMessageDelete(result);
+		}
+	}
 }

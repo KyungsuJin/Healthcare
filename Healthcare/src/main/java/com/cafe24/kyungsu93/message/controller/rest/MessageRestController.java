@@ -39,4 +39,37 @@ public class MessageRestController {
 		map.put("list", list);
 		return map;
 	}
+	//보낸 메시지 리스트
+	@RequestMapping(value = "/sendMessageList", method = RequestMethod.POST)
+	public Map<String, Object> sendMessageList(@RequestParam(value = "sendMemberNo") String memberNo) {
+		logger.debug("MessageRestController.sendMessageList");
+		logger.debug("memberNo: "+memberNo);
+		List<Message> list=messageService.sendMessageList(memberNo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		return map;
+	}
+	//받은메시지 다중 삭제
+	@RequestMapping(value = "/deleteMessageList", method = RequestMethod.POST)
+	public String deleteMessageList(@RequestParam(value = "valueArrayTest[]") List<String> sendMessageNo) {
+		logger.debug("MessageRestController.deleteMessageList");
+		for(String i : sendMessageNo) {
+			String result =i;
+			logger.debug("반복"+result);
+		}
+		messageService.deleteMessageList(sendMessageNo);
+		return "success";
+	}
+
+	// 보낸메시지 다중 삭제
+	@RequestMapping(value = "/deleteSendMessageList", method = RequestMethod.POST)
+	public String deleteSendMessageList(@RequestParam(value = "valueArrayTest[]") List<String> sendMessageNo) {
+		logger.debug("MessageRestController.deleteSendMessageList");
+		for (String i : sendMessageNo) {
+			String result = i;
+			logger.debug("반복" + result);
+		}
+		messageService.deleteSendMessageList(sendMessageNo);
+		return "success123";
+	}
 }

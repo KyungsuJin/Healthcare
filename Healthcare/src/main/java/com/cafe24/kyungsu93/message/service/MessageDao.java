@@ -18,12 +18,12 @@ public class MessageDao {
 		logger.debug("MessageDao.messageIdChk");
 		return sqlSession.selectOne(NS+"messageIdChk",memberId);
 	}
-	//메시지 No
+	//메시지회원번호
 	public String memberReceiveNo(String memberId) {
 		logger.debug("MessageDao.memberReceiveNo");
 		return sqlSession.selectOne(NS+"memberReceiveNo",memberId);
 	}
-	//메시지 회원 번호
+	//메시지 No
 	public int messageNo() {
 		logger.debug("MessageDao.messageNo");
 		return sqlSession.selectOne(NS+"messageNo");
@@ -47,9 +47,32 @@ public class MessageDao {
 		logger.debug("MessageDao.messageReceiveList");
 		return sqlSession.selectList(NS+"messageReceiveList",memberNo);
 	}
-	public String messageContext(String messageNo) {
-		logger.debug("MessageDao.messageContext");
-		return sqlSession.selectOne(NS+"messageContext",messageNo);
+	public void messageContent(String messageNo) {
+		logger.debug("MessageDao.messageContent");
+		sqlSession.insert(NS+"messageContent",messageNo);
+	}
+	public int selectMessageContent(String messageNo) {
+		logger.debug("MessageDao.selectMessageContent");
+		return sqlSession.selectOne(NS+"selectMessageContent",messageNo);
+	}
+	public List<Message> sendMessageList(String memberNo) {
+		logger.debug("MessageDao.sendMessageList");
+		return sqlSession.selectList(NS+"sendMessageList",memberNo);
+	}
+	//받는 회원 no -> id 전환 
+	public String ReceivemessageId(String ReceivemessageId) {
+		logger.debug("MessageDao.ReceivemessageId");
+		return sqlSession.selectOne(NS+"ReceivemessageId",ReceivemessageId);
+	}
+	//받은메시지 단일 삭제
+	public void ReceiveMessageDelete(String ReceivemessageId) {
+		logger.debug("MessageDao.ReceiveMessageDelete");
+		sqlSession.delete(NS + "ReceiveMessageDelete", ReceivemessageId);
+	}
+	//보낸메시지 단일 삭제
+	public void SendMessageDelete(String ReceivemessageId) {
+		logger.debug("MessageDao.SendMessageDelete");
+		sqlSession.delete(NS + "SendMessageDelete", ReceivemessageId);
 	}
 
 }

@@ -90,8 +90,57 @@
   				rs.send_message_no
   				,rs.send_member_id
 				,rs.message_title
+				,rs.message_content
 				,sm.message_date
 			FROM send_message sm,receive_message rs
 			WHERE sm.send_message_no=rs.send_message_no AND sm.member_receive_no=#{memberNo}
   	</select>
+  	<insert id="messageContent"
+  			parameterType="String">
+  			INSERT INTO message_receive_date(
+  				send_message_no
+  				,read_date
+  			)VALUES(
+  				#{messageNo}
+  				,now()
+  			)
+  	</insert>
+  	<select id="selectMessageContent"
+  			parameterType="String"
+  			resultType="Integer">
+  			SELECT count(*)
+			FROM message_receive_date
+			WHERE send_message_no=#{messageNo}
+  	</select>
+  	<select id="sendMessageList"
+  			parameterType="String"
+  			resultMap="message">
+  			SELECT 
+  				sc.send_message_no
+  				,sc.send_member_id
+				,sc.message_title
+				,sc.message_content
+				,sm.message_date
+				,sm.member_receive_no
+			FROM send_message sm,send_message_content sc
+			WHERE sm.send_message_no=sc.send_message_no AND sm.member_send_no=#{memberNo}
+  	</select>
+  	<select id="ReceivemessageId"
+  			parameterType="String"
+  			resultType="String">
+  			SELECT member_id
+         	FROM member
+         	WHERE member_no=#{ReceivemessageId}
+  	</select>
+  	<delete id="ReceiveMessageDelete"
+  			parameterType="String">
+  			DELETE FROM receive_message
+  			WHERE send_message_no =#{ReceivemessageId}
+  	</delete>
+  	<delete id="SendMessageDelete"
+  			parameterType="String">
+  			DELETE FROM send_message_content
+  			WHERE send_message_no =#{ReceivemessageId}
+  	</delete>
+
   </mapper>
