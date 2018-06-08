@@ -1,4 +1,4 @@
-package com.cafe24.kyungsu93.bloodsugar.service;
+/*package com.cafe24.kyungsu93.notice.service;
 
 import java.util.List;
 import java.util.Map;
@@ -13,41 +13,35 @@ import com.cafe24.kyungsu93.bloodpressure.service.BloodPressure;
 import com.cafe24.kyungsu93.bloodsugar.controller.BloodsugarController;
 
 @Repository
-public class BloodsugarDao {
+public class NoticeDao {
 	private static final Logger logger = LoggerFactory.getLogger(BloodsugarController.class);
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.bloodsugar.service.BloodsugarMapper.";
-/*	
-	public List<Bloodsugar> searchBloodsugar(Map<String, Object> map){
-		logger.debug("BloodsugarDao 에서 search Bloodsugar 실행");
-		List<BloodPressure> list = sqlSession.selectList(NS+"searchTable",map);
-		return list;
-	}*/
-	public List<Bloodsugar> bloodsugarList(Map<String,Integer> map) {
-		logger.debug("BloodsugarDao 에서 BloodsugarList 실행");
-		return sqlSession.selectList(NS+"bloodsugarList",map);
+
+	public List<Notice> noticeList(Map<String,Integer> map) {
+		logger.debug("NoticeDao 에서 NoticeList 실행");
+		return sqlSession.selectList(NS+"noticeList",map);
 	}
 	
-	public int bloodsugarCount() {
-		logger.debug("BloodsugarDao 에서 bloodsugarCount 실행");
-		return sqlSession.selectOne(NS+"bloodPressureCount");
+	public int noticeCount() {
+		logger.debug("NoticeDao 에서 noticeCount 실행");
+		return sqlSession.selectOne(NS+"noticeCount");
 	}
 	
-	public int addBloodsugar(Bloodsugar bloodsugar) {
+	public int addNotice(Notice notice) {
 	
-		
-		int row = sqlSession.insert(NS+"addBloodsugar",bloodsugar);
+		int row = sqlSession.insert(NS+"notice",notice);
 		
 		return row;
 	}
 	
-	public int updateBloodsugar(Bloodsugar bloodsugar) {
+	public int updateBloodsugar(Notice bloodsugar) {
 		logger.debug("BloodsugarDao 에서 updateBloodsugar 실행------------------3번"+bloodsugar);
 		return sqlSession.update(NS+"updateBloodsugar",bloodsugar);
     }
 	
-	public Bloodsugar selectBloodsugarOne(String bloodsugarno) {
+	public Notice selectBloodsugarOne(String bloodsugarno) {
 		logger.debug("BloodsugarDao 에서 selectBloodsugarOne 실행"+bloodsugarno);
 		return sqlSession.selectOne(NS+"BloodsugarOne",bloodsugarno);
 	}
@@ -57,3 +51,4 @@ public class BloodsugarDao {
 		return sqlSession.delete(NS+"deleteBloodsugar",bloodsugarno);
 	}
 }
+*/

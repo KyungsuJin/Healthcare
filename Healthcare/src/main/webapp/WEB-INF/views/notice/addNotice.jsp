@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -22,59 +22,66 @@
 		// 입력폼 
 		//공백 또는 "" 불가
 		$('#addbutton').click(function(){
-			if($('#Bloodsugarno').val()==""){
-				alert("혈당코드를 입력하세요.")
-				$('#bloodsugarno').focus();
+			if($('#noticeno').val()==""){
+				alert(" 공지사항코드입력하세요.")
+				$('#noticeno').focus();
 			}else if($('memberno').val()==""){
 				alert("회원코드를 입력하세요.")
 				$('#memberno').focus();
-			}else if($('fastingbloodsugar').val()==""){
-				alert("혈당을 입력하세요.")
-				$('#fastingbloodsugar').focus();
-			}else if($('fastingstate').val()==""){
-				alert("공복여부를 입력하세요.")
-				$('#fastingstate').focus();
+			}else if($('noticetitle').val()==""){
+				alert("제목을 입력하세요.")
+				$('#noticetitle').focus();
+			}else if($('noticecontent').val()==""){
+				alert("내용을 입력하세요.")
+				$('#noticecount').focus();
+			}else if($('noticecount').val()==""){
+				alert("조회수를 입력하세요.")
+				$('#noticecount').focus();
 			}else{
-				$('#bloodsugardate').submit();
+				$('#noticedate').submit();
 			}
 		});
 	});
 
 </script>
 
-<title>addBloodsugar</title>
+<title>addNotice</title>
 </head>
 <body>
 <div class="container">
-	<h1>addBloodsugar</h1>
-	<form id="addForm" action="${pageContext.request.contextPath}/addBloodsugar" method="POST">
+	<h1>addNotice</h1>
+	<form id="addForm" action="${pageContext.request.contextPath}/addNotice" method="POST">
 		<div class="form-group">
-			<label for="Bloodsugarno">bloodsugarno : </label>
-			<input class="form-control" name = "bloodsugarno"  id="bloodsugarno" type="text"/>	
+			<label for="noticeno">addNotice : </label>
+			<input class="form-control" name = "noticeno"  id=noticeno type="text"/>	
 		</div>
 		<div class="form-group">
 			<label for="memberno">memberno : </label>
 			<input class="form-control" name = "memberno"  id="memberno" type="text"/>	
 		</div>
 		<div class="form-group">
-			<label for="fastingbloodsugar">fastingbloodsugar : </label>
-			<input class="form-control" name = "fastingbloodsugar"  id="fastingbloodsugar" type="text"/>	
+			<label for="noticetitle">noticetitle : </label>
+			<input class="form-control" name = "noticetitle"  id="noticetitle" type="text"/>	
 		</div>
 		<div class="form-group">
-			<label for="fastingstate">fastingstate : </label>
-			<input class="form-control" name = "fastingstate"  id="fastingstate" type="text"/>	
+			<label for="noticecontent">noticecontent : </label>
+			<input class="form-control" name = "noticecontent"  id="noticecontent" type="text"/>	
 		</div>
 		<div class="form-group">
-			<label for="bloodsugardate">bloodsugardate : </label>
-			<input class="form-control" name = "bloodsugardate"  id="bloodsugardate" type="text"/>	
+			<label for="noticecount">noticecount : </label>
+			<input class="form-control" name = "noticecount"  id="noticecount" type="text"/>	
+		</div>
+		<div class="form-group">
+			<label for="noticedate">noticedate : </label>
+			<input class="form-control" name = "noticedate"  id="noticedate" type="text"/>	
 		</div>
 		<div>
-			<input class="btn btn-default" id=addButton" type="submit" value="글입력">
+			<input class="btn btn-default" id=addButton" type="submit" value="공지입력">
 			<input class="btn btn-default" type="reset" value="초기화"/>
-			<a class="btn btn-default" id="BloodsugarList" href="${pageContext.request.contextPath}/BloodsugarList">글목록</a>
+			<a class="btn btn-default" id="NoticeList" href="${pageContext.request.contextPath}/NoticeList">글목록</a>
 		</div>
 	</form>
 </div>
 
 </body>
-</html>
+</html> --%>

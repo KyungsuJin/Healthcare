@@ -1,4 +1,4 @@
-package com.cafe24.kyungsu93.bloodsugar.service;
+/*package com.cafe24.kyungsu93.notice.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,13 +16,13 @@ import com.cafe24.kyungsu93.bloodpressure.service.BloodPressure;
 import com.cafe24.kyungsu93.bloodsugar.controller.BloodsugarController;
 
 @Service
-public class BloodsugarService {
+public class NoticeService {
 	private static final Logger logger = LoggerFactory.getLogger(BloodsugarController.class);
 	
 	@Autowired
-	private BloodsugarDao bloodsugarDao;
+	private NoticeDao noticeDao;
 	
-	/*public Map<String,Object> getSearch(HttpServletRequest request, Model model,String searchCode,String searchValue){		
+	public Map<String,Object> getSearch(HttpServletRequest request, Model model,String searchCode,String searchValue){		
 		searchCode = request.getParameter(searchCode);
 		searchValue = request.getParameter(searchValue);
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -34,16 +34,16 @@ public class BloodsugarService {
 		returnMap.put("list", list);
 		return returnMap;
 	
-	}*/
+	}
 	
-	public  Map<String, Object> bloodsugarList(int currentPage, int pagePerRow) {
+	public  Map<String, Object> noticeList(int currentPage, int pagePerRow) {
 		logger.debug("Bloodsugar service BloodsugarList 실행 부분");
 		Map<String,Integer> map = new HashMap<String,Integer>();
 		int beginRow = (currentPage-1)*pagePerRow;
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
-		List<Bloodsugar> list = bloodsugarDao.bloodsugarList(map);
-		int total = bloodsugarDao.bloodsugarCount();
+		List<Notice> list = noticeDao.noticeList(map);
+		int total = noticeDao.noticeCount();
 		int lastPage = total/pagePerRow;
         if(total % pagePerRow != 0) {
             lastPage++;
@@ -87,20 +87,20 @@ public class BloodsugarService {
 		return returnMap;
 	}
 
-	public void addBloodsugar (Bloodsugar bloodsugar) {
-		logger.debug("addBloodsugar BloodsugarService");
+	public void addNotice (Notice notice) {
+		logger.debug("addNotice NoticeService");
 		
-		bloodsugarDao.addBloodsugar(bloodsugar);	
+		noticeDao.addNotice(notice);	
 	}
 	
 	
-	public Bloodsugar selectBloodsugarOne(String bloodsugarno) {
+	public Notice selectBloodsugarOne(String bloodsugarno) {
 		logger.debug("BloodsugarService 에서 selectBloodsugarOne 실행");
 		return bloodsugarDao.selectBloodsugarOne(bloodsugarno);
 		
 	}
 	
-	public void updateBloodsugar (Bloodsugar bloodsugar) {
+	public void updateBloodsugar (Notice bloodsugar) {
 		logger.debug("updateBloodsugar BloodsugarService");
 		logger.debug("88888888888888888888888888"+bloodsugar);
 		bloodsugarDao.updateBloodsugar(bloodsugar);
@@ -111,7 +111,7 @@ public class BloodsugarService {
 		return bloodsugarDao.deletesugarCount(bloodsugarno);
 	}
 	
-	/*
+	
 		logger.debug("BloodPressureService 에서 updateBloodPressure 실행");
 		logger.debug("=================================2번"+bloodsugarno);
 		Bloodsugar bloodsugar = new Bloodsugar();
@@ -128,6 +128,7 @@ public class BloodsugarService {
 
 	}
 	
-	*/
+	
 }
 
+*/

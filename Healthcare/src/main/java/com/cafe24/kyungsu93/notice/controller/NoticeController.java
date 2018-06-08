@@ -1,4 +1,4 @@
-package com.cafe24.kyungsu93.bloodsugar.controller;
+/*package com.cafe24.kyungsu93.notice.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -20,43 +20,45 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.cafe24.kyungsu93.bloodpressure.service.BloodPressure;
 import com.cafe24.kyungsu93.bloodsugar.service.Bloodsugar;
 import com.cafe24.kyungsu93.bloodsugar.service.BloodsugarService;
+import com.cafe24.kyungsu93.notice.service.Notice;
+import com.cafe24.kyungsu93.notice.service.NoticeService;
 
 
 @Controller
-public class BloodsugarController {
+public class NoticeController {
 	
 	@Autowired
-	private BloodsugarService bloodsugarService;
+	private NoticeService noticeService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(BloodsugarController.class);
+	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
 	
-	@RequestMapping(value="/addBloodsugar", method = RequestMethod.GET)
-	public String addBloodsugar() {
-		System.out.println("addBloodsugar 폼 요청");
-		return "/bloodsugar/addBloodsugar";
+	@RequestMapping(value="/addNotice", method = RequestMethod.GET)
+	public String addNotice() {
+		System.out.println("addNotice 폼 요청");
+		return "/notice/addNotice";
 	}
 	
-	@RequestMapping(value="/addBloodsugar", method = RequestMethod.POST)
-		public String BloodsugarList(HttpSession session,Bloodsugar bloodsugar) {
-			System.out.println("BloodsugarList 추가 후 List");
-			System.out.println("BloodsugarList 추가 후 bloodsugar "+bloodsugar.toString());
-			bloodsugarService.addBloodsugar(bloodsugar);
-			return "redirect:/BloodsugarList";
+	@RequestMapping(value="/addNotice", method = RequestMethod.POST)
+		public String NoticeList(HttpSession session,Notice notice) {
+			System.out.println("NoticeList 추가 후 List");
+			System.out.println("NoticeList 추가 후 Notice "+ notice.toString());
+			noticeService.addNotice(notice);
+			return "redirect:/NoticeList";
 	}
 
-	@RequestMapping(value="/BloodsugarList", method=RequestMethod.GET)
+	@RequestMapping(value="/NoticeList", method=RequestMethod.GET)
 	public String bloodsugarList(Model model
 								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
 		logger.debug("BloodsugarController 에서 BloodsugarList 실행");
-		Map<String,Object> map = bloodsugarService.bloodsugarList(currentPage, pagePerRow);
+		Map<String,Object> map = noticeService.noticeList(currentPage, pagePerRow);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 		model.addAttribute("totalBlock", map.get("totalBlock"));
-		return "bloodsugar/BloodsugarList";
+		return "Notice/NoticeList";
 	}
 	@RequestMapping(value="/modifyBloodsugar", method=RequestMethod.POST)
 	public String updateBloodsugar(HttpSession session ,Bloodsugar bloodsugar) {				
@@ -87,7 +89,7 @@ public class BloodsugarController {
 	}
 	
 	
-  /*  public String search(HttpServletRequest request
+    public String search(HttpServletRequest request
     						, Model model
 				    		,@RequestParam(value="searchCode") String searchType
 				    		,@RequestParam(value="searchValue") String searchValue) {
@@ -95,6 +97,7 @@ public class BloodsugarController {
 	Map<String,Object> map = bloodsugarService.getSearch(request, model, searchCode, searchValue);
 	model.addAttribute("list", map.get("list"));
 		return "/bloodsugar/bloodsugarList";
-	}*/
+	}
 }
 
+*/

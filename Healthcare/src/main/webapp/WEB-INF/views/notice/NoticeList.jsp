@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -25,35 +25,37 @@
 </head>
 <body>
 	<h1>bloodsugaList</h1>
-	<form id="bloodsugarList" action="${pageContext.request.contextPath}/bloodsugarList" method="POST">
+	<form id="NoticeList" action="${pageContext.request.contextPath}/NoticeList" method="POST">
 	<!-- 검색 -->
-	 <%-- <form id="formSearch" name="formSearch"  action="${pageContext.request.contextPath}/BloodsugarSearch" method="post"> 
+	 <form id="formSearch" name="formSearch"  action="${pageContext.request.contextPath}/BloodsugarSearch" method="post"> 
 		<select id="searchCode" name="searchCode"> 
 		<option value="fastingbloodsugar" selected="Bloodsugarno">혈당코드</option> 
 		<option value="memberno">회원코드</option> 
 		</select>		
 		<input type="text" id="searchValue" name="searchValue" value="${mapSearch.searchCode}"/> 
 		<button type="button" id="searchBtn">검색</button> 
-	</form>	 --%>
+	</form>	
 	 
 	<table>
 		<thead>
 			<tr>
-				<th>혈당코드</th>
+				<th>공지사항코드</th>
 				<th>회원코드</th>
-				<th>혈당수치</th>
-				<th>공복여부</th>
+				<th>제목</th>
+				<th>내용</th>
+				<th>조회수</th>
 				<th>등록시간</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="bloodsugar" items="${list}">
+			<c:forEach var="notice" items="${list}">
 				<tr>
-					<td>${bloodsugar.bloodsugarno}</td>
-					<td>${bloodsugar.memberno}</td>
-					<td>${bloodsugar.fastingbloodsugar }</td>
-					<td>${bloodsugar.fastingstate }</td>
-					<td>${bloodsugar.bloodsugardate }</td>
+					<td>${notice.noticeno}</td>
+					<td>${notice.memberno}</td>
+					<td>${notice.noticetitle }</td>
+					<td>${notice.noticecontent }</td>
+					<td>${notice.noticecount }</td>
+					<td>${notice.noticedate }</td>
 					<td><a type="button" href="${pageContext.request.contextPath}/modifyBloodsugar?bloodsugarno=${bloodsugar.bloodsugarno}" id="buttonModify">수정</a></td>
 					<td><a type="button" href="${pageContext.request.contextPath}/deleteBloodsugar?bloodsugarno=${bloodsugar.bloodsugarno}" id="buttonDelete">삭제</a></td>  
 				</tr>
@@ -94,4 +96,4 @@
 
 
 </body>
-</html>
+</html> --%>

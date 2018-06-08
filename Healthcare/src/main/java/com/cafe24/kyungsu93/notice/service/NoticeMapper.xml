@@ -16,38 +16,40 @@
 				ON a.member_no = b.member_no
   </select>	
  
-  <select id="bloodsugarList" parameterType="java.util.Map" resultType="com.cafe24.kyungsu93.bloodsugar.service.Bloodsugar">
- 	 SELECT b.blood_sugar_no AS bloodsugarno
-  			,b.member_no AS memberno 
-  			,b.fasting_blood_sugar AS fastingbloodsugar
-  			,b.fasting_state AS fastingstate 
-  			,b.blood_sugar_date AS bloodsugardate
-	FROM blood_sugar AS b
-	JOIN member AS m
-	ON m.member_no=b.member_no
+  <select id="noticeList" parameterType="java.util.Map" resultType="com.cafe24.kyungsu93.notice.service.Notice">
+ 	SELECT 
+ 		notice_no
+ 		,member_no
+ 		,notice_title
+ 		,notice_content
+ 		,notice_count
+ 		,notice_date
+	FROM notice
 
   </select>
   
-  <select id="bloodPressureCount" resultType="Integer">
+  <select id="noticeCount" resultType="Integer">
 		SELECT
 		count(*)
-		FROM blood_sugar
+		FROM notice
 	</select>
   
-  <insert id="addBloodsugar" parameterType="com.cafe24.kyungsu93.bloodsugar.service.Bloodsugar">
+  <insert id="addNotice" parameterType="com.cafe24.kyungsu93.notice.service.Notice">
     
-  INSERT INTO blood_sugar(
-	blood_sugar_no
+   INSERT INTO notice(
+	 notice_no
 	, member_no
-	, fasting_blood_sugar
-	, fasting_state
-	, blood_sugar_date
+	, notice_title
+	, notice_content
+	, notice_count
+	, notice_date
 	)
 	VALUES (
-	 #{bloodsugarno}
+	 #{noticeno}
 	, #{memberno} 
-	, #{fastingbloodsugar}
-	, #{fastingstate}
+	, #{noticetitle}
+	, #{noticecontent}
+	, #{notice_count}
 	, now()
 	)
   
