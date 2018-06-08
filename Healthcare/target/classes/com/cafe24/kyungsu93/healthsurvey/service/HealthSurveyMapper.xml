@@ -42,10 +42,10 @@
 			,health_survey_average_grade AS grade
 			,member AS member
 			,disease AS disease
-		WHERE survey.health_survey_register_no = grade.health_survey_register_no
+		WHERE survey.health_survey_register_no = #{healthSurveyRegisterNo}
+				and survey.health_survey_register_no = grade.health_survey_register_no
 				and survey.member_no = member.member_no
 				and survey.disease_no = disease.disease_no
-				and survey.health_survey_register_no = #{healthSurveyRegisterNo}
   	</select>
   	
   	<select id="getHealthSurveyNo" resultType="Integer">
@@ -150,4 +150,76 @@
 		FROM health_survey_selection
 		WHERE health_survey_question_no = #{healthSurveyQuestionNo}
 	</select>
+	
+	<select id="getHealthSurveyResultNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(CAST(SUBSTRING(health_survey_result_no,22)as decimal)),0) 
+		FROM health_survey_result
+	</select>
+	
+	<insert id="addHealthSurveyResult" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultRequest">
+		INSERT INTO health_survey_result(
+			health_survey_result_no
+			,health_survey_register_no
+			,member_no
+			,health_survey_result_date
+		)
+		VALUES(
+			#{healthSurveyResultNo}
+			,#{healthSurveyRegisterNo}
+			,#{memberNo}
+			,now()
+		)
+	</insert>
+	
+	<insert id="addHealthSurveyTotalGrade" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyTotalGrade">
+		INSERT INTO health_survey_total_grade(
+			health_survey_result_no
+			,health_survey_total_grade
+		)
+		VALUES(
+			#{healthSurveyResultNo}
+			,#{healthSurveyTotalGrade}
+		)
+	</insert>
+	
+	<insert id="addHealthSurveyRecord" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultRequest">
+		INSERT INTO health_survey_record(
+			health_survey_result_no
+			,health_survey_selection_no
+		)
+		VALUES(
+			#{healthSurveyResultNo}
+			,#{healthSurveySelectionNo}
+		)
+	</insert>
+	
+	<select id="getHealthSurveyResultOne" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultRequest"
+											resultType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultResponse">
+		SELECT
+			result.health_survey_result_no AS  healthSurveyResultNo
+			,result.health_survey_register_no AS healthSurveyRegisterNo
+			,result.health_survey_result_date AS healthSurveyResultDate
+			,grade.health_survey_total_grade AS healthSurveyTotalGrade
+			,member.member_name AS memberName
+			,disease.disease_name AS diseaseName
+			,register.health_survey_register_title AS healthSurveyRegisterTitle
+			,register.health_survey_register_content AS healthSurveyRegisterContent
+			,register.health_survey_register_normal AS healthSurveyRegisterNormal
+			,register.health_survey_register_warning AS healthSurveyRegisterWarning
+			,register.health_survey_register_danger AS healthSurveyRegisterDanger
+			,register.health_survey_register_total AS healthSurveyRegisterTotal
+			,register.health_survey_register_date AS healthSurveyRegisterDate
+		FROM health_survey_result AS result
+			,health_survey_total_grade AS grade
+			,health_survey_register AS register
+			,member
+			,disease
+		WHERE result.health_survey_result_no = #{healthSurveyResultNo}
+				and result.health_survey_register_no = register.health_survey_register_no
+				and result.health_survey_result_no = grade.health_survey_result_no
+				and register.member_no = member.member_no
+				and register.disease_no = disease.disease_no
+	</select>
+	
 </mapper>

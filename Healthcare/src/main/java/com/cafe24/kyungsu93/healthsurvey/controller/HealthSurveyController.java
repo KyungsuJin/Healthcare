@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cafe24.kyungsu93.healthscreen.service.HealthScreenRequest;
+import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyDao;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyQuestion;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyRequest;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResponse;
+import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultRequest;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveySelection;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyService;
 
@@ -74,6 +76,14 @@ public class HealthSurveyController {
 		}
 		
 		return "healthsurvey/addHealthSurveyResult";
+	}
+	
+	@RequestMapping(value="/getHealthSurveyResult", method=RequestMethod.GET)
+	public String getHealthSurveyResult(Model model, HealthSurveyResultRequest healthSurveyResultRequest) {
+		
+		model.addAttribute("healthSurveyResultResponse", healthSurveyService.getHealthSurveyResultOne(healthSurveyResultRequest));
+		
+		return "healthsurvey/getHealthSurveyResult";
 	}
 
 }

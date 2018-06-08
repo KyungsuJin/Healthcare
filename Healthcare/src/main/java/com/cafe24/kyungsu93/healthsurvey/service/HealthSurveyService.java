@@ -93,13 +93,26 @@ public class HealthSurveyService {
 		return map;
 	}
 	
-	public void addHealthSurveyResult(List<String> healthSurveySelectionNo) {
+	public String addHealthSurveyResult(String memberNo, List<String> healthSurveySelectionNo, String healthSurveyRegisterNo, int totalGrade) {
+		HealthSurveyResultRequest healthSurveyResultRequest = new HealthSurveyResultRequest();
+		healthSurveyResultRequest.setHealthSurveyResultNo("health_survey_result_"+(healthSurveyDao.getHealthSurveyResultNo()+1));
+		healthSurveyResultRequest.setHealthSurveyRegisterNo(healthSurveyRegisterNo);
+		healthSurveyResultRequest.setMemberNo(memberNo);
+		healthSurveyDao.addHealthSurveyResult(healthSurveyResultRequest);
+		HealthSurveyTotalGrade healthSurveyTotalGrade = new HealthSurveyTotalGrade();
+		healthSurveyTotalGrade.setHealthSurveyResultNo(healthSurveyResultRequest.getHealthSurveyResultNo());
+		healthSurveyTotalGrade.setHealthSurveyTotalGrade(totalGrade);
+		healthSurveyDao.addHealthSurveyTotalGrade(healthSurveyTotalGrade);
 		for(String selectionNo : healthSurveySelectionNo ) {
 			HealthSurveyRecord healthSurveyRecord = new HealthSurveyRecord();
-			
+			healthSurveyRecord.setHealthSurveyResultNo(healthSurveyResultRequest.getHealthSurveyResultNo());
 			healthSurveyRecord.setHealthSurveySelectionNo(selectionNo);
-			//healthSurveyDao.addHealthSurveyResult();
+			healthSurveyDao.addHealthSurveyRecord(healthSurveyRecord);
 		}
-		
+		return healthSurveyResultRequest.getHealthSurveyResultNo();
+	}
+	
+	public HealthSurveyResultResponse getHealthSurveyResultOne(HealthSurveyResultRequest healthSurveyResultRequest) {
+		return healthSurveyDao.getHealthSurveyResultOne(healthSurveyResultRequest);
 	}
 }

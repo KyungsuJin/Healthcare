@@ -15,23 +15,21 @@
 			if($("input[id=healthSurveyRecordNo]:checked").length == $("#questionSize").val()){
 				var param = "";
 				var totalScore = 0;
-				
-				
 				$(".healthSurveyResultContainer :checked").each(function() {
 		        	if( param=="" ) param = "healthSurveyRegisterNo="+$("#healthSurveyRegisterNo").val();
 					param = param + "&healthSurveySelectionNo="+$(this).val();
-					total = total + $(this).closest("div").children("input[id=selectionScore]").val();
+					totalScore = totalScore + Number($(this).closest("div").children("input[id=selectionScore]").val());
 		     	});
-				param = param + "&"
+				param = param + "&healthSurveyTotalGrade="+totalScore;
 				console.log(param);
 				console.log(totalScore);
  				$.ajax({
-			    	url : '',
+			    	url : '${pageContext.request.contextPath}/addHealthSurveyResult',
 			        type : 'post',
 			        data : param,
 			        dataType : 'text',
 			        success : function(data) {
-			          console.log('return string : ' + data);
+			        	location.href="${pageContext.request.contextPath}/getHealthSurveyResult?healthSurveyResult="+data;
 			        },
 			        error : function() { console.log('error');}
 				});

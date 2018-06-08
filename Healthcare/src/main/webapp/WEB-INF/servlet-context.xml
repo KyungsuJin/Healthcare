@@ -55,6 +55,7 @@
                 <value>classpath:com/cafe24/kyungsu93/bloodpressure/service/BloodPressureMapper.xml</value>
 				<value>classpath:com/cafe24/kyungsu93/group/service/GroupMapper.xml</value>
 				<value>classpath:com/cafe24/kyungsu93/bloodsugar/service/BloodsugarMapper.xml</value>
+				<value>classpath:com/cafe24/kyungsu93/notice/controller/NoticeMapper.xml</value>
             </list>
         </property>
     </bean>
