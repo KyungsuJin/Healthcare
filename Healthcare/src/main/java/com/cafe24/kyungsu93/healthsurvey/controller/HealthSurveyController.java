@@ -18,6 +18,7 @@ import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyQuestion;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyRequest;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResponse;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultRequest;
+import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultResponse;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveySelection;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyService;
 
@@ -80,8 +81,10 @@ public class HealthSurveyController {
 	
 	@RequestMapping(value="/getHealthSurveyResult", method=RequestMethod.GET)
 	public String getHealthSurveyResult(Model model, HealthSurveyResultRequest healthSurveyResultRequest) {
-		
-		model.addAttribute("healthSurveyResultResponse", healthSurveyService.getHealthSurveyResultOne(healthSurveyResultRequest));
+		System.out.println("11111"+healthSurveyResultRequest.toString());
+		HealthSurveyResultResponse healthSurveyResultResponse = healthSurveyService.getHealthSurveyResultOne(healthSurveyResultRequest);
+		model.addAttribute("healthSurveyResultResponse", healthSurveyResultResponse);
+		System.out.println("22222"+healthSurveyResultResponse.toString());
 		
 		return "healthsurvey/getHealthSurveyResult";
 	}
