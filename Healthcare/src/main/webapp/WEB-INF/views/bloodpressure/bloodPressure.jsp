@@ -58,6 +58,7 @@
 			</tbody>	
 		</table>
 		<a id="addBloodPressure" href="${pageContext.request.contextPath}/addBloodPressure">혈압등록하기</a>
+		<a id="bloodPressureChart" href="${pageContext.request.contextPath}/bloodPressureChart?memberNo=member_1">내 혈당 그래프 보기</a>
 		<nav>
 			<ul class="pagination pagination-sm">
 				<c:if test="${currentPage > 10}">

@@ -19,7 +19,13 @@ public class BloodPressureService {
 	@Autowired
 	private BloodPressureDao bloodPressureDao;
 	private static final Logger logger = LoggerFactory.getLogger(BloodPressureService.class);
-		
+	
+	public List<BloodPressure> selectBloodPressureChart(String memberNo) {
+		logger.debug("BloodPressureService - selectBloodPressureChart 실행");
+		List<BloodPressure> list = bloodPressureDao.selectBloodPressureChart(memberNo);
+		return list;
+	}
+	
 	public void updateBloodPressure(String bloodPressureNo) {
 		logger.debug("BloodPressureService - updateBloodPressure 실행");
 		BloodPressure bloodPressure = new BloodPressure();
@@ -41,7 +47,7 @@ public class BloodPressureService {
 		return bloodPressureDao.deletePressureCount(bloodPressureNo);
 	}
 	
-	public  Map<String, Object> bloodPressureList(int currentPage, int pagePerRow) {
+	public Map<String, Object> bloodPressureList(int currentPage, int pagePerRow) {
 		logger.debug("BloodPressureService - bloodPressureList 실행");
 		Map<String,Integer> map = new HashMap<String,Integer>();
 		int beginRow = (currentPage-1)*pagePerRow;

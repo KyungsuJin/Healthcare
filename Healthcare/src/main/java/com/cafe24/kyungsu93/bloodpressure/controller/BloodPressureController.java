@@ -1,5 +1,6 @@
 package com.cafe24.kyungsu93.bloodpressure.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -22,7 +23,15 @@ public class BloodPressureController {
 	@Autowired
 	private BloodPressureService bloodPressureService;
 	private static final Logger logger = LoggerFactory.getLogger(BloodPressureController.class);
-			
+	
+	@RequestMapping(value="/bloodPressureChart", method=RequestMethod.GET)
+	public String bloodPressureChart() {
+		logger.debug("BloodpressureController - bloodPressureChart 포워드 실행");
+/*		List<BloodPressure> list = bloodPressureService.selectBloodPressureChart(memberNo);
+		model.addAttribute("list",list);*/
+		return "bloodpressure/bloodPressureChart";
+	}
+		
 	@RequestMapping(value="/modifyBloodPressure", method=RequestMethod.POST)
 	public String updateBloodPressure(@RequestParam(value="bloodPressureNo", required=true) String bloodPressureNo) {
 		logger.debug("BloodpressureController - modifyBloodPressure 리다이렉트 실행");
@@ -32,7 +41,7 @@ public class BloodPressureController {
 	
 	@RequestMapping(value="/modifyBloodPressure", method=RequestMethod.GET)
 	public String modifyBloodPressure(Model model
-											,@RequestParam(value="bloodPressureNo") String bloodPressureNo) {
+										,@RequestParam(value="bloodPressureNo") String bloodPressureNo) {
 		logger.debug("BloodPressureController - modifyBloodPressure 포워드 실행");
 		BloodPressure bloodPressure = bloodPressureService.selectBloodPressureOne(bloodPressureNo);
 		model.addAttribute("bloodPressure", bloodPressure);

@@ -16,9 +16,10 @@ public class BloodPressureDao {
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.bloodpressure.service.BloodPressureMapper.";
 
-	public BloodPressure selectBloodPressureChart(String memeberId) {
+	public List<BloodPressure> selectBloodPressureChart(String memeberNo) {
 		logger.debug("BloodPressureDao - selectBlppdPressureChart 실행");
-		return sqlSession.selectOne(NS+"bloodPressurechart",memeberId);
+		List<BloodPressure> list = sqlSession.selectList(NS+"bloodPressurechart",memeberNo);
+		return list;
 	}
 	
 	public int updateBloodPressure(BloodPressure bloodPressure) {

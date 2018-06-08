@@ -5,12 +5,11 @@
 			 parameterType="String"
 			resultType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
 		SELECT
-			blood_pressure_no as bloodPressureNo,
 			systolic_pressure as systolicPressure,
 			diastolic_pressure as diastolicPressure,
 			blood_pressure_date as bloodPressureDate
 			FROM blood_pressure 	
-		WHERE member_id = #{memberId}
+		WHERE member_no = #{memberNo}
 	 </select>
 	 	 <select id="bloodPressureOne"
 			 parameterType="String"
