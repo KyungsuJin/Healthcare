@@ -29,7 +29,7 @@ public class NoticeService {
 		map.put("searchCode", searchCode); 
 		map.put("searchValue", searchValue);
 		model.addAttribute("map", map);
-		List<Bloodsugar> list = this.bloodsugarDao.searchBloodsugar(map);
+		List<Notice> list = this.noticeDao.searchBloodsugar(map);
 		Map<String,Object> returnMap = new HashMap<String,Object>();
 		returnMap.put("list", list);
 		return returnMap;
@@ -129,6 +129,4 @@ public class NoticeService {
 	}
 	
 	
-}
-
-*/
+}*/
