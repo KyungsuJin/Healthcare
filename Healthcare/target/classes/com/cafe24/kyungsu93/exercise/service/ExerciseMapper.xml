@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.cafe24.kyungsu93.ExerciseMapper">
+  	<!--보증금 등록여부 체크  -->
+  	<select id="exerciseDepositChk"
+  			parameterType="String"
+  			resultType="Integer">
+  		SELECT count(*)
+  		FROM exercise_matching_member
+  		WHERE member_no =#{memberNo};
+  	</select>
+  	<!--회원 포인트 체크  -->
+  	<select id="memberPointChk"
+  			parameterType="String"
+  			resultType="Integer">
+  		SELECT count(*)
+  		FROM member
+  		WHERE member_no=#{memberNo} AND member_point>=1000;
+  	</select>
+  	<!-- 보증금 등록 번호 -->
+  	<select id="RegistrationNo"
+  			resultType="Integer">
+  			SELECT
+         	IFNULL(MAX(cast(SUBSTRING(exercise_matching_member_no,14) as decimal)), 0)
+         	FROM exercise_matching_member
+  	</select>
+  	<insert id="DepositRegistration"
+  			parameterType="com.cafe24.kyungsu93.exercise.service.Exercise">
+  			INSERT INTO exercise_matching_member(
+  				exercise_matching_member_no
+  				,member_no
+  				,exercise_matching_member_date
+  			)VALUES(
+  				#{registrationNo}
+  				,#{memberNo}
+  				,now()
+  			)
+  	
+  	</insert>
+  </mapper>

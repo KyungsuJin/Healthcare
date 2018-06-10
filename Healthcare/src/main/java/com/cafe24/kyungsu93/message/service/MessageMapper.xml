@@ -84,7 +84,7 @@
   	</insert>
   	<!-- 메시지 받은리스트  -->
   	<select id="messageReceiveList"
-  			parameterType="String"
+  			parameterType="java.util.Map"
   			resultMap="message">
   			SELECT 
   				rs.send_message_no
@@ -94,6 +94,16 @@
 				,sm.message_date
 			FROM send_message sm,receive_message rs
 			WHERE sm.send_message_no=rs.send_message_no AND sm.member_receive_no=#{memberNo}
+			LIMIT #{beginRoW},#{pagePerRow}
+  	</select>
+  	<!-- 받은 메시지 총 total -->
+  	<select id="messageReceiveTotal"
+  			parameterType="String"
+  			resultType="Integer">
+  			SELECT COUNT(*)
+			FROM send_message sm, receive_message rm
+			WHERE sm.send_message_no=rm.send_message_no 
+				AND sm.member_receive_no=#{memberNo}
   	</select>
   	<insert id="messageContent"
   			parameterType="String">

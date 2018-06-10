@@ -42,10 +42,31 @@ public class MessageService {
 		return "";
 	}
 	//받은 메시지함 리스트 출력
-	public List<Message> messageReceiveList(String memberNo) {
+	public Map<String, Object> messageReceiveList(String memberNo,int currentPage,int pagePerRow) {
 		logger.debug("MessageService.messageReceiveList");
-		List<Message> list=messageDao.messageReceiveList(memberNo);
-		return list;
+		Map<String,Object> map = new HashMap<String,Object>();
+		int beginRoW=(currentPage-1)/10*10;
+		map.put("beginRoW", beginRoW);
+		map.put("pagePerRow", pagePerRow);
+		map.put("memberNo", memberNo);
+		List<Message> list=messageDao.messageReceiveList(map);
+		int messageReceiveTotal =  messageDao.messageReceiveTotal(memberNo);
+		logger.debug("messageReceiveTotal + : "+messageReceiveTotal);
+		int lastPage=messageReceiveTotal/pagePerRow;
+		if(messageReceiveTotal%pagePerRow>0) {
+			lastPage++;
+		}
+		int startPage = ((currentPage-1)/10)*10+1;
+		int endPage = startPage+pagePerRow-1;
+		if(endPage>lastPage) {
+			endPage=lastPage;
+		}
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("startPage", startPage);
+		returnMap.put("endPage", endPage);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("list", list);
+		return returnMap;
 	}
 	//메시지 읽음 표시
 	public void messageContent(String messageNo) {

@@ -1,6 +1,7 @@
 package com.cafe24.kyungsu93.message.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -43,9 +44,15 @@ public class MessageDao {
 		logger.debug("MessageDao.receiveMessageContent");
 		return sqlSession.insert(NS+"receiveMessageContent",message);
 	}
-	public List<Message> messageReceiveList(String memberNo) {
+	//받은 메시지 리스트
+	public List<Message> messageReceiveList(Map<String,Object> map) {
 		logger.debug("MessageDao.messageReceiveList");
-		return sqlSession.selectList(NS+"messageReceiveList",memberNo);
+		return sqlSession.selectList(NS+"messageReceiveList",map);
+	}
+	//받은 메시지 총 total
+	public int messageReceiveTotal(String memberNo) {
+		logger.debug("MessageDao.messageReceiveTotal");
+		return sqlSession.selectOne(NS + "messageReceiveTotal", memberNo);
 	}
 	public void messageContent(String messageNo) {
 		logger.debug("MessageDao.messageContent");
@@ -74,5 +81,6 @@ public class MessageDao {
 		logger.debug("MessageDao.SendMessageDelete");
 		sqlSession.delete(NS + "SendMessageDelete", ReceivemessageId);
 	}
+
 
 }

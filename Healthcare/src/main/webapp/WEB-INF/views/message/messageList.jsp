@@ -12,6 +12,7 @@
 							,"messageWrite","width=700, height=700,resizable=no,scrollbars=yes");
 			});
 			$("#messageReceive").click(function(){
+				/* window.location.href= "${pageContext.request.contextPath}/messageReceiveList1?memberReceiveNo="+$("#memberReceiveNo").val()+""; */
 				console.log($("#memberReceiveNo").val());
 				 $.ajax({
 					type:"POST"
@@ -22,6 +23,7 @@
 						console.log(data);
 						$("#tb").empty();
 						$("#deletBtn").empty();
+						$("#page").empty();
 						$("#deletBtn").append('<button type="button" id="deleteMessageBtn">삭제</button>');
 						$("#tb").append('<tr><td><input type="checkbox" id="allChk">보낸사람</td><td>내용</td><td>날짜</td></tr>');
 						$.each(data.list,function(key,val){
@@ -31,6 +33,12 @@
 											"<td>"+val.messageDate+"</td></tr>"
 											);
 						});
+						if(data.currentPage>1){
+							$("page").append()
+						}
+						for(var i =data.startPage; i <=data.endPage ; i++){
+							$("#page").append("<a href='#' onclick='$('#sendMessage').click()'>"+i+"</a>");
+						} 
 					}
 				});
 			});
@@ -114,6 +122,16 @@
 	</div>
 	
 	<table border="1" class="table" id="tb">
+		<%-- <tr><td><input type="checkbox" id="allChk">보낸사람</td><td>내용</td><td>날짜</td></tr>
+		<c:forEach items="${list}" var="list">
+			<tr>
+				<td>${list.sendMessageId}</td>
+				<td><a href="${pageContext.request.contextPath}/messageReceiveContent?sendMessageNo=${list.sendMessageNo}&sendMessageId=${list.sendMessageId}&messageTitle=${list.messageTitle}&messageContent=${list.messageContent}&messageDate=${list.messageDate}" class="messageContent">${list.messageTitle}</a></td>
+				<td>${list.messageDate}</td>
+			</tr>
+			
+		</c:forEach> --%>
 	</table>
+	<div id="page" style="text-align: center;"></div>
 </body>
 </html>

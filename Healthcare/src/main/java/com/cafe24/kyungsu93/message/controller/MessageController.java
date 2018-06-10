@@ -73,5 +73,27 @@ public class MessageController {
 		messageService.SendMessageDelete(deleteMessageNo);
 	return "message/messageList";
 	}
+/*	@RequestMapping(value="/des",method=RequestMethod.GET)
+	public String des(@RequestParam(value="currentPage")int currentPage) {
+		logger.debug("messageController.des");
+		logger.debug("currentPage :" +currentPage);
+	return "message/messageList";
+	}*/
+/*	//받은 메시지 리스트
+		@RequestMapping(value = "/messageReceiveList1", method = RequestMethod.GET)
+		public String messageReceiveList1(Model model,
+								@RequestParam(value = "memberReceiveNo") String memberNo
+													,@RequestParam(value="currentPage",defaultValue="1")int currentPage
+													,@RequestParam(value="pagePerRow",defaultValue="10")int pagePerRow){
+			logger.debug("MessageRestController.messageReceiveList");
+			logger.debug("memberNo: "+memberNo);
+			Map<String, Object> map=messageService.messageReceiveList(memberNo,currentPage,pagePerRow);
+			model.addAttribute("currentPage",currentPage);
+			model.addAttribute("startPage",map.get("startPage"));
+			model.addAttribute("endPage",map.get("endPage"));
+			model.addAttribute("lastPage",map.get("lastPage"));
+			model.addAttribute("list",map.get("list"));
+			return "message/messageList";
+		}*/
 
 }
