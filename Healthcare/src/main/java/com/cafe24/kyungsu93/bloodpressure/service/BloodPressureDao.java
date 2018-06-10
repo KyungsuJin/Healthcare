@@ -16,6 +16,23 @@ public class BloodPressureDao {
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.bloodpressure.service.BloodPressureMapper.";
 
+	public int bloodPressureSearchCount(Map<String, Object> map) {
+		logger.debug("BloodPressureDao - bloodPressureCount 실행");
+		return sqlSession.selectOne(NS+"bloodPressureSearchCount",map);
+	}
+	
+	public List<BloodPressure> bloodPressureSearchDate(Map<String, Object> map) {
+		logger.debug("BloodPressureDao - bloodPressureSearchDate 실행");
+		List<BloodPressure> list = sqlSession.selectList(NS+"bloodPressureSearchDate",map);
+		return list;
+	}
+		
+	public List<BloodPressure> bloodPressureSearchAll(Map<String, Object> map) {
+		logger.debug("BloodPressureDao - bloodPressureSearchAll 실행");
+		List<BloodPressure> list = sqlSession.selectList(NS+"bloodPressureSearchAll",map);
+		return list;
+	}
+	
 	public List<BloodPressure> selectBloodPressureChart(String memeberNo) {
 		logger.debug("BloodPressureDao - selectBlppdPressureChart 실행");
 		List<BloodPressure> list = sqlSession.selectList(NS+"bloodPressurechart",memeberNo);

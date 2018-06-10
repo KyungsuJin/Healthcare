@@ -24,6 +24,82 @@ public class BloodPressureService {
 		logger.debug("BloodPressureService - selectBloodPressureChart 실행");
 		return bloodPressureDao.selectBloodPressureChart(memberNo);
 	}
+	public Map<String, Object> bloodPressureSearchDate(String startDate, String endDate) {
+		logger.debug("BloodPressureService - bloodPressureSearchDate 실행");
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
+		logger.debug("가져온 데이터:"+startDate+","+endDate);
+		List<BloodPressure> list = bloodPressureDao.bloodPressureSearchDate(map);
+		logger.debug("bloodPressureSearchDate list:"+list);
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("list", list);
+		return returnMap;
+	}
+	public Map<String, Object> bloodPressureSearch(String keyOption, int keyword, int currentPage, int pagePerRow) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("keyword", keyword);
+		map.put("keyField", keyOption);
+		logger.debug("가져온 데이터:"+keyword+","+keyOption);
+		int count = 0;
+		int result = 0;
+		count = bloodPressureDao.bloodPressureSearchCount(map);
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		if(count >0) {
+			List<BloodPressure> list = bloodPressureDao.bloodPressureSearchAll(map);
+	        logger.debug("list:"+list);
+			result = 1;
+			returnMap.put("list", list);
+			returnMap.put("count", count);
+			returnMap.put("result", result);
+			}else {
+				result = 2;
+				returnMap.put("count", count);
+				returnMap.put("result", result);
+				}
+		//페이징
+		int beginRow = (currentPage-1)*pagePerRow;
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		int lastPage = count/pagePerRow;
+        if(count % pagePerRow != 0) {
+            lastPage++;
+        }
+        logger.debug("lastPage:"+lastPage);
+        logger.debug("currentPage:"+currentPage);
+        logger.debug("beginRow:"+beginRow);
+        logger.debug("pagePerRow:"+pagePerRow);
+        logger.debug("======================page block=========================");
+       
+        int pagePerBlock = 10; //보여줄 블록 수 
+        int block = currentPage/pagePerBlock;
+        int totalBlock = count/pagePerBlock;//총 블록수
+        
+        if(currentPage % pagePerBlock != 0) {
+        	block ++;
+        }
+        int firstBlockPage = (block-1)*pagePerBlock+1;
+        int lastBlockPage = block*pagePerBlock;
+        
+		if(lastPage > 0) {			
+			if(lastPage % pagePerBlock != 0) {
+				totalBlock++;
+			}
+		}
+		if(lastBlockPage >= totalBlock) {
+			lastBlockPage = totalBlock;
+		}
+		logger.debug("firstBlockPage:"+firstBlockPage);
+		logger.debug("lastBlockPage:"+lastBlockPage);
+		logger.debug("block:"+block);
+		logger.debug("totalBlock:"+totalBlock);
+		logger.debug("======================page block=========================");
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("firstBlockPage", firstBlockPage);
+		returnMap.put("lastBlockPage", lastBlockPage);
+		returnMap.put("totalBlock", totalBlock);
+		return returnMap;
+		}
 	
 	public void updateBloodPressure(String bloodPressureNo) {
 		logger.debug("BloodPressureService - updateBloodPressure 실행");
