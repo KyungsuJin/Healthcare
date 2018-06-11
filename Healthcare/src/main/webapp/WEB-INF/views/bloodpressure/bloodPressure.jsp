@@ -5,8 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>bloodPressure</title>
-	<!-- jQuery -->
-	<script src="https://code.jquery.com/jquery.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
    	function formSearchcheck(){
    		var startDate = $('#startDate').val();
@@ -82,7 +82,7 @@
 			</tbody>	
 		</table>
 		<a id="addBloodPressure" href="${pageContext.request.contextPath}/addBloodPressure">혈압등록하기</a>
-		<a id="bloodPressureChart" href="${pageContext.request.contextPath}/bloodPressureChart?memberNo=member_1">내 혈압 그래프 보기</a>
+		<a id="bloodPressureChart" href="${pageContext.request.contextPath}/bloodPressureChart">내 혈압 그래프 보기</a>
 		<nav>
 			<ul class="pagination pagination-sm">
 				<c:if test="${currentPage > 10}">

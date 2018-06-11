@@ -12,32 +12,25 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.cafe24.kyungsu93.group.service.Group;
+import com.cafe24.kyungsu93.group.service.GroupInviteService;
 import com.cafe24.kyungsu93.group.service.GroupService;
 
 @Controller
 public class GroupController {
 	@Autowired
 	private GroupService groupService;
+	@Autowired
+	private GroupInviteService groupInviteService;
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
-		
-	@RequestMapping(value="/invitefind",method= {RequestMethod.POST,RequestMethod.GET})
-	public String findId(Model model,Group group) {
-		
-		logger.debug("GroupController - findId 리다이렉트 실행.");
-		Map<String,Object> map = groupService.inviteSearch(group);
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("count", map.get("count"));
-		model.addAttribute("result", map.get("result"));
-		return "redirect:/inviteSearchList";
+			
+	@RequestMapping(value="/searchInviteMemberForm", method=RequestMethod.GET)
+	public String searchMemberForm() {
+		logger.debug("GroupController - searchMemberForm 포워드 실행");
+		return "group/searchInviteMemberForm";
 	}
-	
-	@RequestMapping(value="/inviteGroupMember", method=RequestMethod.GET)
-	public String inviteGroupMember() {
-		logger.debug("GroupController - inviteGroupMember");
-		return "group/inviteGroupMember";
-	}	
 	
 	@RequestMapping(value="/modifyGroup",method=RequestMethod.POST)
 	public String modifyGroup(@RequestParam(value="groupNo") String groupNo
@@ -48,7 +41,7 @@ public class GroupController {
 		groupService.modifyGroupResult(groupNo, groupInfo, groupKindNo, groupName);
 		return "redirect:/groupList";
 	}
-	
+		
 	@RequestMapping(value="/modifyGroup", method=RequestMethod.GET)
 	public String modifyGroup(Model model,@RequestParam(value="groupNo") String groupNo) {
 		logger.debug("GroupController - modifyGroup 포워드 실행.");

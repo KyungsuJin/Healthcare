@@ -40,9 +40,7 @@ function check() {
 </head>
 	<body>
 		<h1>modifyBloodPressure</h1>
-			${bloodPressure.bloodPressureNo }
-			등록일
-			${bloodPressure.bloodPressureDate }
+			등록일 : ${bloodPressure.bloodPressureDate }
 			<form id="bloodPressureForm" onsubmit="return check()" action="${pageContext.request.contextPath}/modifyBloodPressure" method="post">
 				<input type="hidden" name="bloodPressureNo" value="${bloodPressure.bloodPressureNo }">
 				<input type="text" name="systolicPressure" placeholder="${bloodPressure.systolicPressure}">

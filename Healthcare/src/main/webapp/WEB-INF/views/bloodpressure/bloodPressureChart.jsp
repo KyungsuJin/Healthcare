@@ -5,12 +5,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>bloodPressureChart</title>
-	<!-- jQuery -->
-	<script src="https://code.jquery.com/jquery.min.js"></script>
-	<!-- google charts -->
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-	var memberNo = "member_2";
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery.min.js"></script>
+<!-- google charts -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+/* 	var memberNo = $('#memberNoSession'); */
+	var memberNo = "member_1";
+	console.log(memberNo);
     $(document).ready(function(){
 	    ajaxData();
 	    $('#addBtn').hide();
@@ -83,13 +85,13 @@
                       series: {
                     	  0: {axis: 'diastolicPressure'},
                     	  1: {axis: 'systolicPressure'}
-                      },
-                      axes: {
-                    	  y: {
+						},
+					axes: {
+						y: {
 							diastolicPressure: {label: '이완기혈압[diastolicPressure]'},
 							systolicPressure: {label: '수축기혈압[systolicPressure]'}
-                      	}
-                      },
+						}
+					},
                       hAxis: {
 						format: chartDateformat, 
 						gridlines:{
@@ -100,8 +102,8 @@
 								days  : {format: ['dd일']},
 								hours : {format: ['HH시']}
 								}
+							}
 						}
-                      }
 					};
 				  //입력값을 화면에 뿌려주는 역할.
 			      var chart = new google.charts.Line(document.getElementById('linechart_material'));
@@ -172,18 +174,20 @@
 </script>
 </head>
 <body>
-	<!-- 차트가 그려지는 위치 -->
+<h1>bloodPressureChart</h1>
+<%--<input type="hidden" id="memberNoSession" value="${sessionScope.memberNo}"> --%>
 	<span id="chartResult"></span>
 	<div id="addBtn">
-	<a href="${pageContext.request.contextPath}/addBloodPressure">혈압 등록하기</a>
+		<a href="${pageContext.request.contextPath}/addBloodPressure">혈압 등록하기</a>
 	</div>
+	<!-- 차트가 그려지는 위치 -->
 	<div id="linechart_material"></div>
 	<!-- 혈압 결과값 계산 -->
 	<div id="bloodPressureResult">
-	수축기 혈압 : <span id="systolicPressure"></span><br/>
-	이완기 혈압 : <span id="diastolicPressure"></span><br/>
-	수축기 혈압은 <span id="systolicresult"></span><br/>
- 	이완기 혈압은 <span id="diastolicresult"></span><br/>
+		수축기 혈압 : <span id="systolicPressure"></span><br/>
+		이완기 혈압 : <span id="diastolicPressure"></span><br/>
+		수축기 혈압은 <span id="systolicresult"></span><br/>
+	 	이완기 혈압은 <span id="diastolicresult"></span><br/>
  	</div>
 </body>
 </html>

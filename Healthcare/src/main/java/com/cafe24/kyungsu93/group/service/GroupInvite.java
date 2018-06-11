@@ -4,12 +4,10 @@ public class GroupInvite {
 	private String groupInviteNo;
 	private String groupNo;
 	private String memberNo;
-	private String memeberName;
-	private String memverId;
 	private String groupInviteApproval;
 	private String groupInviteDate;
 	private String groupName;
-	private String prsonalInformationApproval;
+	private String personalInformationApproval;
 	private String groupInviteApprovalDate;
 	private String groupKindName;
 	public String getGroupInviteNo() {
@@ -30,18 +28,6 @@ public class GroupInvite {
 	public void setMemberNo(String memberNo) {
 		this.memberNo = memberNo;
 	}
-	public String getMemeberName() {
-		return memeberName;
-	}
-	public void setMemeberName(String memeberName) {
-		this.memeberName = memeberName;
-	}
-	public String getMemverId() {
-		return memverId;
-	}
-	public void setMemverId(String memverId) {
-		this.memverId = memverId;
-	}
 	public String getGroupInviteApproval() {
 		return groupInviteApproval;
 	}
@@ -61,10 +47,10 @@ public class GroupInvite {
 		this.groupName = groupName;
 	}
 	public String getPrsonalInformationApproval() {
-		return prsonalInformationApproval;
+		return personalInformationApproval;
 	}
 	public void setPrsonalInformationApproval(String prsonalInformationApproval) {
-		this.prsonalInformationApproval = prsonalInformationApproval;
+		this.personalInformationApproval = prsonalInformationApproval;
 	}
 	public String getGroupInviteApprovalDate() {
 		return groupInviteApprovalDate;
@@ -81,10 +67,8 @@ public class GroupInvite {
 	@Override
 	public String toString() {
 		return "GroupInvite [groupInviteNo=" + groupInviteNo + ", groupNo=" + groupNo + ", memberNo=" + memberNo
-				+ ", memeberName=" + memeberName + ", memverId=" + memverId + ", groupInviteApproval="
-				+ groupInviteApproval + ", groupInviteDate=" + groupInviteDate + ", groupName=" + groupName
-				+ ", prsonalInformationApproval=" + prsonalInformationApproval + ", groupInviteApprovalDate="
-				+ groupInviteApprovalDate + ", groupKindName=" + groupKindName + "]";
+				+ ", groupInviteApproval=" + groupInviteApproval + ", groupInviteDate=" + groupInviteDate
+				+ ", groupName=" + groupName + ", prsonalInformationApproval=" + personalInformationApproval
+				+ ", groupInviteApprovalDate=" + groupInviteApprovalDate + ", groupKindName=" + groupKindName + "]";
 	}
-	
 }

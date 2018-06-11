@@ -8,8 +8,8 @@
 <body>
 <h1>addBloodPressure</h1>
 	<form action="${pageContext.request.contextPath}/addBloodPressure" method="post">
-<!-- 		<input type="text" name="bloodPressureNo" placeholder=" BloodPressureId"> -->
-		<input type="text" name="memberNo" value="${member.memberNo}" readonly>
+<%-- <input type="hidden" name="memberNo" value="${sessionScope.memberNo}"> --%>
+		<input type="text" name="memberNo" placeholder="memberNo">
 		<input type="text" name="systolicPressure" placeholder="systolicPressure">
 		<input type="text" name="diastolicPressure" placeholder="diastolicPressure">
 		<input type="submit" value="등록하기">

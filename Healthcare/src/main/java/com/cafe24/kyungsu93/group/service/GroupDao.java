@@ -15,29 +15,7 @@ public class GroupDao{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.group.service.GroupMapper.";
-	
-
-	public List<Group> findNameOne(String memberName) {
-		logger.debug("GroupDao - findNameOne");
-		 List<Group> list = sqlSession.selectList(NS+"findNameOne",memberName);
-		return list;
-	}
-	
-	public Group findIdOne(String memberId) {
-		logger.debug("GroupDao - findIdOne 실행");
-		return sqlSession.selectOne(NS+"findIdOne",memberId);
-	}
-	
-	public int findId(String memberId) {
-		logger.debug("GroupDao - findId 실행");
-		return sqlSession.selectOne(NS+"findId",memberId);
-	}
-	
-	public int findName(String memberName) {
-		logger.debug("GroupDao - findName 실행");
-		return sqlSession.selectOne(NS+"findName",memberName);
-	}
-	
+		
 	public int deleteGroup(String groupNo) {
 		logger.debug("GroupDao - deleteGroup 실행");
 		return sqlSession.delete(NS+"deleteGroup", groupNo);

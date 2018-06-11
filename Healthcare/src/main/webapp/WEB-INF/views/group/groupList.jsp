@@ -21,21 +21,50 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="group" items="${list}">
+			<c:forEach var="groupTable" items="${list}">
 			<tr>
-				<td>${group.groupNo }</td>
-				<td>${group.groupName }</td>
-				<td>${group.groupInFo }</td>
-				<td>${group.groupKindName }</td>
-				<td>${group.groupCreateDate }</td>
-				<td><a type="button" href="${pageContext.request.contextPath}/modifyGroup?groupNo=${group.groupNo}" id="buttonModify">수정</a></td>
-				<td><a type="button" href="${pageContext.request.contextPath}/deleteGroup?groupNo=${group.groupNo}" id="buttonDelete">삭제</a></td>
+				<td>${groupTable.groupNo }</td>
+				<td>${groupTable.groupName }</td>
+				<td>${groupTable.groupInfo }</td>
+				<td>${groupTable.groupKindName }</td>
+				<td>${groupTable.groupCreateDate }</td>
+				<td><a type="button" href="${pageContext.request.contextPath}/modifyGroup?groupNo=${groupTable.groupNo}" id="buttonModify">수정</a></td>
+				<td><a type="button" href="${pageContext.request.contextPath}/deleteGroup?groupNo=${groupTable.groupNo}" id="buttonDelete">삭제</a></td>
 				
 			</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 		<a href="${pageContext.request.contextPath}/addGroup">그룹생성하기</a>
-		<a href="${pageContext.request.contextPath}/groupJoin?memberNo=${group.memberNo}">내가 생성한 그룹</a>
+		<a href="${pageContext.request.contextPath}/searchInviteMemberForm">회원초대하기</a>
+		<nav>
+			<ul class="pagination pagination-sm">
+				<c:if test="${currentPage > 10}">
+					<li>
+						<a aria-label="first" href="${pageContext.request.contextPath }/bloodPressure?currentPage=1">&laquo;</a>
+					</li>
+				</c:if>
+				<c:if test="${firstBlockPage > 2}">
+					<li>
+						<a aria-label="first" href="${pageContext.request.contextPath }/bloodPressure?currentPage=${firstBlockPage-1}">&lsaquo;</a>
+					</li>
+				</c:if>
+					<li>
+					<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
+						<a href="${pageContext.request.contextPath}/bloodPressure?currentPage=${i}">${i}</a>	
+					</c:forEach>		
+					</li>
+				<c:if test="${lastBlockPage < totalBlock}">
+					<li>
+						<a aria-label="last" href="${pageContext.request.contextPath}/bloodPressure?currentPage=${lastBlockPage+1}">&rsaquo;</a>
+					</li>
+				</c:if>
+				<c:if test="${currentPage < lastPage}">
+					<li>
+						<a aria-label="last" href="${pageContext.request.contextPath}/bloodPressure?currentPage=${lastPage}">&raquo;</a>
+					</li>
+				</c:if>
+			</ul>
+		</nav>
 </body>
 </html>
