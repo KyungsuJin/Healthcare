@@ -55,7 +55,7 @@
          	FROM exercise_matching
   	</select>
   	<!-- 운동매칭 등록 -->
-  	<insert id="addExercise"
+  	<insert id="addExerciseMatching"
   			parameterType="com.cafe24.kyungsu93.exercise.service.ExerciseRegistration">
   			INSERT INTO exercise_matching(
   				exercise_matching_no
@@ -81,7 +81,9 @@
   				,now()
   			)
   	</insert>
+  	<!-- 운동매칭 리스트 -->
   	<select id="exerciseMatchingList"
+  			parameterType="java.util.Map"
   			resultType="com.cafe24.kyungsu93.exercise.service.ExerciseRegistration">
   			SELECT
 				exercise.exercise_matching_no AS exerciseMatchingNo
@@ -97,7 +99,15 @@
 			FROM exercise_matching AS exercise ,member 
 			WHERE member.member_no = exercise.member_no
 			ORDER BY exerciseMatchingNo
+			LIMIT #{beginRow},#{pagePerRow}
   	</select>
+  	<!-- 운동매칭 리스트 카운트 -->
+  	<select id="totalCountList"
+  			resultType="Integer">
+  			SELECT COUNT(*)
+  			FROM exercise_matching
+  	</select>
+  	<!-- 운동매칭 내용 출력 -->
   	<select id="exerciseMatchingContent"
   			resultType="com.cafe24.kyungsu93.exercise.service.ExerciseRegistration">
   			SELECT
@@ -114,4 +124,26 @@
 			FROM exercise_matching AS exercise ,member 
 			WHERE member.member_no = exercise.member_no AND exercise.exercise_matching_no=#{exerciseMatchingNo}
   	</select>
+  	<!-- 운동매칭 글, 내용 삭제  -->
+  	<delete id="deleteExerciseMatching"
+  			parameterType="String">
+  			DELETE FROM exercise_matching
+  			WHERE exercise_matching_no =#{exerciseMatchingNo}
+  			
+  	</delete>
+  	<!-- 운동매칭 글 수정 -->
+  	<update id="modifyExerciseMatching"
+  			parameterType="com.cafe24.kyungsu93.exercise.service.ExerciseRegistration">
+  			UPDATE exercise_matching
+  			SET
+  				exercise_no=#{exerciseNo}
+  				,exercise_matching_title=#{exerciseMatchingTitle}
+  				,exercise_matching_content =#{exerciseMatchingContent}
+  				,exercise_matching_time = #{exerciseMatchingTime}
+  				,exercise_matching_count=#{exerciseMatchingCount}
+  				,exercise_matching_place=#{exerciseMatchingPlace}
+  				,exercise_matching_schedule_date=#{exerciseMatchingScheduleDate}
+  			WHERE exercise_matching_no=#{exerciseMatchingNo}
+  	</update>
+  	
   </mapper>

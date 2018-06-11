@@ -39,36 +39,55 @@ public class ExerciseService {
 		}
 
 	// 운동매칭 등록
-	public int addExercise(ExerciseRegistration exerciseRegistration) {
-		logger.debug("ExerciseService.addExercise");
+	public int addExerciseMatching(ExerciseRegistration exerciseRegistration) {
+		logger.debug("ExerciseService.addExerciseMatching");
 		int exerciseMatchingNo=(exerciseDao.exerciseMatchingNo())+1;
 		String exerciseMatchingStr="exercise_matching_";
 		exerciseRegistration.setExerciseMatchingNo(exerciseMatchingStr+exerciseMatchingNo);
 		logger.debug(exerciseRegistration.toString());
-		exerciseDao.addExercise(exerciseRegistration);
+		exerciseDao.addExerciseMatching(exerciseRegistration);
 		
 		return 0;
 	}
 	// 운동매칭 리스트
-	public Map<String,Object> exerciseMatchingList() {
+	public Map<String,Object> exerciseMatchingList(int currentPage,int pagePerRow) {
 		logger.debug("ExerciseService.exerciseMatchingList");
-		List<ExerciseRegistration> exerciseMatchingList=exerciseDao.exerciseMatchingList();
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("exerciseMatchingList", exerciseMatchingList);
-		return map;
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		int beginRow = (currentPage-1)*10;
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		List<ExerciseRegistration> exerciseMatchingList=exerciseDao.exerciseMatchingList(map);
+		int totalCountList =exerciseDao.totalCountList();
+		int lastPage=totalCountList/pagePerRow;
+		if(totalCountList%pagePerRow>0) {
+			lastPage++;
+		}
+		int startPage=((currentPage-1)/10)*10+1;
+		int endPage = startPage+pagePerRow-1;
+		if(endPage>lastPage) {
+			endPage=lastPage;
+		}
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("startPage", startPage);
+		returnMap.put("endPage", endPage);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("exerciseMatchingList", exerciseMatchingList);
+		return returnMap;
 	}
-	public Map<String,Object> exerciseMatchingContent(String exerciseMatchingNo) {
+	//운동매칭 내용
+	public ExerciseRegistration exerciseMatchingContent(String exerciseMatchingNo) {
 		logger.debug("ExerciseService.exerciseMatchingContent");
-		ExerciseRegistration exerciseContent=exerciseDao.exerciseMatchingContent(exerciseMatchingNo);
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("exerciseContent", exerciseContent);
-		return map;
+		return exerciseDao.exerciseMatchingContent(exerciseMatchingNo);
 	}
-
-/*	// 운동선택 리스트
-	public int exerciseList(String memberNo) {
-		logger.debug("ExerciseService.exerciseList");
-		return exerciseDao.exerciseList(memberNo);
-	}*/
+	//운동매칭 내용 삭제
+	public void deleteExerciseMatching(String exerciseMatchingNo) {
+		logger.debug("ExerciseService.deleteExerciseMatching");
+		exerciseDao.deleteExerciseMatching(exerciseMatchingNo);
+	}
+	//운동매칭 내용 수정
+	public void modifyExerciseMatching(ExerciseRegistration exerciseRegistration) {
+		logger.debug("ExerciseService.modifyExerciseMatching");
+		exerciseDao.modifyExerciseMatching(exerciseRegistration);
+	}
 
 }

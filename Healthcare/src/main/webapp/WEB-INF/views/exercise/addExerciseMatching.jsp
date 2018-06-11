@@ -75,7 +75,7 @@
 </head>
 <body>
 	<h1> 운동 등록하기</h1>
-	<form id="addExerciseForm" name="addExerciseForm" action="${pageContext.request.contextPath}/addExercise" method="post">
+	<form id="addExerciseForm" name="addExerciseForm" action="${pageContext.request.contextPath}/addExerciseMatching" method="post">
 		<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}">
 		<!-- <input type="hidden" name="exerciseMatchingTime" value=""> -->
 		<div>
