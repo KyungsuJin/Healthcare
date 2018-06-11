@@ -21,13 +21,14 @@
   		WHERE member_no=#{memberNo} AND member_point>=1000;
   	</select>
   	<!-- 보증금 등록 번호 -->
-  	<select id="RegistrationNo"
+  	<select id="registrationNo"
   			resultType="Integer">
   			SELECT
          	IFNULL(MAX(cast(SUBSTRING(exercise_matching_member_no,14) as decimal)), 0)
          	FROM exercise_matching_member
   	</select>
-  	<insert id="DepositRegistration"
+  	<!-- 보증금 등록 -->
+  	<insert id="depositRegistration"
   			parameterType="com.cafe24.kyungsu93.exercise.service.Exercise">
   			INSERT INTO exercise_matching_member(
   				exercise_matching_member_no
@@ -38,6 +39,79 @@
   				,#{memberNo}
   				,now()
   			)
-  	
   	</insert>
+  	<!-- 포인트 차감 -->
+  	<update id="pointDeduction"
+  			parameterType="String">
+  			UPDATE member 
+  			SET member_point = member_point-1000
+			WHERE member_no =#{memberNo}
+  	</update>
+  	<!-- 운동매칭 게시글 번호 -->
+  	<select id="exerciseMatchingNo"
+  			resultType="Integer">
+  			SELECT
+         	IFNULL(MAX(cast(SUBSTRING(exercise_matching_no,19) as decimal)), 0)
+         	FROM exercise_matching
+  	</select>
+  	<!-- 운동매칭 등록 -->
+  	<insert id="addExercise"
+  			parameterType="com.cafe24.kyungsu93.exercise.service.ExerciseRegistration">
+  			INSERT INTO exercise_matching(
+  				exercise_matching_no
+  				,member_no
+  				,exercise_no
+  				,exercise_matching_title
+  				,exercise_matching_content
+  				,exercise_matching_time
+  				,exercise_matching_count
+  				,exercise_matching_place
+  				,exercise_matching_schedule_date
+  				,exercise_matching_date
+  			)VALUES(
+  				#{exerciseMatchingNo}
+  				,#{memberNo}
+  				,#{exerciseNo}
+  				,#{exerciseMatchingTitle}
+  				,#{exerciseMatchingContent}
+  				,#{exerciseMatchingTime}
+  				,#{exerciseMatchingCount}
+  				,#{exerciseMatchingPlace}
+  				,#{exerciseMatchingScheduleDate}
+  				,now()
+  			)
+  	</insert>
+  	<select id="exerciseMatchingList"
+  			resultType="com.cafe24.kyungsu93.exercise.service.ExerciseRegistration">
+  			SELECT
+				exercise.exercise_matching_no AS exerciseMatchingNo
+				,member.member_id AS memberId
+				,exercise.exercise_no AS exerciseNo
+				,exercise.exercise_matching_title AS exerciseMatchingTitle
+				,exercise.exercise_matching_content AS exerciseMatchingContent
+				,exercise.exercise_matching_time AS exerciseMatchingTime
+				,exercise.exercise_matching_count AS exerciseMatchingCount
+				,exercise.exercise_matching_place AS exerciseMatchingPlace
+				,exercise.exercise_matching_schedule_date AS exerciseMatchingScheduleDate
+				,exercise.exercise_matching_date AS exerciseMatchingDate
+			FROM exercise_matching AS exercise ,member 
+			WHERE member.member_no = exercise.member_no
+			ORDER BY exerciseMatchingNo
+  	</select>
+  	<select id="exerciseMatchingContent"
+  			resultType="com.cafe24.kyungsu93.exercise.service.ExerciseRegistration">
+  			SELECT
+				exercise.exercise_matching_no AS exerciseMatchingNo
+				,member.member_id AS memberId
+				,exercise.exercise_no AS exerciseNo
+				,exercise.exercise_matching_title AS exerciseMatchingTitle
+				,exercise.exercise_matching_content AS exerciseMatchingContent
+				,exercise.exercise_matching_time AS exerciseMatchingTime
+				,exercise.exercise_matching_count AS exerciseMatchingCount
+				,exercise.exercise_matching_place AS exerciseMatchingPlace
+				,exercise.exercise_matching_schedule_date AS exerciseMatchingScheduleDate
+				,exercise.exercise_matching_date AS exerciseMatchingDate
+			FROM exercise_matching AS exercise ,member 
+			WHERE member.member_no = exercise.member_no AND exercise.exercise_matching_no=#{exerciseMatchingNo}
+  	</select>
   </mapper>

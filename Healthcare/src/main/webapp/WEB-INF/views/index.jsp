@@ -20,7 +20,6 @@
 						if(data==0){
 							alert('보증금등록을 하지않았습니다.');
 							if(confirm('보증금등록을 하시겠습니까?')){
-								alert('asdf');
 								window.open("${pageContext.request.contextPath}/exerciseDepositRegistration"
 										,"Registration","width=450, height=300,resizable=no,scrollbars=yes");
 							}else{

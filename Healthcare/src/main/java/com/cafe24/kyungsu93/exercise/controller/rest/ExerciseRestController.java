@@ -39,5 +39,19 @@ public class ExerciseRestController {
 		map.put("result", result);
 		return map;
 	}
+	//보증금 등록 체크 
+	@RequestMapping(value = "/exerciseMatchingList", method = RequestMethod.POST)
+	public Map<String,Object> exerciseMatchingList() {
+		logger.debug("ExerciseRestController.exerciseMatchingList");
+		return exerciseService.exerciseMatchingList();
+	}
+	//운동 매칭 내용
+	@RequestMapping(value = "/exerciseMatchingContent", method = RequestMethod.POST)
+	public Map<String,Object> exerciseMatchingContent(@RequestParam(value = "exerciseMatchingNo") String exerciseMatchingNo) {
+		logger.debug("ExerciseRestController.exerciseMatchingContent get");
+		logger.debug("exerciseMatchingNo : " + exerciseMatchingNo);
+		
+		return exerciseService.exerciseMatchingContent(exerciseMatchingNo);
+	}
 
 }

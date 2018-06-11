@@ -25,21 +25,20 @@
 		    $(function() {
 		        $("#exerciseScheduleDate").datepicker();
 		    });
-		    $("#btn").click(function(){
-		    	console.log($("#startTime").val());
-		    	console.log($("#endTime").val());
-		    	console.log($("#datepicker1").val());
-		    });
 		    $("#exercisePlace").click(function(){
 		    	window.open("${pageContext.request.contextPath}/exercisePlace"
 		    			,"Registration","width=800, height=500,resizable=no,scrollbars=yes");
 		    });
 		    $("#addExerciseBtn").click(function(){
+		    	var i =$("#startTime").val()+"~"+$("#endTime").val();
+
+		    	console.log($("#startTime").val()+"~"+$("#endTime").val());
+		    	
 		    	if($("#exerciseScheduleDate").val().length==0){
 		    		alert('운동예정날짜를 선택해주세요');
 		    		$("#exerciseScheduleDate").focus();
 		    		return false;
-		    	/* }else if($("#startTime").val().length==0 || $("#endTime").val().length==0 ){
+		    	}else if($("#startTime").val().length==0 || $("#endTime").val().length==0 ){
 		    		alert('운동 시작시간 끝나는 시간을 모두 선택해주세요');
 		    		return false;
 		    	}else if($("#startTime").val() > $("#endTime").val()){
@@ -48,7 +47,7 @@
 		    	}else if($("#exercisePlace").val().length==0){
 		    		alert('운동 장소를 결정해 주세요.');
 		    		$("#exercisePlace").click();
-		    		return false; */
+		    		return false;
 		    	}else if($("#exerciseCount").val().length==0){
 		    		alert('운동할 인원수를 정해주세요');
 		    		$("#exerciseCount").focus();
@@ -66,7 +65,9 @@
 		    		$("#exerciseMatchingTitle").focus();
 		    		return false;
 		    	}else{
-		    		
+		    		console.log($("#exerciseMatchingTime").val);
+		    		$("#addExerciseForm").submit();
+		    		alert('운동매칭 등록완료');
 		    	}
 		    });
 		});
@@ -74,16 +75,17 @@
 </head>
 <body>
 	<h1> 운동 등록하기</h1>
-	<form id="addExerciseForm" name="addExerciseForm" action="${pageContext.request.contextPath}/" method="post">
-		<input type="hidden" name="" value="${sessionScope.memberSessionNo}">
+	<form id="addExerciseForm" name="addExerciseForm" action="${pageContext.request.contextPath}/addExercise" method="post">
+		<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}">
+		<!-- <input type="hidden" name="exerciseMatchingTime" value=""> -->
 		<div>
-			예정날짜:<input id="exerciseScheduleDate" type="text" readonly>
-			운동시간 :<input type="time" id="startTime">~<input type="time" id="endTime">
-			운동장소 : <input type="text" id="exercisePlace" name="exercisePlace" placeholder="운동선택하기">
+			예정날짜:<input id="exerciseScheduleDate" name="exerciseMatchingScheduleDate" type="text" readonly>
+			운동시간 :<input type="time" id="startTime" name="exerciseMatchingTime">~<input type="time" name="exerciseMatchingTime"id="endTime">
+			운동장소 : <input type="text" id="exercisePlace" name="exerciseMatchingPlace" placeholder="운동선택하기">
 		</div>
-		<div> 인원수 :<input type="number" id="exerciseCount" min="1" max="100"> 운동종류 : <input type="text" id="exerciseNo"></div>
-		<div>제목 : <input type="text" id="exerciseMatchingTitle"></div>
-		<div><textarea class="form-control" rows="20"></textarea></div>
+		<div> 인원수 :<input type="number" name="exerciseMatchingCount"id="exerciseCount" min="1" max="100"> 운동종류 : <input type="text" name="exerciseNo"id="exerciseNo"></div>
+		<div>제목 : <input type="text" id="exerciseMatchingTitle" name="exerciseMatchingTitle"></div>
+		<div><textarea class="form-control" rows="20" name="exerciseMatchingContent"></textarea></div>
 		<button type="button" id="addExerciseBtn">등록</button>
 	</form>
 </body>

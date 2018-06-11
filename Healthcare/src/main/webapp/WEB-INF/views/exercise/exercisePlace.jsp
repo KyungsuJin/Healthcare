@@ -12,7 +12,7 @@
 	<script>
 	$(document).ready(function(){
 		var map = new naver.maps.Map("map", { //new naver.maps.Map(mapDiv, mapOptions) 지도인스턴스 정의 옵션  mapDiv html 엘리먼트,mapOptions 지도의 옵션 객체
-		  /*   center: new naver.maps.LatLng(37.3595316, 127.1052133), */// center (지도의 중심좌표): 위도 경도를 나타냄 LatLng(lat 위도,lan 경도)
+		    /*  center: new naver.maps.LatLng(37.3595316, 127.1052133), */// center (지도의 중심좌표): 위도 경도를 나타냄 LatLng(lat 위도,lan 경도)
 		    zoom: 10, //지도 줌 레벨
 		    mapTypeControl: true//지도유형 컨트롤의 표시 여부
 		});
@@ -112,11 +112,11 @@
 		        e.preventDefault();
 		        searchAddressToCoordinate($('#address').val());
 		    });
-		    searchAddressToCoordinate('전북 전주시 덕진구 기린대로 446');
+		    searchAddressToCoordinate(window.opener.document.addExerciseForm.exercisePlace.value);
 		}
 		naver.maps.onJSContentLoaded = initGeocoder;
-		$("#chk").click(function(){
-			window.opener.document.addExerciseForm.exercisePlace.value=$("#htmlAddressesChk").val();
+		$('#locationChk').click(function(){
+			window.opener.document.addExerciseForm.exercisePlace.value=$('#htmlAddressesChk').val();
 			window.close();
 		});
 		});
@@ -128,6 +128,6 @@
 	<input type="hidden" id="htmlAddressesChk">
 	<input id="address" type="text" placeholder="운동 장소 검색" value="">
 	<input id="submit" type="button" value="위치 검색">
-	<button type="button" id="chk">위치 확정</button>
+	<button type="button" id="locationChk">위치 확정</button>
 </body>
 </html>

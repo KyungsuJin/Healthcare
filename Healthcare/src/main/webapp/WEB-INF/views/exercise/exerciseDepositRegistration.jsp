@@ -31,7 +31,6 @@
 	<h1>보증금 등록하기</h1>
 	보증금 가격 1000원
 		<input type="hidden" id="memberNo" value="${sessionScope.memberSessionNo}">
-		${sessionScope.memberSessionNo}
 		<button id="RegistrationBtn">등록하기</button>
 
 </body>
