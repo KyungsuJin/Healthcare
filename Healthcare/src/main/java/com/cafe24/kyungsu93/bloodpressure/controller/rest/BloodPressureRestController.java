@@ -1,8 +1,7 @@
 package com.cafe24.kyungsu93.bloodpressure.controller.rest;
 import java.io.IOException;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,18 +25,6 @@ public class BloodPressureRestController {
 	@Autowired
 	private BloodPressureService bloodPressureService;
 	private static final Logger logger = LoggerFactory.getLogger(BloodPressureRestController.class);
-	
-	@RequestMapping(value="/bloodPressureSearch", method=RequestMethod.GET)
-	@ResponseBody
-	public Map<String, Object> searchList(@RequestParam(value="startDate") String startDate
-				                           ,@RequestParam(value="endDate")String endDate) {
-		logger.debug("BloodPressureRestController - searchList bloodPressureSearch ajax 실행");
-	      Map<String, Object> map = bloodPressureService.bloodPressureSearchDate(startDate, endDate);
-	       map.get("list");
-	      map.put("startDate", startDate);
-	      map.put("endDate", endDate);
-	      return map;
-	   }
 	
 	 @RequestMapping(value="/bloodPressureChart", method=RequestMethod.POST)
 	 @ResponseBody

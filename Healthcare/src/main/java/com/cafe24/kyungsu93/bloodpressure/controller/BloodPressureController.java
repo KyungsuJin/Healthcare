@@ -24,12 +24,28 @@ public class BloodPressureController {
 	@Autowired
 	private BloodPressureService bloodPressureService;
 	private static final Logger logger = LoggerFactory.getLogger(BloodPressureController.class);
-		
+	
+	@RequestMapping(value="/bloodPressureSearch", method=RequestMethod.POST)
+	public ModelAndView searchList(@RequestParam(value="startDate") String startDate
+									,@RequestParam(value="endDate")String endDate) {
+		logger.debug("BloodPressureRestController - searchList bloodPressureSearch ModelAndView 실행");
+		List<BloodPressure> list = bloodPressureService.bloodPressureSearchDate(startDate, endDate);
+		int result = 0;
+		if(list.size()>0) {
+			result = 1;
+		}
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("bloodpressure/bloodPressure");
+		modelAndView.addObject("list", list);
+		modelAndView.addObject("startDate", startDate);
+		modelAndView.addObject("endDate", endDate);
+		modelAndView.addObject("result", result);
+		return modelAndView;
+	}
+	
 	@RequestMapping(value="/bloodPressureChart", method=RequestMethod.GET)
 	public String bloodPressureChart() {
 		logger.debug("BloodpressureController - bloodPressureChart 포워드 실행");
-/*		List<BloodPressure> list = bloodPressureService.selectBloodPressureChart(memberNo);
-		model.addAttribute("list",list);*/
 		return "bloodpressure/bloodPressureChart";
 	}
 		
@@ -54,7 +70,7 @@ public class BloodPressureController {
 	public String deleteBloodPressure(@RequestParam(value="bloodPressureNo") String bloodPressureNo) {
 		logger.debug("BloodPressureController - deleteBloodPressure 리다이렉트 실행.");
 		bloodPressureService.deleteBloodPressure(bloodPressureNo);
-		return "redirect:/bloodpressure/bloodPressure";
+		return "redirect:/bloodPressure";
 	}
 	
 	@RequestMapping(value="/bloodPressure", method=RequestMethod.GET)

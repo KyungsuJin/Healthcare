@@ -10,7 +10,11 @@
 	<!-- google charts -->
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-	var memberNo = "member_1";
+	var memberNo = "member_2";
+    $(document).ready(function(){
+	    ajaxData();
+	    $('#addBtn').hide();
+	});	
 	//ajax 실행
 	function ajaxData() {
 	
@@ -22,6 +26,19 @@
 	request.done(function( msg ) {
 		//받아온 데이터 값 확인. 
 		console.log(msg);
+		if(msg.length<2){
+			$('#chartResult').html('최근 일주일동안 등록된 혈압이 2개 미만입니다. 일주일 평균 혈압 차트를 보고싶으시면 혈압을 더 등록해주세요.');
+			$('#addBtn').show();
+			$('#bloodPressureResult').hide();
+			return false;
+		}else if(msg.length<1){
+			$('#chartResult').html('최근 일주일동안 등록된 데이터가 없습니다.');
+			$('#addBtn').show();
+			$('#bloodPressureResult').hide();
+			return false;
+		}else{
+			$('#addBtn').hide();
+		}
 		//구글 차트
 		google.charts.load('current', {'packages':['line']}); //차트 스타일
 		google.charts.setOnLoadCallback(drawChart);
@@ -32,6 +49,8 @@
 				if(msg!=undefined && Array.isArray(msg)){
 					console.log('array 확인');
 					console.log(msg);
+					console.log(msg.length);
+
 					for(var i=0; i < msg.length; i++){
 					console.log("1:"+msg[i].systolicPressure);
 					console.log("2:"+msg[i].diastolicPressure);
@@ -148,19 +167,23 @@
 		  alert( "Request failed: " + textStatus );
 		});
 	}
-       $(document).ready(function(){
-    	    ajaxData();
-    	});
+
 
 </script>
 </head>
 <body>
 	<!-- 차트가 그려지는 위치 -->
+	<span id="chartResult"></span>
+	<div id="addBtn">
+	<a href="${pageContext.request.contextPath}/addBloodPressure">혈압 등록하기</a>
+	</div>
 	<div id="linechart_material"></div>
 	<!-- 혈압 결과값 계산 -->
+	<div id="bloodPressureResult">
 	수축기 혈압 : <span id="systolicPressure"></span><br/>
 	이완기 혈압 : <span id="diastolicPressure"></span><br/>
 	수축기 혈압은 <span id="systolicresult"></span><br/>
  	이완기 혈압은 <span id="diastolicresult"></span><br/>
+ 	</div>
 </body>
 </html>
