@@ -58,6 +58,7 @@
 				<value>classpath:com/cafe24/kyungsu93/notice/service/NoticeMapper.xml</value>
 				<value>classpath:com/cafe24/kyungsu93/diet/service/DietMapper.xml</value>
 				<value>classpath:com/cafe24/kyungsu93/message/service/MessageMapper.xml</value>
+				<value>classpath:com/cafe24/kyungsu93/exercise/service/ExerciseMapper.xml</value>
             </list>
         </property>
     </bean>

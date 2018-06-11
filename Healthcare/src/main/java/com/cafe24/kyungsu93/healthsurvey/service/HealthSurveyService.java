@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.cafe24.kyungsu93.disease.service.Disease;
+import com.cafe24.kyungsu93.disease.service.DiseaseDao;
 import com.cafe24.kyungsu93.healthscreen.service.HealthScreenRequest;
 import com.cafe24.kyungsu93.member.service.Member;
 import com.sun.xml.internal.fastinfoset.algorithm.HexadecimalEncodingAlgorithm;
@@ -21,6 +23,7 @@ public class HealthSurveyService {
 	private static final Logger logger = LoggerFactory.getLogger(HealthSurveyService.class);
 
 	@Autowired HealthSurveyDao healthSurveyDao;
+	@Autowired DiseaseDao diseaseDao; 
 	
 	public Map<String, Object> getHealthSurveyList (int currentPage, int pagePerRow){
 		logger.debug("HealthScreenService.getHealthScreenList 호출");
@@ -168,6 +171,12 @@ public class HealthSurveyService {
 		healthSurveyAverageGrade.setHealthSurveyEvaluationAverageGrade(healthSurveyEvaluationAverageGrade);
 		healthSurveyDao.addHealthSurveyEvaluation(healthSurveyResultRequest);
 		healthSurveyDao.updateHealthSurveyAverageGrade(healthSurveyAverageGrade);
+	}
+	
+	public List<Disease> selectListForAdd() {
+		logger.debug("DiseaseService_selectListForAdd");
+		List<Disease> list = diseaseDao.selectListForAdd();
+		return list;
 	}
 	
 }

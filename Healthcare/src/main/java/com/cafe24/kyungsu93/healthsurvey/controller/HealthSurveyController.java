@@ -1,5 +1,6 @@
 package com.cafe24.kyungsu93.healthsurvey.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cafe24.kyungsu93.disease.service.Disease;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyQuestion;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyRequest;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResponse;
@@ -51,7 +53,9 @@ public class HealthSurveyController {
 	}
 	
 	@RequestMapping(value="/addHealthSurvey", method=RequestMethod.GET)
-	public String addHealthSurvey() {
+	public String addHealthSurvey(Model model) {
+		List<Disease> list = healthSurveyService.selectListForAdd();
+		model.addAttribute("list", list);
 		return "healthsurvey/addHealthSurvey";
 	}
 	
