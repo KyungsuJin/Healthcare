@@ -26,7 +26,7 @@
 		count(*)
 		FROM group_delete
 	</select>
-	<select id="groupDeleteCheckMember" parameterType="String" resultType="Integer">
+	<select id="groupDeleteCheckMemberCount" parameterType="String" resultType="Integer">
 		SELECT
 			count(*)
 		FROM group_invite_approval
@@ -104,8 +104,8 @@
 		INNER JOIN group_kind c
 		ON a.group_kind_no = c.group_kind_no	
 	 	WHERE group_no = #{groupNo}
-	</select>	 
-	 <select id="checkGroupName" parameterType="String"
+	</select>	
+	 <select id="checkGroupNameCount" parameterType="String"
 				 resultType="Integer">
 	 	SELECT 
 	 	COUNT(*)

@@ -6,6 +6,10 @@
 <title>addGroup</title>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
+	$(document).ready(function(){
+		$('#inviteBtn').hide();
+		$('#groupInviteMessage').hide();
+	});	
 	function checkmemberId(){		
 		var memberId = $('#memberId').val();
 		var checkCHar = /[!#$%^&*()?+=\/]/;
@@ -25,11 +29,15 @@
        checkIdAjax.done(function(data){
     	   console.log(data);   
        	if(data.result> 0){
-       		$('#result').html(memberId+'으로 한명의 회원을 찾았습니다. 초대하시겠습니까?');
-			$('#inviteBtn').show();
+       		$('#result').html('한명의 회원을 찾았습니다.');
+       		$('#resultInfomation').html('아이디 :'+memberId+'성함:'+data.name);
+       		$('#inviteBtn').show();
+       		$('#groupInviteMessage').show();
+		
        	}else if(data.result == 0){
-       		$('#result').html(memberId+'라는 아이디로 회원을 찾지못했습니다.');
+       		$('#result').html('회원을 찾지못했습니다. 다시 입력해주세요.');
 			$('#inviteBtn').hide();
+			$('#groupInviteMessage').hide();
        	}
        }); 
        
@@ -37,20 +45,19 @@
     	   alert( "Request failed: " + textStatus );
 		});
 	}
-
 	function check() {
-	if(confirm("그룹을 생성하시겠습니까?")){
-		if(groupForm.groupName.value == "") {
-			alert("그룹명을 입력해주세요.");
-			groupForm.groupName.focus();
+	if(confirm("회원을 초대 하시겠습니까?")){
+		if(inviteForm.memberId.value == "") {
+			alert("초대하실 회원아이디를 검색 해주세요.");
+			inviteForm.memberId.focus();
 			return false;
 		  }
-		if(groupForm.groupInfo.value == ""){
-			alert("그룹 소개글을 해주세요.");
-			groupForm.groupInfo.focus();
+		if(inviteForm.groupInviteMessage.value == "") {
+			alert("초대 메세지를 작성해주세요.");
+			inviteForm.groupInviteMessage.focus();
 			return false;
-		}else{
-			alert("그룹 생성이 완료 되었습니다.");
+		  }else{
+			alert("회원 초대 완료 되었습니다.");
 			return true;
 		}
 	}
@@ -60,18 +67,22 @@ function cancleBtn() {
     location.href="${pageContext.request.contextPath}/groupList";
 }   
 </script>
-
 </head>
 <body>
 <h1>InviteMemberForm</h1>
 	<form name="inviteForm" id="inviteForm" onsubmit="return check()" action="${pageContext.request.contextPath}/inviteMember" method="post">
-		<input type="hidden" name="groupNo" value="#{groupTable.groupNo}">
+		<input type="hidden" name="groupNo" value="${groupTable.groupNo }">
+		그룹명 : ${groupTable.groupName } 그룹 종류 : ${groupTable.groupKindName}
 		<div>
-		초대하고자 하는  회원의 아이디를 입력해주세요.
-		<input type="text" id="memberId" name="memberId" onchange="checkmemberId()"><span id="result"></span>
+			초대하고자 하는  회원의 아이디를 입력해주세요.
+			<input type="text" id="memberId" name="memberId" >
+			<input type="button" value="아이디검색하기" onclick="checkmemberId()">
+			<span id="result"></span><br>
+			<span id="resultInfomation"></span><br>
 		</div>
-		<input type="submit" value="초대하기">
+		<input type="text" id="groupInviteMessage" name="groupInviteMessage" placeholder="초대메세지를 작성해주세요.">
+		<input type="submit" id="inviteBtn" value="초대하기">
 	</form>
-		<input type="button" onclick="cancleBtn()" value="등록취소">
+		<input type="button" onclick="cancleBtn()" value="돌아기기">
 </body>
 </html>

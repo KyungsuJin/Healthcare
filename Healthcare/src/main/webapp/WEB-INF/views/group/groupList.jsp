@@ -17,6 +17,7 @@
 				<th>그룹상세</th>
 				<th>날짜</th>
 				<th>수정</th>
+				<th>회원초대하기</th>
 				<th>삭제</th>
 			</tr>
 		</thead>
@@ -29,6 +30,7 @@
 				<td>${groupTable.groupInfo }</td>
 				<td>${groupTable.groupCreateDate }</td>
 				<td><a type="button" href="${pageContext.request.contextPath}/modifyGroup?groupNo=${groupTable.groupNo}" id="buttonModify">수정</a></td>
+				<td><a type="button" href="${pageContext.request.contextPath}/inviteMemberForm?groupNo=${groupTable.groupNo}" id="buttonModify">회원초대하기</a></td>
 				<td><a type="button" href="${pageContext.request.contextPath}/deleteGroup?groupNo=${groupTable.groupNo}" id="buttonDelete">삭제</a></td>
 				
 			</tr>
@@ -36,7 +38,6 @@
 		</tbody>
 	</table>
 		<a href="${pageContext.request.contextPath}/addGroup">그룹생성하기</a>
-		<a href="${pageContext.request.contextPath}/searchInviteMemberForm">회원초대하기</a>
 		<nav>
 			<ul class="pagination pagination-sm">
 				<c:if test="${currentPage > 10}">

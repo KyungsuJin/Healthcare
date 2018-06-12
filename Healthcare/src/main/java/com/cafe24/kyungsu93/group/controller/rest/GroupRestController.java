@@ -23,14 +23,14 @@ public class GroupRestController {
 	private GroupInviteService groupInviteService;
 	private static final Logger logger = LoggerFactory.getLogger(GroupRestController.class);
 	
-	@RequestMapping(value="/invitefind", method=RequestMethod.POST)
+	@RequestMapping(value="/invitefind", method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> searchMember(@RequestParam(value="memberId") String memberId) {
 		logger.debug("GroupController - SearchMemberForm ajax 실행");
 		logger.debug("memberId:"+memberId);
 		Map<String,Object> map = groupInviteService.invitefind(memberId);
-		map.get("result");
 		logger.debug("result:"+map.get("result"));
+		logger.debug("name:"+map.get("name"));
 		return map;
 	}
 	
@@ -40,7 +40,6 @@ public class GroupRestController {
 		logger.debug("GroupController - checkGroupName ajax 실행");
 		logger.debug("groupName:"+groupName);
 		Map<String,Object> map = groupService.checkGroupName(groupName);
-		map.get("result");
 		logger.debug("result:"+map.get("result"));
 		return map;
     }

@@ -22,9 +22,9 @@ public class GroupDao{
 		return list;
 	}
 	
-	public int groupDeleteCheckMember(String groupName) {
-		logger.debug("GroupDao - groupDeleteCheckMember 실행");
-		return sqlSession.selectOne(NS+"groupDeleteCheckMember",groupName);
+	public int groupDeleteCheckMemberCount(String groupName) {
+		logger.debug("GroupDao - groupDeleteCheckMemberCount 실행");
+		return sqlSession.selectOne(NS+"groupDeleteCheckMemberCount",groupName);
 	}
 	
 	public Group groupDdayNo(String groupExpiredDate) {
@@ -77,9 +77,15 @@ public class GroupDao{
 		 List<Group> list = sqlSession.selectList(NS+"groupList",map);
 		return list;
 	}	
-	public int checkGroupName(String groupName) {
-		logger.debug("GroupDao - checkGroupName 실행");
-		return sqlSession.selectOne(NS+"checkGroupName",groupName);
+	
+	public int checkGroupNoCount(String memberNo) {
+		logger.debug("GroupDao - checkGroupNoCount 실행");
+		return sqlSession.selectOne(NS+"checkGroupNoCount",memberNo);
+	}
+	
+	public int checkGroupNameCount(String groupName) {
+		logger.debug("GroupDao - checkGroupNameCount 실행");
+		return sqlSession.selectOne(NS+"checkGroupNameCount",groupName);
 	}
 	
 	public int groupTotalCount() {

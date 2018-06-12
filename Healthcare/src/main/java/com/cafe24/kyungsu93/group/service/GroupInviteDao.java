@@ -18,16 +18,21 @@ public class GroupInviteDao {
 	
 	public int inviteMember(GroupInvite groupInvite) {
 		logger.debug("GroupInviteDao - addInviteMember 실행");
-		return sqlSession.selectOne(NS+"inviteMember",groupInvite);
+		return sqlSession.insert(NS+"inviteMember",groupInvite);
 	}
 	
 	public int groupInviteNo(String groupInviteNo) {
-		logger.debug("GroupDao - groupInviteNo 실행");
+		logger.debug("GroupInviteDao - groupInviteNo 실행");
 		int row = sqlSession.selectOne(NS+"groupInviteNo", groupInviteNo);
 		logger.debug("row:"+row);
 		return row;
 	}
 	
+	public GroupInvite groupInviteMemberName(String memberId) {
+		logger.debug("GroupInviteDao - groupInviteMemberName 실행");
+		return sqlSession.selectOne(NS+"groupInviteMemberName",memberId);
+	}
+		
 	public int inviteMemberId(String memberId) {
 		logger.debug("GroupInviteDao - inviteMemberId 실행");
 		return sqlSession.selectOne(NS+"groupInviteMemberId",memberId);
@@ -42,6 +47,8 @@ public class GroupInviteDao {
 		logger.debug("GroupInviteDao - totalCountInvite 실행");
 		return sqlSession.selectOne(NS+"totalCountInvite");
 	}
+	
+
 	
 	public List<GroupInvite> groupInviteList(Map<String,Integer> map) {
 		logger.debug("GroupInviteDao - groupInviteList 실행");

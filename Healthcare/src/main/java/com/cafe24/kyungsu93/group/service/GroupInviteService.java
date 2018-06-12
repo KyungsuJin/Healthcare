@@ -4,16 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cafe24.kyungsu93.bloodpressure.service.BloodPressure;
-import com.cafe24.kyungsu93.member.service.Member;
 import com.cafe24.kyungsu93.member.service.MemberDao;
 
 @Service
@@ -24,52 +20,9 @@ public class GroupInviteService {
 	private GroupInviteDao groupInviteDao;
 	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private GroupDao groupDao;
 	private static final Logger logger = LoggerFactory.getLogger(GroupInviteService.class);
-	
-	//그룹 멤버 초대
-	public void addInviteMember(GroupInvite groupInvite) {
-		logger.debug("BloodPressureService - addInviteMember실행");		
-		String groupInviteNo = groupInvite.getGroupInviteNo();
-		try {
-		if(groupInviteNo == null) {
-			int count = 0;
-			count = groupInviteDao.totalCountInvite();
-			if(count > 0) {
-				int result = 0;
-				String groupInviteNo_temp = "group_invite_";
-				result = groupInviteDao.groupInviteNo(groupInviteNo);
-				if(result > 0) {
-						if(1 <= result) {
-							result++;
-						}			
-						groupInviteNo = groupInviteNo_temp + result; 
-				}
-			}else {
-				groupInviteNo = "group_invite_1";
-			}
-		}
-		groupInvite.setGroupInviteNo(groupInviteNo);
-		}catch(NullPointerException e) {
-			e.printStackTrace();
-		}
-		groupInviteDao.inviteMember(groupInvite);
-	}
-	
-	//그룹초대할 멤버 아이디 검색
-	public Map<String,Object> invitefind(String memberId){
-		Map<String,Object> returnMap = new HashMap<String,Object>();
-		int count = 0;
-		count = memberDao.memberListTotal();
-		int result = 0;
-		if(count>0) {
-			groupInviteDao.inviteMemberId(memberId);
-			returnMap.put("result", result);
-		}else {
-			result = 0;
-			returnMap.put("result", result);
-		}
-		return returnMap;
-	}
 	
 	//그룹에 초대한 멤버 리스트
 	public Map<String, Object> groupInviteList(int currentPage, int pagePerRow){
@@ -122,4 +75,86 @@ public class GroupInviteService {
 		returnMap.put("totalBlock", totalBlock);
 		return returnMap;
 	}
+	
+	//그룹 멤버 초대
+	public void addInviteMember(GroupInvite groupInvite) {
+		logger.debug("GroupInviteService - addInviteMember실행");		
+		String groupInviteNo = groupInvite.getGroupInviteNo();
+		String memberId = groupInvite.getMemberId();
+		String groupInviteMessage = groupInvite.getGroupInviteMessage();
+		String groupNo = groupInvite.getGroupNo();
+		logger.debug("memberId:"+memberId);
+		logger.debug("groupInviteNo:"+groupInviteNo);
+		logger.debug("groupNo:"+groupNo);
+		logger.debug("groupInviteMessage:"+groupInviteMessage);
+		groupInvite = groupInviteDao.groupInviteMemberName(memberId);
+		String memberNo = groupInvite.getMemberNo();
+		logger.debug("memberNo:"+memberNo);
+		try {
+		if(groupInviteNo == null) {
+			int count = 0;
+			count = groupInviteDao.totalCountInvite();
+			if(count > 0) {
+				int result = 0;
+				String groupInviteNo_temp = "group_invite_";
+				result = groupInviteDao.groupInviteNo(groupInviteNo);
+				if(result > 0) {
+						if(1 <= result) {
+							result++;
+						}			
+						groupInviteNo = groupInviteNo_temp + result; 
+				}
+			}else {
+				groupInviteNo = "group_invite_1";
+			}
+		}
+		String groupInviteApproval = "F";
+		groupInvite.setGroupInviteApproval(groupInviteApproval);
+		groupInvite.setGroupInviteNo(groupInviteNo);
+		groupInvite.setMemberNo(memberNo);
+		groupInvite.setGroupInviteMessage(groupInviteMessage);
+		groupInvite.setGroupNo(groupNo);
+		}catch(NullPointerException e) {
+			e.printStackTrace();
+		}
+		groupInviteDao.inviteMember(groupInvite);
+	}
+	
+	//그룹초대할 멤버 아이디 검색
+	public Map<String,Object> invitefind(String memberId){
+		logger.debug("GroupInviteService - invitefind실행");		
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		int count = 0;
+		count = memberDao.memberListTotal();
+		String name = null;
+		String no = null;
+		int result = 0;
+		if(count>0) {
+			result = groupInviteDao.inviteMemberId(memberId);
+			returnMap.put("result", result);
+			if(result>0) {
+				GroupInvite groupInvite = groupInviteDao.groupInviteMemberName(memberId);
+				name = groupInvite.getMemberName();
+				no = groupInvite.getMemberNo();
+				returnMap.put("name", name);
+				returnMap.put("no", no);
+			}
+		}else {
+			result = 0;
+			name = "없다";
+			no = "없다";
+			returnMap.put("result", result);
+			returnMap.put("name", name);
+			returnMap.put("no", no);
+		}
+		return returnMap;
+	}
+	
+	//내가 생성한 그룹으로 회원초대
+	public Group inviteGroup(String groupNo) {
+		logger.debug("GroupInviteService - inviteGroup실행");	
+		Group groupTable = groupDao.modifyGroup(groupNo);
+		return groupTable;
+	}
+	
 }

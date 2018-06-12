@@ -86,7 +86,7 @@ public class GroupService {
 		String groupName = group.getGroupName();
 		//그룹명으로 회원검색
 		int count = 0;
-		count = groupDao.groupDeleteCheckMember(groupName);
+		count = groupDao.groupDeleteCheckMemberCount(groupName);
 		if(count>0) {
 			//회원이 있을경우 유예기간 등록
 			groupDao.deleteApproval(groupNo);
@@ -160,7 +160,7 @@ public class GroupService {
 		int result = 0;
 		if(count >0) {
 			//그룹명 검색
-			result = groupDao.checkGroupName(groupName);
+			result = groupDao.checkGroupNameCount(groupName);
 			returnMap.put("result", result);
 		}else {
 			result = 0;

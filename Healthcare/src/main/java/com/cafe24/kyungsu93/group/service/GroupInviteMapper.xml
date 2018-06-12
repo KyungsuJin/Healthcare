@@ -3,16 +3,16 @@
 <mapper namespace="com.cafe24.kyungsu93.group.service.GroupInviteMapper">
 	<select id="groupInviteNo" resultType="Integer">
 		SELECT
-		max(CAST(substring(group_invite_no,13) AS DECIMAL))
+		max(CAST(substring(group_invite_no,14) AS DECIMAL))
 		FROM group_invite
 	</select>
 	<insert id="inviteMember" 
 			parameterType="com.cafe24.kyungsu93.group.service.GroupInvite">
 	INSERT INTO group_invite(
-	group_invite_no, group_no, member_no, group_invite_approval, group_invite_date
+	group_invite_no, group_no, member_no, group_invite_approval, group_invite_message, group_invite_date
 	)
 	VALUES (
-	#{groupInviteNo}, #{groupNo}, #{memberNo}, #{groupInviteApproval}, NOW()
+	#{groupInviteNo}, #{groupNo}, #{memberNo}, #{groupInviteApproval}, #{groupInviteMessage}, NOW()
 	)
 	</insert>	
 	<select  id="groupMemberList"
@@ -30,6 +30,15 @@
 		ON a.group_kind_no = b.group_kind_no
 		ORDER BY group_invite_date DESC
 		LIMIT #{beginRow},#{pagePerRow}
+	</select>
+	<select id="groupInviteMemberName" 
+			parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
+		SELECT
+			member_name as memberName,
+			member_no as memberNo
+		FROM member
+		WHERE member_id = #{memberId}	
 	</select>
 	<select id="groupInviteMemberId" 
 			parameterType="String" 

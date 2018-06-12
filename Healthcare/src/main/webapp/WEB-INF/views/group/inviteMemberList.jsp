@@ -7,7 +7,7 @@
 <title>inviteMemberList</title>
 </head>
 <body>
-<h1>inviteMemberList</h1>
+<h1>내가 초대한 회원 리스트</h1>
 		<c:forEach var="groupInvite" items="${list}">
 			<table>
 				<thead>

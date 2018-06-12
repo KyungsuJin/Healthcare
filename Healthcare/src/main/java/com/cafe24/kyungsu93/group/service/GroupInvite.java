@@ -12,6 +12,7 @@ public class GroupInvite {
 	private String personalInformationApproval;
 	private String groupInviteApprovalDate;
 	private String groupKindName;
+	private String groupInviteMessage;
 	public String getGroupInviteNo() {
 		return groupInviteNo;
 	}
@@ -78,12 +79,19 @@ public class GroupInvite {
 	public void setGroupKindName(String groupKindName) {
 		this.groupKindName = groupKindName;
 	}
+	public String getGroupInviteMessage() {
+		return groupInviteMessage;
+	}
+	public void setGroupInviteMessage(String groupInviteMessage) {
+		this.groupInviteMessage = groupInviteMessage;
+	}
 	@Override
 	public String toString() {
 		return "GroupInvite [groupInviteNo=" + groupInviteNo + ", groupNo=" + groupNo + ", memberNo=" + memberNo
 				+ ", memberName=" + memberName + ", memberId=" + memberId + ", groupInviteApproval="
 				+ groupInviteApproval + ", groupInviteDate=" + groupInviteDate + ", groupName=" + groupName
 				+ ", personalInformationApproval=" + personalInformationApproval + ", groupInviteApprovalDate="
-				+ groupInviteApprovalDate + ", groupKindName=" + groupKindName + "]";
+				+ groupInviteApprovalDate + ", groupKindName=" + groupKindName + ", groupInviteMessage="
+				+ groupInviteMessage + "]";
 	}
 }

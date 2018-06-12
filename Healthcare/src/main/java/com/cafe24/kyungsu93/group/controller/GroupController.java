@@ -15,15 +15,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cafe24.kyungsu93.group.service.Group;
 import com.cafe24.kyungsu93.group.service.GroupInvite;
+import com.cafe24.kyungsu93.group.service.GroupInviteService;
 import com.cafe24.kyungsu93.group.service.GroupService;
 
 @Controller
 public class GroupController {
 	@Autowired
 	private GroupService groupService;
+	@Autowired
+	private GroupInviteService groupInviteService;
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 	
-/*	//그룹에 초대된 멤버 리스트
+	//그룹에 초대된 멤버 리스트
 	@RequestMapping(value="/inviteMemberList", method=RequestMethod.GET)
 	public String inviteMemberList() {
 		logger.debug("GroupController - inviteMemberList 포워드 실행");
@@ -32,16 +35,18 @@ public class GroupController {
 	}
 	
 	@RequestMapping(value="/inviteMember", method=RequestMethod.POST)
-	public String inviteMember(GroupInvite groupInvite) {
+	public String inviteMember(GroupInvite groupInvite,HttpServletRequest request) {
 		logger.debug("GroupController - inviteMemberForm 리다이렉트 실행");
-		
+		groupInviteService.addInviteMember(groupInvite);
 		return "redirect:/groupList";
 	}
-	*/
+
 	//그룹 멤버초대
 	@RequestMapping(value="/inviteMemberForm", method=RequestMethod.GET)
-	public String inviteMemberForm() {
+	public String inviteMemberForm(Model model,@RequestParam(value="groupNo") String groupNo) {
 		logger.debug("GroupController - inviteMemberForm 포워드 실행");
+		Group groupTable = groupInviteService.inviteGroup(groupNo);
+		model.addAttribute("groupTable", groupTable);
 		return "group/inviteMemberForm";
 	}
 	
