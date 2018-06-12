@@ -16,6 +16,17 @@ public class GroupInviteDao {
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.group.service.GroupInviteMapper.";
 	
+	public List<GroupInvite> inviteGroupList(Map<String,Integer> map) {
+		logger.debug("GroupInviteDao - inviteGroupList 실행");
+		 List<GroupInvite> list = sqlSession.selectList(NS+"inviteGroupList",map);
+		return list;
+	}	
+	
+	public GroupInvite personalAgreeMember(String memberName) {
+		logger.debug("GroupInviteDao - personalAgreeMember 실행");
+		return sqlSession.selectOne(NS+"personalAgreeMember",memberName);
+	}
+	
 	public int inviteMember(GroupInvite groupInvite) {
 		logger.debug("GroupInviteDao - addInviteMember 실행");
 		return sqlSession.insert(NS+"inviteMember",groupInvite);
@@ -47,8 +58,6 @@ public class GroupInviteDao {
 		logger.debug("GroupInviteDao - totalCountInvite 실행");
 		return sqlSession.selectOne(NS+"totalCountInvite");
 	}
-	
-
 	
 	public List<GroupInvite> groupInviteList(Map<String,Integer> map) {
 		logger.debug("GroupInviteDao - groupInviteList 실행");

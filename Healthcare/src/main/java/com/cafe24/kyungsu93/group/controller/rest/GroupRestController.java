@@ -34,7 +34,7 @@ public class GroupRestController {
 		return map;
 	}
 	
-	@RequestMapping(value="/checkGroupName", method={RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(value="/checkGroupName", method=RequestMethod.GET)
 	@ResponseBody
     public Map<String, Object> checkGroupName(@RequestParam(value="groupName") String groupName) {
 		logger.debug("GroupController - checkGroupName ajax 실행");

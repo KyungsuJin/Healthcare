@@ -5,6 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>inviteGroupList</title>
+<script type="text/javascript">
+
+</script>
 </head>
 <body>
 <h1>나를 초대한 그룹 리스트</h1>
@@ -29,8 +32,8 @@
 				<td>${groupInvite.groupInfo }</td>
 				<td>${groupInvite.groupInviteMessage }</td>
 				<td>${groupInvite.groupInviteDate }</td>
-				<td><a type="button" href="${pageContext.request.contextPath}/trueGroup?groupNo=${groupInvite.groupNo}" id="trueGroup">수락하기</a></td>
-				<td><a type="button" href="${pageContext.request.contextPath}/falseGroup?groupNo=${groupInvite.groupNo}" id="falseGroup">거절하기</a></td>
+				<td><a type="button" href="${pageContext.request.contextPath}/trueGroup?groupNo=${groupInvite.groupName}" id="trueGroup">수락하기</a></td>
+				<td><a type="button" href="${pageContext.request.contextPath}/falseGroup?groupNo=${groupInvite.groupName}" id="falseGroup">거절하기</a></td>
 			</tr>
 			</c:forEach>
 		</tbody>

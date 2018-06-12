@@ -26,14 +26,39 @@ public class GroupController {
 	private GroupInviteService groupInviteService;
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 	
-	//그룹에 초대된 멤버 리스트
+	//나를 초대한 그룹 리스트
+	@RequestMapping(value="/inviteGroupList", method=RequestMethod.GET)
+	public String inviteGroupList(Model model
+									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
+		logger.debug("GroupController - inviteGroupList 포워드 실행");
+		Map<String,Object> map = groupInviteService.inviteGroupList(currentPage, pagePerRow);
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
+		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
+		model.addAttribute("totalBlock", map.get("totalBlock"));
+		return "group/inviteGroupList";
+	}
+	
+	//그룹에 초대한 멤버 리스트
 	@RequestMapping(value="/inviteMemberList", method=RequestMethod.GET)
-	public String inviteMemberList() {
+	public String inviteMemberList(Model model
+									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
 		logger.debug("GroupController - inviteMemberList 포워드 실행");
-		
+		Map<String,Object> map = groupInviteService.groupInviteList(currentPage, pagePerRow);
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
+		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
+		model.addAttribute("totalBlock", map.get("totalBlock"));
 		return "group/inviteMemberList";
 	}
 	
+	//그룹 멤버초대 등록
 	@RequestMapping(value="/inviteMember", method=RequestMethod.POST)
 	public String inviteMember(GroupInvite groupInvite,HttpServletRequest request) {
 		logger.debug("GroupController - inviteMemberForm 리다이렉트 실행");
@@ -41,7 +66,7 @@ public class GroupController {
 		return "redirect:/groupList";
 	}
 
-	//그룹 멤버초대
+	//그룹 멤버초대 폼
 	@RequestMapping(value="/inviteMemberForm", method=RequestMethod.GET)
 	public String inviteMemberForm(Model model,@RequestParam(value="groupNo") String groupNo) {
 		logger.debug("GroupController - inviteMemberForm 포워드 실행");

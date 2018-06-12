@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cafe24.kyungsu93.group.service.GroupInviteMapper">
+	<insert id="inviteMemberApproval" 
+			parameterType="com.cafe24.kyungsu93.group.service.GroupInvite">
+	INSERT INTO group_invite_approval_result(
+	group_invite_no, member_no, group_name, personal_information_approval, group_invite_approval_date
+	)
+	VALUES (
+	#{groupInviteNo}, #{memberNo}, #{groupName},#{personalInformationApproval}, NOW()
+	)
+	</insert>
 	<select id="groupInviteNo" resultType="Integer">
 		SELECT
 		max(CAST(substring(group_invite_no,14) AS DECIMAL))
@@ -36,9 +45,18 @@
 			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
 		SELECT
 			member_name as memberName,
-			member_no as memberNo
+			member_no as memberNo,
+			member_agree as memberAgree
 		FROM member
 		WHERE member_id = #{memberId}	
+	</select>
+		<select id="personalAgreeMember" 
+			parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
+		SELECT
+			member_agree as memberAgree
+		FROM member
+		WHERE member_name = #{memberName}	
 	</select>
 	<select id="groupInviteMemberId" 
 			parameterType="String" 
@@ -54,23 +72,39 @@
 			count(*)
 		FROM group_invite
 	</select>
+	<select id="inviteGroupList" 
+			parameterType="Integer" 
+			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
+	 	SELECT
+			a.group_no as groupNo,
+			a.group_invite_date as groupInviteDate,
+			a.group_invite_message as groupInviteMessage,
+			b.group_name as groupName,
+			b.group_Info as groupInfo,			
+			c.group_kind_name as groupKindName
+		FROM group_invite a
+		INNER JOIN group_table b
+		ON a.group_no = b.group_no		
+		INNER JOIN group_kind c
+		ON b.group_kind_no = c.group_kind_no		
+		ORDER BY group_invite_date DESC
+		LIMIT #{beginRow},#{pagePerRow}
+	</select>
 	<select id="groupInviteList" 
 			parameterType="Integer" 
 			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
 	 	SELECT
-			group_invite_no as groupInviteNo,
-			group_name as groupName,
-			group_no as groupNo,
-			group_invite_no as groupInviteNo,
-			group_invite_approval as groupInviteApproval,
-			personal_information_approval as prsonalInformationApproval,
-			group_invite_date as groupInviteDate,
-			group_kind_Name as groupKindName
+			b.group_name as groupName,
+			a.group_no as groupNo,
+			a.group_invite_approval as groupInviteApproval,
+			a.group_invite_date as groupInviteDate,
+			c.member_name as memberName,
+			c.member_id as memberId
 		FROM group_invite a
-		INNER JOIN group_kind b
-		INNER JOIN group_invite_approval c
-		ON a.group_kind_no = b.group_kind_no
-		ON a.group_invite_no = c.group_invite_no			
+		INNER JOIN group_table b
+		ON a.group_no = b.group_no
+		INNER JOIN member c
+		ON a.member_no = c.member_no		
 		ORDER BY group_invite_date DESC
 		LIMIT #{beginRow},#{pagePerRow}
 	</select>

@@ -24,6 +24,58 @@ public class GroupInviteService {
 	private GroupDao groupDao;
 	private static final Logger logger = LoggerFactory.getLogger(GroupInviteService.class);
 	
+	//나를 초대한 그룹 리스트
+	public Map<String, Object> inviteGroupList(int currentPage, int pagePerRow){
+		logger.debug("GroupInviteService - inviteGroupList 실행");
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		int beginRow = (currentPage-1)*pagePerRow;
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		List<GroupInvite> list = groupInviteDao.inviteGroupList(map);
+		int total = groupInviteDao.totalCountInvite();
+		int lastPage = total/pagePerRow;
+        if(total % pagePerRow != 0) {
+            lastPage++;
+        }
+        logger.debug("list:"+list);
+        logger.debug("lastPage:"+lastPage);
+        logger.debug("currentPage:"+currentPage);
+        logger.debug("beginRow:"+beginRow);
+        logger.debug("pagePerRow:"+pagePerRow);
+        logger.debug("====================== page block =========================");
+       
+        int pagePerBlock = 10; //보여줄 블록 수 
+        int block = currentPage/pagePerBlock;
+        int totalBlock = total/pagePerBlock;//총 블록수
+        
+        if(currentPage % pagePerBlock != 0) {
+        	block ++;
+        }
+        int firstBlockPage = (block-1)*pagePerBlock+1;
+        int lastBlockPage = block*pagePerBlock;
+        
+		if(lastPage > 0) {			
+			if(lastPage % pagePerBlock != 0) {
+				totalBlock++;
+			}
+		}
+		if(lastBlockPage >= totalBlock) {
+			lastBlockPage = totalBlock;
+		}
+		logger.debug("firstBlockPage:"+firstBlockPage);
+		logger.debug("lastBlockPage:"+lastBlockPage);
+		logger.debug("block:"+block);
+		logger.debug("totalBlock:"+totalBlock);
+		logger.debug("====================== page block =========================");
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("list", list);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("firstBlockPage", firstBlockPage);
+		returnMap.put("lastBlockPage", lastBlockPage);
+		returnMap.put("totalBlock", totalBlock);
+		return returnMap;
+	}
+	
 	//그룹에 초대한 멤버 리스트
 	public Map<String, Object> groupInviteList(int currentPage, int pagePerRow){
 		logger.debug("GroupInviteService - groupMemberList 실행");
@@ -76,7 +128,7 @@ public class GroupInviteService {
 		return returnMap;
 	}
 	
-	//그룹 멤버 초대
+	//그룹에 초대된 멤버 추가
 	public void addInviteMember(GroupInvite groupInvite) {
 		logger.debug("GroupInviteService - addInviteMember실행");		
 		String groupInviteNo = groupInvite.getGroupInviteNo();
@@ -127,7 +179,6 @@ public class GroupInviteService {
 		int count = 0;
 		count = memberDao.memberListTotal();
 		String name = null;
-		String no = null;
 		int result = 0;
 		if(count>0) {
 			result = groupInviteDao.inviteMemberId(memberId);
@@ -135,17 +186,13 @@ public class GroupInviteService {
 			if(result>0) {
 				GroupInvite groupInvite = groupInviteDao.groupInviteMemberName(memberId);
 				name = groupInvite.getMemberName();
-				no = groupInvite.getMemberNo();
 				returnMap.put("name", name);
-				returnMap.put("no", no);
 			}
 		}else {
 			result = 0;
-			name = "없다";
-			no = "없다";
+			name = "공백";
 			returnMap.put("result", result);
 			returnMap.put("name", name);
-			returnMap.put("no", no);
 		}
 		return returnMap;
 	}
