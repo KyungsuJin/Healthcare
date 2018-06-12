@@ -12,23 +12,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cafe24.kyungsu93.group.service.GroupInviteService;
 import com.cafe24.kyungsu93.group.service.GroupService;
 
 @RestController
 public class GroupRestController {
 	@Autowired
 	private GroupService groupService;
+	@Autowired
+	private GroupInviteService groupInviteService;
 	private static final Logger logger = LoggerFactory.getLogger(GroupRestController.class);
 	
-/*	@RequestMapping(value="/invitefind", method=RequestMethod.POST)
+	@RequestMapping(value="/invitefind", method=RequestMethod.POST)
 	@ResponseBody
-	public int searchMember(@RequestParam(value="memberId") String memberId) {
+	public Map<String, Object> searchMember(@RequestParam(value="memberId") String memberId) {
 		logger.debug("GroupController - SearchMemberForm ajax 실행");
-		int row = 0;
-		row = groupInviteService.invitefind(memberId);
-		logger.debug("row:"+row);
-		return row;
-	}*/
+		logger.debug("memberId:"+memberId);
+		Map<String,Object> map = groupInviteService.invitefind(memberId);
+		map.get("result");
+		logger.debug("result:"+map.get("result"));
+		return map;
+	}
 	
 	@RequestMapping(value="/checkGroupName", method={RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody

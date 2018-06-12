@@ -25,8 +25,8 @@
 			<tr>
 				<td>${groupTable.groupNo }</td>
 				<td>${groupTable.groupName }</td>
-				<td>${groupTable.groupInfo }</td>
 				<td>${groupTable.groupKindName }</td>
+				<td>${groupTable.groupInfo }</td>
 				<td>${groupTable.groupCreateDate }</td>
 				<td><a type="button" href="${pageContext.request.contextPath}/modifyGroup?groupNo=${groupTable.groupNo}" id="buttonModify">수정</a></td>
 				<td><a type="button" href="${pageContext.request.contextPath}/deleteGroup?groupNo=${groupTable.groupNo}" id="buttonDelete">삭제</a></td>

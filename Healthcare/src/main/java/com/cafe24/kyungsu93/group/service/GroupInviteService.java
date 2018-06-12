@@ -22,8 +22,11 @@ public class GroupInviteService {
 
 	@Autowired
 	private GroupInviteDao groupInviteDao;
+	@Autowired
+	private MemberDao memberDao;
 	private static final Logger logger = LoggerFactory.getLogger(GroupInviteService.class);
 	
+	//그룹 멤버 초대
 	public void addInviteMember(GroupInvite groupInvite) {
 		logger.debug("BloodPressureService - addInviteMember실행");		
 		String groupInviteNo = groupInvite.getGroupInviteNo();
@@ -52,10 +55,23 @@ public class GroupInviteService {
 		groupInviteDao.inviteMember(groupInvite);
 	}
 	
-	public int invitefind(String memberId){
-		return groupInviteDao.inviteMemberId(memberId);
+	//그룹초대할 멤버 아이디 검색
+	public Map<String,Object> invitefind(String memberId){
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		int count = 0;
+		count = memberDao.memberListTotal();
+		int result = 0;
+		if(count>0) {
+			groupInviteDao.inviteMemberId(memberId);
+			returnMap.put("result", result);
+		}else {
+			result = 0;
+			returnMap.put("result", result);
+		}
+		return returnMap;
 	}
 	
+	//그룹에 초대한 멤버 리스트
 	public Map<String, Object> groupInviteList(int currentPage, int pagePerRow){
 		logger.debug("GroupInviteService - groupMemberList 실행");
 		Map<String,Integer> map = new HashMap<String,Integer>();
