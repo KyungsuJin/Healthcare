@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cafe24.kyungsu93.FoodInfo;
+import com.cafe24.kyungsu93.Food;
 
 @Service
 @Transactional
@@ -16,7 +16,7 @@ public class DietService {
 	@Autowired
 	DietDao dietDao;
 	private static final Logger logger = LoggerFactory.getLogger(DietService.class);
-	public List<FoodInfo> selectForAddIngetCalorie() {
+	public List<Food> selectForAddIngetCalorie() {
 		logger.debug("DietService_selectForAddIngetCalorie");
 		return dietDao.selectForAddIngetCalorie();
 	}

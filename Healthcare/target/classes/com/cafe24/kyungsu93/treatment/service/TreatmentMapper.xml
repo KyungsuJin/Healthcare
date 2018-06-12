@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.cafe24.kyungsu93.treatment.service.TreatmentMapper">
+	
+	<select id="getTreatmentNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(CAST(SUBSTRING(treatment_no,11)as decimal)),0) 
+		FROM treatment
+	
+	</select>
+	
+	
+	<insert id="addTreatment" parameterType="com.cafe24.kyungsu93.treatment.service.TreatmentRequest">
+        INSERT INTO treatment(
+        	treatment_no
+        	,member_no
+        	,treatment_department
+        	,hospital_name
+        	,treatment_title
+            ,treatment_content
+            ,doctor_name
+            ,hospital_address
+        )
+        VALUES(
+        	#{treatmentNo}
+        	,#{memberNo}
+        	,#{treatmentDepartment}
+        	,#{hospitalName}
+            ,#{treatmentTitle}
+            ,#{treatmentContent}
+        	,#{doctorName}
+        	,#{hospitalAddress}
+        	,now()
+        )         
+	</insert>  
+	
+	<select id="treatmentTotalCount" resultType="Integer">
+		SELECT 
+			count(*)
+		FROM treatment
+	</select>
+
+	<select id="getTreatmentList" parameterType="java.util.Map" resultType="com.cafe24.kyungsu93.treatment.service.TreatmentResponse">
+		SELECT 
+			treatment_no AS treatmentNo
+        	,treatment_department AS treatmentDepartment
+        	,hospital_name AS hospitalName
+        	,treatment_title AS  treatmentTitle
+            ,doctor_name AS treatmentContent
+            ,treatment_date AS treatmentDate
+		FROM treatment
+		WHERE member_no = #{memberNo} 
+		ORDER BY treatment_date DESC
+		LIMIT #{beginRow}, #{pagePerRow}
+	</select>
+
+	<resultMap id="treatmentContentResult" type="com.cafe24.kyungsu93.treatment.service.TreatmentResponse">
+		<result property="treatmentNo" column="treatmentNo" />
+		<result property="treatmentDepartment" column="treatmentDepartment" />
+		<result property="hospitalName" column="hospitalName" />
+		<result property="treatmentTitle" column="treatmentTitle" />
+		<result property="treatmentContent" column="treatmentContent" />
+		<result property="doctorName" column="doctorName" />
+		<result property="hospitalAddress" column="hospitalAddress" />
+		<result property="treatmentDate" column="treatmentDate" />
+		<collection property="treatmentFile" column="treatmentNo"
+			javaType="java.util.ArrayList" ofType="com.cafe24.kyungsu93.treatment.service.TreatmentFile"
+			select="getTreatmentContentFile" />
+	</resultMap>
+
+	<select id="getTreatmentContent" parameterType="com.cafe24.kyungsu93.treatment.service.TreatmentRequest" resultMap="treatmentContentResult">
+		SELECT 
+			treatment_no AS treatmentNo
+        	,treatment_department AS treatmentDepartment
+        	,hospital_name AS hospitalName
+        	,treatment_title AS treatmentTitle
+            ,treatment_content AS treatmentContent
+            ,doctor_name AS doctorName
+            ,hospital_address AS hospitalAddress
+            ,treatment_date AS  treatmentDate
+		FROM treatment
+		WHERE treatment_no = #{treatmentNo}
+	</select>
+	
+	<select id="getTreatmentContentFile" resultType="com.cafe24.kyungsu93.treatment.service.TreatmentFile">
+		SELECT 
+			treatment_file_no AS treatmentFileNo
+			,treatment_file_name AS treatmentFileName
+			,treatment_file_real_name AS treatmentFileRealName
+			,treatment_file_size AS treatmentFileSize
+			,treatment_file_ext AS treatmentFileExt
+		FROM treatment_file
+		WHERE treatment_no = #{treatmentNo}
+	</select>
+	
+	<delete id="removeTreatment" parameterType="com.cafe24.kyungsu93.treatment.service.TreatmentRequest">
+		DELETE
+		FROM treatment
+		WHERE treatment_no = #{treatmentNo}
+	</delete>
+	
+	<update id="modifyTreatment" parameterType="com.cafe24.kyungsu93.treatment.service.TreatmentRequest">
+		UPDATE
+			treatment
+		SET
+			,treatment_department = #{treatmentDepartment}
+        	,hospital_name = #{hospitalName}
+        	,treatment_title = #{treatmentTitle}
+            ,treatment_content = #{treatmentContent}
+            ,doctor_name = #{doctorName}
+            ,hospital_address = #{hospitalAddress}
+		WHERE treatment_no = #{treatmentNo}
+	</update>
+	
+	<select id="getTreatmentClosest" parameterType="com.cafe24.kyungsu93.treatment.service.TreatmentRequest" resultType="com.cafe24.kyungsu93.treatment.service.TreatmentResponse">
+		(SELECT 
+			treatment_no AS TreatmentNo 
+		FROM treatment 
+		WHERE (CAST(SUBSTRING(treatment_no,11)as decimal) &gt; (CAST(SUBSTRING(#{treatmentNo},11)as decimal) 
+		LIMIT 1)
+		UNION ALL
+		(SELECT 
+			treatment_no AS TreatmentNo 
+		FROM treatment 
+		WHERE (CAST(SUBSTRING(treatment_no,11)as decimal) &lt; (CAST(SUBSTRING(#{treatmentNo},11)as decimal)
+		ORDER BY treatment_no DESC 
+		LIMIT 1)
+	</select>
+
+</mapper>

@@ -23,21 +23,21 @@ public class HomeController {
 	HomeService homeService;
 	
 	//식품영양정보는 json 으로 받아서 DB에 등록해야 할것같아서 스크립트로 처리하려고함.
-	@RequestMapping(value = "/foodInfo", method = RequestMethod.GET)
-	public String foodInfo() {
-		logger.debug("HomeController.foodInfo 메서드 실행");
-		homeService.foodInfoInsert();
-		return "foodInfo";
+	@RequestMapping(value = "/food", method = RequestMethod.GET)
+	public String food() {
+		logger.debug("HomeController.food 메서드 실행");
+		homeService.foodInsert();
+		return "food";
 	}
 	
 	
-	@RequestMapping(value = "/medicineInfo", method = RequestMethod.GET)
-	public String medicineInfo() {
-		logger.debug("HomeController.medicineInfo 메서드 실행");
+	@RequestMapping(value = "/medicine", method = RequestMethod.GET)
+	public String medicine() {
+		logger.debug("HomeController.medicine 메서드 실행");
 		for(int i = 1 ; i < 11 ; i++) {
-			homeService.medicineInfo(i);
+			homeService.medicine(i);
 		}
-		return "medicineInfo";
+		return "medicine";
 	}
 	
 }

@@ -8,16 +8,16 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class FoodInfoDao {
-	private static final Logger logger = LoggerFactory.getLogger(FoodInfoDao.class);
+public class FoodDao {
+	private static final Logger logger = LoggerFactory.getLogger(FoodDao.class);
 
-	final String NS = "com.cafe24.kyungsu93.FoodInfoMapper.";
+	final String NS = "com.cafe24.kyungsu93.FoodMapper.";
 	
 	@Autowired private SqlSessionTemplate sqlSession;
 	
-	public void foodInfoInsert(FoodInfo foodInfo) {
-		logger.debug("FoodInfoDao.foodInfoInsert 메서드 호출");
-		sqlSession.insert(NS + "insertFoodInfo", foodInfo);
+	public void foodInsert(Food food) {
+		logger.debug("FoodDao.foodInsert 메서드 호출");
+		sqlSession.insert(NS + "insertFood", food);
 	}
 	
 }

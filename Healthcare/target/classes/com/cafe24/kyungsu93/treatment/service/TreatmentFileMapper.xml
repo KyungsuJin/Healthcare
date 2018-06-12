@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.cafe24.kyungsu93.treatment.service.TreatmentFileMapper">
+	<select id="getTreatmentFileNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(CAST(SUBSTRING(treatment_file_no,16)as decimal)),0) 
+		FROM treatment_file
+	</select>
+	<insert id="addTreatmentFile" parameterType="com.cafe24.kyungsu93.treatment.service.TreatmentFile">
+        INSERT INTO treatment_file(
+        	treatment_no
+        	,treatment_file_name
+        	,treatment_file_real_name
+            ,treatment_file_ext
+            ,treatment_file_type
+            ,treatment_file_size
+        )
+        VALUES(
+            #{treatmentId}
+            ,#{treatmentFileName}
+            ,#{treatmentFileRealName}
+            ,#{treatmentFileExt}
+            ,#{treatmentFileType}
+            ,#{treatmentFileSize}
+        )      
+	</insert>
+	
+	<select id="treatmentFileTotalCount" parameterType="com.cafe24.kyungsu93.treatment.service.TreatmentRequest" resultType="Integer">
+		SELECT 
+			count(*)
+		FROM treatment_file
+		WHERE treatment_no = #{treatmentNo}
+	</select>
+	
+	<delete id="removeAllTreatmentFile" parameterType="String">
+		DELETE
+		FROM treatment_file
+		WHERE treatment_no = #{treatmentNo}
+	</delete>
+	
+	<delete id="removeTreatmentFile" parameterType="String">
+		DELETE
+		FROM treatment_file
+		WHERE treatment_file_no = #{treatmentFileNo}
+	</delete>
+</mapper>

@@ -1,7 +1,7 @@
 package com.cafe24.kyungsu93;
 
-public class FoodInfo {
-	private String foodInfoNo;
+public class Food {
+	private String foodNo;
 	private String foodGroup;
 	private String foodName;
 	private int foodOnce;
@@ -16,11 +16,11 @@ public class FoodInfo {
 	private double foodTransfat;
 	private int foodBuildYear;
 	
-	public String getFoodInfoNo() {
-		return foodInfoNo;
+	public String getFoodNo() {
+		return foodNo;
 	}
-	public void setFoodInfoNo(String foodInfoNo) {
-		this.foodInfoNo = foodInfoNo;
+	public void setFoodNo(String foodNo) {
+		this.foodNo = foodNo;
 	}
 	public String getFoodGroup() {
 		return foodGroup;
@@ -102,7 +102,7 @@ public class FoodInfo {
 	}
 	@Override
 	public String toString() {
-		return "FoodInfo [foodInfoNo=" + foodInfoNo + ", foodGroup=" + foodGroup + ", foodName=" + foodName
+		return "Food [foodNo=" + foodNo + ", foodGroup=" + foodGroup + ", foodName=" + foodName
 				+ ", foodOnce=" + foodOnce + ", foodKcal=" + foodKcal + ", foodCarbohydrate=" + foodCarbohydrate
 				+ ", foodProtein=" + foodProtein + ", foodFat=" + foodFat + ", foodSugar=" + foodSugar
 				+ ", foodNatrium=" + foodNatrium + ", foodCholesterol=" + foodCholesterol + ", foodSfa=" + foodSfa

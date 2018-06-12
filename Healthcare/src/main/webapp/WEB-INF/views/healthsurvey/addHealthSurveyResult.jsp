@@ -39,8 +39,8 @@
 			}
 		});
 		
-		$("#cancelBtn").click(function(){
-			location.href="${pageContext.request.contextPath}/getHealthSurveyContent?healthSurveyNo=${healthSurvey.healthSurveyNo}";
+		$("#getHealthSurveyListBtn").click(function(){
+			location.href="${pageContext.request.contextPath}/getHealthSurveyContent?healthSurveyRegisterNo=${question[0].healthSurveyRegisterNo}";
 		});
 	});	
 </script>
@@ -66,7 +66,7 @@
 			<br>
 		</c:forEach>
 		<input id="addHealthSurveyResultBtn" class="btn btn-default" type="button" value="제출">
-		<input id="getHealthSurveyListBtn" class="btn btn-default" type="button" value="목록">
+		<input id="getHealthSurveyListBtn" class="btn btn-default" type="button" value="설문정보 다시보기">
 	</div>
 </body>
 </html>

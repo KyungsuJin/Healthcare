@@ -1,6 +1,6 @@
 package com.cafe24.kyungsu93;
 
-public class MedicineInfo {
+public class Medicine {
 	private String medicineNo;
 	private String medicineName;
 	private String medicineManufacturer;
@@ -82,7 +82,7 @@ public class MedicineInfo {
 	
 	@Override
 	public String toString() {
-		return "MedicineInfo [medicineNo=" + medicineNo + ", medicineName=" + medicineName + ", medicineManufacturer="
+		return "Medicine [medicineNo=" + medicineNo + ", medicineName=" + medicineName + ", medicineManufacturer="
 				+ medicineManufacturer + ", medicinePermissionDate=" + medicinePermissionDate + ", medicineMaterial="
 				+ medicineMaterial + ", medicineStorageMethod=" + medicineStorageMethod + ", medicineValidTerm="
 				+ medicineValidTerm + ", medicineProGen=" + medicineProGen + ", medicineClass=" + medicineClass

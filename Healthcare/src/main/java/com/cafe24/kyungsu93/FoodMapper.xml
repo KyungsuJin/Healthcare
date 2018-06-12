@@ -3,10 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cafe24.kyungsu93.FoodInfoMapper">
-	<insert id="insertFoodInfo" parameterType="com.cafe24.kyungsu93.FoodInfo">
-        INSERT INTO food_info(
-        	food_info_no
+<mapper namespace="com.cafe24.kyungsu93.FoodMapper">
+	<insert id="insertFood" parameterType="com.cafe24.kyungsu93.Food">
+        INSERT INTO food(
+        	food_no
         	,food_group
         	,food_name
         	,food_once
@@ -22,7 +22,7 @@
         	,food_build_year
         )
         VALUES(
-            #{foodInfoNo}
+            #{foodNo}
             ,#{foodGroup}
             ,#{foodName}
             ,#{foodOnce}

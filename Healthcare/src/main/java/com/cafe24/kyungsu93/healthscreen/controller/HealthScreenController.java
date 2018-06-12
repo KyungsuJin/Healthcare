@@ -29,7 +29,18 @@ public class HealthScreenController {
 													,@RequestParam(value="pagePerRow", defaultValue="10") int pagePerRow
 													,HttpSession session) {
 		logger.debug("HealthScreenController.getHealthScreenList 메서드 실행");
-		if(session.getAttribute("memberSessionName") != null) {
+		if(healthScreenRequest.getMemberNo() != null) {
+			Map map = healthScreenService.getHealthScreenList(currentPage, pagePerRow, healthScreenRequest);
+			model.addAttribute("list", map.get("list"));
+			model.addAttribute("firstPage", map.get("firstPage"));
+			model.addAttribute("lastPage", map.get("lastPage"));
+			model.addAttribute("beforePage", map.get("beforePage"));
+			model.addAttribute("afterPage", map.get("afterPage"));
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("pagePerRow", pagePerRow);
+			return "healthscreen/getHealthScreenList";
+			
+		} if(session.getAttribute("memberSessionNo") != null) {
 			healthScreenRequest.setMemberNo(session.getAttribute("memberSessionNo").toString());
 			Map map = healthScreenService.getHealthScreenList(currentPage, pagePerRow, healthScreenRequest);
 			model.addAttribute("list", map.get("list"));

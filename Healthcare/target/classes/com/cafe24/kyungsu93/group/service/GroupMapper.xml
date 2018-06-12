@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cafe24.kyungsu93.group.service.GroupMapper">
+	<select id="deleteGroupList" parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.Group">
+		SELECT
+			group_no as groupNo,
+			group_name as groupName,
+			group_info as groupInfo,
+			group_create_date as groupCreateDate,
+			group_expired_date as groupExpiredDate,
+			group_kind_name as groupKindName
+		FROM group_table a	
+		INNER JOIN group_delete b	
+		INNER JOIN group_kind c
+		ON a.group_no = c.group_no	
+		ON a.group_kind_no = c.group_kind_no			
+		ORDER BY group_create_date DESC
+		LIMIT #{beginRow},#{pagePerRow}
+	</select>
+	<select id="groupdeleteCount" resultType="Integer">
+		SELECT
+		count(*)
+		FROM group_delete
+	</select>
+	<select id="groupDdayNo" parameterType="String" resultType="com.cafe24.kyungsu93.group.service.Group">
+		SELECT
+		group_no as groupNo
+		FROM group_delete
+		WHERE group_Expired_date = #{groupExpiredDate}
+	</select>
+	<select id="groupDdaycheck" resultType="com.cafe24.kyungsu93.group.service.Group">
+		SELECT
+		 MIN(group_expired_date) as groupExpiredDate 
+		FROM group_delete
+	</select>
+	<insert id="deleteApproval" parameterType="com.cafe24.kyungsu93.group.service.Group">
+		INSERT INTO group_delete
+		(group_no, group_expired_date)
+		VALUES (
+			#{groupNo}, NOW()+Interval 1 Month
+		)
+	</insert>
 	 <delete id="deleteGroup"  parameterType="com.cafe24.kyungsu93.group.service.Group">
 		DELETE FROM group_table WHERE group_no = #{groupNo}
 	</delete>
@@ -43,51 +83,6 @@
 		ON a.group_kind_no = c.group_kind_no	
 	 	WHERE group_no = #{groupNo}
 	</select>	 
-	 <select id="findNameOne"  
-				 parameterType="String" 
-				 resultType="com.cafe24.kyungsu93.group.service.Group">
-	 	SELECT group_no as groupNo,
-			group_name as groupName,
-			group_info as groupInfo,
-			group_create_date as groupCreateDate,
-			group_kind_name as groupKindName
-		FROM group_table a		
-		INNER JOIN group_kind c
-		ON a.group_kind_no = c.group_kind_no			
-	 	WHERE member_name = #{memberName}
-	</select>
-	<select id="findIdOne"  
-				 parameterType="String" 
-				 resultType="com.cafe24.kyungsu93.group.service.Group">
-	 	SELECT group_no as groupNo,
-			group_name as groupName,
-			group_create_date as groupCreateDate,
-			group_kind_name as groupKindName
-			FROM group_table a		
-			INNER JOIN group_kind c
-			ON a.group_kind_no = c.group_kind_no			
-	 	WHERE member_id = #{memberId}
-	</select>
-	<select id="findName"  
-				 parameterType="String" 
-				 resultType="Integer">
-	 	SELECT 
-	 	COUNT(*)
-	 	FROM group_table a		
-		INNER JOIN member b
-		ON a.member_no = b.member_no
-	 	WHERE member_name = #{memberName}
-	 </select>
-	 <select id="findId"  
-				 parameterType="String" 
-				 resultType="Integer">
-	 	SELECT 
-	 	COUNT(*)
-	 	FROM group_table a		
-		INNER JOIN member b
-		ON a.member_no = b.member_no
-	 	WHERE member_id = #{memberId}
-	 </select>
 	 <select id="checkGroupName" parameterType="String"
 				 resultType="Integer">
 	 	SELECT 

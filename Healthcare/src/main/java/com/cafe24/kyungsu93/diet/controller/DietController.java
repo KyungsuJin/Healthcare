@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.cafe24.kyungsu93.FoodInfo;
+import com.cafe24.kyungsu93.Food;
 import com.cafe24.kyungsu93.diet.service.DietService;
 
 @Controller
@@ -28,7 +28,7 @@ public class DietController {
 	@RequestMapping(value="/addIngestCalorie", method=RequestMethod.GET)
 	public String addIngestCalorie(Model model) {
 		logger.debug("DietController_addIngestCalorie_GET");
-		List<FoodInfo> list = dietService.selectForAddIngetCalorie();
+		List<Food> list = dietService.selectForAddIngetCalorie();
 		model.addAttribute("list", list);
 		return "diet/addIngestCalorie";
 	}

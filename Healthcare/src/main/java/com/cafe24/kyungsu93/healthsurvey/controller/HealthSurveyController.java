@@ -67,7 +67,7 @@ public class HealthSurveyController {
 		System.out.println(healthSurveySelection.toString());
 		System.out.println("여기오---------------");
 		healthSurveyService.addHealthSurvey(healthSurveyRequest, healthSurveyQuestion, healthSurveySelection);
-		return "getHealthSurveyList";
+		return "redirect:/getHealthSurveyList";
 	}
 	
 	@RequestMapping(value="/getHealthSurveyQuestion", method=RequestMethod.GET)

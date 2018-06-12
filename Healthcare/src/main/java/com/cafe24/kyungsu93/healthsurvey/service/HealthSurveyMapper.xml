@@ -28,7 +28,7 @@
 				and survey.member_no = member.member_no
 				and survey.disease_no = disease.disease_no
 		ORDER BY survey.health_survey_register_date DESC
-		LIMIT ${beginRow}, ${pagePerRow}
+		LIMIT #{beginRow}, #{pagePerRow}
   	</select>
   	
   	<select id="getHealthSurveyContent" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyRequest" resultType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResponse">
@@ -321,7 +321,7 @@
 				and result.member_no = member.member_no
 				and register.disease_no = disease.disease_no
 		ORDER BY result.health_survey_result_date DESC
-		LIMIT ${beginRow}, ${pagePerRow}
+		LIMIT #{beginRow}, #{pagePerRow}
   	</select>
 	
 	<update id="addHealthSurveyEvaluation" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultRequest">
