@@ -33,19 +33,17 @@
 	</select>
 	<select id="groupInviteMemberId" 
 			parameterType="String" 
-			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
+			resultType="Integer">
 		SELECT
 			count(*)
-		FORM group_table a
-		INNER JOIN member b
-		ON a.member_no = b.member_no
+		FROM member
 		WHERE member_id = #{memberId}	
 	</select>
 	<select id="totalCountInvite" 
 			resultType="Integer">
 		SELECT
 			count(*)
-		FORM group_invite
+		FROM group_invite
 	</select>
 	<select id="groupInviteList" 
 			parameterType="Integer" 

@@ -23,7 +23,7 @@ public class GroupController {
 	private GroupService groupService;
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 	
-	//그룹에 초대된 멤버 리스트
+/*	//그룹에 초대된 멤버 리스트
 	@RequestMapping(value="/inviteMemberList", method=RequestMethod.GET)
 	public String inviteMemberList() {
 		logger.debug("GroupController - inviteMemberList 포워드 실행");
@@ -37,7 +37,7 @@ public class GroupController {
 		
 		return "redirect:/groupList";
 	}
-	
+	*/
 	//그룹 멤버초대
 	@RequestMapping(value="/inviteMemberForm", method=RequestMethod.GET)
 	public String inviteMemberForm() {

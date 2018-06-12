@@ -4,24 +4,39 @@
 	<select id="deleteGroupList" parameterType="String" 
 			resultType="com.cafe24.kyungsu93.group.service.Group">
 		SELECT
-			group_no as groupNo,
-			group_name as groupName,
-			group_info as groupInfo,
-			group_create_date as groupCreateDate,
-			group_expired_date as groupExpiredDate,
-			group_kind_name as groupKindName
-		FROM group_table a	
-		INNER JOIN group_delete b	
-		INNER JOIN group_kind c
-		ON a.group_no = c.group_no	
-		ON a.group_kind_no = c.group_kind_no			
-		ORDER BY group_create_date DESC
-		LIMIT #{beginRow},#{pagePerRow}
+			a.group_no as groupNo,
+			a.group_expired_date as groupExpiredDate,
+			b.member_no as memberNo,
+			b.group_name as groupName,
+			b.group_info as groupInfo,
+			c.member_name as memberName,
+			b.group_create_date as groupCreateDate,
+			d.group_kind_name as groupKindName
+		FROM group_delete a
+		INNER JOIN group_table b
+		ON a.group_no = b.group_no
+		INNER JOIN member c
+		ON b.member_no = c.member_no
+		INNER JOIN group_kind d
+		ON b.group_kind_no = d.group_kind_no		
+		ORDER BY group_expired_date DESC
 	</select>
 	<select id="groupdeleteCount" resultType="Integer">
 		SELECT
 		count(*)
 		FROM group_delete
+	</select>
+	<select id="groupDeleteCheckMember" parameterType="String" resultType="Integer">
+		SELECT
+			count(*)
+		FROM group_invite_approval
+		WHERE group_name = #{groupName}
+	</select>
+	<select id="groupDeleteCheckgroupNo" parameterType="String" resultType="com.cafe24.kyungsu93.group.service.Group">
+		SELECT
+			group_name as groupName
+		FROM group_invite_approval
+		WHERE group_no = #{groupNo}
 	</select>
 	<select id="groupDdayNo" parameterType="String" resultType="com.cafe24.kyungsu93.group.service.Group">
 		SELECT
@@ -41,18 +56,25 @@
 			#{groupNo}, NOW()+Interval 1 Month
 		)
 	</insert>
+		 <delete id="deleteGroupDelete"  parameterType="com.cafe24.kyungsu93.group.service.Group">
+		DELETE 
+		FROM group_delete 
+		WHERE group_no = #{groupNo}
+	</delete>
 	 <delete id="deleteGroup"  parameterType="com.cafe24.kyungsu93.group.service.Group">
-		DELETE FROM group_table WHERE group_no = #{groupNo}
+		DELETE 
+		FROM group_table 
+		WHERE group_no = #{groupNo}
 	</delete>
 	<select id="groupList" 
 			parameterType="Integer" 
 			resultType="com.cafe24.kyungsu93.group.service.Group">
 	 	SELECT
-			group_no as groupNo,
-			group_name as groupName,
-			group_info as groupInfo,
-			group_create_date as groupCreateDate,
-			group_kind_name as groupKindName
+			a.group_no as groupNo,
+			a.group_name as groupName,
+			a.group_info as groupInfo,
+			a.group_create_date as groupCreateDate,
+			c.group_kind_name as groupKindName
 		FROM group_table a		
 		INNER JOIN group_kind c
 		ON a.group_kind_no = c.group_kind_no			
@@ -63,7 +85,6 @@
 				 parameterType="com.cafe24.kyungsu93.group.service.Group">
 	 	UPDATE group_table
 		SET	
-			group_name= #{groupName},
 			group_kind_no = #{groupKindNo},
 			group_info = #{groupInfo},
 			group_create_date = now()
@@ -72,12 +93,13 @@
 	<select id="modifyGroup"  
 				 parameterType="String" 
 				 resultType="com.cafe24.kyungsu93.group.service.Group">
-	 	SELECT group_no as groupNo,
-	 		member_no as memberNo,
-			group_name as groupName,
-			group_info as groupInfo,
-			group_create_date as groupCreateDate,	
-			group_kind_name as groupKindName
+	 	SELECT 
+	 		a.group_no as groupNo,
+	 		a.member_no as memberNo,
+			a.group_name as groupName,
+			a.group_info as groupInfo,
+			a.group_create_date as groupCreateDate,	
+			c.group_kind_name as groupKindName
 		FROM group_table a		
 		INNER JOIN group_kind c
 		ON a.group_kind_no = c.group_kind_no	
