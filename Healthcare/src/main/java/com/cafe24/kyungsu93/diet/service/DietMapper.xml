@@ -4,10 +4,50 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cafe24.kyungsu93.diet.service.DietMapper">
-	<select id="selectForAddIngestCalorie"
-			resultType="com.cafe24.kyungsu93.FoodInfo">
+	<select id="selectIngestCalorieList"
+			resultType="com.cafe24.kyungsu93.diet.service.IngestCalorie">
 		SELECT
-			food_info_no as foodInfoNo
+			a.ingest_calorie_no as ingestCalorie
+			,a.member_no as memberNo
+			,a.food_no as foodNo
+			,a.ingest_weight as IngestWeight
+			,a.ingest_calorie_date as ingestCalorieDate
+			,b.food_name as foodName
+		FROM
+			ingest_calorie a, food b
+		WHERE
+			a.food_no = b.food_no
+		ORDER BY
+			ingest_calorie_date DESC
+	</select>
+	<select id="selectIngestCalorieNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(cast(SUBSTRING(ingest_calorie_no,16) as decimal)), 0)
+		FROM
+			ingest_calorie
+	</select>
+	<insert id="insertIngestCalorie" parameterType="com.cafe24.kyungsu93.diet.service.IngestCalorie">
+		INSERT INTO ingest_calorie(
+			ingest_calorie_no
+			,member_no
+			,food_no
+			,ingest_weight
+			,ingest_calorie_date
+		)
+		VALUES(
+			#{ingestCalorieNo}
+			,#{memberNo}
+			,#{foodNo}
+			,#{ingestWeight}
+			,now()
+		)
+			
+	</insert>
+	<select id="selectFoodSearch"
+			parameterType="String"
+			resultType="com.cafe24.kyungsu93.Food">
+		SELECT
+			food_no as foodNo
 			,food_group as foodGroup
 			,food_name as foodName
 			,food_once as foodOnce
@@ -22,6 +62,8 @@
 			,food_transfat as foodTransfat
 			,food_build_year as foodBuildYear
 		FROM
-			food_info
+			food
+		WHERE
+			food_name LIKE CONCAT('%',#{sv},'%')
 	</select>
 </mapper>

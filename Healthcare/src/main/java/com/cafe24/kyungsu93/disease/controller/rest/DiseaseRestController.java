@@ -23,7 +23,6 @@ public class DiseaseRestController {
 	public List<DiseaseSubCategory> selectBoxDisease(@RequestParam(value="diseaseNo") String diseaseNo) {
 		logger.debug("RestDiseaseController_selectBoxDisease", diseaseNo);
 		List<DiseaseSubCategory> list = diseaseService.selectBoxDisease(diseaseNo);
-		System.out.println("llllllllllllllllllllllllllllll"+list.size());
 		return list;
 	}
 	@RequestMapping(value="/diseaseSCNameChecked", method=RequestMethod.POST)

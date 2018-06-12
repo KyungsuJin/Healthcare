@@ -1,19 +1,14 @@
 package com.cafe24.kyungsu93.diet.service;
 
-public class IngestCalorie {
+import java.util.List;
+
+public class IngestCalorieRequest {
 	private String ingestCalorieNo;
 	private String memberNo;
-	private String foodNo;
-	private int ingestWeight;
+	private List<String> foodNo;
+	private List<Integer> ingestWeight;
 	private String ingestCalorieDate;
-	private String foodName;
 	
-	public String getFoodName() {
-		return foodName;
-	}
-	public void setFoodName(String foodName) {
-		this.foodName = foodName;
-	}
 	public String getIngestCalorieNo() {
 		return ingestCalorieNo;
 	}
@@ -26,10 +21,16 @@ public class IngestCalorie {
 	public void setMemberNo(String memberNo) {
 		this.memberNo = memberNo;
 	}
-	public int getIngestWeight() {
+	public List<String> getFoodNo() {
+		return foodNo;
+	}
+	public void setFoodNo(List<String> foodNo) {
+		this.foodNo = foodNo;
+	}
+	public List<Integer> getIngestWeight() {
 		return ingestWeight;
 	}
-	public void setIngestWeight(int ingestWeight) {
+	public void setIngestWeight(List<Integer> ingestWeight) {
 		this.ingestWeight = ingestWeight;
 	}
 	public String getIngestCalorieDate() {
@@ -38,18 +39,10 @@ public class IngestCalorie {
 	public void setIngestCalorieDate(String ingestCalorieDate) {
 		this.ingestCalorieDate = ingestCalorieDate;
 	}
-	public String getFoodNo() {
-		return foodNo;
-	}
-	public void setFoodNo(String foodNo) {
-		this.foodNo = foodNo;
-	}
-	
 	@Override
 	public String toString() {
-		return "IngestCalorie [ingestCalorieNo=" + ingestCalorieNo + ", memberNo=" + memberNo + ", foodNo=" + foodNo
-				+ ", ingestWeight=" + ingestWeight + ", ingestCalorieDate=" + ingestCalorieDate + ", foodName="
-				+ foodName + "]";
+		return "IngestCalorieRequest [ingestCalorieNo=" + ingestCalorieNo + ", memberNo=" + memberNo + ", foodNo="
+				+ foodNo + ", ingestWeight=" + ingestWeight + ", ingestCalorieDate=" + ingestCalorieDate + "]";
 	}
 	
 }
