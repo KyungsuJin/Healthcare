@@ -4,38 +4,66 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cafe24.kyungsu93.bloodpressure.service.BloodPressure;
 import com.cafe24.kyungsu93.member.service.Member;
 import com.cafe24.kyungsu93.member.service.MemberDao;
 
 @Service
 @Transactional
 public class GroupInviteService {
+
 	@Autowired
-	private MemberDao memberDao;
+	private GroupInviteDao groupInviteDao;
 	private static final Logger logger = LoggerFactory.getLogger(GroupInviteService.class);
 	
-	public Map<String, Object> invitefind(String id){
-		Map<String,Object> map = new HashMap<String,Object>();
-		int row =  memberDao.memberIdCheck(id);
-		map.put("row", row);
-		logger.debug("row:"+row);
-		return map;
+	public void addInviteMember(GroupInvite groupInvite) {
+		logger.debug("BloodPressureService - addInviteMember실행");		
+		String groupInviteNo = groupInvite.getGroupInviteNo();
+		try {
+		if(groupInviteNo == null) {
+			int count = 0;
+			count = groupInviteDao.totalCountInvite();
+			if(count > 0) {
+				int result = 0;
+				String groupInviteNo_temp = "group_invite_";
+				result = groupInviteDao.groupInviteNo(groupInviteNo);
+				if(result > 0) {
+						if(1 <= result) {
+							result++;
+						}			
+						groupInviteNo = groupInviteNo_temp + result; 
+				}
+			}else {
+				groupInviteNo = "group_invite_1";
+			}
+		}
+		groupInvite.setGroupInviteNo(groupInviteNo);
+		}catch(NullPointerException e) {
+			e.printStackTrace();
+		}
+		groupInviteDao.inviteMember(groupInvite);
 	}
 	
-	public Map<String, Object> groupMemberList(int currentPage, int pagePerRow){
+	public int invitefind(String memberId){
+		return groupInviteDao.inviteMemberId(memberId);
+	}
+	
+	public Map<String, Object> groupInviteList(int currentPage, int pagePerRow){
 		logger.debug("GroupInviteService - groupMemberList 실행");
 		Map<String,Integer> map = new HashMap<String,Integer>();
 		int beginRow = (currentPage-1)*pagePerRow;
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
-		List<Member> list = memberDao.memberList(map);
-		int total = memberDao.totalCountList();
+		List<GroupInvite> list = groupInviteDao.groupInviteList(map);
+		int total = groupInviteDao.totalCountInvite();
 		int lastPage = total/pagePerRow;
         if(total % pagePerRow != 0) {
             lastPage++;

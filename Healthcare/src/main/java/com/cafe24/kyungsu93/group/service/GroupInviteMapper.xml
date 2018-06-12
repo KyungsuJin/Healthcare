@@ -1,7 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cafe24.kyungsu93.group.service.GroupInviteMapper">
-		<select id="groupInviteList" 
+	<select id="groupInviteNo" resultType="Integer">
+		SELECT
+		max(CAST(substring(group_invite_no,13) AS DECIMAL))
+		FROM group_invite
+	</select>
+	<insert id="inviteMember" 
+			parameterType="com.cafe24.kyungsu93.group.service.GroupInvite">
+	INSERT INTO group_invite(
+	group_invite_no, group_no, member_no, group_invite_approval, group_invite_date
+	)
+	VALUES (
+	#{groupInviteNo}, #{groupNo}, #{memberNo}, #{groupInviteApproval}, NOW()
+	)
+	</insert>	
+	<select  id="groupMemberList"
+			parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
+		SELECT
+			group_name as groupName,
+			member_name as memberName,
+			member_id as memberId,
+			group_no as groupNo,
+			group_Info as groupInfo,
+			group_kind_Name as groupKindName
+		FROM group_table a
+		INNER JOIN group_kind b
+		ON a.group_kind_no = b.group_kind_no
+		ORDER BY group_invite_date DESC
+		LIMIT #{beginRow},#{pagePerRow}
+	</select>
+	<select id="groupInviteMemberId" 
+			parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
+		SELECT
+			count(*)
+		FORM group_table a
+		INNER JOIN member b
+		ON a.member_no = b.member_no
+		WHERE member_id = #{memberId}	
+	</select>
+	<select id="totalCountInvite" 
+			resultType="Integer">
+		SELECT
+			count(*)
+		FORM group_invite
+	</select>
+	<select id="groupInviteList" 
 			parameterType="Integer" 
 			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
 	 	SELECT

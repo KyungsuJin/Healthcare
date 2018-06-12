@@ -8,6 +8,7 @@ public class Group {
 	private String groupName;
 	private String groupInfo;
 	private String groupCreateDate;
+	private String groupExpiredDate;
 	public String getGroupNo() {
 		return groupNo;
 	}
@@ -50,10 +51,17 @@ public class Group {
 	public void setGroupCreateDate(String groupCreateDate) {
 		this.groupCreateDate = groupCreateDate;
 	}
+	public String getGroupExpiredDate() {
+		return groupExpiredDate;
+	}
+	public void setGroupExpiredDate(String groupExpiredDate) {
+		this.groupExpiredDate = groupExpiredDate;
+	}
 	@Override
 	public String toString() {
 		return "Group [groupNo=" + groupNo + ", groupKindNo=" + groupKindNo + ", groupKindName=" + groupKindName
 				+ ", memberNo=" + memberNo + ", groupName=" + groupName + ", groupInfo=" + groupInfo
-				+ ", groupCreateDate=" + groupCreateDate + "]";
-	}	
+				+ ", groupCreateDate=" + groupCreateDate + ", groupExpiredDate=" + groupExpiredDate + "]";
+	}
+
 }

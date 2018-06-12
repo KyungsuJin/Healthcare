@@ -15,7 +15,33 @@ public class GroupDao{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.group.service.GroupMapper.";
+	
+	public List<Group> deleteGroupList(Map<String,Integer> map) {
+		logger.debug("GroupDao - deleteGroupList 실행");
+		 List<Group> list = sqlSession.selectList(NS+"deleteGroupList",map);
+		return list;
+	}
+	
+	public Group groupDdayNo(String groupExpiredDate) {
+		logger.debug("GroupDao - groupDdayNo 실행");
+		return sqlSession.selectOne(NS+"groupDdayNo", groupExpiredDate);
+	}
 		
+	public Group groupDdaycheck(Group group) {
+		logger.debug("GroupDao - groupDdaycheck 실행");
+		return sqlSession.selectOne(NS+"groupDdaycheck", group);
+	}
+	
+	public int groupdeleteCount() {
+		logger.debug("GroupDao - groupdeleteCount 실행");
+		return sqlSession.selectOne(NS+"groupdeleteCount");
+	}
+		
+	public int deleteApproval(String groupNo) {
+		logger.debug("GroupDao - deleteApproval 실행");
+		return sqlSession.insert(NS+"deleteApproval", groupNo);
+	}
+	
 	public int deleteGroup(String groupNo) {
 		logger.debug("GroupDao - deleteGroup 실행");
 		return sqlSession.delete(NS+"deleteGroup", groupNo);
