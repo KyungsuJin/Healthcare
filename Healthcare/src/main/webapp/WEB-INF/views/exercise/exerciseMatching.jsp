@@ -69,7 +69,7 @@
 </head>
 <body>
 	<h1> 운동매칭 </h1>
-	<a href="${pageContext.request.contextPath}/addExercise">운동매칭 등록</a>
+	<a href="${pageContext.request.contextPath}/addExerciseMatching">운동매칭 등록</a>
 	<input type="hidden" name="sessionId"id="sessionId" value="${sessionScope.memberSessionId}">
 	<input type="hidden" name="exercisePlaceView"id="exercisePlaceView">
 	<table border="1" class="table" id="tb">
@@ -87,7 +87,5 @@
 		<tbody id="tbody">
 		</tbody>
 	</table>
-	
-
 </body>
 </html>

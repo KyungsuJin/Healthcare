@@ -9,10 +9,24 @@ public class Message {
 	private String messageDate;
 	private String messageTitle;
 	private String messageContent;
+	private int sendMessageChk;
+	private int readMessageChk;
 	
 	
 	
 	
+	public int getReadMessageChk() {
+		return readMessageChk;
+	}
+	public void setReadMessageChk(int readMessageChk) {
+		this.readMessageChk = readMessageChk;
+	}
+	public int getSendMessageChk() {
+		return sendMessageChk;
+	}
+	public void setSendMessageChk(int sendMessageChk) {
+		this.sendMessageChk = sendMessageChk;
+	}
 	public String getMemberReceiveId() {
 		return memberReceiveId;
 	}

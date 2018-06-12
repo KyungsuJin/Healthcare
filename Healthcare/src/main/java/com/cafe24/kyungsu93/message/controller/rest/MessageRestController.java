@@ -36,18 +36,20 @@ public class MessageRestController {
 												,@RequestParam(value="pagePerRow",defaultValue="10")int pagePerRow){
 		logger.debug("MessageRestController.messageReceiveList");
 		logger.debug("memberNo: "+memberNo);
+		logger.debug("currnetPage : "+currentPage);
 		Map<String, Object> map=messageService.messageReceiveList(memberNo,currentPage,pagePerRow);
 		map.put("currentPage", currentPage);
 		return map;
 	}
 	//보낸 메시지 리스트
 	@RequestMapping(value = "/sendMessageList", method = RequestMethod.POST)
-	public Map<String, Object> sendMessageList(@RequestParam(value = "sendMemberNo") String memberNo) {
+	public Map<String, Object> sendMessageList(@RequestParam(value = "sendMemberNo") String memberNo
+											,@RequestParam(value="currentPage",defaultValue="1")int currentPage
+											,@RequestParam(value="pagePerRow",defaultValue="10")int pagePerRow) {
 		logger.debug("MessageRestController.sendMessageList");
 		logger.debug("memberNo: "+memberNo);
-		List<Message> list=messageService.sendMessageList(memberNo);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list);
+		Map<String, Object> map=messageService.sendMessageList(memberNo,currentPage,pagePerRow);
+		map.put("currentPage", currentPage);
 		return map;
 	}
 	//받은메시지 다중 삭제

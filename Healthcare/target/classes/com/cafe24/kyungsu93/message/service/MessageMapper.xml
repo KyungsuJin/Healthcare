@@ -105,6 +105,15 @@
 			WHERE sm.send_message_no=rm.send_message_no 
 				AND sm.member_receive_no=#{memberNo}
   	</select>
+  	<!-- 보낸 메시지 총 total -->
+  	<select id="messageSendTotal"
+  			parameterType="String"
+  			resultType="Integer">
+  			SELECT COUNT(*)
+			FROM send_message sm,send_message_content sc
+			WHERE sm.send_message_no=sc.send_message_no 
+				AND sm.member_send_no=#{memberNo}
+  	</select>
   	<insert id="messageContent"
   			parameterType="String">
   			INSERT INTO message_receive_date(
@@ -122,8 +131,9 @@
 			FROM message_receive_date
 			WHERE send_message_no=#{messageNo}
   	</select>
+  	<!-- 보낸 메시지 리스트  -->
   	<select id="sendMessageList"
-  			parameterType="String"
+  			parameterType="java.util.Map"
   			resultMap="message">
   			SELECT 
   				sc.send_message_no
@@ -134,6 +144,7 @@
 				,sm.member_receive_no
 			FROM send_message sm,send_message_content sc
 			WHERE sm.send_message_no=sc.send_message_no AND sm.member_send_no=#{memberNo}
+  			LIMIT #{beginRoW},#{pagePerRow}
   	</select>
   	<select id="ReceivemessageId"
   			parameterType="String"
@@ -152,5 +163,25 @@
   			DELETE FROM send_message_content
   			WHERE send_message_no =#{ReceivemessageId}
   	</delete>
+  	<!-- 보낸 메시지 수신자가 읽었나 확인  -->
+  	<select id="sendMessageChk"
+  			parameterType="String"
+  			resultType="Integer">
+  			SELECT 
+  				count(*)
+			FROM send_message_content sc,message_receive_date md
+			WHERE sc.send_message_no=md.send_message_no 
+			AND sc.send_message_no=#{sendMessageNo}
+  	</select>
+  	<!-- 받은 메시지  읽었나 확인  -->
+  	<select id="readMessageChk"
+  			parameterType="String"
+  			resultType="Integer">
+  			SELECT 
+  				count(*)
+			FROM receive_message rm,message_receive_date md
+			WHERE rm.send_message_no=md.send_message_no 
+			AND rm.send_message_no=#{sendMessageNo}
+  	</select>
 
   </mapper>

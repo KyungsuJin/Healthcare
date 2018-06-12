@@ -45,11 +45,15 @@ public class MessageService {
 	public Map<String, Object> messageReceiveList(String memberNo,int currentPage,int pagePerRow) {
 		logger.debug("MessageService.messageReceiveList");
 		Map<String,Object> map = new HashMap<String,Object>();
-		int beginRoW=(currentPage-1)/10*10;
+		int beginRoW=(currentPage-1)*10;
 		map.put("beginRoW", beginRoW);
 		map.put("pagePerRow", pagePerRow);
 		map.put("memberNo", memberNo);
 		List<Message> list=messageDao.messageReceiveList(map);
+		for(Message readList : list) {
+			logger.debug(readList.getSendMessageNo());
+			readList.setReadMessageChk(messageDao.readMessageChk(readList.getSendMessageNo()));
+		}
 		int messageReceiveTotal =  messageDao.messageReceiveTotal(memberNo);
 		logger.debug("messageReceiveTotal + : "+messageReceiveTotal);
 		int lastPage=messageReceiveTotal/pagePerRow;
@@ -77,14 +81,39 @@ public class MessageService {
 		}
 	}
 	//보낸메시지 리스트 출력 함
-	public List<Message> sendMessageList(String memberNo) {
+	public Map<String,Object> sendMessageList(String memberNo,int currentPage,int pagePerRow) {
 		logger.debug("MessageService.sendMessageList");
-		List<Message> list=messageDao.sendMessageList(memberNo);
-		for(Message list1 : list) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		int beginRoW=(currentPage-1)*10;
+		map.put("beginRoW", beginRoW);
+		map.put("pagePerRow", pagePerRow);
+		map.put("memberNo", memberNo);
+		List<Message> list=messageDao.sendMessageList(map);
+		int messageSendTotal =  messageDao.messageSendTotal(memberNo);
+		for(Message list1 : list) {//memberNo 를 memberId 로 전환
 			logger.debug(list1.getMemberReceiveNo());
 			list1.setMemberReceiveId(messageDao.ReceivemessageId(list1.getMemberReceiveNo()));
 		}
-		return list;
+		for(Message list2 : list) {//메시지의 수신여부를 확인
+			logger.debug(list2.getSendMessageNo());
+			list2.setSendMessageChk(messageDao.sendMessageChk(list2.getSendMessageNo()));
+		}
+		
+		int lastPage=messageSendTotal/pagePerRow;
+		if(messageSendTotal%pagePerRow>0) {
+			lastPage++;
+		}
+		int startPage = ((currentPage-1)/10)*10+1;
+		int endPage = startPage+pagePerRow-1;
+		if(endPage>lastPage) {
+			endPage=lastPage;
+		}
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("startPage", startPage);
+		returnMap.put("endPage", endPage);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("list", list);
+		return returnMap;
 	}
 	//받은 메시지 삭제
 	public void ReceiveMessageDelete(String deleteMessageNo) {

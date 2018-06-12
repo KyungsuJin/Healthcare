@@ -75,6 +75,31 @@ public class ExerciseDao {
 		logger.debug("ExerciseDao.modifyExerciseMatching");
 		sqlSession.delete(NS + "modifyExerciseMatching", exerciseRegistration);
 	}
+	//운동매칭 참가신청  pk
+	public int exerciseMatchingJoinMemberNo() {
+		logger.debug("ExerciseDao.modifyExerciseMatching");
+		return sqlSession.selectOne(NS + "exerciseMatchingJoinMemberNo");
+	}
+	//운동매칭 글등록시 글등록자는 자동으로 참가신청 or 참가신청
+	public int addExerciseMatchingJoinMember(ExerciseRegistration exerciseRegistration) {
+		logger.debug("ExerciseDao.addExerciseMatchingJoinMember");
+		return sqlSession.insert(NS + "addExerciseMatchingJoinMember", exerciseRegistration);
+	}
+	//운동매칭 글 삭제시 글등록자 매칭 참가 신청 삭제
+	public void deleteExerciseMatchingJoinMember(String exerciseMatchingNo) {
+		logger.debug("ExerciseDao.deleteExerciseMatchingJoinMember");
+		sqlSession.delete(NS + "deleteExerciseMatchingJoinMember", exerciseMatchingNo);
+	}
+	//운동매칭 중복 참가 체크
+	public int exerciseSignUpChk(ExerciseRegistration exerciseRegistration) {
+		logger.debug("ExerciseDao.exerciseSignUpChk");
+		return sqlSession.selectOne(NS + "exerciseSignUpChk", exerciseRegistration);
+	}
+	//운동매칭 참가신청 취소
+	public void exerciseCancel(ExerciseRegistration exerciseRegistration) {
+		logger.debug("ExerciseDao.exerciseCancel");
+		sqlSession.selectOne(NS + "exerciseCancel", exerciseRegistration);
+	}
 
 
 }

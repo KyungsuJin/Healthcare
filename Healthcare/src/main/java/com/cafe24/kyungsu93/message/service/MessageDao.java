@@ -54,6 +54,11 @@ public class MessageDao {
 		logger.debug("MessageDao.messageReceiveTotal");
 		return sqlSession.selectOne(NS + "messageReceiveTotal", memberNo);
 	}
+	//받은 보낸메시지 총 total
+	public int messageSendTotal(String memberNo) {
+		logger.debug("MessageDao.messageSendTotal");
+		return sqlSession.selectOne(NS + "messageSendTotal", memberNo);
+	}
 	public void messageContent(String messageNo) {
 		logger.debug("MessageDao.messageContent");
 		sqlSession.insert(NS+"messageContent",messageNo);
@@ -62,9 +67,10 @@ public class MessageDao {
 		logger.debug("MessageDao.selectMessageContent");
 		return sqlSession.selectOne(NS+"selectMessageContent",messageNo);
 	}
-	public List<Message> sendMessageList(String memberNo) {
+	//보낸메시지 리스트
+	public List<Message> sendMessageList(Map<String,Object> map) {
 		logger.debug("MessageDao.sendMessageList");
-		return sqlSession.selectList(NS+"sendMessageList",memberNo);
+		return sqlSession.selectList(NS+"sendMessageList",map);
 	}
 	//받는 회원 no -> id 전환 
 	public String ReceivemessageId(String ReceivemessageId) {
@@ -80,6 +86,16 @@ public class MessageDao {
 	public void SendMessageDelete(String ReceivemessageId) {
 		logger.debug("MessageDao.SendMessageDelete");
 		sqlSession.delete(NS + "SendMessageDelete", ReceivemessageId);
+	}
+	//보낸메시지 읽었나 확인
+	public int sendMessageChk(String sendMessageNo) {
+		logger.debug("MessageDao.sendMessageChk");
+		return sqlSession.selectOne(NS + "sendMessageChk", sendMessageNo);
+	}
+	//받은메시지 읽었나 확인
+	public int readMessageChk(String sendMessageNo) {
+		logger.debug("MessageDao.readMessageChk");
+		return sqlSession.selectOne(NS + "readMessageChk", sendMessageNo);
 	}
 
 

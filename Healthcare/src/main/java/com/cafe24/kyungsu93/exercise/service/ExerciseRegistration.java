@@ -12,8 +12,17 @@ public class ExerciseRegistration {
 	private String exerciseMatchingScheduleDate;
 	private String exerciseMatchingDate;
 	private String memberId;
+	private String exerciseMatchingJoinMemberNo;
 	
 	
+	
+	
+	public String getExerciseMatchingJoinMemberNo() {
+		return exerciseMatchingJoinMemberNo;
+	}
+	public void setExerciseMatchingJoinMemberNo(String exerciseMatchingJoinMemberNo) {
+		this.exerciseMatchingJoinMemberNo = exerciseMatchingJoinMemberNo;
+	}
 	public String getMemberId() {
 		return memberId;
 	}

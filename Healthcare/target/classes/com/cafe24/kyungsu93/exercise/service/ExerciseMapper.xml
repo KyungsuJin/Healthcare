@@ -98,7 +98,7 @@
 				,exercise.exercise_matching_date AS exerciseMatchingDate
 			FROM exercise_matching AS exercise ,member 
 			WHERE member.member_no = exercise.member_no
-			ORDER BY exerciseMatchingNo
+			ORDER BY exercise_matching_date
 			LIMIT #{beginRow},#{pagePerRow}
   	</select>
   	<!-- 운동매칭 리스트 카운트 -->
@@ -145,5 +145,46 @@
   				,exercise_matching_schedule_date=#{exerciseMatchingScheduleDate}
   			WHERE exercise_matching_no=#{exerciseMatchingNo}
   	</update>
-  	
+  	<!-- 운동매칭 참가신청 pk -->
+  	<select id="exerciseMatchingJoinMemberNo"
+  			resultType="Integer">
+  			SELECT
+         	IFNULL(MAX(cast(SUBSTRING(exercise_matching_join_member_no,31) as decimal)), 0)
+         	FROM exercise_matching_join_member
+  	</select>
+  	<!-- 운동매칭 참가신청 -->
+  	<insert id="addExerciseMatchingJoinMember"
+  			parameterType="com.cafe24.kyungsu93.exercise.service.ExerciseRegistration">
+  			INSERT INTO exercise_matching_join_member(
+  				exercise_matching_join_member_no
+  				,matching_no
+  				,member_no
+  				,exercise_matching_join_date
+  			)VALUES(
+  				#{exerciseMatchingJoinMemberNo}
+  				,#{exerciseMatchingNo}
+  				,#{memberNo}
+  				,now()
+  			)
+  	</insert>
+  	<!-- 운동매칭 참가취소 -->
+  	<delete id="deleteExerciseMatchingJoinMember"
+  			parameterType="com.cafe24.kyungsu93.exercise.service.ExerciseRegistration">
+  			DELETE FROM exercise_matching_join_member
+  			WHERE matching_no = #{exerciseMatchingNo}
+  	</delete>
+  	<!-- 운동매칭 참가중복확인 -->
+  	<select id="exerciseSignUpChk"
+  			parameterType="com.cafe24.kyungsu93.exercise.service.ExerciseRegistration"
+  			resultType="Integer">
+  			select count(*)
+			from exercise_matching_join_member
+			where matching_no=#{exerciseMatchingNo} AND  member_no =#{memberNo}
+  	</select>
+  	<!-- 운동매칭 참가취소 -->
+  	<delete id="exerciseCancel"
+  			parameterType="com.cafe24.kyungsu93.exercise.service.ExerciseRegistration">
+  			DELETE FROM exercise_matching_join_member
+  			WHERE matching_no = #{exerciseMatchingNo} AND member_no=#{memberNo}
+  	</delete>
   </mapper>
