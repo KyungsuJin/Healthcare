@@ -29,28 +29,32 @@ public class TreatmentController {
 	////////////////////// 게시글 작성 후 파일 업로드 //////////////////////
 	@RequestMapping(value="/addTreatment", method=RequestMethod.GET)
 	public String addTreatment(Model model
-			,@RequestParam(value="currentPage") int currentPage
+			,@RequestParam(value="currentPage", defaultValue="1" ) int currentPage
 			,@RequestParam(value="pagePerRow", defaultValue="10" ) int pagePerRow) {
 		logger.debug("TreatmentController.addTreatment GET 방식 호출");
-		//model.addAttribute("currentPage", currentPage);
-		//model.addAttribute("pagePerRow", pagePerRow);
-		return "addTreatment";
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("pagePerRow", pagePerRow);
+		return "treatment/addTreatment";
 	}
 	
 	@RequestMapping(value="/addTreatment", method=RequestMethod.POST)
 	public String addTreatment(TreatmentRequest treatmentRequest, HttpSession session, Model model) {
 		logger.debug("TreatmentController.addTreatment POST 방식 호출");
+		if(treatmentRequest.getMemberNo() == null) {
+			treatmentRequest.setMemberNo(session.getAttribute("memberSessionNo").toString());
+		}
+		System.out.println(session.getAttribute("memberSessionNo").toString());
 		List<MultipartFile> multipartFileList = treatmentRequest.getMultipartFile();
 		if(multipartFileList != null) {
 			for(MultipartFile multipartFile : multipartFileList) {
 				if(multipartFile.getContentType().equals("application/x-msdownload")) {
 					model.addAttribute("treatment", treatmentRequest);
 					model.addAttribute("exeFileName", multipartFile.getOriginalFilename());
-					return "addTreatment";
+					return "treatment/addTreatment";
 				}
 			}
 		}
-		String path = session.getServletContext().getRealPath("/resources/upload");
+		String path = session.getServletContext().getRealPath("/upload");
 		logger.debug("TreatmentController.addTreatment.path : " + path);
 		treatmentService.addTreatment(treatmentRequest, path+"/");
 		
@@ -74,7 +78,7 @@ public class TreatmentController {
 		model.addAttribute("afterPage", map.get("afterPage"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("pagePerRow", pagePerRow);
-		return "getTreatmentList";
+		return "treatment/getTreatmentList";
 	}
 	
 	////////////////////// 게시물 내용 출력 //////////////////////
@@ -88,7 +92,7 @@ public class TreatmentController {
 		logger.debug("TreatmentController.getTreatmentContent GET 방식 호출");
 		Map map = treatmentService.getTreatmentContent(treatmentRequest);
 		model.addAttribute("treatmentResponse", map.get("treatmentResponse"));
-		model.addAttribute("downloadPath", session.getServletContext().getRealPath("/resources/upload")+"/");
+		model.addAttribute("downloadPath", session.getServletContext().getRealPath("/upload")+"/");
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("pagePerRow", pagePerRow);
 		if(map.get("upTreatment") != null) {
@@ -97,7 +101,7 @@ public class TreatmentController {
 		if(map.get("downTreatment") != null) {
 			model.addAttribute("downTreatmentId", ((TreatmentRequest) map.get("downTreatment")).getTreatmentNo());
 		}
-		return "getTreatmentContent";
+		return "treatment/getTreatmentContent";
 	}
 	
 	////////////////////// 게시물 삭제 //////////////////////
@@ -122,7 +126,7 @@ public class TreatmentController {
 		model.addAttribute("treatment",treatmentService.getTreatmentContent(treatmentRequest).get("treatment"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("pagePerRow", pagePerRow);
-		return "modifyTreatment";
+		return "treatment/modifyTreatment";
 	}
 	
 	@RequestMapping(value="/modifyTreatment", method=RequestMethod.POST)
@@ -142,7 +146,7 @@ public class TreatmentController {
 				}
 			}
 		}
-		treatmentService.modifyTreatment(treatmentRequest, session.getServletContext().getRealPath("/resources/upload")+"/");
+		treatmentService.modifyTreatment(treatmentRequest, session.getServletContext().getRealPath("/upload")+"/");
 		return "redirect:/getTreatmentContent?treatmentId=" + treatmentRequest.getTreatmentNo() + "&currentPage=" + currentPage + "&pagePerRow=" + pagePerRow;
 	}
 }

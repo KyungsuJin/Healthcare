@@ -39,5 +39,10 @@ public class HomeController {
 		}
 		return "medicine";
 	}
+	@RequestMapping(value = "/resume", method = RequestMethod.GET)
+	public String resume() {
+		logger.debug("HomeController.resume 메서드 실행");
+		return "resume/resume";
+	}
 	
 }

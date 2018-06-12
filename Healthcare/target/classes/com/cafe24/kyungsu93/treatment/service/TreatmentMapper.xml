@@ -23,6 +23,7 @@
             ,treatment_content
             ,doctor_name
             ,hospital_address
+            ,treatment_date
         )
         VALUES(
         	#{treatmentNo}
