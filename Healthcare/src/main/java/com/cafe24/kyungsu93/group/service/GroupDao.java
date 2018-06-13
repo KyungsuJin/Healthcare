@@ -93,11 +93,9 @@ public class GroupDao{
 		return sqlSession.selectOne(NS+"groupCount");
 	}
 	
-	public int selectGroupNo(String groupNo) {
+	public int selectGroupNo() {
 		logger.debug("GroupDao - selectGroupNo 실행");
-		int row = sqlSession.selectOne(NS+"groupNo", groupNo);
-		logger.debug("row:"+row);
-		return row;
+		return sqlSession.selectOne(NS+"groupNo");
 	}
 	public int addGroup(Group Group) {
 		logger.debug("GroupDao - addGroup 실행");

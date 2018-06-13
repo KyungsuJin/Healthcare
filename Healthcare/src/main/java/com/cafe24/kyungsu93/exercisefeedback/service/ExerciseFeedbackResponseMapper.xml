@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackResponseMapper">
+<!-- 	<select id="foodSearch" parameterType="String" 
+			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackResult">
+	SELECT 
+		food_info_no as foodInfoNo, 
+		food_group as foodGroup, 
+		food_name as foodName, 
+		food_once as foodOnece, 
+		food_kcal as foodKcal, 
+		food_carbohydrate as foodCarbohydrate, 
+		food_protein as foodProtein, 
+		food_fat as foodFat, 
+		food_sugar as foodSugar, 
+		food_natrium as foodNatrium, 
+		food_cholesterol as foodCholesterol, 
+		food_transfat as foodTransfat
+	FROM food_info
+	WHERE food_group = #{foodGroup} or food_info_no = #{foodInfoNo}
+		<choose>
+			<when test="foodName != null"> 
+					AND food_name like CONCAT(#{foodName}, '%') 
+			</when>
+		</choose>
+	</select> -->
+</mapper>

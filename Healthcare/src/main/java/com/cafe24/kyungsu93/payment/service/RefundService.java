@@ -1,4 +1,4 @@
-package com.cafe24.kyungsu93.group.service;
+package com.cafe24.kyungsu93.payment.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,219 +10,220 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cafe24.kyungsu93.member.service.MemberDao;
-
 @Service
 @Transactional
-public class GroupInviteService {
+public class RefundService {
 
 	@Autowired
-	private GroupInviteDao groupInviteDao;
-	@Autowired
-	private MemberDao memberDao;
-	@Autowired
-	private GroupDao groupDao;
-	private static final Logger logger = LoggerFactory.getLogger(GroupInviteService.class);
+	private RefundDao refundDao;
+	private static final Logger logger = LoggerFactory.getLogger(RefundService.class);
 	
 	/**
-	 * 나를 초대한 그룹 리스트
-	 * @param currentPage
-	 * @param pagePerRow
-	 * @return
+	 * 환불 신청 등록
+	 * @param refund
 	 */
-	public Map<String, Object> inviteGroupList(int currentPage, int pagePerRow){
-		logger.debug("GroupInviteService - inviteGroupList 실행");
-		Map<String,Integer> map = new HashMap<String,Integer>();
-		int beginRow = (currentPage-1)*pagePerRow;
-		map.put("beginRow", beginRow);
-		map.put("pagePerRow", pagePerRow);
-		List<GroupInvite> list = groupInviteDao.inviteGroupList(map);
-		int total = groupInviteDao.totalCountInvite();
-		int lastPage = total/pagePerRow;
-        if(total % pagePerRow != 0) {
-            lastPage++;
-        }
-        logger.debug("list:"+list);
-        logger.debug("lastPage:"+lastPage);
-        logger.debug("currentPage:"+currentPage);
-        logger.debug("beginRow:"+beginRow);
-        logger.debug("pagePerRow:"+pagePerRow);
-        logger.debug("====================== page block =========================");
-       
-        int pagePerBlock = 10; //보여줄 블록 수 
-        int block = currentPage/pagePerBlock;
-        int totalBlock = total/pagePerBlock;//총 블록수
-        
-        if(currentPage % pagePerBlock != 0) {
-        	block ++;
-        }
-        int firstBlockPage = (block-1)*pagePerBlock+1;
-        int lastBlockPage = block*pagePerBlock;
-        
-		if(lastPage > 0) {			
-			if(lastPage % pagePerBlock != 0) {
-				totalBlock++;
-			}
-		}
-		if(lastBlockPage >= totalBlock) {
-			lastBlockPage = totalBlock;
-		}
-		logger.debug("firstBlockPage:"+firstBlockPage);
-		logger.debug("lastBlockPage:"+lastBlockPage);
-		logger.debug("block:"+block);
-		logger.debug("totalBlock:"+totalBlock);
-		logger.debug("====================== page block =========================");
-		Map<String,Object> returnMap = new HashMap<String,Object>();
-		returnMap.put("list", list);
-		returnMap.put("lastPage", lastPage);
-		returnMap.put("firstBlockPage", firstBlockPage);
-		returnMap.put("lastBlockPage", lastBlockPage);
-		returnMap.put("totalBlock", totalBlock);
-		return returnMap;
-	}
-	
-	/**
-	 * 그룹에 초대한 회원리스트
-	 * @param currentPage
-	 * @param pagePerRow
-	 * @return
-	 */
-	public Map<String, Object> groupInviteList(int currentPage, int pagePerRow){
-		logger.debug("GroupInviteService - groupMemberList 실행");
-		Map<String,Integer> map = new HashMap<String,Integer>();
-		int beginRow = (currentPage-1)*pagePerRow;
-		map.put("beginRow", beginRow);
-		map.put("pagePerRow", pagePerRow);
-		List<GroupInvite> list = groupInviteDao.groupInviteList(map);
-		int total = groupInviteDao.totalCountInvite();
-		int lastPage = total/pagePerRow;
-        if(total % pagePerRow != 0) {
-            lastPage++;
-        }
-        logger.debug("list:"+list);
-        logger.debug("lastPage:"+lastPage);
-        logger.debug("currentPage:"+currentPage);
-        logger.debug("beginRow:"+beginRow);
-        logger.debug("pagePerRow:"+pagePerRow);
-        logger.debug("====================== page block =========================");
-       
-        int pagePerBlock = 10; //보여줄 블록 수 
-        int block = currentPage/pagePerBlock;
-        int totalBlock = total/pagePerBlock;//총 블록수
-        
-        if(currentPage % pagePerBlock != 0) {
-        	block ++;
-        }
-        int firstBlockPage = (block-1)*pagePerBlock+1;
-        int lastBlockPage = block*pagePerBlock;
-        
-		if(lastPage > 0) {			
-			if(lastPage % pagePerBlock != 0) {
-				totalBlock++;
-			}
-		}
-		if(lastBlockPage >= totalBlock) {
-			lastBlockPage = totalBlock;
-		}
-		logger.debug("firstBlockPage:"+firstBlockPage);
-		logger.debug("lastBlockPage:"+lastBlockPage);
-		logger.debug("block:"+block);
-		logger.debug("totalBlock:"+totalBlock);
-		logger.debug("====================== page block =========================");
-		Map<String,Object> returnMap = new HashMap<String,Object>();
-		returnMap.put("list", list);
-		returnMap.put("lastPage", lastPage);
-		returnMap.put("firstBlockPage", firstBlockPage);
-		returnMap.put("lastBlockPage", lastBlockPage);
-		returnMap.put("totalBlock", totalBlock);
-		return returnMap;
-	}
-	
-	/**
-	 * 회원 초대
-	 * @param groupInvite
-	 */
-	public void addInviteMember(GroupInvite groupInvite) {
-		logger.debug("GroupInviteService - addInviteMember실행");		
-		String groupInviteNo = groupInvite.getGroupInviteNo();
-		String memberId = groupInvite.getMemberId();
-		String groupInviteMessage = groupInvite.getGroupInviteMessage();
-		String groupNo = groupInvite.getGroupNo();
-		logger.debug("memberId:"+memberId);
-		logger.debug("groupInviteNo:"+groupInviteNo);
-		logger.debug("groupNo:"+groupNo);
-		logger.debug("groupInviteMessage:"+groupInviteMessage);
-		groupInvite = groupInviteDao.groupInviteMemberName(memberId);
-		String memberNo = groupInvite.getMemberNo();
-		logger.debug("memberNo:"+memberNo);
+	public void addrefund(Refund refund) {
+		logger.debug("RefundService - addrefund실행");		
+		String refundNo = refund.getRefundNo();
+		logger.debug("refundNo:"+refundNo);
+		String refundSum = refund.getRefundNo();
+		logger.debug("refundSum:"+refundSum);
 		try {
-		if(groupInviteNo == null) {
-			int count = 0;
-			count = groupInviteDao.totalCountInvite();
-			if(count > 0) {
-				int result = 0;
-				String groupInviteNo_temp = "group_invite_";
-				result = groupInviteDao.groupInviteNo(groupInviteNo);
-				if(result > 0) {
+			if(refundNo == null) {
+				//포인트 결제 전체 검색
+				int count = 0;
+				count = refundDao.refundTotalCount();
+				if(count > 0) {
+					int result = 0;
+					String refundNo_temp = "refund_";
+					//포인트 결제 번호 최대값 검색
+					result = refundDao.refundMaxNo();
+					if(result > 0) {
 						if(1 <= result) {
 							result++;
-						}			
-						groupInviteNo = groupInviteNo_temp + result; 
+						}
+						refundNo = refundNo_temp + result; 
+					}
+				}else {
+					refundNo = "refund_1";
 				}
-			}else {
-				groupInviteNo = "group_invite_1";
 			}
-		}
-		String groupInviteApproval = "F";
-		groupInvite.setGroupInviteApproval(groupInviteApproval);
-		groupInvite.setGroupInviteNo(groupInviteNo);
-		groupInvite.setMemberNo(memberNo);
-		groupInvite.setGroupInviteMessage(groupInviteMessage);
-		groupInvite.setGroupNo(groupNo);
+			refund.setRefundNo(refundNo);
+			refund.setRefundSum(refundSum);
 		}catch(NullPointerException e) {
 			e.printStackTrace();
 		}
-		groupInviteDao.inviteMember(groupInvite);
-	}
+		refundDao.addrefund(refund);
+		}
 	
 	/**
-	 * 회원 아이디 검색
-	 * @param memberId
+	 * 환불 지급완료 리스트
+	 * @param currentPage
+	 * @param pagePerRow
 	 * @return
 	 */
-	public Map<String,Object> invitefind(String memberId){
-		logger.debug("GroupInviteService - invitefind실행");		
-		Map<String,Object> returnMap = new HashMap<String,Object>();
-		int count = 0;
-		count = memberDao.memberListTotal();
-		String name = null;
-		int result = 0;
-		if(count>0) {
-			result = groupInviteDao.inviteMemberId(memberId);
-			returnMap.put("result", result);
-			if(result>0) {
-				GroupInvite groupInvite = groupInviteDao.groupInviteMemberName(memberId);
-				name = groupInvite.getMemberName();
-				returnMap.put("name", name);
+	public Map<String, Object> refundCompleteList(int currentPage, int pagePerRow){
+		logger.debug("pointChargingService - refundCompleteList 실행");
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		int beginRow = (currentPage-1)*pagePerRow;
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		List<Refund> list = refundDao.refundCompleteList(map);
+		int total = refundDao.refundCompleteTotalCount();
+		int lastPage = total/pagePerRow;
+        if(total % pagePerRow != 0) {
+            lastPage++;
+        }
+        logger.debug("list:"+list);
+        logger.debug("lastPage:"+lastPage);
+        logger.debug("currentPage:"+currentPage);
+        logger.debug("beginRow:"+beginRow);
+        logger.debug("pagePerRow:"+pagePerRow);
+        logger.debug("====================== page block =========================");
+       
+        int pagePerBlock = 10; //보여줄 블록 수 
+        int block = currentPage/pagePerBlock;
+        int totalBlock = total/pagePerBlock;//총 블록수
+        
+        if(currentPage % pagePerBlock != 0) {
+        	block ++;
+        }
+        int firstBlockPage = (block-1)*pagePerBlock+1;
+        int lastBlockPage = block*pagePerBlock;
+        
+		if(lastPage > 0) {			
+			if(lastPage % pagePerBlock != 0) {
+				totalBlock++;
 			}
-		}else {
-			result = 0;
-			name = "공백";
-			returnMap.put("result", result);
-			returnMap.put("name", name);
 		}
+		if(lastBlockPage >= totalBlock) {
+			lastBlockPage = totalBlock;
+		}
+		logger.debug("firstBlockPage:"+firstBlockPage);
+		logger.debug("lastBlockPage:"+lastBlockPage);
+		logger.debug("block:"+block);
+		logger.debug("totalBlock:"+totalBlock);
+		logger.debug("====================== page block =========================");
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("list", list);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("firstBlockPage", firstBlockPage);
+		returnMap.put("lastBlockPage", lastBlockPage);
+		returnMap.put("totalBlock", totalBlock);
 		return returnMap;
 	}
-	
+
 	/**
-	 * 하나의 그룹 검색
-	 * @param groupNo
+	 * 환불 승인 완료 리스트
+	 * @param currentPage
+	 * @param pagePerRow
 	 * @return
 	 */
-	public Group inviteGroup(String groupNo) {
-		logger.debug("GroupInviteService - inviteGroup실행");	
-		Group groupTable = groupDao.modifyGroup(groupNo);
-		return groupTable;
+	public Map<String, Object> refundApprovalList(int currentPage, int pagePerRow){
+		logger.debug("pointChargingService - refundApprovalList 실행");
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		int beginRow = (currentPage-1)*pagePerRow;
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		List<Refund> list = refundDao.refundApprovalList(map);
+		int total = refundDao.refundApprovalTotalCount();
+		int lastPage = total/pagePerRow;
+        if(total % pagePerRow != 0) {
+            lastPage++;
+        }
+        logger.debug("list:"+list);
+        logger.debug("lastPage:"+lastPage);
+        logger.debug("currentPage:"+currentPage);
+        logger.debug("beginRow:"+beginRow);
+        logger.debug("pagePerRow:"+pagePerRow);
+        logger.debug("====================== page block =========================");
+       
+        int pagePerBlock = 10; //보여줄 블록 수 
+        int block = currentPage/pagePerBlock;
+        int totalBlock = total/pagePerBlock;//총 블록수
+        
+        if(currentPage % pagePerBlock != 0) {
+        	block ++;
+        }
+        int firstBlockPage = (block-1)*pagePerBlock+1;
+        int lastBlockPage = block*pagePerBlock;
+        
+		if(lastPage > 0) {			
+			if(lastPage % pagePerBlock != 0) {
+				totalBlock++;
+			}
+		}
+		if(lastBlockPage >= totalBlock) {
+			lastBlockPage = totalBlock;
+		}
+		logger.debug("firstBlockPage:"+firstBlockPage);
+		logger.debug("lastBlockPage:"+lastBlockPage);
+		logger.debug("block:"+block);
+		logger.debug("totalBlock:"+totalBlock);
+		logger.debug("====================== page block =========================");
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("list", list);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("firstBlockPage", firstBlockPage);
+		returnMap.put("lastBlockPage", lastBlockPage);
+		returnMap.put("totalBlock", totalBlock);
+		return returnMap;
 	}
-	
+
+	/**
+	 * 환불 승인 대기리스트
+	 * @param currentPage
+	 * @param pagePerRow
+	 * @return
+	 */
+	public Map<String, Object> refundList(int currentPage, int pagePerRow){
+		logger.debug("pointChargingService - refundList 실행");
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		int beginRow = (currentPage-1)*pagePerRow;
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		List<Refund> list = refundDao.refundList(map);
+		int total = refundDao.refundTotalCount();
+		int lastPage = total/pagePerRow;
+        if(total % pagePerRow != 0) {
+            lastPage++;
+        }
+        logger.debug("list:"+list);
+        logger.debug("lastPage:"+lastPage);
+        logger.debug("currentPage:"+currentPage);
+        logger.debug("beginRow:"+beginRow);
+        logger.debug("pagePerRow:"+pagePerRow);
+        logger.debug("====================== page block =========================");
+       
+        int pagePerBlock = 10; //보여줄 블록 수 
+        int block = currentPage/pagePerBlock;
+        int totalBlock = total/pagePerBlock;//총 블록수
+        
+        if(currentPage % pagePerBlock != 0) {
+        	block ++;
+        }
+        int firstBlockPage = (block-1)*pagePerBlock+1;
+        int lastBlockPage = block*pagePerBlock;
+        
+		if(lastPage > 0) {			
+			if(lastPage % pagePerBlock != 0) {
+				totalBlock++;
+			}
+		}
+		if(lastBlockPage >= totalBlock) {
+			lastBlockPage = totalBlock;
+		}
+		logger.debug("firstBlockPage:"+firstBlockPage);
+		logger.debug("lastBlockPage:"+lastBlockPage);
+		logger.debug("block:"+block);
+		logger.debug("totalBlock:"+totalBlock);
+		logger.debug("====================== page block =========================");
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("list", list);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("firstBlockPage", firstBlockPage);
+		returnMap.put("lastBlockPage", lastBlockPage);
+		returnMap.put("totalBlock", totalBlock);
+		return returnMap;
+	}
 }

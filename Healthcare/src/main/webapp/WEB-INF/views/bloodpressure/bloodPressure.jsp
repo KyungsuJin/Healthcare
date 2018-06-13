@@ -75,8 +75,8 @@
 						<td>${bloodPressure.bloodPressureDate}</td>
 						<td>${bloodPressure.systolicPressure }</td>
 						<td>${bloodPressure.diastolicPressure }</td>
-						<td><a type="button" href="${pageContext.request.contextPath}/modifyBloodPressure?bloodPressureNo=${bloodPressure.bloodPressureNo}" id="buttonModify">수정</a></td>
-						<td><a type="button" href="${pageContext.request.contextPath}/deleteBloodPressure?bloodPressureNo=${bloodPressure.bloodPressureNo}" id="buttonDelete">삭제</a></td>
+						<td><a type="button" href="${pageContext.request.contextPath}/modifyBloodPressure?bloodPressureNo=${bloodPressure.bloodPressureNo}" id="modifyBtn">수정</a></td>
+						<td><a type="button" href="${pageContext.request.contextPath}/deleteBloodPressure?bloodPressureNo=${bloodPressure.bloodPressureNo}" id="deleteBtn">삭제</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>	

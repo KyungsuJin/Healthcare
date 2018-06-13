@@ -19,11 +19,23 @@ public class BloodPressureService {
 	@Autowired
 	private BloodPressureDao bloodPressureDao;
 	private static final Logger logger = LoggerFactory.getLogger(BloodPressureService.class);
-	
+
+	/**
+	 * 혈압 차트
+	 * @param memberNo
+	 * @return
+	 */
 	public List<BloodPressure> selectBloodPressureChart(String memberNo) {
 		logger.debug("BloodPressureService - selectBloodPressureChart 실행");
 		return bloodPressureDao.selectBloodPressureChart(memberNo);
 	}
+	
+	/**
+	 * 혈압 기간별 검색
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
 	public List<BloodPressure> bloodPressureSearchDate(String startDate, String endDate) {
 		logger.debug("BloodPressureService - bloodPressureSearchDate 실행");
 		
@@ -37,6 +49,10 @@ public class BloodPressureService {
 		return list;
 	}
 	
+	/**
+	 * 혈압 수정
+	 * @param bloodPressureNo
+	 */
 	public void updateBloodPressure(String bloodPressureNo) {
 		logger.debug("BloodPressureService - updateBloodPressure 실행");
 		BloodPressure bloodPressure = new BloodPressure();
@@ -48,16 +64,33 @@ public class BloodPressureService {
 		bloodPressureDao.updateBloodPressure(bloodPressure);		
 	}
 	
+	/**
+	 * 하나의 혈압 선택
+	 * @param bloodPressureNo
+	 * @return
+	 */
 	public BloodPressure selectBloodPressureOne(String bloodPressureNo) {
 		logger.debug("BloodPressureService - selectBloodPressureOne 실행");
 		BloodPressure bloodPressure = bloodPressureDao.selectBloodPressureOne(bloodPressureNo);
 		return bloodPressure;
 	}
+
+	/**
+	 * 혈압 삭제
+	 * @param bloodPressureNo
+	 * @return
+	 */
 	public int deleteBloodPressure(String bloodPressureNo) {
 		logger.debug("BloodPressureService - deleteBloodPressure 실행");
 		return bloodPressureDao.deletePressureCount(bloodPressureNo);
 	}
 	
+	/**
+	 * 혈압 리스트
+	 * @param currentPage
+	 * @param pagePerRow
+	 * @return
+	 */
 	public Map<String, Object> bloodPressureList(int currentPage, int pagePerRow) {
 		logger.debug("BloodPressureService - bloodPressureList 실행");
 		Map<String,Integer> map = new HashMap<String,Integer>();
@@ -109,6 +142,10 @@ public class BloodPressureService {
 		return returnMap;
 	}
 	
+	/**
+	 * 혈압 등록
+	 * @param bloodPressure
+	 */
 	public void addBloodPressure(BloodPressure bloodPressure) {
 		logger.debug("BloodPressureService - addBloodPressure실행");		
 		String bloodPressureNo = bloodPressure.getBloodPressureNo();

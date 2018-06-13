@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackMapper">
+	<select id="exerciseFeedbackRequestNo" resultType="Integer">
+		SELECT
+		max(CAST(substring(exercise_feedback_request_no,19) AS DECIMAL))
+		FROM exercise_feedback_request
+	</select>
+	<insert id="exerciseFeedbackRequest" parameterType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
+	INSERT INTO exercise_feedback_request(
+	exercise_feedback_request_no, member_no, teacher_no, exercise_feedback_request_title, exercise_feedback_request_content, exercise_feedback_request_date)
+	VALUES (
+	#{exerciseFeedbackRequestNo}, #{memberNo}, #{teacherNo}, #{exerciseFeedbackRequestTitle}, #{exerciseFeedbackRequestContent}, NOW()
+	)
+	</insert>
+	<select id="exerciseFeedbackList" parameterType="Integer" 
+			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
+		SELECT 
+			a.exercise_feedback_request_no as exerciseFeedbackRequestNo,  
+			a.exercise_feedback_request_title as exerciseFeedbackRequestTitle, 
+			a.exercise_feedback_request_content as exerciseFeedbackRequestContent, 
+			a.exercise_feedback_request_date as exerciseFeedbackRequestDate,
+			b.member_name as memberName,
+			c.exercise_feedback_result as exerciseFeedbackResult
+		FROM exercise_feedback_request a
+		INNER JOIN member b
+		ON a.teacher_no = b.member_no
+		INNER JOIN exercise_feedback_approval_result c
+		ON a.exercise_feedback_request_no = c.exercise_feedback_request_no
+		ORDER BY exercise_feedback_request_date DESC
+		LIMIT #{beginRow},#{pagePerRow}
+	</select>
+	<select id="exerciseFeedbackPtSelect" parameterType="String" 
+			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
+		SELECT 
+			member_name as memberName,
+			member_id as memberId,
+			member_no as member_no
+		FROM member
+		WHERE member_no = #{memberNo}
+	</select>
+	<select id="exerciseFeedbackPtTotalCount" resultType="Integer">
+		SELECT
+		count(*)
+		FROM member_teacher
+	</select>
+	<select id="exerciseFeedbackPtList" parameterType="Integer" 
+			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
+		SELECT 
+			a.member_name as memberName,
+			a.member_id as memberId,
+			b.member_no as memberNo,
+			b.member_work_space as memberWorkSpace, 
+			b.member_total_feedback as memberTotalFeedback,
+			b.member_agree_feedback as memberAgreeFeedback, 
+			b.evaluation_average_grade as evaluationAverageGrade
+		FROM member a
+		INNER JOIN member_teacher b
+		ON a.member_no = b.member_no
+		WHERE feedback_availablilty = 'T'
+		ORDER BY evaluation_average_grade DESC
+		LIMIT #{beginRow},#{pagePerRow}
+	</select>
+	<select id="exerciseFeedbackRequestTotalCount" resultType="Integer">
+		SELECT
+		count(*)
+		FROM exercise_feedback_request
+	</select>
+	<select id="exerciseFeedbackRequestList" parameterType="Integer" 
+			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
+		SELECT 
+			a.exercise_feedback_request_no as exerciseFeedbackRequestNo, 
+			b.member_id as memberId,
+			b.member_name as memberName, 
+			a.exercise_feedback_request_title as exerciseFeedbackRequestTitle, 
+			a.exercise_feedback_request_content as exerciseFeedbackRequestContent, 
+			a.exercise_feedback_request_date as exerciseFeedbackRequestDate
+		FROM exercise_feedback_request a
+		INNER JOIN member b
+		ON a.member_no = b.member_no
+		ORDER BY exercise_feedback_request_date DESC
+		LIMIT #{beginRow},#{pagePerRow}
+	</select>
+</mapper>

@@ -19,7 +19,12 @@ public class GroupService {
 	private GroupDao groupDao;
 	private static final Logger logger = LoggerFactory.getLogger(GroupService.class);
 	
-	//그룹수정
+	/**
+	 * 그룹 수정
+	 * @param groupNo
+	 * @param groupInfo
+	 * @param groupKindNo
+	 */
 	public void modifyGroupResult(String groupNo, String groupInfo,String groupKindNo) {
 		logger.debug("GroupService - modifyGroupResult실행");
 		Group group = new Group();
@@ -29,14 +34,22 @@ public class GroupService {
 		groupDao.modifyGroupResult(group);
 	}
 	
-	//그룹수정
+	/**
+	 * 하나의 그룹 선택
+	 * @param groupNo
+	 * @return
+	 */
 	public Group modifyGroup(String groupNo) {
 		logger.debug("GroupService - modifyGroup 실행");
 		Group group = groupDao.modifyGroup(groupNo);
 		return group;
 	}
 	
-	//그룹삭제리스트
+	/**
+	 * 그룹 삭제 리스트
+	 * 유예기간이 지난경우 그룹 삭제
+	 * @return
+	 */
 	public Map<String, Object> deleteGroupList() {
 		logger.debug("GroupService - deleteList 실행");
 		Map<String,Integer> map = new HashMap<String,Integer>();
@@ -78,7 +91,10 @@ public class GroupService {
 		return returnMap;
 	}
 	
-	//그룹 삭제 또는 그룹삭제유예기간 등록
+	/**
+	 * 그룹삭제 회원이 있을 경우 유예기간 등록
+	 * @param groupNo
+	 */
 	public void deleteGroup(String groupNo) {
 		logger.debug("GroupService - deleteGroup 실행");
 		//그룹번호로 그룹명 검색
@@ -96,7 +112,12 @@ public class GroupService {
 		}
 	}	
 	
-	//생성된그룹리스트
+	/**
+	 * 생성된 그룹 리스트
+	 * @param currentPage
+	 * @param pagePerRow
+	 * @return
+	 */
 	public Map<String, Object> groupList(int currentPage, int pagePerRow) {
 		logger.debug("GroupService - groupList 실행");
 		Map<String,Integer> map = new HashMap<String,Integer>();
@@ -150,7 +171,11 @@ public class GroupService {
 		return returnMap;
 	}
 	
-	//그룹명 검색
+	/**
+	 * 그룹명 검색
+	 * @param groupName
+	 * @return
+	 */
 	public  Map<String, Object> checkGroupName(String groupName) {
 		logger.debug("GroupService - checkGroupName실행");	
 		Map<String,Object> returnMap = new HashMap<String,Object>();
@@ -169,7 +194,10 @@ public class GroupService {
 		return returnMap;
 	}
 	
-	//그룹생성
+	/**
+	 * 그룹 생성
+	 * @param group
+	 */
 	public void addGroup(Group group) {
 		logger.debug("GroupService - addGroup실행");		
 		String groupNo = group.getGroupNo();
@@ -182,7 +210,7 @@ public class GroupService {
 					int result = 0;
 					String groupNo_temp = "group_";
 					//그룹 번호 최대값 검색
-					result = groupDao.selectGroupNo(groupNo);
+					result = groupDao.selectGroupNo();
 					if(result > 0) {
 						if(1 <= result) {
 							result++;
