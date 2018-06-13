@@ -98,7 +98,7 @@
 				,exercise.exercise_matching_date AS exerciseMatchingDate
 			FROM exercise_matching AS exercise ,member 
 			WHERE member.member_no = exercise.member_no
-			ORDER BY exercise_matching_date
+			ORDER BY exercise_matching_date desc
 			LIMIT #{beginRow},#{pagePerRow}
   	</select>
   	<!-- 운동매칭 리스트 카운트 -->
@@ -187,4 +187,51 @@
   			DELETE FROM exercise_matching_join_member
   			WHERE matching_no = #{exerciseMatchingNo} AND member_no=#{memberNo}
   	</delete>
+  	<!--운동매칭 참가 리스트-->
+  	<select id="attendExerciseMatching"
+  			parameterType="String"
+  			resultType="com.cafe24.kyungsu93.exercise.service.ExerciseRegistration">
+  			SELECT 
+				jm.exercise_matching_join_date AS exerciseMatchingJoinDate
+				,jm.matching_no AS exerciseMatchingNo
+				,em.exercise_no AS exerciseNo
+				,em.exercise_matching_title AS exerciseMatchingTitle
+				,em.exercise_matching_time AS exerciseMatchingTime
+				,em.exercise_matching_place AS exerciseMatchingPlace
+				,em.exercise_matching_schedule_date AS exerciseMatchingScheduleDate
+			FROM exercise_matching_join_member jm,exercise_matching em
+			WHERE jm.matching_no=em.exercise_matching_no 
+			AND jm.member_no=#{memberNo}
+  	</select>
+  	<!--운동매칭 현재참가 인원수 -->
+  	<select id="exerciseMatchingAttendCount"
+  			parameterType="String"
+  			resultType="Integer">
+  			SELECT count(*)
+  			FROM exercise_matching_join_member
+  			WHERE matching_no=#{exerciseMatchingNo}
+  			
+  	</select>
+  	<!-- 운동매칭 완료 -->
+  	<insert id="exerciseComplete"
+  			parameterType="com.cafe24.kyungsu93.exercise.service.ExerciseRegistration">
+  			INSERT INTO exercise_matching_result(
+  				exercise_matching_no
+  				,member_no
+  				,exercise_matching_result_date
+  			)VALUES(
+  				#{exerciseMatchingNo}
+  				,#{memberNo}
+  				,now()
+  			)
+  	</insert>
+  	<!--운동매칭 현재참가 인원수 -->
+  	<select id="exerciseMatchingResult"
+  			parameterType="com.cafe24.kyungsu93.exercise.service.ExerciseRegistration"
+  			resultType="Integer">
+  			SELECT count(*)
+  			FROM exercise_matching_result
+  			WHERE exercise_matching_no=#{exerciseMatchingNo} AND member_no=#{memberNo}
+  			
+  	</select>
   </mapper>

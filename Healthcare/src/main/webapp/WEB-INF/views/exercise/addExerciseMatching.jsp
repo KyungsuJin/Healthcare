@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,6 +38,14 @@
 		    	if($("#exerciseScheduleDate").val().length==0){
 		    		alert('운동예정날짜를 선택해주세요');
 		    		$("#exerciseScheduleDate").focus();
+		    		return false;
+		    	}else if($("#exerciseScheduleDate").val()<$("#currentDate").val()){
+		    		alert('운동예정 날짜는 오늘날짜보다 작을수없습니다.');
+		    		$("#exerciseScheduleDate").focus();
+		    		return false;
+		    	}else if(($("#exerciseScheduleDate").val() <= $("#currentDate").val())
+		    			&& ($("#startTime").val() < $("#currentTime").val())){
+		    		alert('운동 시작은 현재시간보다 작을수 없습니다.');
 		    		return false;
 		    	}else if($("#startTime").val().length==0 || $("#endTime").val().length==0 ){
 		    		alert('운동 시작시간 끝나는 시간을 모두 선택해주세요');
@@ -76,8 +85,10 @@
 <body>
 	<h1> 운동 등록하기</h1>
 	<form id="addExerciseForm" name="addExerciseForm" action="${pageContext.request.contextPath}/addExerciseMatching" method="post">
+		<c:set var="now" value="<%=new java.util.Date()%>" />
 		<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}">
-		<!-- <input type="hidden" name="exerciseMatchingTime" value=""> -->
+		<input type="hidden" id="currentDate" value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" />">
+		<input type="hidden" id="currentTime" value="<fmt:formatDate value="${now}" pattern="k:mm" />">
 		<div>
 			예정날짜:<input id="exerciseScheduleDate" name="exerciseMatchingScheduleDate" type="text" readonly>
 			운동시간 :<input type="time" id="startTime" name="exerciseMatchingTime">~<input type="time" name="exerciseMatchingTime"id="endTime">

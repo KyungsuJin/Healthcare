@@ -57,11 +57,11 @@ public class MemberController {
 	   return "member/memberList";
    }
    //의사회원 리스트 폼 출력
-   @RequestMapping(value="/DoctorMemberList",method=RequestMethod.GET)
-   public String DoctorMemberList(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
+   @RequestMapping(value="/doctorMemberList",method=RequestMethod.GET)
+   public String doctorMemberList(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
 		   				,@RequestParam(value="searchSelect",required=false)String searchSelect
 		   				,@RequestParam(value="searchTextTest",required=false)String searchText) {
-	   logger.debug("MemberController.DoctorMemberList");
+	   logger.debug("MemberController.doctorMemberList");
 	   logger.debug("searchSelect : " +searchSelect);
 	   logger.debug("searchText : " +searchText);
 	   model.addAttribute("currentPage",currentPage);

@@ -8,15 +8,37 @@ public class ExerciseRegistration {
 	private String exerciseMatchingContent;
 	private String exerciseMatchingTime;
 	private int exerciseMatchingCount;
+	private int exerciseMatchingAttendCount;
 	private String exerciseMatchingPlace;
 	private String exerciseMatchingScheduleDate;
 	private String exerciseMatchingDate;
 	private String memberId;
 	private String exerciseMatchingJoinMemberNo;
+	private String exerciseMatchingJoinDate;
+	private int exerciseMatchingResult;
+
 	
 	
+
 	
-	
+	public int getExerciseMatchingResult() {
+		return exerciseMatchingResult;
+	}
+	public void setExerciseMatchingResult(int exerciseMatchingResult) {
+		this.exerciseMatchingResult = exerciseMatchingResult;
+	}
+	public int getExerciseMatchingAttendCount() {
+		return exerciseMatchingAttendCount;
+	}
+	public void setExerciseMatchingAttendCount(int exerciseMatchingAttendCount) {
+		this.exerciseMatchingAttendCount = exerciseMatchingAttendCount;
+	}
+	public String getExerciseMatchingJoinDate() {
+		return exerciseMatchingJoinDate;
+	}
+	public void setExerciseMatchingJoinDate(String exerciseMatchingJoinDate) {
+		this.exerciseMatchingJoinDate = exerciseMatchingJoinDate;
+	}
 	public String getExerciseMatchingJoinMemberNo() {
 		return exerciseMatchingJoinMemberNo;
 	}

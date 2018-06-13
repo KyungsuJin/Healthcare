@@ -74,5 +74,6 @@ public class ExerciseRestController {
 		exerciseService.exerciseCancel(exerciseRegistration);
 		return 1;
 	}
+	
 
 }

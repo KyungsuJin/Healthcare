@@ -31,14 +31,13 @@
 						$.each(data.list,function(key,val){
 							$("#tb").append(
 											"<tr><td><input type='checkbox' name='deletMessageChk' value='"+val.sendMessageNo+"'>"+val.sendMessageId+"</td>"+
-											"<td><a class='messageContent' href='${pageContext.request.contextPath}/messageReceiveContent?sendMessageNo="+val.sendMessageNo+"&sendMessageId="+val.sendMessageId+"&messageTitle="+val.messageTitle+"&messageContent="+val.messageContent+"&messageDate="+val.messageDate+"' class='messageContent'>"+val.messageTitle+"</a></td>"+
-											"<td>"+val.messageDate+"</td><td>"+val.readMessageChk+"</td></tr>"
+											"<td><a class='messageContent"+key+"' href='${pageContext.request.contextPath}/messageReceiveContent?sendMessageNo="+val.sendMessageNo+"&sendMessageId="+val.sendMessageId+"&messageTitle="+val.messageTitle+"&messageContent="+val.messageContent+"&messageDate="+val.messageDate+"' class='messageContent'>"+val.messageTitle+"</a></td>"+
+											"<td>"+val.messageDate+"</td></tr>"
 											);	
-							if(val.readMessageChk===1){
-								//console.log($(data.list).find(".messageContent").css("color","red"));
-								//$(data.list).css("color","red");
-								console.log($(this).css("color","red"));
-								$(this).children('a').attr("style","color:red");
+
+							if(val.readMessageChk==1){
+								$(".messageContent"+key).css('color','black');
+								
 							}
 						});
 						if(data.currentPage>1){
@@ -122,7 +121,6 @@
 				$("#sendCurrentPage").val(Number($("#sendCurrentPage").val())+1);
 				$("#sendMessage").click();
 			});
-			
 			$(document).on("click","#allChk",function(){
 				if($("#allChk").prop("checked")){
 					$("input[name=deletMessageChk]").prop("checked",true);
@@ -147,7 +145,6 @@
 						$("#messageReceive").click();
 					}
 				})
-				
 			});
 			//메시지 삭제 체크로 다중 삭제 
 			$(document).on("click","#deleteSendMessageBtn",function(){
@@ -166,7 +163,6 @@
 						$("#sendMessage").click();
 					}
 				})
-				
 			});
 		});
 	</script>
@@ -182,7 +178,6 @@
 		<button type="button" id="sendMessage">보낸 메시지</button>
 		<button type="button" id="messageReceive">받은 메시지</button>
 	</div>
-	
 	<table border="1" class="table" id="tb">
 	</table>
 	<div id="page" style="text-align: center;"></div>

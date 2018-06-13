@@ -61,6 +61,10 @@ public class ExerciseService {
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
 		List<ExerciseRegistration> exerciseMatchingList=exerciseDao.exerciseMatchingList(map);
+		for(ExerciseRegistration matchingList:exerciseMatchingList) {
+			logger.debug(matchingList.getExerciseMatchingNo());
+			matchingList.setExerciseMatchingAttendCount(exerciseDao.exerciseMatchingAttendCount(matchingList.getExerciseMatchingNo()));
+		}
 		int totalCountList =exerciseDao.totalCountList();
 		int lastPage=totalCountList/pagePerRow;
 		if(totalCountList%pagePerRow>0) {
@@ -81,7 +85,12 @@ public class ExerciseService {
 	//운동매칭 내용
 	public ExerciseRegistration exerciseMatchingContent(String exerciseMatchingNo) {
 		logger.debug("ExerciseService.exerciseMatchingContent");
-		return exerciseDao.exerciseMatchingContent(exerciseMatchingNo);
+		ExerciseRegistration exerciseRegistration = new ExerciseRegistration();
+		logger.debug("매칭 참가 인원"+exerciseDao.exerciseMatchingAttendCount(exerciseMatchingNo));
+		
+		exerciseRegistration=exerciseDao.exerciseMatchingContent(exerciseMatchingNo);
+		exerciseRegistration.setExerciseMatchingAttendCount(exerciseDao.exerciseMatchingAttendCount(exerciseMatchingNo));
+		return exerciseRegistration;
 	}
 	//운동매칭 글 삭제시 글등록자 매칭 참가 신청 삭제
 	public void deleteExerciseMatching(String exerciseMatchingNo) {
@@ -110,12 +119,33 @@ public class ExerciseService {
 	//운동매칭 참가신청 여부
 	public int exerciseSignUpSelect(ExerciseRegistration exerciseRegistration) {
 		logger.debug("ExerciseService.exerciseSignUpSelect");
-		return exerciseDao.exerciseSignUpChk(exerciseRegistration);
+		int result=exerciseDao.exerciseSignUpChk(exerciseRegistration);
+		result=result+exerciseDao.exerciseMatchingResult(exerciseRegistration);
+		return result;
 	}
 	//운동매칭 참가신청 취소
 	public void exerciseCancel(ExerciseRegistration exerciseRegistration) {
 		logger.debug("ExerciseService.exerciseCancel");
 		exerciseDao.exerciseCancel(exerciseRegistration);
+	}
+	//운동매칭 참가 리스트
+	public List<ExerciseRegistration> attendExerciseMatching(String memberNo) {
+		logger.debug("ExerciseService.attendExerciseMatching");
+		List<ExerciseRegistration> attendMatchingList=exerciseDao.attendExerciseMatching(memberNo);
+		for(ExerciseRegistration matchingResult :attendMatchingList) {
+			matchingResult.setMemberNo(memberNo);
+			logger.debug("memberNo : " + matchingResult.getMemberNo());
+			logger.debug("exerciseNo : " + matchingResult.getExerciseNo());
+			matchingResult.setExerciseMatchingResult(exerciseDao.exerciseMatchingResult(matchingResult));
+			logger.debug("asdasdasd"+ matchingResult.getExerciseMatchingResult());
+		}
+		 return attendMatchingList;
+	}
+	//운동매칭 완료
+	public int exerciseComplete(ExerciseRegistration exerciseRegistration) {
+		logger.debug("ExerciseService.attendExerciseMatching");
+		return exerciseDao.exerciseComplete(exerciseRegistration);
+
 	}
 
 }

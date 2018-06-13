@@ -8,12 +8,12 @@
 	<script>
 	$(document).ready(function(){
 		//메시지 쓰기 새창
-		$("#writeMessage").click(function(){
+		$("#messageWrite").click(function(){
 				window.open("${pageContext.request.contextPath}/message"
 						,"messageWrite","width=700, height=700,resizable=no,scrollbars=yes");
 		});
 		//메시지 받은 리스트
-		$("#receiveMessage").click(function(){
+		$("#messageReceive").click(function(){
 			console.log($("#memberReceiveNo").val());
 			 $.ajax({
 				type:"POST"
@@ -29,14 +29,14 @@
 					$("#deletBtn").append('<button type="button" id="deleteMessageBtn">삭제</button>');
 					$("#tb").append('<tr><td><input type="checkbox" id="allChk">보낸사람</td><td>내용</td><td>날짜</td></tr>');
 					$.each(data.list,function(key,val){
-						
 						$("#tb").append(
 										"<tr><td><input type='checkbox' name='deletMessageChk' value='"+val.sendMessageNo+"'>"+val.sendMessageId+"</td>"+
-										"<td><a class='messageContent' href='${pageContext.request.contextPath}/messageReceiveContent?sendMessageNo="+val.sendMessageNo+"&sendMessageId="+val.sendMessageId+"&messageTitle="+val.messageTitle+"&messageContent="+val.messageContent+"&messageDate="+val.messageDate+"' class='messageContent'>"+val.messageTitle+"</a></td>"+
+										"<td><a class='messageContent"+key+"' href='${pageContext.request.contextPath}/messageReceiveContent?sendMessageNo="+val.sendMessageNo+"&sendMessageId="+val.sendMessageId+"&messageTitle="+val.messageTitle+"&messageContent="+val.messageContent+"&messageDate="+val.messageDate+"' class='messageContent'>"+val.messageTitle+"</a></td>"+
 										"<td>"+val.messageDate+"</td></tr>"
-										);
+										);	
+
 						if(val.readMessageChk==1){
-							$(".messageContent").css('color','red');
+							$(".messageContent"+key).css('color','black');
 						}
 					});
 					if(data.currentPage>1){
@@ -55,15 +55,15 @@
 		$(document).on("click",".receiveMessagePage",function(){
 			console.log($(this).text());
 			$("#receiveCurrentPage").val($(this).text());
-			$("#receiveMessage").click();
+			$("#messageReceive").click();
 		});
 		$(document).on("click",".receiveMessagePageBack",function(){
 			$("#receiveCurrentPage").val(Number($("#receiveCurrentPage").val())-1);
-			$("#receiveMessage").click();
+			$("#messageReceive").click();
 		});
 		$(document).on("click",".receiveMessagePageNext",function(){
 			$("#receiveCurrentPage").val(Number($("#receiveCurrentPage").val())+1);
-			$("#receiveMessage").click();
+			$("#messageReceive").click();
 		});
 		//메시지 보낸 리스트
 		$("#sendMessage").click(function(){
@@ -120,7 +120,6 @@
 			$("#sendCurrentPage").val(Number($("#sendCurrentPage").val())+1);
 			$("#sendMessage").click();
 		});
-		
 		$(document).on("click","#allChk",function(){
 			if($("#allChk").prop("checked")){
 				$("input[name=deletMessageChk]").prop("checked",true);
@@ -145,7 +144,6 @@
 					$("#messageReceive").click();
 				}
 			})
-			
 		});
 		//메시지 삭제 체크로 다중 삭제 
 		$(document).on("click","#deleteSendMessageBtn",function(){
@@ -164,7 +162,6 @@
 					$("#sendMessage").click();
 				}
 			})
-			
 		});
 			$("#deleteMessage").click(function(){
 				if(confirm('정말 삭제하시겠습니까?')){
@@ -187,9 +184,9 @@
 	<input type="hidden" id="sendMessageNo" name="sendMessageNo" value="${message.sendMessageNo}">
 	<div id="deletBtn" style="margin-right:5px;float:left;"></div>
 	<div style="float:left;">
-		<button type="button" id="writeMessage">메시지 작성</button>
+		<button type="button" id="messageWrite">메시지 작성</button>
 		<button type="button" id="sendMessage">보낸 메시지</button>
-		<button type="button" id="receiveMessage">받은 메시지</button>
+		<button type="button" id="messageReceive">받은 메시지</button>
 		<button type="button" id="reportMessage">메시지 신고</button>
 	</div>
 	<table border="1" class="table" id="tb">

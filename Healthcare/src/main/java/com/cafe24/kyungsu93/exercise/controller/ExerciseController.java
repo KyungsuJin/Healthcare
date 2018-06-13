@@ -1,5 +1,6 @@
 package com.cafe24.kyungsu93.exercise.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -71,6 +72,7 @@ public class ExerciseController {
 		logger.debug("ExerciseRestController.exerciseMatchingContent get");
 		logger.debug("exerciseMatchingNo : " + exerciseMatchingNo);
 		ExerciseRegistration exercise = exerciseService.exerciseMatchingContent(exerciseMatchingNo);
+		logger.debug("컨트롤러 매칭 회원"+exercise.getExerciseMatchingAttendCount());
 		model.addAttribute("exercise",exercise);
 		return "exercise/exerciseMatchingContent";
 	}
@@ -90,6 +92,45 @@ public class ExerciseController {
 		logger.debug(exerciseRegistration.toString());
 		exerciseService.modifyExerciseMatching(exerciseRegistration);
 		return "redirect:/exerciseMatching";
+	}
+	//운동매칭 페이징
+	@RequestMapping(value = "/exerciseMatchingList", method = RequestMethod.GET)
+	public String exerciseMatchingList(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage) {
+		logger.debug("ExerciseRestController.exerciseMatchingList GET");
+		model.addAttribute("currentPage",currentPage);
+		return "exercise/exerciseMatching";
+	}
+	//자신의 운동 참가 리스트
+	@RequestMapping(value = "/attendExerciseMatching", method = RequestMethod.GET)
+	public String attendExerciseMatching(Model model
+										,@RequestParam(value="memberNo")String memberNo) {
+		logger.debug("ExerciseRestController.attendExerciseMatching GET");
+		logger.debug(memberNo);
+		List<ExerciseRegistration> attendExerciseMatchingList=exerciseService.attendExerciseMatching(memberNo);
+		model.addAttribute("attendExerciseMatchingList",attendExerciseMatchingList);
+		return "exercise/attendExerciseMatching";
+	}
+	//운동매칭 완료
+	@RequestMapping(value = "/exerciseComplete", method = RequestMethod.GET)
+	public String exerciseComplete(Model model,ExerciseRegistration exerciseRegistration) {
+		logger.debug("ExerciseRestController.exerciseComplete");
+		logger.debug("memberNo : " + exerciseRegistration.getMemberNo());
+		logger.debug("exerciseMatchingNo : " + exerciseRegistration.getExerciseMatchingNo());
+		int result = exerciseService.exerciseComplete(exerciseRegistration);
+		logger.debug("result : " + result);
+		model.addAttribute("memberNo",exerciseRegistration.getMemberNo());
+		return "redirect:/attendExerciseMatching";
+	}
+	//운동매칭 참가 신청 취소
+	@RequestMapping(value = "/exerciseMatchingCancel", method = RequestMethod.GET)
+	public String exerciseMatchingCancel(Model model,
+									ExerciseRegistration exerciseRegistration) {
+		logger.debug("ExerciseRestController.exerciseMatchingCancel");
+		logger.debug("memberNo : " + exerciseRegistration.getMemberNo());
+		logger.debug("exerciseMatchingNo : " + exerciseRegistration.getExerciseMatchingNo());
+		exerciseService.exerciseCancel(exerciseRegistration);
+		model.addAttribute("memberNo",exerciseRegistration.getMemberNo());
+		return "redirect:/attendExerciseMatching";
 	}
 	
 	

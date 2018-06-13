@@ -100,6 +100,25 @@ public class ExerciseDao {
 		logger.debug("ExerciseDao.exerciseCancel");
 		sqlSession.selectOne(NS + "exerciseCancel", exerciseRegistration);
 	}
-
+	//운동매칭 참가 리스트
+	public List<ExerciseRegistration> attendExerciseMatching(String memberNo) {
+		logger.debug("ExerciseDao.attendExerciseMatching");
+		return sqlSession.selectList(NS + "attendExerciseMatching", memberNo);
+	}
+	//운동매칭 현재 참가 인원수
+	public int exerciseMatchingAttendCount(String exerciseMatchingNo) {
+		logger.debug("ExerciseDao.exerciseMatchingAttendCount");
+		return sqlSession.selectOne(NS + "exerciseMatchingAttendCount", exerciseMatchingNo);
+	}
+	//운동매칭 완료
+	public int exerciseComplete(ExerciseRegistration exerciseRegistration) {
+		logger.debug("ExerciseDao.exerciseComplete");
+		 return sqlSession.insert(NS + "exerciseComplete", exerciseRegistration);
+	}
+	//운동매칭 결과 조회
+	public int exerciseMatchingResult(ExerciseRegistration exerciseRegistration) {
+		logger.debug("ExerciseDao.exerciseMatchingResult");
+		return sqlSession.selectOne(NS + "exerciseMatchingResult", exerciseRegistration);
+	}
 
 }

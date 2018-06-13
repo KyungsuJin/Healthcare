@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +8,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
 		$(document).ready(function(){
-			
+			/*내용보기를 눌렀을때 참가신청이 되어있는지와 운완료를 했는지 여부를 파악해 1이넘어오면 운동신청 2가넘어오면 운동완료를 눌름 */
 			$.ajax({
 				type :"POST"
 				,url : "${pageContext.request.contextPath}/exerciseSignUpSelect"
@@ -19,9 +20,12 @@
 					if(data==1){
 						$("#exerciseDiv").empty();
 						$("#exerciseDiv").append('<a href="#" id="exerciseCancel">참가신청 취소</a>')
+					}else{
+						$("#exerciseDiv").empty();
 					}
 				}
-			});		
+			});
+			/*운동매칭 취소  */
 			$(document).on("click","#exerciseCancel",function(){
 				$.ajax({
 					type :"POST"
@@ -32,13 +36,16 @@
 					,dataType : "text"
 					,success:function(data){
 						alert('신청취소가 되었습니다.');
+						location.reload();
 					}
 				});		
 			});
+			/* 운동매칭 장소 새창 형태로 제공 */
 			$("#matchingPlace").click(function(){
 				    	window.open("${pageContext.request.contextPath}/exercisePlaceView"
 				    			,"Registration","width=800, height=500,resizable=no,scrollbars=yes");
 			});
+			/* 운동매칭 참가 신청*/
 			$("#exerciseSignUp").click(function(){
 				if(confirm('정말로 참가신청을 하시겠습니까? 신청뒤 취소하면 불이익이 있을수 있습니다.')){
 					 $.ajax({
@@ -51,6 +58,7 @@
 						,success:function(data){
 							if(data==0){
 								alert('참가신청이 완료되었습니다.');
+								location.reload();
 							}else{
 								alert('참가신청을 실패했습니다.');
 							}
@@ -69,6 +77,7 @@
 <body>
 	<h1> 운동매칭 </h1>
 	<a href="${pageContext.request.contextPath}/addExerciseMatching">운동매칭 등록</a>
+	<a href="${pageContext.request.contextPath}/attendExerciseMatching?memberNo=${sessionScope.memberSessionNo}">자신의 운동참가 리스트</a>
 	<input type="hidden" name="exercisePlaceView"id="exercisePlaceView" value="${exercise.exerciseMatchingPlace}">
 	<input type="hidden" name="memberNo" id="memberNo" value="${sessionScope.memberSessionNo}">
 	<input type="hidden" name="exerciseMatchingNo"id="exerciseMatchingNo" value="${exercise.exerciseMatchingNo}">
@@ -82,6 +91,7 @@
 				<th>일시</th>
 			</tr>
 		</thead>
+		<tbody>
 			<tr>
 				<td>${exercise.memberId}</td>
 				<td>${exercise.exerciseNo}</td>
@@ -96,15 +106,17 @@
 				<td colspan="5">
 					<textarea class="form-control" rows="20" name="exerciseMatchingContent" readonly>${exercise.exerciseMatchingContent}</textarea>
 				</td>
+			</tr>
+	</tbody>
 	</table>
 	<div>
 		<a href="${pageContext.request.contextPath}/exerciseMatching">목록으로</a>
-		<c:if test="${exercise.memberId eq sessionScope.memberSessionId}">
+		<c:if test="${exercise.memberId eq sessionScope.memberSessionId or sessionScope.memberSessionLevel==1}">
 			<a href="${pageContext.request.contextPath}/deleteExerciseMatching?exerciseMatchingNo=${exercise.exerciseMatchingNo}">삭제</a>
 			<a href="${pageContext.request.contextPath}/modifyExerciseMatching?exerciseMatchingNo=${exercise.exerciseMatchingNo}">수정</a>
 		</c:if>
 		<div id="exerciseDiv">
-			<c:if test="${exercise.memberId ne sessionScope.memberSessionId}">
+			<c:if test="${exercise.exerciseMatchingCount > exercise.exerciseMatchingAttendCount}">
 				<a href="#" id="exerciseSignUp">참가신청</a>
 			</c:if>
 		</div>

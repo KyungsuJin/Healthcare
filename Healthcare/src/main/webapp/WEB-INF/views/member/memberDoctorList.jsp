@@ -37,16 +37,16 @@
 											);
 					});
 						if(data.currentPage>1){
-							$("#page").append('<a href="${pageContext.request.contextPath}/DoctorMemberList?currentPage=1&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> << </a>');
-							$("#page").append('<a href="${pageContext.request.contextPath}/DoctorMemberList?currentPage='+(data.currentPage-1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> 이전 </a>');
+							$("#page").append('<a href="${pageContext.request.contextPath}/doctorMemberList?currentPage=1&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> << </a>');
+							$("#page").append('<a href="${pageContext.request.contextPath}/doctorMemberList?currentPage='+(data.currentPage-1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> 이전 </a>');
 						}
 						for(i=data.startPage;i<=data.endPage;i++){
-							$("#page").append('<a href="${pageContext.request.contextPath}/DoctorMemberList?currentPage='+i+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> ' +i+ ' </a>');
+							$("#page").append('<a href="${pageContext.request.contextPath}/doctorMemberList?currentPage='+i+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> ' +i+ ' </a>');
 						}
 						
 						if(data.lastPage>data.currentPage){
-							$("#page").append('<a href="${pageContext.request.contextPath}/DoctorMemberList?currentPage='+(data.currentPage+1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> 다음 </a>');
-							$("#page").append('<a href="${pageContext.request.contextPath}/DoctorMemberList?currentPage='+data.lastPage+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> >> </a>');
+							$("#page").append('<a href="${pageContext.request.contextPath}/doctorMemberList?currentPage='+(data.currentPage+1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> 다음 </a>');
+							$("#page").append('<a href="${pageContext.request.contextPath}/doctorMemberList?currentPage='+data.lastPage+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> >> </a>');
 						}
 					
 					
