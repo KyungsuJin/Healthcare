@@ -64,12 +64,12 @@
 <h1>운동 피드백</h1>
 	<form id="exercisefeedbackForm" onsubmit="return check()" action="${pageContext.request.contextPath}/exerciseFeedbackRequestResult" method="post">
 		<div>
-			<input type="hidden" name="memberNo" value="${exerciseFeedback.memberNo }">
+			<input type="text" name="memberName" value="${map.exerciseFeedbackRequest.memberName }">
 	<%-- <input type="hidden" name="memberNo" value="${sessionScope.memberNo}"> --%>
 		</div>
 		<div>
 			제목 :
-			<input type="text" name="exerciseFeedbackTitle">
+			<input type="text"  id="exerciseFeedbackTitle" name="exerciseFeedbackTitle">
 		</div>
 
 		<div>

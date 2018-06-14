@@ -1,9 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackMapper">
+	<select id="exerciseFeedbackApprovalResult" 
+				parameterType="String" 
+				resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
+		SELECT 
+			exercise_feedback_approval as exerciseFeedbackApproval, 
+			exercise_feedback_result as exerciseFeedbackResult,
+			exercise_feedback_approval_date as exerciseFeedbackApprovalDate
+		FROM exercise_feedback_approval_result
+		WHERE exercise_feedback_request_no = #{exerciseFeedbackRequestNo}	
+	</select>
+	<select id="exerciseFeedbackApprovalresultTotalCount" resultType="Integer">
+		SELECT
+		count(*)
+		FROM exercise_feedback_approval_result
+		WHERE exercise_feedback_request_no = #{exerciseFeedbackRequestNo}
+	</select>
+	<insert id="feedbackapprovalDenied" 
+		parameterType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
+		INSERT INTO exercise_feedback_approval_result(
+		exercise_feedback_request_no, exercise_feedback_approval, exercise_feedback_result, exercise_feedback_approval_date)
+		VALUES (
+		#{exerciseFeedbackRequestNo}, '거절', '거정', NOW()
+		)
+	</insert>
+	<insert id="feedbackapprovalAccept" 
+	parameterType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
+		INSERT INTO exercise_feedback_approval_result(
+		exercise_feedback_request_no, exercise_feedback_approval, exercise_feedback_result, exercise_feedback_approval_date)
+		VALUES (
+		#{exerciseFeedbackRequestNo}, '수락', '대기', NOW()
+		)
+	</insert>
+	<select id="nextExerciseFeedbackDetailCount" resultType="Integer">
+		SELECT
+		count(*)
+		FROM exercise_feedback_request
+		WHERE exercise_feedback_request_no > #{exerciseFeedbackRequestNo}
+		 ORDER BY exercise_feedback_request_no DESC LIMIT 1
+	</select>
+	<select id="prevExerciseFeedbackDetail" 
+			parameterType="String" 
+			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
+		SELECT 
+			exercise_feedback_request_no as exerciseFeedbackRequestNo, 
+			exercise_feedback_request_title as exerciseFeedbackRequestTitle
+		FROM exercise_feedback_request
+		 WHERE #{exerciseFeedbackRequestNo} > exercise_feedback_request_no
+		 ORDER BY exercise_feedback_request_no DESC LIMIT 1
+	</select>
+	<select id="prevExerciseFeedbackDetailCount" resultType="Integer">
+		SELECT
+		count(*)
+		FROM exercise_feedback_request
+		WHERE #{exerciseFeedbackRequestNo} > exercise_feedback_request_no
+		 ORDER BY exercise_feedback_request_no DESC LIMIT 1
+	</select>
+	<select id="nextExerciseFeedbackDetail" 
+			parameterType="String" 
+			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
+		SELECT 
+			exercise_feedback_request_no as exerciseFeedbackRequestNo, 
+			exercise_feedback_request_title as exerciseFeedbackRequestTitle
+		FROM exercise_feedback_request
+		WHERE exercise_feedback_request_no > #{exerciseFeedbackRequestNo}
+		 ORDER BY exercise_feedback_request_no DESC LIMIT 1
+	</select>
+	<select id="exerciseFeedbackRequestDetail" 
+			parameterType="String" 
+			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
+		SELECT 
+			a.exercise_feedback_request_no as exerciseFeedbackRequestNo, 
+			b.member_id as memberId,
+			b.member_name as memberName, 
+			a.exercise_feedback_request_title as exerciseFeedbackRequestTitle, 
+			a.exercise_feedback_request_content as exerciseFeedbackRequestContent, 
+			a.exercise_feedback_request_date as exerciseFeedbackRequestDate
+		FROM exercise_feedback_request a
+		INNER JOIN member b
+		ON a.member_no = b.member_no
+		WHERE exercise_feedback_request_no = #{exerciseFeedbackRequestNo}
+		ORDER BY exercise_feedback_request_date DESC
+	</select>
 	<select id="exerciseFeedbackRequestNo" resultType="Integer">
 		SELECT
-		max(CAST(substring(exercise_feedback_request_no,19) AS DECIMAL))
+		max(CAST(substring(exercise_feedback_request_no,27) AS DECIMAL))
 		FROM exercise_feedback_request
 	</select>
 	<insert id="exerciseFeedbackRequest" parameterType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
@@ -34,8 +116,7 @@
 			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
 		SELECT 
 			member_name as memberName,
-			member_id as memberId,
-			member_no as member_no
+			member_no as memberNo
 		FROM member
 		WHERE member_no = #{memberNo}
 	</select>

@@ -16,7 +16,7 @@ public class ExerciseFeedbackResponseDao {
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackResponseMapper.";
 	
-	//운동피드백 요청 등록
+	//운동피드백 음식 검색 리스트
 	public List<ExerciseFeedbackResult> feedbackFoodSearch(ExerciseFeedbackResult exerciseFeedbackResult) {
 		logger.debug("ExerciseFeedbackResponseDao - feedbackFoodSearch 실행");
 		List<ExerciseFeedbackResult> list = sqlSession.selectList(NS+"feedbackFoodSearch", exerciseFeedbackResult);
