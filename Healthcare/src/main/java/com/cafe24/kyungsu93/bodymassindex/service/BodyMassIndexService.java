@@ -27,5 +27,11 @@ public class BodyMassIndexService {
 		return bodyMassIndexDao.bodyMassIndexList(memberNo);
 		
 	}
+	//체질량 차트리스트
+	public List<BodyMassIndex> bodyMassIndexChart(String memberNo) {
+		logger.debug("BodyMassIndexService.bodyMassIndexChart");
+		return bodyMassIndexDao.bodyMassIndexChart(memberNo);
+
+	}
 
 }

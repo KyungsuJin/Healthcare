@@ -42,6 +42,12 @@ public class BodyMassIndexController {
 		model.addAttribute("bodyMassIndexList",bodyMassIndexList);
 		return "bodymassindex/bodyMassIndexList";
 	}
+	//체질량 차트 페이지
+	@RequestMapping(value = "/bodyMassIndexChart", method = RequestMethod.GET)
+	public String bodyMassIndexChart() {
+		logger.debug("BodyMassIndexController.bodyMassIndexChart GET");
+		return "bodymassindex/bodyMassIndexChart";
+	}
 
 
 }

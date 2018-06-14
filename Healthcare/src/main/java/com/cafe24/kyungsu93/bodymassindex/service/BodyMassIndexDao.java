@@ -28,4 +28,9 @@ public class BodyMassIndexDao {
 		logger.debug("BodyMassIndexDao.bodyMassIndexList");
 		return sqlSession.selectList(NS + "bodyMassIndexList",memberNo);
 	}
+	//체질량 차트리스트
+	public List<BodyMassIndex> bodyMassIndexChart(String memberNo) {
+		logger.debug("BodyMassIndexDao.bodyMassIndexChart");
+		return sqlSession.selectList(NS + "bodyMassIndexChart", memberNo);
+	}
 }
