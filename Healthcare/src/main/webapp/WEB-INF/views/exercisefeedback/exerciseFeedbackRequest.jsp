@@ -3,12 +3,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>ExerciseFeedAsk</title>
+<title>exerciseFeedbackReqeust</title>
 <head>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
-
-	function check() {
+ 	function check() {
 	if(confirm("선택한 강사님으로  운동피드백을 요청하시겠습니까?")){
 		if(exercisefeedbackForm.exerciseFeedbackTitle.value == "") {
 			alert("제목을 입력해주세요.");
@@ -27,24 +26,25 @@
 
 function cancleBtn() {
     location.href="${pageContext.request.contextPath}/exerciseFeedbackPtList";
-}   
+}    
 </script>
 </head>
 <body>
 <h1>운동 피드백 요청 스텝2</h1>
-	<form id="exercisefeedbackForm" onsubmit="return check()" action="${pageContext.request.contextPath}/exerciseFeedbackRequest" method="post">
+	<form id="exercisefeedbackForm" onsubmit="return check()" action="${pageContext.request.contextPath}/exerciseFeedbackRequest" method="POST">
 		<div>
-			선택한 강사 : ${exerciseFeedback.memberName }
-			<input type="hidden" name="teacherNo" value="${exerciseFeedback.memberNo }">
+		선택한 강사 : ${map.ptMemberName }
+			<input type="hidden" name="teacherNo" value="${map.ptMemberNo}">
+			회원 번호:<input type="text" name="memberNo">
 	<%-- <input type="hidden" name="memberNo" value="${sessionScope.memberNo}"> --%>
 		</div>
 		<div>
 			제목 :
-			<input type="text" name="exerciseFeedbackTitle">
+			<input type="text" name="exerciseFeedbackRequestTitle" id="exerciseFeedbackTitle">
 		</div>
 		<div>
 			내용:
-			<textarea name="exerciseFeedbackContent" style="resize: none;" cols="40" rows="8" placeholder="내용을 입력해주세요"></textarea>
+			<textarea name="exerciseFeedbackRequestContent" id="exerciseFeedbackContent" style="resize: none;" cols="40" rows="8" placeholder="내용을 입력해주세요"></textarea>
 		</div>
 		<input type="submit" value="등록하기">
 	</form>

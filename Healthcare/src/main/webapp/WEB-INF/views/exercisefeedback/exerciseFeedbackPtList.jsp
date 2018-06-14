@@ -21,14 +21,14 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="teacher" items="${list}">
+			<c:forEach var="teacher" items="${exercisePtlist}">
 				<tr>
 					<td>${teacher.memberName }</td>
 					<td>${teacher.memberWorkSpace }</td>
 					<td>${teacher.memberTotalFeedback }</td>
 					<td>${teacher.memberAgreeFeedback }</td>
 					<td>${teacher.evaluationAverageGrade }</td>
-					<td><a type="button" href="${pageContext.request.contextPath}/exerciseFeedbackReqeust?memberNo=${teacher.memberNo}">선택하기</a></td>
+					<td><a type="button" href="${pageContext.request.contextPath}/exerciseFeedbackRequest?memberNo=${teacher.memberNo}">선택하기</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

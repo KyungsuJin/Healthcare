@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class ExerciseFeedbackResponseService {
 	@Autowired
 	private ExerciseFeedbackResponseDao exerciseFeedbackResponseDao;
+	@Autowired
+	private ExerciseFeedbackDao exerciseFeedbackDao;
 	private static final Logger logger = LoggerFactory.getLogger(ExerciseFeedbackResponseService.class);
 	
 	public Map<String,Object> feedbackFoodSearch(ExerciseFeedbackResult exerciseFeedbackResult){
@@ -25,10 +27,17 @@ public class ExerciseFeedbackResponseService {
 		logger.debug("foodName:"+foodName);	
 		Map<String,Object> returnMap = new HashMap<String,Object>();
 		int result = 0;
-		
-		List<ExerciseFeedbackResult> foodInfo = exerciseFeedbackResponseDao.feedbackFoodSearch(exerciseFeedbackResult);
+			List<ExerciseFeedbackResult> foodInfo = exerciseFeedbackResponseDao.feedbackFoodSearch(exerciseFeedbackResult);
 		returnMap.put("foodInfo", foodInfo);
 		returnMap.put("result", result);
 		return returnMap;
+	}
+	
+	public Map<String,Object> exerciseFeedResponse(String exerciseFeedbackRequestNo) {
+		ExerciseFeedbackRequest exerciseFeedbackRequest = exerciseFeedbackDao.exerciseFeedbackRequestDetail(exerciseFeedbackRequestNo);
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("exerciseFeedbackRequest", exerciseFeedbackRequest);
+		return returnMap;
+		
 	}
 }

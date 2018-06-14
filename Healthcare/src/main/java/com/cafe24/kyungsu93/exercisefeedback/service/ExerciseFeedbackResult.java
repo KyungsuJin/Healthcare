@@ -16,14 +16,14 @@ public class ExerciseFeedbackResult {
 	private String foodGroup;
 	private String foodName;
 	private int foodOnece;
-	private Double foodKcal;
-	private Double foodCarbohydrate;
-	private Double foodProtein;
-	private Double foodFat;
-	private Double foodSugar;
-	private Double foodNatrium;
-	private Double foodCholesterol;
-	private Double foodTransfat;
+	private double foodKcal;
+	private double foodCarbohydrate;
+	private double foodProtein;
+	private double foodFat;
+	private double foodSugar;
+	private double foodNatrium;
+	private double foodCholesterol;
+	private double foodTransfat;
 	public String getExerciseFeedbackRequestNo() {
 		return exerciseFeedbackRequestNo;
 	}

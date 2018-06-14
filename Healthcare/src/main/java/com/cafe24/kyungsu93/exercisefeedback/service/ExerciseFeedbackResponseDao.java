@@ -1,25 +1,43 @@
 package com.cafe24.kyungsu93.exercisefeedback.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@Repository
-public class ExerciseFeedbackResponseDao {
-
-	private static final Logger logger = LoggerFactory.getLogger(ExerciseFeedbackResponseDao.class);
+@Service
+@Transactional
+public class ExerciseFeedbackResponseService {
 	@Autowired
-	private SqlSessionTemplate sqlSession;
-	final String NS = "com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackResponseMapper.";
+	private ExerciseFeedbackResponseDao exerciseFeedbackResponseDao;
+	@Autowired
+	private ExerciseFeedbackDao exerciseFeedbackDao;
+	private static final Logger logger = LoggerFactory.getLogger(ExerciseFeedbackResponseService.class);
 	
-	//운동피드백 요청 등록
-	public List<ExerciseFeedbackResult> feedbackFoodSearch(ExerciseFeedbackResult exerciseFeedbackResult) {
-		logger.debug("ExerciseFeedbackResponseDao - feedbackFoodSearch 실행");
-		List<ExerciseFeedbackResult> list = sqlSession.selectList(NS+"feedbackFoodSearch", exerciseFeedbackResult);
-		return list;
+	public Map<String,Object> feedbackFoodSearch(ExerciseFeedbackResult exerciseFeedbackResult){
+		logger.debug("ExerciseFeedbackResponseService - feedbackFoodSearch실행");	
+		String foodGroup = exerciseFeedbackResult.getFoodGroup();
+		String foodName = exerciseFeedbackResult.getFoodName();
+		logger.debug("foodGroup:" +foodGroup);	
+		logger.debug("foodName:"+foodName);	
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		int result = 0;
+			List<ExerciseFeedbackResult> foodInfo = exerciseFeedbackResponseDao.feedbackFoodSearch(exerciseFeedbackResult);
+		returnMap.put("foodInfo", foodInfo);
+		returnMap.put("result", result);
+		return returnMap;
+	}
+	
+	public Map<String,Object> exerciseFeedResponse(String exerciseFeedbackRequestNo) {
+		ExerciseFeedbackRequest exerciseFeedbackRequest = exerciseFeedbackDao.exerciseFeedbackRequestDetail(exerciseFeedbackRequestNo);
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("exerciseFeedbackRequest", exerciseFeedbackRequest);
+		return returnMap;
+		
 	}
 }

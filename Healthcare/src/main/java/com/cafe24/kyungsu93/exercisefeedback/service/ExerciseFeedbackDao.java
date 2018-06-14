@@ -18,6 +18,62 @@ public class ExerciseFeedbackDao {
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackMapper.";
 	
+	//운동피드백 요청결과 디테일 검색
+	public ExerciseFeedbackRequest exerciseFeedbackApprovalResult(String exerciseFeedbackRequestNo) {
+		logger.debug("ExerciseFeedbackDao - exerciseFeedbackApprovalResult 실행");
+		return sqlSession.selectOne(NS+"exerciseFeedbackApprovalResult",exerciseFeedbackRequestNo);
+	}
+	
+	//운동피드백 요청결과 카운트
+	public int exerciseFeedbackApprovalresultTotalCount(String exerciseFeedbackRequestNo) {
+		logger.debug("ExerciseFeedbackDao - exerciseFeedbackApprovalresultTotalCount 실행");
+		return sqlSession.selectOne(NS+"exerciseFeedbackApprovalresultTotalCount",exerciseFeedbackRequestNo);
+	}
+	
+	//운동 피드백 거절
+	public int feedbackapprovalDenied(String exerciseFeedbackRequestNo) {
+		logger.debug("ExerciseFeedbackDao - feedbackapprovalDenied 실행");
+		int row = sqlSession.insert(NS+"feedbackapprovalDenied",exerciseFeedbackRequestNo);
+		return row;
+	}	
+	
+	//운동 피드백 수락
+	public int feedbackapprovalAccept(String exerciseFeedbackRequestNo) {
+		logger.debug("ExerciseFeedbackDao - feedbackapprovalAccept 실행");
+		int row = sqlSession.insert(NS+"feedbackapprovalAccept",exerciseFeedbackRequestNo);
+		return row;
+	}	
+	
+	//운동 피드백 이전글
+	public int prevExerciseFeedbackDetailCount(String exerciseFeedbackRequestNo) {
+		logger.debug("ExerciseFeedbackDao - prevExerciseFeedbackDetailCount 실행");
+		return sqlSession.selectOne(NS+"prevExerciseFeedbackDetailCount",exerciseFeedbackRequestNo);
+	}		
+	
+	//운동 피드백 다음글 
+	public int nextExerciseFeedbackDetailCount(String exerciseFeedbackRequestNo) {
+		logger.debug("ExerciseFeedbackDao - nextExerciseFeedbackDetailCount 실행");
+		return sqlSession.selectOne(NS+"nextExerciseFeedbackDetailCount",exerciseFeedbackRequestNo);
+	}		
+	
+	//운동 피드백 다음글 
+	public ExerciseFeedbackRequest nextExerciseFeedbackDetail(String exerciseFeedbackRequestNo) {
+		logger.debug("ExerciseFeedbackDao - nextExerciseFeedbackDetail 실행");
+		return sqlSession.selectOne(NS+"nextExerciseFeedbackDetail",exerciseFeedbackRequestNo);
+	}
+	
+	//운동 피드백 이전글
+	public ExerciseFeedbackRequest prevExerciseFeedbackDetail(String exerciseFeedbackRequestNo) {
+		logger.debug("ExerciseFeedbackDao - prevExerciseFeedbackDetail 실행");
+		return sqlSession.selectOne(NS+"prevExerciseFeedbackDetail",exerciseFeedbackRequestNo);
+	}
+	
+	//운동 피드백 요청 상세보기
+	public ExerciseFeedbackRequest exerciseFeedbackRequestDetail(String exerciseFeedbackRequestNo) {
+		logger.debug("ExerciseFeedbackDao - exerciseFeedbackRequestDetail 실행");
+		return sqlSession.selectOne(NS+"exerciseFeedbackRequestDetail",exerciseFeedbackRequestNo);
+	}
+	
 	//운동피드백 요청등록번호 최대값 검색
 	public int exerciseFeedbackRequestNo() {
 		logger.debug("ExerciseFeedbackDao - exerciseFeedbackRequestNo 실행");
