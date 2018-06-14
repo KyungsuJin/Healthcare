@@ -1,6 +1,6 @@
 package com.cafe24.kyungsu93.diet.service;
 
-public class Caloriebattle {
+public class CalorieBattle {
 	private String calorieBattleNo;
 	private String memberNo;
 	private double consumeCalorie;
@@ -11,10 +11,9 @@ public class Caloriebattle {
 	private double fat;
 	private double sugar;
 	private double natrium;
-	private double sholesterol;
+	private double cholesterol;
 	private double sfa;
 	private String calorieDate;
-	
 	public String getCalorieBattleNo() {
 		return calorieBattleNo;
 	}
@@ -75,11 +74,11 @@ public class Caloriebattle {
 	public void setNatrium(double natrium) {
 		this.natrium = natrium;
 	}
-	public double getSholesterol() {
-		return sholesterol;
+	public double getCholesterol() {
+		return cholesterol;
 	}
-	public void setSholesterol(double sholesterol) {
-		this.sholesterol = sholesterol;
+	public void setCholesterol(double cholesterol) {
+		this.cholesterol = cholesterol;
 	}
 	public double getSfa() {
 		return sfa;
@@ -93,6 +92,13 @@ public class Caloriebattle {
 	public void setCalorieDate(String calorieDate) {
 		this.calorieDate = calorieDate;
 	}
-	
+	@Override
+	public String toString() {
+		return "CalorieBattle [calorieBattleNo=" + calorieBattleNo + ", memberNo=" + memberNo + ", consumeCalorie="
+				+ consumeCalorie + ", ingestCalorie=" + ingestCalorie + ", oneDayCalorie=" + oneDayCalorie
+				+ ", carbohydrate=" + carbohydrate + ", protein=" + protein + ", fat=" + fat + ", sugar=" + sugar
+				+ ", natrium=" + natrium + ", cholesterol=" + cholesterol + ", sfa=" + sfa + ", calorieDate="
+				+ calorieDate + "]";
+	}
 	
 }

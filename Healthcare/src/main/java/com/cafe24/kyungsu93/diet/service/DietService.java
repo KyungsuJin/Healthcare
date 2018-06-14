@@ -1,6 +1,10 @@
 package com.cafe24.kyungsu93.diet.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,12 +19,76 @@ import com.cafe24.kyungsu93.Food;
 public class DietService {
 	@Autowired
 	DietDao dietDao;
+	@Autowired
+	HttpSession session;
 	
 	private static final Logger logger = LoggerFactory.getLogger(DietService.class);
 	
+	public TotalCalorieResponse totalCalorie(String memberNo, String datePicker) {
+		logger.debug("DietService_totalCalorie");
+		Map<String, String> map = new HashMap<String, String>();
+		String pickMonth = datePicker.substring(0, 2);
+		String pickDay = datePicker.substring(3, 5);
+		String pickYear = datePicker.substring(6, 10);
+		map.put("memberNo", memberNo);
+		map.put("pickMonth", pickMonth);
+		map.put("pickDay", pickDay);
+		map.put("pickYear", pickYear);
+		
+		List<TotalCalorieResponse> list = dietDao.totalCalorie(map);
+		TotalCalorieResponse totalCalorie = new TotalCalorieResponse();
+		double kcal = 0;
+		double carbohydrate = 0;
+		double protein = 0;
+		double fat = 0;
+		double sugar = 0;
+		double natrium = 0;
+		double Cholesterol = 0;
+		double sfa = 0;
+		int ingestWeight = 0;
+		
+		for(int i=0; i<list.size() ;i++) {
+			ingestWeight = list.get(i).getIngestWeight();
+			kcal += list.get(i).getTotalKcal()*ingestWeight;
+			carbohydrate += list.get(i).getTotalCarbohydrate()*ingestWeight;
+			protein += list.get(i).getTotalProtein()*ingestWeight;
+			fat += list.get(i).getTotalFat()*ingestWeight;
+			sugar += list.get(i).getTotalSugar()*ingestWeight;
+			natrium += list.get(i).getTotalNatrium()*ingestWeight;
+			Cholesterol += list.get(i).getTotalCholesterol()*ingestWeight;
+			sfa += list.get(i).getTotalSfa()*ingestWeight;
+
+			if(i+1 == list.size()) {
+				totalCalorie.setTotalKcal(kcal);
+				totalCalorie.setTotalCarbohydrate(carbohydrate = carbohydrate/i);
+				totalCalorie.setTotalProtein(protein = protein/i);
+				totalCalorie.setTotalFat(fat = fat/i);
+				totalCalorie.setTotalSugar(sugar = sugar/i);
+				totalCalorie.setTotalNatrium(natrium = natrium/i);
+				totalCalorie.setTotalCholesterol(Cholesterol = Cholesterol/i);
+				totalCalorie.setTotalSfa(sfa = sfa/i);
+			}
+		}
+		return totalCalorie;
+	}
+	public int removeIngestCalorie(String ingestCalorieNo, String memberNo) {
+		logger.debug("DietService_removeIngestCalorie");
+		String sMemberNo = (String)session.getAttribute("memberSessionNo");
+		System.out.println("sMemberNo : " +sMemberNo);
+		System.out.println("ingestCalorieNo : " +ingestCalorieNo);
+		//현재로그인한 회원과 등록회원을 비교하여 다르다면 0을 return하고 동일하다면 removeIngestCalorie메서드를 실행한다.
+		if(sMemberNo != memberNo) {
+			return 0;
+		}
+		return dietDao.removeIngestCalorie(ingestCalorieNo);
+	}
 	public List<IngestCalorie> getIngestCalorie() {
 		logger.debug("DietService_getIngestCalorie");
-		return dietDao.getIngestCalorie();
+		String memberNo = (String)session.getAttribute("memberSessionNo");
+		if(memberNo == null) {
+			return null;
+		}
+		return dietDao.getIngestCalorie(memberNo);
 	}
 	public int addIngestCalorie(IngestCalorieRequest ingestCalorieRequest) {
 		logger.debug("DietService_ingestCalorie");

@@ -4,10 +4,45 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cafe24.kyungsu93.diet.service.DietMapper">
+	<select id="selectTotalCalorie" 
+			parameterType="java.util.Map"
+			resultType="com.cafe24.kyungsu93.diet.service.TotalCalorieResponse">
+						
+		SELECT
+			a.member_no as memberNo
+			,a.ingest_weight as ingestWeight
+			,a.ingest_calorie_date as ingestCalorieDate
+			,b.food_name as foodName
+			,b.food_once as totalOnce
+			,b.food_kcal as totalKcal
+			,b.food_carbohydrate as totalCarbohydrate
+			,b.food_protein as totalProtein
+			,b.food_fat as totalFat
+			,b.food_sugar as totalSugar
+			,b.food_natrium as totalNatrium
+			,b.food_cholesterol as totalCholesterol
+			,b.food_sfa as totalSfa
+		FROM
+			ingest_calorie a, food b
+		WHERE
+			a.food_no = b.food_no 
+			and a.member_no=#{memberNo}
+<!-- 			and YEAR(a.ingest_calorie_date) = #{pickYear}
+			and MONTH(a.ingest_calorie_date) = #{pickMonth}
+			and DAY(a.ingest_calorie_date) = #{pickDay} -->
+	</select>
+	<delete id="deleteIngestCalorie" parameterType="String">
+		DELETE
+		FROM
+			ingest_calorie
+		WHERE
+			ingest_calorie_no=#{ingestCalorieNo}
+	</delete>
 	<select id="selectIngestCalorieList"
+			parameterType="String"
 			resultType="com.cafe24.kyungsu93.diet.service.IngestCalorie">
 		SELECT
-			a.ingest_calorie_no as ingestCalorie
+			a.ingest_calorie_no as ingestCalorieNo
 			,a.member_no as memberNo
 			,a.food_no as foodNo
 			,a.ingest_weight as IngestWeight
@@ -16,7 +51,7 @@
 		FROM
 			ingest_calorie a, food b
 		WHERE
-			a.food_no = b.food_no
+			a.food_no = b.food_no AND member_no=#{memberNo}
 		ORDER BY
 			ingest_calorie_date DESC
 	</select>
@@ -59,7 +94,6 @@
 			,food_natrium as foodNatrium
 			,food_cholesterol as foodCholesterol
 			,food_sfa as foodSfa
-			,food_transfat as foodTransfat
 			,food_build_year as foodBuildYear
 		FROM
 			food

@@ -41,7 +41,7 @@
 														'<td>'+result[i].foodCholesterol+'</td>'+
 														'<td>'+result[i].foodSfa+'</td>'+
 														'<td>'+result[i].foodTransfat+'</td>'+
-														'<td class="td">'+result[i].foodNo+'</td>'+	
+														'<td class="td">'+result[i].foodBuildYear+'</td>'+	
 														'<td><input type="hidden" name="foodNo" value="'+result[i].foodNo+'"></td>'+
 														'<td><input type="button" id="btnAdd" value="추가"></td></tr>');
 							}
