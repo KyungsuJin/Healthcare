@@ -15,6 +15,7 @@
 					$("#submitBtn").click();
 				}
 			})
+			/* 유효성검사 */
 			$("#submitBtn").click(function(){
 				if($("#memberName").val()=='' || blank.test($("#memberName").val())){
 		            alert('이름은 필수 입력값 입니다.');
@@ -28,7 +29,7 @@
 		        }else{
 		        	$("#memberEmail").val($("#memberEmail1").val()+'@'+$("#memberEmail2").val());
 		        	$.ajax({
-		        		type:'POST'
+		        		type:"POST"
 		        		,url : "${pageContext.request.contextPath}/memberFindId"
 		        		,data : {"memberName" : $("#memberName").val()
 								,"memberEmail":$("#memberEmail").val()}

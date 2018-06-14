@@ -69,17 +69,17 @@ public class MemberService {
 		int result = (memberDao.memberNo());
 		String memberNo = "member_";
 		memberFile.setMemberNo(memberNo+result);
-		UUID uuid = UUID.randomUUID();
-		String fileName =uuid.toString().replaceAll("-", "");
+		UUID uuid = UUID.randomUUID(); //랜덤한 id 값 생성
+		String fileName =uuid.toString().replaceAll("-", "");//랜덤한 id 값의 - 를 공백으로 바꿔준다.
 		memberFile.setMemberFileName(fileName);
-		String fileExt = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".")+1);
+		String fileExt = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".")+1);//파일 확장자
 		memberFile.setMemberFileExt(fileExt);
-		memberFile.setMemberFileSize(multipartFile.getSize());
-		memberFile.setMemberFileRealName(multipartFile.getOriginalFilename());
-		memberFile.setMemberFileType(multipartFile.getContentType());
+		memberFile.setMemberFileSize(multipartFile.getSize());//파일사이즈
+		memberFile.setMemberFileRealName(multipartFile.getOriginalFilename());//파일의 원래이름
+		memberFile.setMemberFileType(multipartFile.getContentType());//파일타입
 		logger.debug(memberFile.toString());
 		logger.debug(path);
-		File file = new File(path+fileName+"."+fileExt);
+		File file = new File(path+fileName+"."+fileExt);//파일의 경로 지정
 		logger.debug("file : "+file);
 		memberFileDao.memberFile(memberFile);
 		try {
@@ -133,9 +133,9 @@ public class MemberService {
 			memberDao.memberLeaveRequest(id);
 		}else if(level==3) {
 			memberNo=memberDao.memberLeaveSelect(id);
-			logger.debug("-0--------------"+memberNo);
+			logger.debug("memberNo : "+memberNo);
 			memberDao.memberLeaveDoctorRequest(memberNo);
-			memberFile(memberNo,path);
+			memberFile(memberNo,path);//의사회원 또는피티 회원은 파일이 있기때문에 파일삭제 부분
 			memberDao.FileRemove(memberNo);
 			memberDao.memberLeaveRequest(id);
 		}else if(level==4) {

@@ -141,4 +141,35 @@ public class MessageService {
 			messageDao.SendMessageDelete(result);
 		}
 	}
+	//받은 메시지 신고 처리
+	public int messageComplain(String complainReason,String messageNo) {
+		logger.debug("MessageService.messageComplain");
+		Message message = messageDao.complainMessageContent(messageNo);
+		int complainEndNo = (messageDao.messageComplainNo())+1;
+		String complaingString = "complain_";
+		String complainNo = complaingString+complainEndNo;
+		Map<String,String> messageComplain = new HashMap<String,String>();
+		messageComplain.put("complainReason", complainReason);
+		messageComplain.put("messageNo", messageNo);
+		messageComplain.put("messageTitle", message.getMessageTitle());
+		messageComplain.put("messageContent", message.getMessageContent());
+		messageComplain.put("complainNo", complainNo);
+		int result = messageDao.alreadyComplain(messageNo);
+		if(result==0) {
+			messageDao.messageComplain(messageComplain);
+		}
+		return result;
+	}
+	//신고받은 메시지 리스트
+	public List<MessageComplain> messageComplainList() {
+		logger.debug("MessageService.messageComplainList");
+		return messageDao.messageComplainList();
+
+	}
+	//신고받은 메시지 세부 내용
+	public MessageComplain messageComplainContent(String sendMessageNo) {
+		logger.debug("MessageService.messageComplainContent");
+		return messageDao.messageComplainContent(sendMessageNo);
+
+	}
 }

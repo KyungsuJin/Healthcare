@@ -13,7 +13,7 @@
 			})
 			$("#checkButton").click(function(){
 				$.ajax({
-					type:'POST',
+					type:"POST",
 					url : "${pageContext.request.contextPath}/memberModifyCheck",
 					data : {"memberId" : $("#memberId").val()
 							,"memberPw":$("#memberPw").val()},

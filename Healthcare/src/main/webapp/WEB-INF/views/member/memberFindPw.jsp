@@ -28,7 +28,7 @@
 		        }else{
 		        	$("#memberEmail").val($("#memberEmail1").val()+'@'+$("#memberEmail2").val());
 		        	$.ajax({
-		        		type:'POST'
+		        		type:"POST"
 		        		,url : "${pageContext.request.contextPath}/memberFindPw"
 		        		,data : {"memberId" : $("#memberId").val()
 								,"memberEmail":$("#memberEmail").val()}

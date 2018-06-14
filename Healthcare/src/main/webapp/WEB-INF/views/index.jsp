@@ -53,6 +53,7 @@
 		<a href="${pageContext.request.contextPath}/memberLeave">회원탈퇴</a>
 		<a href="${pageContext.request.contextPath}/memberApprovalList">회원승인대기리스트</a>
 		<a href="${pageContext.request.contextPath}/exerciseMatching">운동매칭 관리</a>
+		<a href="${pageContext.request.contextPath}/messageComplainList">메시지 관리</a>
 		<a href="${pageContext.request.contextPath}/memberListChoice">회원리스트</a>
 	</c:if>
 	<c:if test="${!empty sessionScope.memberSessionId && sessionScope.memberSessionLevel!=1}">
@@ -63,6 +64,7 @@
 		<a href="${pageContext.request.contextPath}/memberModifyCheck">회원정보수정</a>
 		<a href="#" id="messageList">메세지</a>
 		<a href="#" id="exercise">운동 매칭</a>
+		<a href="${pageContext.request.contextPath}/bodyMassIndexList?memberNo=${sessionScope.memberSessionNo}">체질량관리</a>
 		<a href="${pageContext.request.contextPath}/memberLeave">회원탈퇴</a>
 	</c:if>
 </body>

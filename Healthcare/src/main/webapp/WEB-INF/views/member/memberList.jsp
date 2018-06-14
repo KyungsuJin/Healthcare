@@ -8,7 +8,7 @@
 	<script>
 		$(document).ready(function(){
 				$.ajax({
-					type : "get"
+					type : "GET"
 					,url : "${pageContext.request.contextPath}/memberList"
 					,data :
 							{"memberLevel":2 

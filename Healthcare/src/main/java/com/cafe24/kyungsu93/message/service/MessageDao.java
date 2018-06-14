@@ -97,6 +97,35 @@ public class MessageDao {
 		logger.debug("MessageDao.readMessageChk");
 		return sqlSession.selectOne(NS + "readMessageChk", sendMessageNo);
 	}
-
+	//신고된 메시지  내용 가져오기 
+	public Message complainMessageContent(String messageNo) {
+		logger.debug("MessageDao.complainMessageContent");
+		return sqlSession.selectOne(NS + "complainMessageContent", messageNo);
+	}
+	//신고된 내용 입력/신고처리
+	public void messageComplain(Map<String,String> messageComplain) {
+		logger.debug("MessageDao.complainMessageContet");
+		sqlSession.insert(NS + "complainMessageContet", messageComplain);
+	}
+	//신고 번호 구해오기
+	public int messageComplainNo() {
+		logger.debug("MessageDao.messageComplainNo");
+		return sqlSession.selectOne(NS + "messageComplainNo");
+	}
+	//이미 신고되었는지 확인
+	public int alreadyComplain(String messageNo) {
+		logger.debug("MessageDao.alreadyComplain");
+		return sqlSession.selectOne(NS + "alreadyComplain",messageNo);
+	}
+	//이미 신고되었는지 확인
+	public List<MessageComplain> messageComplainList() {
+		logger.debug("MessageDao.messageComplainList");
+		return sqlSession.selectList(NS + "messageComplainList");
+	}
+	//신고된 메시지 세부 내용
+	public MessageComplain messageComplainContent(String sendMessageNo) {
+		logger.debug("MessageDao.messageComplainContent");
+		return sqlSession.selectOne(NS + "messageComplainContent",sendMessageNo);
+	}
 
 }

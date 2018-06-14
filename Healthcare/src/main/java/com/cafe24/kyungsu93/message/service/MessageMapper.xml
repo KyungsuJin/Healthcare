@@ -183,5 +183,78 @@
 			WHERE rm.send_message_no=md.send_message_no 
 			AND rm.send_message_no=#{sendMessageNo}
   	</select>
+  	<!-- 신고된 메시지 내용 가져오기  -->
+  	<select id="complainMessageContent"
+  			parameterType="String"
+  			resultMap="message">
+  			SELECT 
+  				message_title
+  				,message_content
+			FROM receive_message
+			WHERE send_message_no=#{messageNo}
+  	</select>
+  	<!-- 신고된 메시지 내용 입력 /신고처리  -->
+  	<insert id="complainMessageContet"
+  			parameterType="java.util.Map">
+  			INSERT INTO message_complain(
+  				complain_no
+  				,send_message_no
+  				,message_title
+  				,message_content
+  				,complain_reason
+  				,complain_date
+  			)VALUES(
+  				#{complainNo}
+  				,#{messageNo}
+  				,#{messageTitle}
+  				,#{messageContent}
+  				,#{complainReason}
+  				,now()
+  			)
+  	</insert>
+  	<!-- 신고 번호 -->
+  	<select id="messageComplainNo"
+  			resultType="Integer">
+  			SELECT
+         	IFNULL(MAX(cast(SUBSTRING(complain_no,10) as decimal)), 0)
+         	FROM message_complain
+  	</select>
+  	<!-- 이미 신고된 메시지 인지 확인 -->
+  	<select id="alreadyComplain"
+  			parameterType="String"
+  			resultType="Integer">
+  			SELECT count(*)
+  			FROM message_complain
+  			WHERE send_message_no=#{messageNo}
+  	</select>
+  	<!-- 신고된 메시지 리스트 -->
+  	<select id="messageComplainList"
+  			resultType="com.cafe24.kyungsu93.message.service.MessageComplain">
+  			SELECT 
+					complain_no AS complainNo
+					,send_message_no AS sendMessageNo
+					,message_title AS messageTitle
+					,message_content AS messageContent
+					,complain_reason AS complainReason
+					,complain_date AS complainDate
+					,processing_progress AS processingProgress
+  			FROM message_complain
+  	</select>
+  	<!-- 신고된 메시지 세부 내용 -->
+  	<select id="messageComplainContent"
+  			resultType="com.cafe24.kyungsu93.message.service.MessageComplain">
+  			SELECT 
+					sm.member_receive_no AS memberReceiveNo
+					,sm.message_date AS sendMessageDate
+					,sm.member_send_no AS memberSendNo
+					,mc.send_message_no AS sendMessageNo
+					,mc.message_title AS messageTitle
+					,mc.message_content AS messageContent
+					,mc.complain_reason AS complainReason
+					,mc.complain_date AS complainDate
+  			FROM message_complain mc ,send_message sm
+  			WHERE mc.send_message_no=sm.send_message_no
+  			AND mc.send_message_no=#{sendMessageNo}
+  	</select>
 
   </mapper>

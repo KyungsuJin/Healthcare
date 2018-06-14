@@ -7,6 +7,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script>
 		$(document).ready(function(){
+			/* DocList 를 불러오는 ajax */
 			$.ajax({
 				type : "GET"
 				,url : "${pageContext.request.contextPath}/memberList"
@@ -36,6 +37,7 @@
 											'<td><a href="${pageContext.request.contextPath}/memberExpulsion?memberId='+val.memberId+'&memberLevel='+val.memberLevel+'">강퇴</a></td></tr>'
 											);
 					});
+					/* 페이징 부분 */
 						if(data.currentPage>1){
 							$("#page").append('<a href="${pageContext.request.contextPath}/doctorMemberList?currentPage=1&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> << </a>');
 							$("#page").append('<a href="${pageContext.request.contextPath}/doctorMemberList?currentPage='+(data.currentPage-1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> 이전 </a>');
@@ -52,6 +54,7 @@
 					
 				}
 			});
+			/* 검색부분 */
 			$("#searchBtn").click(function(){
 				window.location.href='${pageContext.request.contextPath}/DoctorMemberList?searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchTextTest").val();
 			})

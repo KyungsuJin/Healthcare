@@ -1,5 +1,6 @@
 package com.cafe24.kyungsu93.message.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -7,12 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cafe24.kyungsu93.message.service.Message;
+import com.cafe24.kyungsu93.message.service.MessageComplain;
 import com.cafe24.kyungsu93.message.service.MessageService;
 @Controller
 public class MessageController {
@@ -73,27 +76,28 @@ public class MessageController {
 		messageService.SendMessageDelete(deleteMessageNo);
 	return "message/messageList";
 	}
-/*	@RequestMapping(value="/des",method=RequestMethod.GET)
-	public String des(@RequestParam(value="currentPage")int currentPage) {
-		logger.debug("messageController.des");
-		logger.debug("currentPage :" +currentPage);
-	return "message/messageList";
-	}*/
-/*	//받은 메시지 리스트
-		@RequestMapping(value = "/messageReceiveList1", method = RequestMethod.GET)
-		public String messageReceiveList1(Model model,
-								@RequestParam(value = "memberReceiveNo") String memberNo
-													,@RequestParam(value="currentPage",defaultValue="1")int currentPage
-													,@RequestParam(value="pagePerRow",defaultValue="10")int pagePerRow){
-			logger.debug("MessageRestController.messageReceiveList");
-			logger.debug("memberNo: "+memberNo);
-			Map<String, Object> map=messageService.messageReceiveList(memberNo,currentPage,pagePerRow);
-			model.addAttribute("currentPage",currentPage);
-			model.addAttribute("startPage",map.get("startPage"));
-			model.addAttribute("endPage",map.get("endPage"));
-			model.addAttribute("lastPage",map.get("lastPage"));
-			model.addAttribute("list",map.get("list"));
-			return "message/messageList";
-		}*/
+	//받은 메시지 신고 페이지
+	@RequestMapping(value = "/messageComplain", method = RequestMethod.GET)
+	public String messageComplain() {
+		logger.debug("messageController.messageComplain GET");
+		return "message/messageComplain";
+	}
+	//신고 받은 리스트 페이지
+	@RequestMapping(value = "/messageComplainList", method = RequestMethod.GET)
+	public String messageComplainList(Model model) {
+		logger.debug("messageController.messageComplainList GET");
+		List<MessageComplain> messageComplainList=messageService.messageComplainList();
+		model.addAttribute("messageComplainList",messageComplainList);
+		return "message/messageComplainList";
+	}
+	//신고 받은 메시지 세부 내용
+	@RequestMapping(value = "/messageComplainContent", method = RequestMethod.GET)
+	public String messageComplainContent(Model model,@RequestParam(value="sendMessageNo")String sendMessageNo) {
+		logger.debug("messageController.messageComplainContent GET");
+		MessageComplain messageComplain = messageService.messageComplainContent(sendMessageNo);
+		model.addAttribute("messageComplain",messageComplain);
+		return "message/messageComplainContent";
+	}
+	
 
 }

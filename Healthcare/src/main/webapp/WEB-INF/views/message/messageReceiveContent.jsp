@@ -163,6 +163,7 @@
 				}
 			})
 		});
+		//메시지 삭제
 			$("#deleteMessage").click(function(){
 				if(confirm('정말 삭제하시겠습니까?')){
 					$("#deleteForm").submit();
@@ -170,8 +171,10 @@
 					
 				}
 			});
+		//메시지 신고
 			$("#reportMessage").click(function(){
-				
+				window.open("${pageContext.request.contextPath}/messageComplain"
+							,"messageComplain","width=400 ,height=130");
 			})
 		});
 	</script>
@@ -187,7 +190,6 @@
 		<button type="button" id="messageWrite">메시지 작성</button>
 		<button type="button" id="sendMessage">보낸 메시지</button>
 		<button type="button" id="messageReceive">받은 메시지</button>
-		<button type="button" id="reportMessage">메시지 신고</button>
 	</div>
 	<table border="1" class="table" id="tb">
 		<thead>
@@ -214,6 +216,7 @@
 				<form id="deleteForm"action="${pageContext.request.contextPath}/ReceiveMessageDelete" method="post">
 					<input type="hidden" id="deleteMessageNo" name="deleteMessageNo" value="${message.sendMessageNo}">
 					<button type=button id="deleteMessage">삭제</button>
+					<button type="button" id="reportMessage">메시지 신고</button>
 				</form>
 			</td>
 		<tr>

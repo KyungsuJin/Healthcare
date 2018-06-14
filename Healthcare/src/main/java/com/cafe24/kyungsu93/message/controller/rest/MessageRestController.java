@@ -73,6 +73,15 @@ public class MessageRestController {
 			logger.debug("반복" + result);
 		}
 		messageService.deleteSendMessageList(sendMessageNo);
-		return "success123";
+		return "success";
+	}
+	//받은 메시지 신고 처리
+	@RequestMapping(value = "/messageComplain", method = RequestMethod.POST)
+	public int messageComplain(@RequestParam(value = "complainReason") String complainReason
+								,@RequestParam(value = "messageNo") String messageNo) {
+		logger.debug("messageController.messageComplain POST");
+		logger.debug("선택 값 sv :" + complainReason);
+		logger.debug("선택 값  asdf :" + messageNo);
+		return messageService.messageComplain(complainReason,messageNo);
 	}
 }

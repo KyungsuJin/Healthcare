@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.cafe24.kyungsu93.BodyMassIndexMapper">
+  	<resultMap type="com.cafe24.kyungsu93.bodymassindex.service.BodyMassIndex" id="bodyMassIndex">
+  		<result column="body_mass_index_no" property="bodyMassIndexNo"/>
+  		<result column="member_no" property="memberNo"/>
+  		<result column="body_height" property="bodyHeight"/>
+  		<result column="body_weight" property="bodyWeight"/>
+  		<result column="body_waist_size" property="bodyWaistSize"/>
+  		<result column="body_mass_index" property="bodyMassIndex"/>
+  		<result column="body_date" property="bodyDate"/>
+  	</resultMap>
+  	<!--체질량 등록  -->
+  	<insert id="addBodyMassIndex"
+  			parameterType="com.cafe24.kyungsu93.bodymassindex.service.BodyMassIndex">
+  			INSERT INTO body_mass_index(
+  				body_mass_index_no
+  				,member_no
+  				,body_height
+  				,body_weight
+  				,body_waist_size
+  				,body_mass_index
+  				,body_date
+  			)VALUES(
+  				#{bodyMassIndexNo}
+  				,#{memberNo}
+  				,#{bodyHeight}
+  				,#{bodyWeight}
+  				,#{bodyWaistSize}
+  				,#{bodyMassIndex}
+  				,now()
+  			)
+  	</insert>
+  	<!--체질량 등록번호 max 구하기  -->
+  	<select id="bodyMassIndexEndNo"
+  			resultType="Integer">
+  			SELECT
+         	IFNULL(MAX(cast(SUBSTRING(body_mass_index_no,17) as decimal)), 0)
+         	FROM body_mass_index
+  	</select>
+  	<!--체질량 등록한 리스트  -->
+  	<select id="bodyMassIndexList"
+  			parameterType="String"
+  			resultMap="bodyMassIndex">
+  			SELECT
+  				body_mass_index_no
+  				,body_height
+  				,body_weight
+  				,body_waist_size
+  				,body_mass_index
+  				,body_date
+  			FROM body_mass_index
+  			WHERE member_no =#{memberNo}
+  	</select>
+  
+  </mapper>
