@@ -195,14 +195,14 @@ public class ExerciseFeedbackService {
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
 		//운동피드백 요청 리스트
-		List<ExerciseFeedbackRequest> list = exerciseFeedbackDao.exerciseFeedbackRequestList(map);
+		List<ExerciseFeedbackRequest> exercisefeedbacklist = exerciseFeedbackDao.exerciseFeedbackRequestList(map);
 		//게시판 전체 게시물 수
 		int total = exerciseFeedbackDao.exerciseFeedbackRequestTotalCount();
 		int lastPage = total/pagePerRow;
         if(total % pagePerRow != 0) {
             lastPage++;
         }
-        logger.debug("list:"+list);
+        logger.debug("exercisefeedbacklist:"+exercisefeedbacklist);
         logger.debug("lastPage:"+lastPage);
         logger.debug("currentPage:"+currentPage);
         logger.debug("beginRow:"+beginRow);
@@ -233,7 +233,7 @@ public class ExerciseFeedbackService {
 		logger.debug("totalBlock:"+totalBlock);
 		logger.debug("====================== page block =========================");
 		Map<String,Object> returnMap = new HashMap<String,Object>();
-		returnMap.put("list", list);
+		returnMap.put("exercisefeedbacklist", exercisefeedbacklist);
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("firstBlockPage", firstBlockPage);
 		returnMap.put("lastBlockPage", lastBlockPage);

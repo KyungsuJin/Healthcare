@@ -36,7 +36,7 @@ public class ExerciseFeedbackController {
 		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 		model.addAttribute("totalBlock", map.get("totalBlock"));
-		return "group/exerciseFeedbackList";
+		return "exercisefeedback/exerciseFeedbackList";
 	}
 	
 	//운동피드백 요청 리스트
@@ -52,7 +52,7 @@ public class ExerciseFeedbackController {
 		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 		model.addAttribute("totalBlock", map.get("totalBlock"));
-		return "group/exerciseFeedbackRequestList";
+		return "exercisefeedback/exerciseFeedbackRequestList";
 	}
 	
 	//운동 피드백 요청 완료
@@ -81,11 +81,11 @@ public class ExerciseFeedbackController {
 		Map<String,Object> map = exerciseFeedbackService.exerciseFeedbackPtList(currentPage, pagePerRow);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("list", map.get("list"));
+		model.addAttribute("exercisefeedbacklist", map.get("exercisefeedbacklist"));
 		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 		model.addAttribute("totalBlock", map.get("totalBlock"));
-		return "group/exerciseFeedbackPtList";
+		return "exercisefeedback/exerciseFeedbackPtList";
 	}
 	
 }

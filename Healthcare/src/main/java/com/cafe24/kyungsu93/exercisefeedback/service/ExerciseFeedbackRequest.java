@@ -6,8 +6,8 @@ public class ExerciseFeedbackRequest {
 	private String memberName;
 	private String memberId;
 	private String memberWorkSpace;
-	private String memberTotalFeedback;
-	private String memberAgreeFeedback;
+	private int memberTotalFeedback;
+	private int memberAgreeFeedback;
 	private String feedbackAvailability;
 	private String teacherNo;
 	private String exerciseFeedbackRequestTitle;
@@ -16,6 +16,7 @@ public class ExerciseFeedbackRequest {
 	private String exerciseFeedbackApproval;
 	private String exerciseFeedbackResult;
 	private String exerciseFeedbackApprovalDate;
+	private double evaluationAverageGrade;
 	public String getExerciseFeedbackRequestNo() {
 		return exerciseFeedbackRequestNo;
 	}
@@ -46,16 +47,16 @@ public class ExerciseFeedbackRequest {
 	public void setMemberWorkSpace(String memberWorkSpace) {
 		this.memberWorkSpace = memberWorkSpace;
 	}
-	public String getMemberTotalFeedback() {
+	public int getMemberTotalFeedback() {
 		return memberTotalFeedback;
 	}
-	public void setMemberTotalFeedback(String memberTotalFeedback) {
+	public void setMemberTotalFeedback(int memberTotalFeedback) {
 		this.memberTotalFeedback = memberTotalFeedback;
 	}
-	public String getMemberAgreeFeedback() {
+	public int getMemberAgreeFeedback() {
 		return memberAgreeFeedback;
 	}
-	public void setMemberAgreeFeedback(String memberAgreeFeedback) {
+	public void setMemberAgreeFeedback(int memberAgreeFeedback) {
 		this.memberAgreeFeedback = memberAgreeFeedback;
 	}
 	public String getFeedbackAvailability() {
@@ -106,6 +107,12 @@ public class ExerciseFeedbackRequest {
 	public void setExerciseFeedbackApprovalDate(String exerciseFeedbackApprovalDate) {
 		this.exerciseFeedbackApprovalDate = exerciseFeedbackApprovalDate;
 	}
+	public double getEvaluationAverageGrade() {
+		return evaluationAverageGrade;
+	}
+	public void setEvaluationAverageGrade(double evaluationAverageGrade) {
+		this.evaluationAverageGrade = evaluationAverageGrade;
+	}
 	@Override
 	public String toString() {
 		return "ExerciseFeedbackRequest [exerciseFeedbackRequestNo=" + exerciseFeedbackRequestNo + ", memberNo="
@@ -115,7 +122,8 @@ public class ExerciseFeedbackRequest {
 				+ ", exerciseFeedbackRequestTitle=" + exerciseFeedbackRequestTitle + ", exerciseFeedbackRequestContent="
 				+ exerciseFeedbackRequestContent + ", exerciseFeedbackRequestDate=" + exerciseFeedbackRequestDate
 				+ ", exerciseFeedbackApproval=" + exerciseFeedbackApproval + ", exerciseFeedbackResult="
-				+ exerciseFeedbackResult + ", exerciseFeedbackApprovalDate=" + exerciseFeedbackApprovalDate + "]";
+				+ exerciseFeedbackResult + ", exerciseFeedbackApprovalDate=" + exerciseFeedbackApprovalDate
+				+ ", evaluationAverageGrade=" + evaluationAverageGrade + "]";
 	}
 
 }

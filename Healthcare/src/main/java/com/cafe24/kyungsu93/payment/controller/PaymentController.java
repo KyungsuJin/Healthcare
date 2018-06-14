@@ -32,7 +32,7 @@ public class PaymentController {
 	@RequestMapping(value="/refundResult", method=RequestMethod.GET)
 	public String refundResult() {
 		logger.debug("PaymentController - refundResult 포워드 실행");
-		return "group/refundResult";
+		return "payment/refundResult";
 	}
 	
 	//환불 신청 완료
@@ -47,14 +47,14 @@ public class PaymentController {
 	@RequestMapping(value="/addRefund", method=RequestMethod.GET)
 	public String addRefund() {
 		logger.debug("PaymentController - addRefund 포워드 실행");
-		return "group/addRefund";
+		return "payment/addRefund";
 	}
 	
 	//포인트 결제 신청 완료 결과
 	@RequestMapping(value="/pointChargingResult", method=RequestMethod.GET)
 	public String pointChargingResult() {
 		logger.debug("PaymentController - pointChargingResult 포워드 실행");
-		return "group/pointChargingResult";
+		return "payment/pointChargingResult";
 	}
 	
 	//포인트 결제 신청 완료
@@ -69,7 +69,7 @@ public class PaymentController {
 	@RequestMapping(value="/addPointCharging", method=RequestMethod.GET)
 	public String addpointCharging() {
 		logger.debug("PaymentController - addPointCharging 포워드 실행");
-		return "group/addPointCharging";
+		return "payment/addPointCharging";
 	}
 	
 	//환불 지급완료 리스트
@@ -85,7 +85,7 @@ public class PaymentController {
 		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 		model.addAttribute("totalBlock", map.get("totalBlock"));
-		return "group/refundCompleteList";
+		return "payment/refundCompleteList";
 	}
 	
 	//환불 승인 리스트
@@ -101,7 +101,7 @@ public class PaymentController {
 		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 		model.addAttribute("totalBlock", map.get("totalBlock"));
-		return "group/refundApprovalList";
+		return "payment/refundApprovalList";
 	}
 	
 	//환불 승인 대기 리스트
@@ -117,11 +117,11 @@ public class PaymentController {
 		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 		model.addAttribute("totalBlock", map.get("totalBlock"));
-		return "group/refundList";
+		return "payment/refundList";
 	}
 	
 	//포인트 결제 승인 리스트
-	@RequestMapping(value="/PointChargingApprovalList", method=RequestMethod.GET)
+	@RequestMapping(value="/pointChargingApprovalList", method=RequestMethod.GET)
 	public String PointChargingApprovalList(Model model
 								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
@@ -133,11 +133,11 @@ public class PaymentController {
 		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 		model.addAttribute("totalBlock", map.get("totalBlock"));
-		return "group/PointChargingApprovalList";
+		return "payment/pointChargingApprovalList";
 	}
 	
 	//포인트 결제 승인 대기 리스트
-	@RequestMapping(value="/PointChargingList", method=RequestMethod.GET)
+	@RequestMapping(value="/pointChargingList", method=RequestMethod.GET)
 	public String PointChargingList(Model model
 								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
@@ -149,6 +149,6 @@ public class PaymentController {
 		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 		model.addAttribute("totalBlock", map.get("totalBlock"));
-		return "group/PointChargingList";
+		return "payment/pointChargingList";
 	}
 }

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE>
 <html>
 <head>
@@ -20,15 +21,15 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="memberTeacher" items="${list}">
-			<tr>
-				<td>${memberTeacher.memberName }</td>
-				<td>${memberTeacher.WorkSpace }</td>
-				<td>${memberTeacher.memberTotalFeedback }</td>
-				<td>${memberTeacher.memberAgreeFeedback }</td>
-				<td>${memberTeacher.evaluationAverageGrade }</td>
-				<td><a type="button" href="${pageContext.request.contextPath}/exerciseFeedbackReqeust?memberNo=${memberTeacher.memberNo}">선택하기</a></td>
-			</tr>
+			<c:forEach var="teacher" items="${list}">
+				<tr>
+					<td>${teacher.memberName }</td>
+					<td>${teacher.memberWorkSpace }</td>
+					<td>${teacher.memberTotalFeedback }</td>
+					<td>${teacher.memberAgreeFeedback }</td>
+					<td>${teacher.evaluationAverageGrade }</td>
+					<td><a type="button" href="${pageContext.request.contextPath}/exerciseFeedbackReqeust?memberNo=${teacher.memberNo}">선택하기</a></td>
+				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
