@@ -1,17 +1,17 @@
-package com.cafe24.kyungsu93;
+package com.cafe24.kyungsu93.medicine.service;
 
 public class Medicine {
 	private String medicineNo;
 	private String medicineName;
 	private String medicineManufacturer;
-	private int medicinePermissionDate;
 	private String medicineMaterial;
 	private String medicineStorageMethod;
 	private String medicineValidTerm;
-	private String medicineProGen;
+	private String medicineEtcOtc;
 	private String medicineClass;
 	private String medicineAppear;
 	private String medicinePack;
+	private int medicinePermissionDate;
 	
 	public String getMedicineNo() {
 		return medicineNo;
@@ -31,12 +31,6 @@ public class Medicine {
 	public void setMedicineManufacturer(String medicineManufacturer) {
 		this.medicineManufacturer = medicineManufacturer;
 	}
-	public int getMedicinePermissionDate() {
-		return medicinePermissionDate;
-	}
-	public void setMedicinePermissionDate(int medicinePermissionDate) {
-		this.medicinePermissionDate = medicinePermissionDate;
-	}
 	public String getMedicineMaterial() {
 		return medicineMaterial;
 	}
@@ -55,11 +49,11 @@ public class Medicine {
 	public void setMedicineValidTerm(String medicineValidTerm) {
 		this.medicineValidTerm = medicineValidTerm;
 	}
-	public String getMedicineProGen() {
-		return medicineProGen;
+	public String getMedicineEtcOtc() {
+		return medicineEtcOtc;
 	}
-	public void setMedicineProGen(String medicineProGen) {
-		this.medicineProGen = medicineProGen;
+	public void setMedicineEtcOtc(String medicineEtcOtc) {
+		this.medicineEtcOtc = medicineEtcOtc;
 	}
 	public String getMedicineClass() {
 		return medicineClass;
@@ -79,14 +73,19 @@ public class Medicine {
 	public void setMedicinePack(String medicinePack) {
 		this.medicinePack = medicinePack;
 	}
-	
+	public int getMedicinePermissionDate() {
+		return medicinePermissionDate;
+	}
+	public void setMedicinePermissionDate(int medicinePermissionDate) {
+		this.medicinePermissionDate = medicinePermissionDate;
+	}
 	@Override
 	public String toString() {
 		return "Medicine [medicineNo=" + medicineNo + ", medicineName=" + medicineName + ", medicineManufacturer="
-				+ medicineManufacturer + ", medicinePermissionDate=" + medicinePermissionDate + ", medicineMaterial="
-				+ medicineMaterial + ", medicineStorageMethod=" + medicineStorageMethod + ", medicineValidTerm="
-				+ medicineValidTerm + ", medicineProGen=" + medicineProGen + ", medicineClass=" + medicineClass
-				+ ", medicineAppear=" + medicineAppear + ", medicinePack=" + medicinePack + "]";
+				+ medicineManufacturer + ", medicineMaterial=" + medicineMaterial + ", medicineStorageMethod="
+				+ medicineStorageMethod + ", medicineValidTerm=" + medicineValidTerm + ", medicineEtcOtc="
+				+ medicineEtcOtc + ", medicineClass=" + medicineClass + ", medicineAppear=" + medicineAppear
+				+ ", medicinePack=" + medicinePack + ", medicinePermissionDate=" + medicinePermissionDate + "]";
 	}
 	
 }

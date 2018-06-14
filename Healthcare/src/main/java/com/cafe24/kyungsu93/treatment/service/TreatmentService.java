@@ -20,42 +20,6 @@ public class TreatmentService {
 	@Autowired private TreatmentDao treatmentDao;
 	@Autowired private TreatmentFileDao treatmentFileDao;
 	
-	public void addTreatment(TreatmentRequest treatmentRequest, String path) {
-		logger.debug("TreatmentService.addTreatment 메서드 호출");
-		logger.debug("TreatmentService.addTreatment.treatmentRequest : " + treatmentRequest.toString());
-		logger.debug("TreatmentService.addTreatment.path : " + path);
-		List<MultipartFile> multipartFileList = treatmentRequest.getMultipartFile();
-		//file 업로드 전 게시물을 먼저 insert 한 후 primary key 값을 가져온다.
-		String treatmentNo = "treatment_" + (treatmentDao.getTreatmentNo()+1);
-		treatmentRequest.setTreatmentNo(treatmentNo);
-		treatmentDao.addTreatment(treatmentRequest);
-		logger.debug("TreatmentService.addTreatment.treatmentNo : " + treatmentNo);
-		if(multipartFileList != null) {
-			for(MultipartFile multipartFile : multipartFileList) {
-				logger.debug("TreatmentService.addTreatment.multipartFile : " + multipartFile);
-				TreatmentFile treatmentFile = new TreatmentFile();
-				UUID uuid = UUID.randomUUID();
-				String fileName = uuid.toString().replaceAll("-", "");
-				treatmentFile.setTreatmentFileName(fileName);
-				treatmentFile.setTreatmentFileRealName(multipartFile.getOriginalFilename());
-				treatmentFile.setTreatmentNo(treatmentNo);
-				String fileExt = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".")+1);
-				treatmentFile.setTreatmentFileExt(fileExt);
-				treatmentFile.setTreatmentFileType(multipartFile.getContentType());
-				treatmentFile.setTreatmentFileSize(multipartFile.getSize());
-				File file = new File(path+fileName+"."+fileExt);
-				try {
-					multipartFile.transferTo(file);
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				treatmentFileDao.addTreatmentFile(treatmentFile);
-			}
-		}
-	}
-	
 	public Map<String, Object> getTreatmentList(int currentPage, int pagePerRow, TreatmentRequest treatmentRequest){
 		logger.debug("TreatmentService.getTreatmentList 호출");
 		int totalRow = treatmentDao.treatmentTotalCount();
@@ -86,10 +50,49 @@ public class TreatmentService {
 		return map;
 	}
 	
+	public void addTreatment(TreatmentRequest treatmentRequest, String path) {
+		logger.debug("TreatmentService.addTreatment 메서드 호출");
+		logger.debug("TreatmentService.addTreatment.treatmentRequest : " + treatmentRequest.toString());
+		logger.debug("TreatmentService.addTreatment.path : " + path);
+		List<MultipartFile> multipartFileList = treatmentRequest.getMultipartFile();
+		//file 업로드 전 게시물을 먼저 insert 한 후 primary key 값을 가져온다.
+		String treatmentNo = "treatment_" + (treatmentDao.getTreatmentNo()+1);
+		treatmentRequest.setTreatmentNo(treatmentNo);
+		System.out.println("service : " + treatmentRequest.getMemberNo());
+		treatmentDao.addTreatment(treatmentRequest);
+		logger.debug("TreatmentService.addTreatment.treatmentNo : " + treatmentNo);
+		if(multipartFileList != null) {
+			for(MultipartFile multipartFile : multipartFileList) {
+				logger.debug("TreatmentService.addTreatment.multipartFile : " + multipartFile);
+				TreatmentFile treatmentFile = new TreatmentFile();
+				UUID uuid = UUID.randomUUID();
+				String fileName = uuid.toString().replaceAll("-", "");
+				treatmentFile.setTreatmentFileName(fileName);
+				treatmentFile.setTreatmentFileRealName(multipartFile.getOriginalFilename());
+				treatmentFile.setTreatmentNo(treatmentNo);
+				String fileExt = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".")+1);
+				treatmentFile.setTreatmentFileExt(fileExt);
+				treatmentFile.setTreatmentFileType(multipartFile.getContentType());
+				treatmentFile.setTreatmentFileSize(multipartFile.getSize());
+				File file = new File(path+fileName+"."+fileExt);
+				try {
+					multipartFile.transferTo(file);
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				treatmentFile.setTreatmentFileNo("treatment_file_"+(treatmentFileDao.getTreatmentFileNo()+1));
+				treatmentFileDao.addTreatmentFile(treatmentFile);
+			}
+		}
+	}
+	
 	public Map<String, TreatmentResponse> getTreatmentContent(TreatmentRequest treatmentRequest) {
 		Map map = new HashMap<String, Object>();
-		map.put("treatmentResponse", treatmentDao.getTreatmentContent(treatmentRequest));
-		List<TreatmentResponse> list = treatmentDao.getTreatmentClosest(treatmentRequest);
+		TreatmentResponse treatmentResponse = treatmentDao.getTreatmentContent(treatmentRequest);
+		map.put("treatmentResponse", treatmentResponse);
+		List<TreatmentResponse> list = treatmentDao.getTreatmentClosest(treatmentResponse);
 		if(list.size() == 0) {
 			
 		} else if(list.size() < 2) {

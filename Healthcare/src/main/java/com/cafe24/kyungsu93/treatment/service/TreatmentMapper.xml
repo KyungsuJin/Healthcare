@@ -5,13 +5,31 @@
   
 <mapper namespace="com.cafe24.kyungsu93.treatment.service.TreatmentMapper">
 	
+	<select id="treatmentTotalCount" resultType="Integer">
+		SELECT 
+			count(*)
+		FROM treatment
+	</select>
+	
+	<select id="getTreatmentList" parameterType="java.util.Map" resultType="com.cafe24.kyungsu93.treatment.service.TreatmentResponse">
+		SELECT 
+			treatment_no AS treatmentNo
+        	,treatment_department AS treatmentDepartment
+        	,hospital_name AS hospitalName
+        	,treatment_title AS  treatmentTitle
+            ,doctor_name AS treatmentContent
+            ,treatment_date AS treatmentDate
+		FROM treatment
+		WHERE member_no = #{memberNo} 
+		ORDER BY treatment_date DESC
+		LIMIT #{beginRow}, #{pagePerRow}
+	</select>
+	
 	<select id="getTreatmentNo" resultType="Integer">
 		SELECT
 			IFNULL(MAX(CAST(SUBSTRING(treatment_no,11)as decimal)),0) 
 		FROM treatment
-	
 	</select>
-	
 	
 	<insert id="addTreatment" parameterType="com.cafe24.kyungsu93.treatment.service.TreatmentRequest">
         INSERT INTO treatment(
@@ -36,27 +54,7 @@
         	,#{hospitalAddress}
         	,now()
         )         
-	</insert>  
-	
-	<select id="treatmentTotalCount" resultType="Integer">
-		SELECT 
-			count(*)
-		FROM treatment
-	</select>
-
-	<select id="getTreatmentList" parameterType="java.util.Map" resultType="com.cafe24.kyungsu93.treatment.service.TreatmentResponse">
-		SELECT 
-			treatment_no AS treatmentNo
-        	,treatment_department AS treatmentDepartment
-        	,hospital_name AS hospitalName
-        	,treatment_title AS  treatmentTitle
-            ,doctor_name AS treatmentContent
-            ,treatment_date AS treatmentDate
-		FROM treatment
-		WHERE member_no = #{memberNo} 
-		ORDER BY treatment_date DESC
-		LIMIT #{beginRow}, #{pagePerRow}
-	</select>
+	</insert>
 
 	<resultMap id="treatmentContentResult" type="com.cafe24.kyungsu93.treatment.service.TreatmentResponse">
 		<result property="treatmentNo" column="treatmentNo" />
@@ -107,7 +105,7 @@
 		UPDATE
 			treatment
 		SET
-			,treatment_department = #{treatmentDepartment}
+			treatment_department = #{treatmentDepartment}
         	,hospital_name = #{hospitalName}
         	,treatment_title = #{treatmentTitle}
             ,treatment_content = #{treatmentContent}
@@ -116,18 +114,18 @@
 		WHERE treatment_no = #{treatmentNo}
 	</update>
 	
-	<select id="getTreatmentClosest" parameterType="com.cafe24.kyungsu93.treatment.service.TreatmentRequest" resultType="com.cafe24.kyungsu93.treatment.service.TreatmentResponse">
+	<select id="getTreatmentClosest" parameterType="com.cafe24.kyungsu93.treatment.service.TreatmentResponse" resultType="com.cafe24.kyungsu93.treatment.service.TreatmentResponse">
 		(SELECT 
 			treatment_no AS TreatmentNo 
 		FROM treatment 
-		WHERE (CAST(SUBSTRING(treatment_no,11)as decimal) &gt; (CAST(SUBSTRING(#{treatmentNo},11)as decimal) 
+		WHERE treatment_date &gt; #{treatmentDate} 
 		LIMIT 1)
 		UNION ALL
 		(SELECT 
 			treatment_no AS TreatmentNo 
 		FROM treatment 
-		WHERE (CAST(SUBSTRING(treatment_no,11)as decimal) &lt; (CAST(SUBSTRING(#{treatmentNo},11)as decimal)
-		ORDER BY treatment_no DESC 
+		WHERE treatment_date &lt; #{treatmentDate}
+		ORDER BY treatment_date DESC 
 		LIMIT 1)
 	</select>
 

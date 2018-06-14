@@ -64,8 +64,6 @@
 	<div id="containerTreatment" align="center">
 		<h1>addTreatment</h1>
 		<form id="treatmentForm" action="${pageContext.request.contextPath}/addTreatment" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="memberNo" value="${memberNo}">
-			
 			<div>treatmentDepartment : <input id="treatmentDepartment" class="form-control" type="text" name="treatmentDepartment" value="${treatment.treatmentDepartment}"></div>
 			<div>hospitalName : <input id="hospitalName" class="form-control" type="text" name="hospitalName" value="${treatment.hospitalName}"></div>
 			<div>doctorName : <input id="doctorName" class="form-control" type="text" name="doctorName" value="${treatment.doctorName}"></div>

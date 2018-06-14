@@ -30,15 +30,6 @@ public class HomeController {
 		return "food";
 	}
 	
-	
-	@RequestMapping(value = "/medicine", method = RequestMethod.GET)
-	public String medicine() {
-		logger.debug("HomeController.medicine 메서드 실행");
-		for(int i = 1 ; i < 11 ; i++) {
-			homeService.medicine(i);
-		}
-		return "medicine";
-	}
 	@RequestMapping(value = "/resume", method = RequestMethod.GET)
 	public String resume() {
 		logger.debug("HomeController.resume 메서드 실행");

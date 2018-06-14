@@ -20,6 +20,7 @@ public class TreatmentDao {
 		return sqlSession.selectOne(NS+"getTreatmentNo"); 
 	}
 	public void addTreatment(TreatmentRequest treatmentRequest) {
+		System.out.println("dao : "+treatmentRequest.getMemberNo());
 		logger.debug("TreatmentDao.addTreatment 메서드 호출");
 		sqlSession.insert(NS + "addTreatment", treatmentRequest);
 	}
@@ -29,7 +30,7 @@ public class TreatmentDao {
 	}
 	
 	public List<TreatmentResponse> getTreatmentList(Map map){
-		logger.debug("TreatmentDao.getTreatmentList 메서드 호출");
+		logger.debug("TreatmentDao.getTreatmentList.map : " + map);
 		List<TreatmentResponse> list = sqlSession.selectList(NS+"getTreatmentList", map);
 		return list;
 	}
@@ -44,10 +45,11 @@ public class TreatmentDao {
 	}
 	
 	public void modifyTreatment(TreatmentRequest treatmentRequest) {
+		logger.debug("TreatmentDao.modifyTreatment.treatmentRequest : " + treatmentRequest);
 		sqlSession.update(NS+"modifyTreatment",treatmentRequest);
 	}
 	
-	public List<TreatmentResponse> getTreatmentClosest(TreatmentRequest treatmentRequest) {
-		return sqlSession.selectList(NS+"getTreatmentClosest", treatmentRequest);
+	public List<TreatmentResponse> getTreatmentClosest(TreatmentResponse treatmentResponse) {
+		return sqlSession.selectList(NS+"getTreatmentClosest", treatmentResponse);
 	}
 }

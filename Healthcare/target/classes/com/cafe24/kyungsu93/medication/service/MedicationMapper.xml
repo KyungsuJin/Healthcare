@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cafe24.kyungsu93.medication.service.MedicationMapper">
+	<select id="medicationTotalCount" resultType="Integer">
+		SELECT 
+			count(*)
+		FROM medication
+	</select>
+
+	<select id="getMedicationList" parameterType="java.util.Map" resultType="com.cafe24.kyungsu93.medication.service.MedicationResponse">
+		SELECT 
+			medication_no AS medicationNo
+			,medicine_no AS medicineNo
+			,medication_start_date AS medicationStartDate
+			,medication_end_date AS medicationEndDate
+			,dosage AS dosage
+			,total_dosage AS totalDosage
+			,medication_title AS medicationTitle
+			,medication_date AS medicationDate
+		FROM medication
+		WHERE member_no = #{memberNo}
+		ORDER BY medication_date DESC
+		LIMIT #{beginRow}, #{pagePerRow}
+	</select>
+	
+	<select id="getMedicationNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(CAST(SUBSTRING(medication_no,11)as decimal)),0) 
+		FROM medication
+	</select>
+	
+	<insert id="addMedication" parameterType="com.cafe24.kyungsu93.medication.service.MedicationRequest">
+        INSERT INTO medication(
+        	medication_no
+        	,medicine_no
+        	,member_no
+        	,medication_start_date
+        	,medication_end_date
+        	,dosage
+        	,total_dosage
+        	,medication_title
+            ,medication_content
+            ,medication_date
+        )
+        VALUES(
+        	#{medicationNo}
+        	,#{medicineNo}
+        	,#{memberNo}
+        	,#{medicationStartDate}
+            ,#{medicationEndDate}
+            ,#{dosage}
+        	,#{totalDosage}
+        	,#{medicationTitle}
+        	,#{medicationContent}
+        	,now()
+        )         
+	</insert>
+	
+	<select id="getMedicationContent" parameterType="com.cafe24.kyungsu93.medication.service.MedicationRequest" resultType="com.cafe24.kyungsu93.medication.service.MedicationResponse">
+		SELECT 
+			medication.medication_no AS medicationNo
+			,medication.medicine_no AS medicineNo
+			,medicine.medicine_name AS medicineName
+			,member.member_name AS memberName
+			,medication.medication_start_date AS medicationStartDate
+			,medication.medication_end_date AS medicationEndDate
+			,medication.dosage AS dosage
+			,medication.total_dosage AS totalDosage
+			,medication.medication_title AS medicationTitle
+			,medication.medication_content AS medicationContent
+			,medication.medication_date AS medicationDate
+		FROM medication, member, medicine
+		WHERE medication_no = #{medicationNo}
+				and medication.medicine_no = medicine.medicine_no
+				and medication.member_no = member.member_no 
+	</select>
+	
+	<delete id="removeMedicationRecord" parameterType="com.cafe24.kyungsu93.medication.service.MedicationRequest">
+		DELETE
+		FROM medication_record
+		WHERE medication_no = #{medicationNo}
+	</delete>
+	
+	<delete id="removeMedication" parameterType="com.cafe24.kyungsu93.medication.service.MedicationRequest">
+		DELETE
+		FROM medication
+		WHERE medication_no = #{medicationNo}
+	</delete>
+	
+	<update id="modifyMedication" parameterType="com.cafe24.kyungsu93.medication.service.MedicationRequest">
+		UPDATE
+			medication
+		SET
+			medication_no = #{medicationNo}
+			,medication_start_date = #{medicationStartDate} 
+			,medication_end_date = #{medicationEndDate}
+			,dosage = #{dosage}
+			,total_dosage = #{totalDosage}
+			,medication_title = #{medicationTitle}
+			,medication_content = #{medicationContent}
+		WHERE medication_no = #{medicationNo}
+	</update>
+</mapper>
