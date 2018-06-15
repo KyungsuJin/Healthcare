@@ -19,7 +19,7 @@ public class ExerciseFeedbackResponseService {
 	private ExerciseFeedbackDao exerciseFeedbackDao;
 	private static final Logger logger = LoggerFactory.getLogger(ExerciseFeedbackResponseService.class);
 	
-	public Map<String,Object> feedbackFoodSearch(ExerciseFeedbackResult exerciseFeedbackResult){
+/*	public Map<String,Object> feedbackFoodSearch(ExerciseFeedbackResult exerciseFeedbackResult){
 		logger.debug("ExerciseFeedbackResponseService - feedbackFoodSearch실행");	
 		String foodGroup = exerciseFeedbackResult.getFoodGroup();
 		String foodName = exerciseFeedbackResult.getFoodName();
@@ -31,7 +31,7 @@ public class ExerciseFeedbackResponseService {
 		returnMap.put("foodInfo", foodInfo);
 		returnMap.put("result", result);
 		return returnMap;
-	}
+	}*/
 	
 	public Map<String,Object> exerciseFeedResponse(String exerciseFeedbackRequestNo) {
 		ExerciseFeedbackRequest exerciseFeedbackRequest = exerciseFeedbackDao.exerciseFeedbackRequestDetail(exerciseFeedbackRequestNo);

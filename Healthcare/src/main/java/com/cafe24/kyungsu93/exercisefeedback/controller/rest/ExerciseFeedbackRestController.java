@@ -23,12 +23,12 @@ public class ExerciseFeedbackRestController {
 	private ExerciseFeedbackResponseService exerciseFeedbackResponseService;
 	private static final Logger logger = LoggerFactory.getLogger(ExerciseFeedbackRestController.class);
 	
-	@RequestMapping(value="/feedbackFoodSearch", method=RequestMethod.GET)
+/*	@RequestMapping(value="/feedbackFoodSearch", method=RequestMethod.GET)
 	@ResponseBody
     public Map<String, Object> feedbackFoodSearch(ExerciseFeedbackResult exerciseFeedbackResult) {
 		logger.debug("GroupController - checkGroupName ajax 실행");
 		Map<String,Object> map = exerciseFeedbackResponseService.feedbackFoodSearch(exerciseFeedbackResult);
 		logger.debug("result:"+map.get("result"));
 		return map;
-    }
+    }*/
 }
