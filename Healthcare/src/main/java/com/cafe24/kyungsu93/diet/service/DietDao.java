@@ -23,6 +23,7 @@ public class DietDao {
 	//소모칼로리 리스트를 불러온다.
 	public List<ConsumeCalorie> getConsumeCalorie() {
 		logger.debug("DietDao_selectExerciseSearch");
+		logger.debug("DietDao_selectExerciseSearch");
 		return sqlSession.selectList(NS+"");
 	}
 	//검색어를 입력하면 운동 정보를 가져온다

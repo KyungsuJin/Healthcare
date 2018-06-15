@@ -86,14 +86,5 @@ public class TotalCalorieResponse {
 	public void setTotalSfa(double totalSfa) {
 		this.totalSfa = totalSfa;
 	}
-	@Override
-	public String toString() {
-		return "TotalCalorieResponse [memberNo=" + memberNo + ", foodName=" + foodName + ", ingestWeight="
-				+ ingestWeight + ", totalOnce=" + totalOnce + ", totalKcal=" + totalKcal + ", totalCarbohydrate="
-				+ totalCarbohydrate + ", totalProtein=" + totalProtein + ", totalFat=" + totalFat + ", totalSugar="
-				+ totalSugar + ", totalNatrium=" + totalNatrium + ", totalCholesterol=" + totalCholesterol
-				+ ", totalSfa=" + totalSfa + "]";
-	}
-	
 	
 }

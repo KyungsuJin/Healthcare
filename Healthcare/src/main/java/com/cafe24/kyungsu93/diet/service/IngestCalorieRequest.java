@@ -39,10 +39,5 @@ public class IngestCalorieRequest {
 	public void setIngestCalorieDate(String ingestCalorieDate) {
 		this.ingestCalorieDate = ingestCalorieDate;
 	}
-	@Override
-	public String toString() {
-		return "IngestCalorieRequest [ingestCalorieNo=" + ingestCalorieNo + ", memberNo=" + memberNo + ", foodNo="
-				+ foodNo + ", ingestWeight=" + ingestWeight + ", ingestCalorieDate=" + ingestCalorieDate + "]";
-	}
 	
 }

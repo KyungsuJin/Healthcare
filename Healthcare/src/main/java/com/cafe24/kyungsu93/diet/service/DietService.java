@@ -28,6 +28,7 @@ public class DietService {
 	
 	public String getConsumeCalorie() {
 		logger.debug("DietService_getConsumeCalorie");
+		logger.debug("DietService_getConsumeCalorie");
 		dietDao.getConsumeCalorie();
 		return null;
 	}

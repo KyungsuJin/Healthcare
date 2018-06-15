@@ -36,11 +36,5 @@ public class ConsumeCalorie {
 	public void setConsumeDate(String consumeDate) {
 		this.consumeDate = consumeDate;
 	}
-	@Override
-	public String toString() {
-		return "ConsumeCalorie [consumeCalorieNo=" + consumeCalorieNo + ", memberNo=" + memberNo + ", exerciseNo="
-				+ exerciseNo + ", consumeTime=" + consumeTime + ", consumeDate=" + consumeDate + "]";
-	}
-	
 	
 }
