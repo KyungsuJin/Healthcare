@@ -1,4 +1,4 @@
-/*package com.cafe24.kyungsu93.doctorrequest.controller;
+package com.cafe24.kyungsu93.doctorrequest.controller;
 
 import java.util.Map;
 
@@ -21,7 +21,7 @@ public class DoctorRequestController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DoctorRequestController.class);
 	
-	@RequestMapping(value="/doctorrequest", method = RequestMethod.GET)
+	/*@RequestMapping(value="/DoctorRequest", method = RequestMethod.POST)
 	public String doctorrequestList(Model model,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 												,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
 	logger.debug("DoctorrequestController 에서 DoctorrequestList 실행");
@@ -33,6 +33,31 @@ public class DoctorRequestController {
 	model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 	model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 	model.addAttribute("totalBlock", map.get("totalBlock"));
-	return "doctorrequest/DoctorRequestList";
+	return "/doctorrequest/DoctorRequestList";
 	}
-}*/
+	*/
+
+
+	
+	@RequestMapping(value="/DoctorRequestList", method=RequestMethod.GET)
+	public String DoctorRequestList(Model model
+								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
+		logger.debug("DoctorRequestController 에서 DoctorRequestList 실행");
+		Map<String,Object> map = doctorRequestService.doctorRequestList(currentPage, pagePerRow);
+		logger.debug("1번-1"+map);
+		logger.debug("1번"+currentPage);
+		logger.debug("2번"+pagePerRow);
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
+		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
+		model.addAttribute("totalBlock", map.get("totalBlock"));
+		return "/doctorrequest/DoctorRequestList";
+	}
+	
+	
+	
+	
+}

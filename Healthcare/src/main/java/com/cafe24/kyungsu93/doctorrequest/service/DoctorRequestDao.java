@@ -1,4 +1,4 @@
-/*package com.cafe24.kyungsu93.doctorrequest.service;
+package com.cafe24.kyungsu93.doctorrequest.service;
 
 import java.util.List;
 import java.util.Map;
@@ -19,6 +19,7 @@ public class DoctorRequestDao {
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.doctorrequest.service.DoctorRequestMapper.";
 	public List<DoctorRequest> doctorrequestList(Map<String,Integer> map) {
+	logger.debug("2번-2"+map);
 	logger.debug("DoctorRequestDao 에서 DoctorRequest 실행");
 	return sqlSession.selectList(NS+"doctorrequestList",map);
 	}
@@ -33,4 +34,4 @@ public class DoctorRequestDao {
 		logger.debug("DoctorRequestDao 에서 doctorRequestCount 실행");
 		return sqlSession.selectOne(NS+"doctorRequestCount");
 	}
-}*/
+}
