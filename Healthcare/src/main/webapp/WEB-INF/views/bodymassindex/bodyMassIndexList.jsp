@@ -8,6 +8,7 @@
 <body>
 	<h1>체질량 관리</h1>
 	<a href="${pageContext.request.contextPath}/addBodyMassIndex">체질량 등록</a>
+	<a href="${pageContext.request.contextPath}/bodyMassIndexChart">체질량 차트</a>
 	<table border="1" class="table">
 		<thead>
 			<tr>

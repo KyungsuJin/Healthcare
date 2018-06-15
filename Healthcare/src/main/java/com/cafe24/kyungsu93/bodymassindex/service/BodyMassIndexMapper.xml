@@ -55,5 +55,19 @@
   			FROM body_mass_index
   			WHERE member_no =#{memberNo}
   	</select>
+  	<!--체질량 차트리스트  -->
+  	<select id="bodyMassIndexChart"
+  			parameterType="String"
+  			resultMap="bodyMassIndex">
+  			SELECT
+  				body_height
+  				,body_weight
+  				,body_waist_size
+  				,body_mass_index
+  				,body_date
+  			FROM body_mass_index
+  			WHERE member_no =#{memberNo}
+  			ORDER BY body_date
+  	</select>
   
   </mapper>
