@@ -26,11 +26,43 @@ public class DietService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DietService.class);
 	
-	public String getConsumeCalorie() {
+	public int removeConsumeCalorie(String consumeCalorieNo, String memberNo) {
+		logger.debug("DietService_removeConsumeCalorie");
+		return dietDao.removeConsumeCalorie(consumeCalorieNo);
+	}
+	public TotalConsumeResponse totalConsume(String memberNo, String datePicker) {
+		logger.debug("DietService_totalConsume");
+		Map<String, String> map = new HashMap<String, String>();
+		String pickMonth = datePicker.substring(0, 2);
+		String pickDay = datePicker.substring(3, 5);
+		String pickYear = datePicker.substring(6, 10);
+		map.put("memberNo", memberNo);
+		map.put("pickMonth", pickMonth);
+		map.put("pickDay", pickDay);
+		map.put("pickYear", pickYear);
+		dietDao.totalConsume(map);
+		
+		List<TotalConsumeResponse> list = dietDao.totalConsume(map);
+		TotalConsumeResponse totalConsumeResponse = new TotalConsumeResponse();
+		int consumeTime = 0;
+		int exerciseCalorie = 0;
+		for(int i=0; i<list.size(); i++) {
+			consumeTime = list.get(i).getConsumeTime();
+			exerciseCalorie += list.get(i).getTotalExerciseCalorie()*consumeTime;
+			if(i+1 == list.size()) {
+				totalConsumeResponse.setTotalExerciseCalorie(exerciseCalorie = exerciseCalorie/i);
+			}
+		}
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!:"+totalConsumeResponse.getTotalExerciseCalorie());
+		return totalConsumeResponse;	
+	}
+	public List<ConsumeCalorie> getConsumeCalorie() {
 		logger.debug("DietService_getConsumeCalorie");
-		logger.debug("DietService_getConsumeCalorie");
-		dietDao.getConsumeCalorie();
-		return null;
+		String memberNo = (String)session.getAttribute("memberSessionNo");
+		if(memberNo == null) {
+			return null;
+		}
+		return dietDao.getConsumeCalorie(memberNo);
 	}
 	public List<Exercise> selectExerciseSearch(String sv) {
 		logger.debug("DietService_selectExerciseSearch");
@@ -70,7 +102,7 @@ public class DietService {
 		map.put("pickYear", pickYear);
 		
 		List<TotalCalorieResponse> list = dietDao.totalCalorie(map);
-		TotalCalorieResponse totalCalorie = new TotalCalorieResponse();
+		TotalCalorieResponse totalCalorieResPonse = new TotalCalorieResponse();
 		double kcal = 0;
 		double carbohydrate = 0;
 		double protein = 0;
@@ -93,23 +125,21 @@ public class DietService {
 			sfa += list.get(i).getTotalSfa()*ingestWeight;
 
 			if(i+1 == list.size()) {
-				totalCalorie.setTotalKcal(kcal);
-				totalCalorie.setTotalCarbohydrate(carbohydrate = carbohydrate/i);
-				totalCalorie.setTotalProtein(protein = protein/i);
-				totalCalorie.setTotalFat(fat = fat/i);
-				totalCalorie.setTotalSugar(sugar = sugar/i);
-				totalCalorie.setTotalNatrium(natrium = natrium/i);
-				totalCalorie.setTotalCholesterol(Cholesterol = Cholesterol/i);
-				totalCalorie.setTotalSfa(sfa = sfa/i);
+				totalCalorieResPonse.setTotalKcal(kcal);
+				totalCalorieResPonse.setTotalCarbohydrate(carbohydrate = carbohydrate/i);
+				totalCalorieResPonse.setTotalProtein(protein = protein/i);
+				totalCalorieResPonse.setTotalFat(fat = fat/i);
+				totalCalorieResPonse.setTotalSugar(sugar = sugar/i);
+				totalCalorieResPonse.setTotalNatrium(natrium = natrium/i);
+				totalCalorieResPonse.setTotalCholesterol(Cholesterol = Cholesterol/i);
+				totalCalorieResPonse.setTotalSfa(sfa = sfa/i);
 			}
 		}
-		return totalCalorie;
+		return totalCalorieResPonse;
 	}
 	public int removeIngestCalorie(String ingestCalorieNo, String memberNo) {
 		logger.debug("DietService_removeIngestCalorie");
 		String sMemberNo = (String)session.getAttribute("memberSessionNo");
-		System.out.println("sMemberNo : " +sMemberNo);
-		System.out.println("ingestCalorieNo : " +ingestCalorieNo);
 		//현재로그인한 회원과 등록회원을 비교하여 다르다면 0을 return하고 동일하다면 removeIngestCalorie메서드를 실행한다.
 		if(sMemberNo != memberNo) {
 			return 0;

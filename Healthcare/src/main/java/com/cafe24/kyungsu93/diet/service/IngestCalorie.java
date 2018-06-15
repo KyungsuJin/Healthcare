@@ -45,5 +45,11 @@ public class IngestCalorie {
 		this.foodNo = foodNo;
 	}
 	
+	@Override
+	public String toString() {
+		return "IngestCalorie [ingestCalorieNo=" + ingestCalorieNo + ", memberNo=" + memberNo + ", foodNo=" + foodNo
+				+ ", ingestWeight=" + ingestWeight + ", ingestCalorieDate=" + ingestCalorieDate + ", foodName="
+				+ foodName + "]";
+	}
 	
 }

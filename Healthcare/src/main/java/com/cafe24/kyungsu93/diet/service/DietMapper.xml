@@ -4,14 +4,48 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cafe24.kyungsu93.diet.service.DietMapper">
-<!-- 	<select id="selectConsumeCalorie"
-			parameterType=""
-			resultType="">
-		SELECT
+	<delete id="deleteConsumeCalorie"
+			parameterType="String">
+		DELETE
 		FROM
 			consume_calorie
 		WHERE
-	</select> -->
+			consume_calorie_no = #{consumeCalorieNo}	
+		
+	</delete>
+	<select id="selectTotalConsume"
+			parameterType="java.util.Map"
+			resultType="com.cafe24.kyungsu93.diet.service.TotalConsumeResponse">				
+		SELECT
+			a.member_no as memberNo
+			,a.consume_time as consumeTime
+			,a.consume_calorie_date as consumeCalorieDate
+			,b.exercise_name as exerciseName
+			,b.exercise_calorie as totalExerciseCalorie
+		FROM
+			consume_calorie a, exercise b
+		WHERE
+			a.exercise_no = b.exercise_no 
+			and a.member_no=#{memberNo}
+			and YEAR(a.consume_calorie_date) = #{pickYear}
+			and MONTH(a.consume_calorie_date) = #{pickMonth}
+			and DAY(a.consume_calorie_date) = #{pickDay} 
+	</select>
+	<select id="selectConsumeCalorieList"
+			parameterType="String"
+			resultType="com.cafe24.kyungsu93.diet.service.ConsumeCalorie">
+		SELECT
+			a.consume_calorie_no as consumeCalorieNo
+			,a.member_no as memberNo
+			,a.exercise_no as exerciseNo
+			,a.consume_time as consumeTime
+			,a.consume_calorie_date as consumeCalorieDate
+			,b.exercise_name as exerciseName
+		FROM
+			consume_calorie a, exercise b
+		WHERE
+			a.exercise_no = b.exercise_no AND a.member_no = #{memberNo}
+	</select>
 	<select id="selectExerciseSearch"
 			parameterType="String"
 			resultType="com.cafe24.kyungsu93.diet.service.Exercise">

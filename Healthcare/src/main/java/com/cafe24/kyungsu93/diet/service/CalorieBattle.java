@@ -92,6 +92,13 @@ public class CalorieBattle {
 	public void setCalorieDate(String calorieDate) {
 		this.calorieDate = calorieDate;
 	}
-
+	@Override
+	public String toString() {
+		return "CalorieBattle [calorieBattleNo=" + calorieBattleNo + ", memberNo=" + memberNo + ", consumeCalorie="
+				+ consumeCalorie + ", ingestCalorie=" + ingestCalorie + ", oneDayCalorie=" + oneDayCalorie
+				+ ", carbohydrate=" + carbohydrate + ", protein=" + protein + ", fat=" + fat + ", sugar=" + sugar
+				+ ", natrium=" + natrium + ", cholesterol=" + cholesterol + ", sfa=" + sfa + ", calorieDate="
+				+ calorieDate + "]";
+	}
 	
 }

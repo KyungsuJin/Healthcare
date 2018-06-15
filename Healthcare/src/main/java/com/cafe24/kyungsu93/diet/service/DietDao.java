@@ -20,11 +20,19 @@ public class DietDao {
 	String NS = "com.cafe24.kyungsu93.diet.service.DietMapper.";
 	Logger logger =	LoggerFactory.getLogger(DietDao.class);
 	
+	public int removeConsumeCalorie(String consumeCalorieNo) {
+		logger.debug("DietDao_removeConsumeCalorie");
+		return sqlSession.delete(NS+"deleteConsumeCalorie", consumeCalorieNo);
+	}
+	//날짜별 하루 소모칼로리의 토탈을 계산
+	public List<TotalConsumeResponse> totalConsume(Map<String, String> map) {
+		logger.debug("DietDao_totalConsume");
+		return sqlSession.selectList(NS+"selectTotalConsume", map);
+	}
 	//소모칼로리 리스트를 불러온다.
-	public List<ConsumeCalorie> getConsumeCalorie() {
-		logger.debug("DietDao_selectExerciseSearch");
-		logger.debug("DietDao_selectExerciseSearch");
-		return sqlSession.selectList(NS+"");
+	public List<ConsumeCalorie> getConsumeCalorie(String memberNo) {
+		logger.debug("DietDao_getConsumeCalorie");
+		return sqlSession.selectList(NS+"selectConsumeCalorieList", memberNo);
 	}
 	//검색어를 입력하면 운동 정보를 가져온다
 	public List<Exercise> selectExerciseSearch(String sv) {

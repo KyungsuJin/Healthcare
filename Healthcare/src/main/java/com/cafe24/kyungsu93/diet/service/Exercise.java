@@ -30,4 +30,9 @@ public class Exercise {
 	public void setExerciseDate(String exerciseDate) {
 		this.exerciseDate = exerciseDate;
 	}
+	@Override
+	public String toString() {
+		return "Exercise [exerciseNo=" + exerciseNo + ", exerciseName=" + exerciseName + ", exerciseCalorie="
+				+ exerciseCalorie + ", exerciseDate=" + exerciseDate + "]";
+	}
 }
