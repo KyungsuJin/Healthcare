@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cafe24.kyungsu93.diet.service.ConsumeCalorieRequest;
 import com.cafe24.kyungsu93.diet.service.DietService;
 import com.cafe24.kyungsu93.diet.service.IngestCalorie;
 import com.cafe24.kyungsu93.diet.service.IngestCalorieRequest;
@@ -21,6 +22,24 @@ public class DietController {
 	DietService dietService;
 	private static final Logger logger = LoggerFactory.getLogger(DietController.class);
 	
+	@RequestMapping(value="/getConsumeCalorie", method=RequestMethod.GET)
+	public String getConsumeCalorie() {
+		logger.debug("DietController_getConsumeCalorie");
+		dietService.getConsumeCalorie();
+		return "diet/getConsumeCalorie";
+	}
+	@RequestMapping(value="/addConsumeCalorie", method=RequestMethod.POST)
+	public String addConsumeCalorie(ConsumeCalorieRequest consumeCalorieRequest) {
+		logger.debug("DietController_addConsumeCalorie_POST");
+		dietService.addConsumeCalorie(consumeCalorieRequest);
+		return "/";
+	}
+	@RequestMapping(value="/addConsumeCalorie", method=RequestMethod.GET)
+	public String addConsumeCalorie() {
+		logger.debug("DietController_addConsumeCalorie_GET");
+
+		return "diet/addConsumeCalorie";
+	}
 	@RequestMapping(value="/removeIngestCalorie", method=RequestMethod.GET)
 	public String removeIngestCalorie(@RequestParam(value="ingestCalorieNo") String ingestCalorieNo
 										,@RequestParam(value="memberNo") String memberNo) {

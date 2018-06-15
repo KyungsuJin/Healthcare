@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cafe24.kyungsu93.Food;
+
+import com.cafe24.kyungsu93.exercise.service.Exercise;
+import com.cafe24.kyungsu93.food.service.Food;
 
 @Repository
 public class DietDao {
@@ -18,6 +20,26 @@ public class DietDao {
 	String NS = "com.cafe24.kyungsu93.diet.service.DietMapper.";
 	Logger logger =	LoggerFactory.getLogger(DietDao.class);
 	
+	//소모칼로리 리스트를 불러온다.
+	public List<ConsumeCalorie> getConsumeCalorie() {
+		logger.debug("DietDao_selectExerciseSearch");
+		return sqlSession.selectList(NS+"");
+	}
+	//검색어를 입력하면 운동 정보를 가져온다
+	public List<Exercise> selectExerciseSearch(String sv) {
+		logger.debug("DietDao_selectExerciseSearch");
+		return sqlSession.selectList(NS+"selectExerciseSearch",sv);
+	}
+	//소모칼로리의 pk를 생성한다.
+	public int selectConsumeCalorieNo() {
+		logger.debug("DietDao_selectConsumeCalorieNo");
+		return sqlSession.selectOne(NS+"selectConsumeCalorieNo");
+	}
+	//소모칼로리를 등록한다.
+	public int addConsumeCalorie(ConsumeCalorie consumeCalorie) {
+		logger.debug("DietDao_addConsumeCalorie");
+		return sqlSession.insert(NS+"insertConsumeCalorie", consumeCalorie);
+	}
 	//날짜별 자신의 하루토탈 칼로리 계산
 	public List<TotalCalorieResponse> totalCalorie(Map<String,String> map) {
 		logger.debug("DietDao_totalCalorie");

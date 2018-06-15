@@ -4,10 +4,52 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cafe24.kyungsu93.diet.service.DietMapper">
+<!-- 	<select id="selectConsumeCalorie"
+			parameterType=""
+			resultType="">
+		SELECT
+		FROM
+			consume_calorie
+		WHERE
+	</select> -->
+	<select id="selectExerciseSearch"
+			parameterType="String"
+			resultType="com.cafe24.kyungsu93.diet.service.Exercise">
+		SELECT
+			exercise_no as exerciseNo
+			,exercise_name as exerciseName
+			,exercise_calorie as exerciseCalorie
+			,exercise_date as exerciseDate
+		FROM
+			exercise
+		WHERE
+			exercise_name LIKE CONCAT('%',#{sv},'%')
+	</select>
+	<select id="selectConsumeCalorieNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(cast(SUBSTRING(consume_calorie_no,17) as decimal)), 0)
+		FROM
+			consume_calorie
+	</select>	
+	<insert id="insertConsumeCalorie" parameterType="com.cafe24.kyungsu93.diet.service.ConsumeCalorie">
+		INSERT INTO consume_calorie(
+			consume_calorie_no
+			,member_no
+			,exercise_no
+			,consume_time
+			,consume_calorie_date
+		)
+		VALUES(
+			#{consumeCalorieNo}
+			,#{memberNo}
+			,#{exerciseNo}
+			,#{consumeTime}
+			,now()
+		)	
+	</insert>
 	<select id="selectTotalCalorie" 
 			parameterType="java.util.Map"
-			resultType="com.cafe24.kyungsu93.diet.service.TotalCalorieResponse">
-						
+			resultType="com.cafe24.kyungsu93.diet.service.TotalCalorieResponse">				
 		SELECT
 			a.member_no as memberNo
 			,a.ingest_weight as ingestWeight
@@ -27,9 +69,9 @@
 		WHERE
 			a.food_no = b.food_no 
 			and a.member_no=#{memberNo}
-<!-- 			and YEAR(a.ingest_calorie_date) = #{pickYear}
+			and YEAR(a.ingest_calorie_date) = #{pickYear}
 			and MONTH(a.ingest_calorie_date) = #{pickMonth}
-			and DAY(a.ingest_calorie_date) = #{pickDay} -->
+			and DAY(a.ingest_calorie_date) = #{pickDay} 
 	</select>
 	<delete id="deleteIngestCalorie" parameterType="String">
 		DELETE
@@ -80,7 +122,7 @@
 	</insert>
 	<select id="selectFoodSearch"
 			parameterType="String"
-			resultType="com.cafe24.kyungsu93.Food">
+			resultType="com.cafe24.kyungsu93.food.service.Food">
 		SELECT
 			food_no as foodNo
 			,food_group as foodGroup

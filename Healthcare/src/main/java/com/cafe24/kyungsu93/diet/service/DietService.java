@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cafe24.kyungsu93.Food;
+
+import com.cafe24.kyungsu93.exercise.service.Exercise;
+import com.cafe24.kyungsu93.food.service.Food;
 
 @Service
 @Transactional
@@ -24,6 +26,37 @@ public class DietService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DietService.class);
 	
+	public String getConsumeCalorie() {
+		logger.debug("DietService_getConsumeCalorie");
+		dietDao.getConsumeCalorie();
+		return null;
+	}
+	public List<Exercise> selectExerciseSearch(String sv) {
+		logger.debug("DietService_selectExerciseSearch");
+		
+		return dietDao.selectExerciseSearch(sv);
+	}
+	public int addConsumeCalorie(ConsumeCalorieRequest consumecalorieRequest) {
+		logger.debug("DietService_addConsumeCalorie");
+		ConsumeCalorie consumeCalorie = new ConsumeCalorie();
+		consumeCalorie.setMemberNo(consumecalorieRequest.getMemberNo());
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!"+ consumecalorieRequest.getExerciseNo().size());
+		int addConsumeCalroie=0;
+		for(int i=0; i<consumecalorieRequest.getExerciseNo().size(); i++) {
+			consumeCalorie.setExerciseNo(consumecalorieRequest.getExerciseNo().get(i));
+			consumeCalorie.setConsumeTime(consumecalorieRequest.getConsumeTime().get(i));
+			
+			int result = (dietDao.selectConsumeCalorieNo())+1;
+			System.out.println("result : "+ result);
+			String temp = "consume_calorie_";
+			String consumeCalorieNo = temp+result;
+			
+			consumeCalorie.setConsumeCalorieNo(consumeCalorieNo);
+			
+			addConsumeCalroie = dietDao.addConsumeCalorie(consumeCalorie);
+		}
+		return addConsumeCalroie;
+	}
 	public TotalCalorieResponse totalCalorie(String memberNo, String datePicker) {
 		logger.debug("DietService_totalCalorie");
 		Map<String, String> map = new HashMap<String, String>();
@@ -95,8 +128,6 @@ public class DietService {
 		IngestCalorie ingestCalorie = new IngestCalorie();
 		ingestCalorie.setIngestCalorieNo(ingestCalorieRequest.getIngestCalorieNo());
 		ingestCalorie.setMemberNo(ingestCalorieRequest.getMemberNo());
-		System.out.println("푸드넘버 : "+ingestCalorieRequest.getFoodNo().get(0));
-		System.out.println("푸드넘버 : "+ingestCalorieRequest.getFoodNo().get(1));
 		int addIngestCalorie = 0;
 		for(int i=0; i <ingestCalorieRequest.getFoodNo().size();i++) {
 			ingestCalorie.setFoodNo(ingestCalorieRequest.getFoodNo().get(i));

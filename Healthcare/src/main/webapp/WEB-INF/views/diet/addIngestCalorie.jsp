@@ -15,7 +15,6 @@
 	<title>Insert title here</title>
 	<script>
 		$(document).ready(function() {
-
 			$('#btnSearch').click(function() {
 				if( $('#sv').val() == "" ||  $('#sv').val() == " " || $('#sv').val().length < 2) {
 					console.log(sv);

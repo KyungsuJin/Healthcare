@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cafe24.kyungsu93.Food;
 import com.cafe24.kyungsu93.diet.service.DietService;
 import com.cafe24.kyungsu93.diet.service.TotalCalorieResponse;
+import com.cafe24.kyungsu93.exercise.service.Exercise;
+import com.cafe24.kyungsu93.food.service.Food;
 
 @RestController
 public class DietRestController {
@@ -21,13 +22,16 @@ public class DietRestController {
 	@Autowired
 	DietService dietService;
 	
+	@RequestMapping(value="/exerciseSearch", method=RequestMethod.POST)
+	public List<Exercise> selectExerciseSearch(@RequestParam(value="sv") String sv) {
+		logger.debug("DietRestController_selectExerciseSearch");
+		return dietService.selectExerciseSearch(sv);
+	}
 	@RequestMapping(value="/totalCalorie", method=RequestMethod.POST)
-	public TotalCalorieResponse totalCalorie(Model model
-												,@RequestParam(value="memberNo") String memberNo
+	public TotalCalorieResponse totalCalorie(@RequestParam(value="memberNo") String memberNo
 												,@RequestParam(value="datePicker") String datePicker) {
 		logger.debug("DietRestController_onedayCalorie");
 		TotalCalorieResponse totalCalorie = dietService.totalCalorie(memberNo, datePicker);
-		model.addAttribute("totalCalorie", totalCalorie);
 		return totalCalorie;
 	}
 	@RequestMapping(value="/foodSerach", method=RequestMethod.POST)
