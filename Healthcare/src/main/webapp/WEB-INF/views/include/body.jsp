@@ -18,16 +18,20 @@
       <div class="collapse navbar-collapse"
          id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-             <li><a href="${pageContext.request.contextPath}/getArticleList" data-toggle="tooltip" data-placement="bottom"
-                     title="ArticleList">ArticleList</a></li>
-            <li><a href="${pageContext.request.contextPath}/getNoticeList" data-toggle="tooltip" data-placement="bottom"
-               title="NoticeList">NoticeList</a></li>
-            <li><a href="${pageContext.request.contextPath}/getBoardList" data-toggle="tooltip" data-placement="bottom"
-               title="BoardList">BoardList</a></li>
-            <li><a href="${pageContext.request.contextPath}/getGalleryList" data-toggle="tooltip" data-placement="bottom"
-               title="GalleryList">GalleryList</a></li>
-            <li><a href="${pageContext.request.contextPath}/getResumeList" data-toggle="tooltip" data-placement="bottom"
-               title="ResumeList">ResumeList</a></li>
+             <li><a href="${pageContext.request.contextPath}/getHealthScreenList" data-toggle="tooltip" data-placement="bottom"
+                     title="getHealthScreenList">건강검진표</a></li>
+            <li><a href="${pageContext.request.contextPath}/getHealthSurveyResultList" data-toggle="tooltip" data-placement="bottom"
+               title="getHealthSurveyResultList">나의 건강설문 결과</a></li>
+            <li><a href="${pageContext.request.contextPath}/getHealthSurveyList" data-toggle="tooltip" data-placement="bottom"
+               title="getHealthSurveyList">건강설문</a></li>
+            <li><a href="${pageContext.request.contextPath}/getTreatmentList" data-toggle="tooltip" data-placement="bottom"
+               title="getTreatmentList">진료기록</a></li>
+            <li><a href="${pageContext.request.contextPath}/getMedicationList" data-toggle="tooltip" data-placement="bottom"
+               title="getMedicationList">복약기록</a></li>
+            <li><a href="${pageContext.request.contextPath}/getMedicineList" data-toggle="tooltip" data-placement="bottom"
+               title="getMedicineList">약품검색</a></li>
+            <li><a href="${pageContext.request.contextPath}/getHospitalPharmacy" data-toggle="tooltip" data-placement="bottom"
+               title="getHospitalPharmacy">병원,약국 검색</a></li>
          </ul>
          <ul class="nav navbar-nav navbar-right">
             <c:choose>

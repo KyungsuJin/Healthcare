@@ -1,7 +1,9 @@
 package com.cafe24.kyungsu93.medicine.service;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -22,10 +24,37 @@ public class MedicineService {
 	static String medicineCode = "1";
 	@Autowired MedicineDao medicineDao;
 	
-	public List<Medicine> getMedicineList(String medicineName) {
-		List<Medicine> list = medicineDao.getMedicineList(medicineName);
-		System.out.println("list : "+list);
-		return list;
+	public Map<String, Object> getMedicineList(int currentPage, int pagePerRow, String medicineName){
+		int totalRow = medicineDao.medicineTotalCount("%"+medicineName+"%");
+		int firstPage = 1;
+		int lastPage = totalRow/pagePerRow;
+		if(totalRow%pagePerRow != 0) {
+			lastPage++;
+		}
+		int beforePage = ((currentPage-1)/10)*10;
+		int afterPage = ((currentPage-1)/10)*10 +11;
+		
+		Map pageMap = new HashMap<String, Object>();
+		pageMap.put("beginRow", (currentPage-1)*10);
+		pageMap.put("pagePerRow", pagePerRow);
+		pageMap.put("medicineName", "%"+medicineName+"%");
+		Map map = new HashMap<String, Object>();
+		List<Medicine> list = medicineDao.getMedicineList(pageMap);
+		for(Medicine medicine : list) {
+			medicine.setMedicineNo(medicine.getMedicineNo().split("_")[1]);
+			System.out.println(medicine.getMedicineNo());
+		}
+		map.put("list", list);
+		map.put("firstPage", firstPage);
+		map.put("lastPage", lastPage);
+		map.put("beforePage", beforePage);
+		map.put("afterPage", afterPage);
+		logger.debug("MedicineService.getMedicineList.list : " + list);
+		logger.debug("MedicineService.getMedicineList.firstPage : " + firstPage);
+		logger.debug("MedicineService.getMedicineList.lastPage : " + lastPage);
+		logger.debug("MedicineService.getMedicineList.beforePage : " + beforePage);
+		logger.debug("MedicineService.getMedicineList.afterPage : " + afterPage);
+		return map;
 	}
 	
 	public void addMedicine(int number) {

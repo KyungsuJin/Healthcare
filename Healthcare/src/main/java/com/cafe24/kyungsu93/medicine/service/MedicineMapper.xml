@@ -4,7 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.cafe24.kyungsu93.medicine.service.MedicineMapper">
-	<select id="getMedicineList" parameterType="String" resultType="com.cafe24.kyungsu93.medicine.service.Medicine">
+	<select id="medicineTotalCount" resultType="Integer">
+		SELECT 
+			count(*)
+		FROM medicine
+		WHERE medicine_name like #{medicineName}
+	</select>
+
+	<select id="getMedicineList" parameterType="java.util.Map" resultType="com.cafe24.kyungsu93.medicine.service.Medicine">
 		SELECT
 			medicine_no AS medicineNo
 			,medicine_name AS medicineName
@@ -19,6 +26,8 @@
 			,medicine_permission_date AS medicinePermissionDate
 		FROM medicine
 		WHERE medicine_name like #{medicineName}
+		ORDER BY medicine_no asc
+		LIMIT #{beginRow}, #{pagePerRow}
 	</select>
 
 	<insert id="addMedicine" parameterType="com.cafe24.kyungsu93.medicine.service.Medicine">

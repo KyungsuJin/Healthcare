@@ -1,6 +1,5 @@
 package com.cafe24.kyungsu93.medication.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -13,13 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.cafe24.kyungsu93.medication.service.MedicationService;
 import com.cafe24.kyungsu93.medication.service.MedicationRequest;
-import com.cafe24.kyungsu93.medication.service.MedicationRequest;
-import com.cafe24.kyungsu93.medication.service.MedicationRequest;
-
 
 @Controller
 public class MedicationController {

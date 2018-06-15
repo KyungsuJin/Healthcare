@@ -1,5 +1,7 @@
 package com.cafe24.kyungsu93.medicine.controller;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cafe24.kyungsu93.medicine.service.MedicineService;
+import com.cafe24.kyungsu93.treatment.service.TreatmentRequest;
 
 @Controller
 public class MedicineController {
@@ -17,19 +20,39 @@ public class MedicineController {
 	
 	@Autowired MedicineService medicineService; 
 	
-	@RequestMapping(value="/searchMedicineForm", method=RequestMethod.GET)
-	public String searchMedicineForm() {
-		return "medicine/searchMedicineForm";
-	}
-	
 	@RequestMapping(value="/getMedicineList", method=RequestMethod.GET)
-	public String getMedicineList() {
+	public String getMedicineList(Model model
+			,@RequestParam(value="medicineNo", defaultValue="1") String medicineNo
+			,@RequestParam(value="medicineName", defaultValue="") String medicineName
+			,@RequestParam(value="currentPage", defaultValue="1" ) int currentPage
+			,@RequestParam(value="pagePerRow", defaultValue="10" ) int pagePerRow) {
+		
+		Map map = medicineService.getMedicineList(currentPage, pagePerRow, medicineName);
+		model.addAttribute("medicineName", medicineName);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("firstPage", map.get("firstPage"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("beforePage", map.get("beforePage"));
+		model.addAttribute("afterPage", map.get("afterPage"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("pagePerRow", pagePerRow);
 		return "medicine/getMedicineList";
 	}
 	
 	@RequestMapping(value="/getMedicineList", method=RequestMethod.POST)
-	public String getMedicineList(Model model, @RequestParam(value="medicineName") String medicineName) {
-		model.addAttribute("list", medicineService.getMedicineList(medicineName));
+	public String getMedicineList(Model model
+				,@RequestParam(value="medicineName") String medicineName
+				,@RequestParam(value="currentPage", defaultValue="1" ) int currentPage
+				,@RequestParam(value="pagePerRow", defaultValue="10" ) int pagePerRow) {
+		Map map = medicineService.getMedicineList(currentPage, pagePerRow, medicineName);
+		model.addAttribute("medicineName", medicineName);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("firstPage", map.get("firstPage"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("beforePage", map.get("beforePage"));
+		model.addAttribute("afterPage", map.get("afterPage"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("pagePerRow", pagePerRow);
 		return "medicine/getMedicineList";
 	}
 	
