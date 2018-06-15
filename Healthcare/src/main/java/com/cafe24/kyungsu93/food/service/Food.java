@@ -1,4 +1,4 @@
-package com.cafe24.kyungsu93;
+package com.cafe24.kyungsu93.food.service;
 
 public class Food {
 	private String foodNo;
