@@ -39,11 +39,14 @@ public class BloodsugarService {
 	public  Map<String, Object> bloodsugarList(int currentPage, int pagePerRow) {
 		logger.debug("Bloodsugar service BloodsugarList 실행 부분");
 		Map<String,Integer> map = new HashMap<String,Integer>();
+		logger.debug("4번"+map);
 		int beginRow = (currentPage-1)*pagePerRow;
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
 		List<Bloodsugar> list = bloodsugarDao.bloodsugarList(map);
+		logger.debug("5번"+list);
 		int total = bloodsugarDao.bloodsugarCount();
+		logger.debug("7번"+total);
 		int lastPage = total/pagePerRow;
         if(total % pagePerRow != 0) {
             lastPage++;
@@ -111,6 +114,11 @@ public class BloodsugarService {
 		return bloodsugarDao.deletesugarCount(bloodsugarno);
 	}
 	
+	/*public List<Bloodsugar> selectBloodsugarChart(String memberno) {
+		logger.debug("BloodsugarService 에서 selectBloodsugarChart 실행");
+		return bloodsugarDao.selectBloodsugarChart(memberno);
+	}
+	*/
 	/*
 		logger.debug("BloodPressureService 에서 updateBloodPressure 실행");
 		logger.debug("=================================2번"+bloodsugarno);

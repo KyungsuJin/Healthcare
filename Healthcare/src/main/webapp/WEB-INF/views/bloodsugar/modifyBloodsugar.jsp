@@ -24,9 +24,14 @@
 		<td><input type="hidden" name="bloodsugarno" value="${bloodsugar.bloodsugarno}"></td>
 		<td><input type="text" name="memberno" value="${bloodsugar.memberno}"></td>
 		<td><input type="text" name="fastingbloodsugar" value="${bloodsugar.fastingbloodsugar}"></td>
-		<td><input type="text" name="fastingstate" value="${bloodsugar.fastingstate}"></td>
+
 		<td><input type="text" name="bloodsugardate" value="${bloodsugar.bloodsugardate}"></td>
 		<td><input type="submit" value="수정하기">
+		<form>
+			<input type="radio" name ="fastingstate"  checked="checked" value="F" id="fastingstate"/>F
+			<input type="radio" name="fastingstate" value="T">T 	
+		</form>
+		
 	</form>
 	</tr>
 	</thead>

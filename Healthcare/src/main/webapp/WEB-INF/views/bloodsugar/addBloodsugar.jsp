@@ -16,7 +16,11 @@
 <!-- bootstrap javascript소스를 사용하기 위한 CDN주소 -->
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+<script type="text/javascript">
+$(document).ready(function(){
+   console.log($("input[name=myRadio]:checked").val());
+});
+</script>
 <script>
 	$(document).ready(function(){
 		// 입력폼 
@@ -61,10 +65,6 @@
 			<input class="form-control" name = "fastingbloodsugar"  id="fastingbloodsugar" type="text"/>	
 		</div>
 		<div class="form-group">
-			<label for="fastingstate">fastingstate : </label>
-			<input class="form-control" name = "fastingstate"  id="fastingstate" type="text"/>	
-		</div>
-		<div class="form-group">
 			<label for="bloodsugardate">bloodsugardate : </label>
 			<input class="form-control" name = "bloodsugardate"  id="bloodsugardate" type="text"/>	
 		</div>
@@ -73,6 +73,10 @@
 			<input class="btn btn-default" type="reset" value="초기화"/>
 			<a class="btn btn-default" id="BloodsugarList" href="${pageContext.request.contextPath}/BloodsugarList">글목록</a>
 		</div>
+		<form>
+			<input type="radio" name ="fastingstate"  checked="checked" value="F" id="fastingstate"/>F
+			<input type="radio" name ="fastingstate"  id="fastingstate" value="T">T 	
+		</form>
 	</form>
 </div>
 

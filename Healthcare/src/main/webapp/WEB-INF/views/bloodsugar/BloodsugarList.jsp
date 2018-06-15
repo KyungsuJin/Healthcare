@@ -8,6 +8,7 @@
 <title>BloodsugarList</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+
  <!-- <script>
     $(document).ready(function(){
     	 $('#searchBtn').click(function(){
@@ -60,7 +61,7 @@
 			</c:forEach>	
 		</tbody>
 	</table>
-	<a id="addBloodsugar" href="${pageContext.request.contextPath}/addBloodsugar">혈당등록하기</a>
+	<a id="addBloodsugar" href="${pageContext.request.contextPath}/addBloodsugar">혈압등록하기</a>
 
 	<nav>
 			<ul class="pagination pagination-sm">

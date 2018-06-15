@@ -50,6 +50,8 @@ public class BloodsugarController {
 								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
 		logger.debug("BloodsugarController 에서 BloodsugarList 실행");
 		Map<String,Object> map = bloodsugarService.bloodsugarList(currentPage, pagePerRow);
+		logger.debug("1번"+currentPage);
+		logger.debug("2번"+pagePerRow);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("list", map.get("list"));

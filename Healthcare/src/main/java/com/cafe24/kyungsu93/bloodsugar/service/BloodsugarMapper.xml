@@ -28,7 +28,7 @@
 
   </select>
   
-  <select id="bloodPressureCount" resultType="Integer">
+  <select id="bloodsugarCount" resultType="Integer">
 		SELECT
 		count(*)
 		FROM blood_sugar

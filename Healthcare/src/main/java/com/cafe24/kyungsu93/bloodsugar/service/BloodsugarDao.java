@@ -26,12 +26,13 @@ public class BloodsugarDao {
 	}*/
 	public List<Bloodsugar> bloodsugarList(Map<String,Integer> map) {
 		logger.debug("BloodsugarDao 에서 BloodsugarList 실행");
+		logger.debug("6번"+map);
 		return sqlSession.selectList(NS+"bloodsugarList",map);
 	}
 	
 	public int bloodsugarCount() {
 		logger.debug("BloodsugarDao 에서 bloodsugarCount 실행");
-		return sqlSession.selectOne(NS+"bloodPressureCount");
+		return sqlSession.selectOne(NS+"bloodsugarCount");
 	}
 	
 	public int addBloodsugar(Bloodsugar bloodsugar) {
@@ -56,4 +57,10 @@ public class BloodsugarDao {
 		logger.debug("BloodPressureDao 에서 deletePressureCount 실행");
 		return sqlSession.delete(NS+"deleteBloodsugar",bloodsugarno);
 	}
+	/*public List<Bloodsugar> selectBloodsugarChart(String memeberno) {
+		logger.debug("BloodsugarDao 에서 selectBloodsugarChart 실행");
+		List<Bloodsugar> list = sqlSession.selectList(NS+"bloodsugarchart",memeberno);
+		return list;
+	}*/
+	
 }
