@@ -16,10 +16,4 @@ public class HomeController {
 		logger.debug("HomeController.resume 메서드 실행");
 		return "resume/resume";
 	}
-	
-	@RequestMapping(value = "/getHospitalPharmacy", method = RequestMethod.GET)
-	public String getHospitalPharmacy() {
-		logger.debug("HomeController.getHospitalPharmacy 메서드 실행");
-		return "getHospitalPharmacy";
-	}
 }
