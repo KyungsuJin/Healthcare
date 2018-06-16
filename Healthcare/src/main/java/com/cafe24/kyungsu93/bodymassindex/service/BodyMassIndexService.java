@@ -22,7 +22,7 @@ public class BodyMassIndexService {
 		bodyMassIndexDao.addBodyMassIndex(bodyMassIndex);
 	}
 	//체질량을 등록한 리스트
-	public List<BodyMassIndex> bodyMassIndexList(String memberNo) {
+	public List<BodyMassIndex> bodyMassIndexList(String memberNo,int currentPage,int pagePerRow) {
 		logger.debug("BodyMassIndexService.bodyMassIndexList");
 		return bodyMassIndexDao.bodyMassIndexList(memberNo);
 		

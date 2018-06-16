@@ -36,9 +36,11 @@ public class BodyMassIndexController {
 	//체질량 입력 페이지
 	@RequestMapping(value = "/bodyMassIndexList", method = RequestMethod.GET)
 	public String bodyMassIndexList(Model model
-									,@RequestParam(value="memberNo")String memberNo) {
+									,@RequestParam(value="memberNo")String memberNo
+									,@RequestParam(value="currentPage",defaultValue="1")int currentPage
+									,@RequestParam(value="pageRerRow",defaultValue="10")int pagePerRow) {
 		logger.debug("BodyMassIndexController.bodyMassIndexList GET");
-		List<BodyMassIndex> bodyMassIndexList =bodyMassIndexService.bodyMassIndexList(memberNo);
+		List<BodyMassIndex> bodyMassIndexList =bodyMassIndexService.bodyMassIndexList(memberNo,currentPage,pagePerRow);
 		model.addAttribute("bodyMassIndexList",bodyMassIndexList);
 		return "bodymassindex/bodyMassIndexList";
 	}

@@ -61,6 +61,7 @@
 </head>
 <body>
 	<h1> 운동매칭 </h1>
+
 	<a href="${pageContext.request.contextPath}/addExerciseMatching">운동매칭 등록</a>
 	<a href="${pageContext.request.contextPath}/attendExerciseMatching?memberNo=${sessionScope.memberSessionNo}">자신의 운동참가 리스트</a>
 	<input type="hidden" name="sessionId"id="sessionId" value="${sessionScope.memberSessionId}">
