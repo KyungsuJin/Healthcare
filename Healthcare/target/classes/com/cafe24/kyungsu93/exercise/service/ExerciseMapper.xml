@@ -4,6 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.cafe24.kyungsu93.ExerciseMapper">
+  <!--memberNo -> memberId  -->
+  	<select id="changeMemberNo"
+  			parameterType="String"
+  			resultType="String">
+  		SELECT  member_no
+  		FROM member
+  		WHERE member_id =#{memberId};
+  	</select>
   	<!--보증금 등록여부 체크  -->
   	<select id="exerciseDepositChk"
   			parameterType="String"
@@ -107,6 +115,34 @@
   			SELECT COUNT(*)
   			FROM exercise_matching
   	</select>
+  	<!-- 운동매칭 검색리스트 -->
+  	<select id="exerciseMatchingSearchList"
+  			parameterType="java.util.Map"
+  			resultType="com.cafe24.kyungsu93.exercise.service.ExerciseRegistration">
+  			SELECT
+				exercise.exercise_matching_no AS exerciseMatchingNo
+				,member.member_id AS memberId
+				,exercise.exercise_no AS exerciseNo
+				,exercise.exercise_matching_title AS exerciseMatchingTitle
+				,exercise.exercise_matching_content AS exerciseMatchingContent
+				,exercise.exercise_matching_time AS exerciseMatchingTime
+				,exercise.exercise_matching_count AS exerciseMatchingCount
+				,exercise.exercise_matching_place AS exerciseMatchingPlace
+				,exercise.exercise_matching_schedule_date AS exerciseMatchingScheduleDate
+				,exercise.exercise_matching_date AS exerciseMatchingDate
+			FROM exercise_matching AS exercise ,member 
+			WHERE member.member_no = exercise.member_no
+			AND ${searchSelect}  LIKE '%${searchText}%'
+			ORDER BY exercise_matching_date desc
+			LIMIT #{beginRow},#{pagePerRow}
+  	</select>
+  	<!-- 운동매칭 리스트 검색 후 카운트 -->
+  	<select id="totalCountSearchList"
+  			resultType="Integer">
+  			SELECT COUNT(*)
+  			FROM exercise_matching AS member
+  			WHERE ${searchSelect}  LIKE '%${searchText}%'
+  	</select>
   	<!-- 운동매칭 내용 출력 -->
   	<select id="exerciseMatchingContent"
   			resultType="com.cafe24.kyungsu93.exercise.service.ExerciseRegistration">
@@ -123,6 +159,38 @@
 				,exercise.exercise_matching_date AS exerciseMatchingDate
 			FROM exercise_matching AS exercise ,member 
 			WHERE member.member_no = exercise.member_no AND exercise.exercise_matching_no=#{exerciseMatchingNo}
+  	</select>
+  	<!-- 운동매칭 기간별 검색 -->
+  	<select id="exerciseMatchingSearchDateList"
+  			parameterType="java.util.Map"
+  			resultType="com.cafe24.kyungsu93.exercise.service.ExerciseRegistration">
+  			SELECT
+				exercise.exercise_matching_no AS exerciseMatchingNo
+				,member.member_id AS memberId
+				,exercise.exercise_no AS exerciseNo
+				,exercise.exercise_matching_title AS exerciseMatchingTitle
+				,exercise.exercise_matching_content AS exerciseMatchingContent
+				,exercise.exercise_matching_time AS exerciseMatchingTime
+				,exercise.exercise_matching_count AS exerciseMatchingCount
+				,exercise.exercise_matching_place AS exerciseMatchingPlace
+				,exercise.exercise_matching_schedule_date AS exerciseMatchingScheduleDate
+				,exercise.exercise_matching_date AS exerciseMatchingDate
+			FROM exercise_matching AS exercise ,member 
+			WHERE member.member_no = exercise.member_no
+			 <![CDATA[
+				AND exercise.exercise_matching_schedule_date >= #{exerciseDateStart} AND exercise.exercise_matching_schedule_date <= #{exerciseDateEnd}
+			]]>
+			ORDER BY exercise_matching_date desc
+			LIMIT #{beginRow},#{pagePerRow}
+  	</select>
+  	<!-- 운동매칭 기간별 검색 리스트 카운트  -->
+  	<select id="totalCountSearchDateList"
+  			resultType="Integer">
+  			SELECT COUNT(*)
+  			FROM exercise_matching AS member
+  			WHERE <![CDATA[
+				${searchSelect} >= #{exerciseDateStart} AND ${searchSelect} <= #{exerciseDateEnd}
+			]]>
   	</select>
   	<!-- 운동매칭 글, 내용 삭제  -->
   	<delete id="deleteExerciseMatching"

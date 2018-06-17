@@ -43,9 +43,16 @@ public class ExerciseRestController {
 	//운동매칭 리스트
 	@RequestMapping(value = "/exerciseMatchingList", method = RequestMethod.POST)
 	public Map<String,Object> exerciseMatchingList(@RequestParam(value="currentPage",defaultValue="1")int currentPage
-												,@RequestParam(value="pagePerRow",defaultValue="10")int pageRerRow) {
+												,@RequestParam(value="pagePerRow",defaultValue="10")int pageRerRow
+												,@RequestParam(value = "searchSelect", required = false, defaultValue = "") String searchSelect
+												,@RequestParam(value = "searchText", required = false, defaultValue = "") String searchText
+												,@RequestParam(value="exerciseDateStart",required=false,defaultValue="")String exerciseDateStart
+												,@RequestParam(value="exerciseDateEnd",required=false,defaultValue="")String exerciseDateEnd) {
 		logger.debug("ExerciseRestController.exerciseMatchingList");
-		Map<String,Object> map=exerciseService.exerciseMatchingList(currentPage,pageRerRow);
+		logger.debug("searchSelect : " + searchSelect);
+		logger.debug("searchText : " + searchText);
+		Map<String,Object> map=exerciseService.exerciseMatchingList(currentPage,pageRerRow, searchText,
+				searchSelect,exerciseDateStart,exerciseDateEnd);
 		map.put("currentPage", currentPage);
 		return map;
 	}

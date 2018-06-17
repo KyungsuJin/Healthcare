@@ -208,7 +208,7 @@
 		</tbody>
 		<tr>
 			<td colspan="2">
-				<form id="deleteForm" action="${pageContext.request.contextPath}/SendMessageDelete" method="post">
+				<form id="deleteForm" action="${pageContext.request.contextPath}/sendMessageDelete" method="post">
 					<input type="hidden" id="deleteMessageNo" name="deleteMessageNo" value="${message.sendMessageNo}">
 					<button type=button id="deleteMessage">삭제</button>
 				</form>

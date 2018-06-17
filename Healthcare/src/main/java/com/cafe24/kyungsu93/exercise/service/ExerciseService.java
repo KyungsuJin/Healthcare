@@ -1,5 +1,6 @@
 package com.cafe24.kyungsu93.exercise.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,18 +55,47 @@ public class ExerciseService {
 		return 0;
 	}
 	// 운동매칭 리스트
-	public Map<String,Object> exerciseMatchingList(int currentPage,int pagePerRow) {
+	public Map<String,Object> exerciseMatchingList(int currentPage,int pagePerRow,String searchText,String searchSelect,String exerciseDateStart,String exerciseDateEnd) {
 		logger.debug("ExerciseService.exerciseMatchingList");
-		Map<String,Integer> map = new HashMap<String,Integer>();
+		List<ExerciseRegistration> exerciseMatchingList = new ArrayList<ExerciseRegistration>();
+		Map<String,Integer> map = new HashMap<String,Integer>();//원래의 리스트+페이징 정볼르 담기위한 map
+		int totalCountList=0;
 		int beginRow = (currentPage-1)*10;
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
-		List<ExerciseRegistration> exerciseMatchingList=exerciseDao.exerciseMatchingList(map);
+		if(searchSelect.equals("member.member_no")) {//member_no로 변환 작업
+			searchText=exerciseDao.changeMemberNo(searchText);
+		}
+		Map<String,Object> searchMap = new HashMap<String,Object>();//검색한정보+페이징 정보를 담기위한 map
+		searchMap.put("exerciseDateStart", exerciseDateStart);
+		searchMap.put("exerciseDateEnd", exerciseDateEnd);
+		searchMap.put("searchText", searchText);
+		searchMap.put("searchSelect", searchSelect);
+		searchMap.put("beginRow", beginRow);
+		searchMap.put("pagePerRow", pagePerRow);
+		if(!exerciseDateStart.equals("")) {
+			logger.debug("기간별 검색!");
+			exerciseMatchingList=exerciseDao.exerciseMatchingSearchDateList(searchMap);
+			totalCountList=exerciseDao.totalCountSearchDateList(searchMap);
+		}
+		if(!searchText.equals("")) {
+			logger.debug("그냥 검색!");
+			exerciseMatchingList=exerciseDao.exerciseMatchingSearchList(searchMap);
+			totalCountList=exerciseDao.totalCountSearchList(searchMap);
+			logger.debug("totalCountList"+totalCountList);
+		}
+		if(searchText.equals("") && exerciseDateStart.equals("")) {
+			logger.debug("그냥 리스트!");
+			exerciseMatchingList=exerciseDao.exerciseMatchingList(map);
+			totalCountList =exerciseDao.totalCountList();
+			logger.debug("totalCountList"+totalCountList);
+		}
+		
 		for(ExerciseRegistration matchingList:exerciseMatchingList) {
 			logger.debug(matchingList.getExerciseMatchingNo());
 			matchingList.setExerciseMatchingAttendCount(exerciseDao.exerciseMatchingAttendCount(matchingList.getExerciseMatchingNo()));
 		}
-		int totalCountList =exerciseDao.totalCountList();
+		
 		int lastPage=totalCountList/pagePerRow;
 		if(totalCountList%pagePerRow>0) {
 			lastPage++;

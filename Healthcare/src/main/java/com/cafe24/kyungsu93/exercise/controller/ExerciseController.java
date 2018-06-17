@@ -52,6 +52,25 @@ public class ExerciseController {
 		logger.debug("ExerciseRestController.exercisePlace get");
 		return "exercise/exercisePlace";
 	}
+	//운동 검색 후 리스트
+	@RequestMapping(value = "/exerciseSearchList", method = RequestMethod.GET)
+	public String exerciseSearchList(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
+				,@RequestParam(value="searchSelect",required=false)String searchSelect
+				,@RequestParam(value="searchTextTest",required=false)String searchText
+				,@RequestParam(value="exerciseDateStart",required=false)String exerciseDateStart
+				,@RequestParam(value="exerciseDateEnd",required=false)String exerciseDateEnd) {
+		logger.debug("ExerciseRestController.exerciseSearchList get");
+		logger.debug("searchSelect : " +searchSelect);
+		logger.debug("searchText : " +searchText);
+		logger.debug("exerciseDateStart : " + exerciseDateStart);
+		logger.debug("exerciseDateEnd : " + exerciseDateEnd);
+		model.addAttribute("currentPage",currentPage);
+		model.addAttribute("searchSelect",searchSelect);
+		model.addAttribute("searchText",searchText);
+		model.addAttribute("exerciseDateStart",exerciseDateStart);
+		model.addAttribute("exerciseDateEnd",exerciseDateEnd);
+		return "exercise/exerciseMatching";
+	}
 	//운동 장소 리스트 뷰
 	@RequestMapping(value = "/exercisePlaceView", method = RequestMethod.GET)
 	public String exercisePlaceView() {

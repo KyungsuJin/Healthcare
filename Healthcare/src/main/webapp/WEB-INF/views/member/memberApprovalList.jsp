@@ -49,7 +49,7 @@
 	</table>
 	<div id="pageDiv">
 		<c:if test="${currentPage>1}">
-			<a href="${pageContext.request.contextPath}/memberApprovalList?currentPage=1"></a>
+			<a href="${pageContext.request.contextPath}/memberAppralList?currentPage=1"></a>
 			<a href="${pageContext.request.contextPath}/memberApprovalList?currentPage=${currentPage-1}">이전</a>
 		</c:if>
 			<c:forEach begin="${startPage}" end="${endPage}" step="1" var="i">

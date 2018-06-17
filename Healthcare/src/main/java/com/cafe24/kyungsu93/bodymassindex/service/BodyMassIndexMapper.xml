@@ -43,7 +43,7 @@
   	</select>
   	<!--체질량 등록한 리스트  -->
   	<select id="bodyMassIndexList"
-  			parameterType="String"
+  			parameterType="java.util.Map"
   			resultMap="bodyMassIndex">
   			SELECT
   				body_mass_index_no
@@ -52,6 +52,15 @@
   				,body_waist_size
   				,body_mass_index
   				,body_date
+  			FROM body_mass_index
+  			WHERE member_no =#{memberNo}
+  			LIMIT #{beginRow},#{pagePerRow}
+  	</select>
+  	<select id="bodyMassIndexListCount"
+  			parameterType="String"
+  			resultType="Integer">
+  			SELECT
+  				count(*)
   			FROM body_mass_index
   			WHERE member_no =#{memberNo}
   	</select>
@@ -69,5 +78,42 @@
   			WHERE member_no =#{memberNo}
   			ORDER BY body_date
   	</select>
+  	<select id="healthScreenCount"
+  			parameterType="String"
+  			resultType="Integer">
+  			SELECT
+  				count(*)
+  			FROM health_screen
+  			WHERE body_mass_index_no =#{bodyMassIndexNo}
+  	</select>
+  	<delete id="deleteBmi"
+  			parameterType="String"
+  			>
+  			DELETE FROM body_mass_index
+  			WHERE body_mass_index_no=#{bodyMassIndexNo}
+  	</delete>
+  	<select id="modifyBmiInfo"
+  			parameterType="String"
+  			resultMap="bodyMassIndex">
+  			SELECT
+  				body_mass_index_no
+  				,body_height
+  				,body_weight
+  				,body_waist_size
+  				,body_mass_index
+  			FROM body_mass_index
+  			WHERE body_mass_index_no =#{bodyMassIndexNo}
+  	</select>
+  	<update id="modifyBmi"
+  			parameterType="com.cafe24.kyungsu93.bodymassindex.service.BodyMassIndex"
+  			>
+  			UPDATE body_mass_index
+  			SET
+  				body_height =#{bodyHeight}
+  				,body_weight =#{bodyWeight}
+  				,body_waist_size=#{bodyWaistSize}
+  				,body_mass_index=#{bodyMassIndex}
+  			WHERE body_mass_index_no =#{bodyMassIndexNo}
+  	</update>
   
   </mapper>

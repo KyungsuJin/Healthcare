@@ -92,7 +92,7 @@ public class MessageService {
 		int messageSendTotal =  messageDao.messageSendTotal(memberNo);
 		for(Message list1 : list) {//memberNo 를 memberId 로 전환
 			logger.debug(list1.getMemberReceiveNo());
-			list1.setMemberReceiveId(messageDao.ReceivemessageId(list1.getMemberReceiveNo()));
+			list1.setMemberReceiveId(messageDao.receivemessageId(list1.getMemberReceiveNo()));
 		}
 		for(Message list2 : list) {//메시지의 수신여부를 확인
 			logger.debug(list2.getSendMessageNo());
@@ -116,29 +116,29 @@ public class MessageService {
 		return returnMap;
 	}
 	//받은 메시지 삭제
-	public void ReceiveMessageDelete(String deleteMessageNo) {
+	public void receiveMessageDelete(String deleteMessageNo) {
 		logger.debug("MessageService.ReceiveMessageDelete");
-		messageDao.ReceiveMessageDelete(deleteMessageNo);
+		messageDao.receiveMessageDelete(deleteMessageNo);
 	}
 	//받은 메시지 여러개 삭제
 	public void deleteMessageList(List<String> sendMessageNo) {
 		logger.debug("MessageService.deleteMessageList");
 		for(String i : sendMessageNo) {
 			String result =i;
-			messageDao.ReceiveMessageDelete(result);
+			messageDao.receiveMessageDelete(result);
 		}
 	}
 	//보낸 메시지 삭제
-	public void SendMessageDelete(String deleteMessageNo) {
-		logger.debug("MessageService.SendMessageDelete");
-		messageDao.SendMessageDelete(deleteMessageNo);
+	public void sendMessageDelete(String deleteMessageNo) {
+		logger.debug("MessageService.sendMessageDelete");
+		messageDao.sendMessageDelete(deleteMessageNo);
 	}
 	// 받은 메시지 여러개 삭제
 	public void deleteSendMessageList(List<String> sendMessageNo) {
 		logger.debug("MessageService.deleteSendMessageList");
 		for (String i : sendMessageNo) {
 			String result = i;
-			messageDao.SendMessageDelete(result);
+			messageDao.sendMessageDelete(result);
 		}
 	}
 	//받은 메시지 신고 처리
@@ -161,15 +161,42 @@ public class MessageService {
 		return result;
 	}
 	//신고받은 메시지 리스트
-	public List<MessageComplain> messageComplainList() {
+	public Map<String,Object> messageComplainList(int currentPage,int pagePerRow) {
 		logger.debug("MessageService.messageComplainList");
-		return messageDao.messageComplainList();
+		int beginRow = ((currentPage-1)/10)*10;
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		List<MessageComplain> messageComplainList=messageDao.messageComplainList(map);
+		int complainListCount = messageDao.complainListCount();
+		int lastPage=complainListCount/pagePerRow;
+		if(complainListCount%pagePerRow>0) {
+			lastPage++;
+		}
+		int startPage = ((currentPage-1)/10)*10+1;
+		int endPage = startPage+pagePerRow-1;
+		if(endPage>lastPage) {
+			endPage=lastPage;
+		}
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("startPage", startPage);
+		returnMap.put("endPage", endPage);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("messageComplainList", messageComplainList);
+		return returnMap;
 
 	}
 	//신고받은 메시지 세부 내용
 	public MessageComplain messageComplainContent(String sendMessageNo) {
 		logger.debug("MessageService.messageComplainContent");
 		return messageDao.messageComplainContent(sendMessageNo);
+
+	}
+	//관리자 메시지 삭제
+	public void deleteMessageAll(String sendMessageNo) {
+		logger.debug("MessageService.deleteMessageAll");
+		 messageDao.receiveMessageDelete(sendMessageNo);
+		 messageDao.sendMessageDelete(sendMessageNo);
 
 	}
 }

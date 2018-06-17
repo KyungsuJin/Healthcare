@@ -1,6 +1,7 @@
 package com.cafe24.kyungsu93.bodymassindex.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,8 +41,12 @@ public class BodyMassIndexController {
 									,@RequestParam(value="currentPage",defaultValue="1")int currentPage
 									,@RequestParam(value="pageRerRow",defaultValue="10")int pagePerRow) {
 		logger.debug("BodyMassIndexController.bodyMassIndexList GET");
-		List<BodyMassIndex> bodyMassIndexList =bodyMassIndexService.bodyMassIndexList(memberNo,currentPage,pagePerRow);
-		model.addAttribute("bodyMassIndexList",bodyMassIndexList);
+		Map<String,Object> bodyMassIndexList =bodyMassIndexService.bodyMassIndexList(memberNo,currentPage,pagePerRow);
+		model.addAttribute("bodyMassIndexList",bodyMassIndexList.get("list"));
+		model.addAttribute("startPage",bodyMassIndexList.get("startPage"));
+		model.addAttribute("endPage",bodyMassIndexList.get("endPage"));
+		model.addAttribute("lastPage",bodyMassIndexList.get("lastPage"));
+		model.addAttribute("currentPage",currentPage);
 		return "bodymassindex/bodyMassIndexList";
 	}
 	//체질량 차트 페이지
@@ -50,6 +55,24 @@ public class BodyMassIndexController {
 		logger.debug("BodyMassIndexController.bodyMassIndexChart GET");
 		return "bodymassindex/bodyMassIndexChart";
 	}
+	// 체질량 수정 폼
+	@RequestMapping(value = "/modifyBmi", method = RequestMethod.GET)
+	public String modifyBmi(Model model,@RequestParam(value = "bodyMassIndexNo") String bodyMassIndexNo) {
+		logger.debug("BodyMassIndexRestController.modifyBmi GET");
+		logger.debug("bodyMassIndexNo"+bodyMassIndexNo);
+		BodyMassIndex bodyMassIndex=bodyMassIndexService.modifyBmiInfo(bodyMassIndexNo);
+		model.addAttribute("bodyMassIndex",bodyMassIndex);
+		return "bodymassindex/modifyBodyMassIndex";
+	}
+	// 체질량 수정 
+	@RequestMapping(value = "/modifyBmi", method = RequestMethod.POST)
+	public String modifyBmi(Model model,BodyMassIndex bodyMassIndex) {
+		logger.debug("BodyMassIndexRestController.modifyBmi POST");
+		bodyMassIndexService.modifyBmi(bodyMassIndex);
+		model.addAttribute("memberNo",bodyMassIndex.getMemberNo());
+		return "redirect:/bodyMassIndexList";
+	}
+	
 
 
 }

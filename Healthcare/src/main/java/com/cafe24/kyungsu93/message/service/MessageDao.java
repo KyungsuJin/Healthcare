@@ -73,19 +73,19 @@ public class MessageDao {
 		return sqlSession.selectList(NS+"sendMessageList",map);
 	}
 	//받는 회원 no -> id 전환 
-	public String ReceivemessageId(String ReceivemessageId) {
-		logger.debug("MessageDao.ReceivemessageId");
-		return sqlSession.selectOne(NS+"ReceivemessageId",ReceivemessageId);
+	public String receivemessageId(String ReceivemessageId) {
+		logger.debug("MessageDao.receivemessageId");
+		return sqlSession.selectOne(NS+"receivemessageId",ReceivemessageId);
 	}
 	//받은메시지 단일 삭제
-	public void ReceiveMessageDelete(String ReceivemessageId) {
-		logger.debug("MessageDao.ReceiveMessageDelete");
-		sqlSession.delete(NS + "ReceiveMessageDelete", ReceivemessageId);
+	public void receiveMessageDelete(String deleteMessageNo) {
+		logger.debug("MessageDao.receiveMessageDelete");
+		sqlSession.delete(NS + "receiveMessageDelete", deleteMessageNo);
 	}
 	//보낸메시지 단일 삭제
-	public void SendMessageDelete(String ReceivemessageId) {
-		logger.debug("MessageDao.SendMessageDelete");
-		sqlSession.delete(NS + "SendMessageDelete", ReceivemessageId);
+	public void sendMessageDelete(String deleteMessageNo) {
+		logger.debug("MessageDao.sendMessageDelete");
+		sqlSession.delete(NS + "sendMessageDelete", deleteMessageNo);
 	}
 	//보낸메시지 읽었나 확인
 	public int sendMessageChk(String sendMessageNo) {
@@ -117,10 +117,15 @@ public class MessageDao {
 		logger.debug("MessageDao.alreadyComplain");
 		return sqlSession.selectOne(NS + "alreadyComplain",messageNo);
 	}
-	//이미 신고되었는지 확인
-	public List<MessageComplain> messageComplainList() {
+	//신고받은 리스트
+	public List<MessageComplain> messageComplainList(Map<String,Integer> map) {
 		logger.debug("MessageDao.messageComplainList");
-		return sqlSession.selectList(NS + "messageComplainList");
+		return sqlSession.selectList(NS + "messageComplainList",map);
+	}
+	//신고받은 리스트
+	public int complainListCount() {
+		logger.debug("MessageDao.complainListCount");
+		return sqlSession.selectOne(NS + "complainListCount");
 	}
 	//신고된 메시지 세부 내용
 	public MessageComplain messageComplainContent(String sendMessageNo) {

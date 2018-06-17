@@ -61,19 +61,19 @@ public class MessageController {
 	return "message/messageSendContent";
 	}
 	//받은 메시지 단일 삭제
-	@RequestMapping(value="/ReceiveMessageDelete",method=RequestMethod.POST)
-	public String ReceiveMessageDelete(@RequestParam(value="deleteMessageNo")String deleteMessageNo) {
+	@RequestMapping(value="/receiveMessageDelete",method=RequestMethod.POST)
+	public String receiveMessageDelete(@RequestParam(value="deleteMessageNo")String deleteMessageNo) {
 		logger.debug("messageController.ReceiveMessageDelete");
 		logger.debug("sendMessageNo :"+deleteMessageNo);
-		messageService.ReceiveMessageDelete(deleteMessageNo);
+		messageService.receiveMessageDelete(deleteMessageNo);
 	return "message/messageList";
 	}
 	//보낸 메시지 단일 삭제
-	@RequestMapping(value="/SendMessageDelete",method=RequestMethod.POST)
-	public String SendMessageDelete(@RequestParam(value="deleteMessageNo")String deleteMessageNo) {
-		logger.debug("messageController.SendMessageDelete");
+	@RequestMapping(value="/sendMessageDelete",method=RequestMethod.POST)
+	public String sendMessageDelete(@RequestParam(value="deleteMessageNo")String deleteMessageNo) {
+		logger.debug("messageController.sendMessageDelete");
 		logger.debug("sendMessageNo :"+deleteMessageNo);
-		messageService.SendMessageDelete(deleteMessageNo);
+		messageService.sendMessageDelete(deleteMessageNo);
 	return "message/messageList";
 	}
 	//받은 메시지 신고 페이지
@@ -84,10 +84,16 @@ public class MessageController {
 	}
 	//신고 받은 리스트 페이지
 	@RequestMapping(value = "/messageComplainList", method = RequestMethod.GET)
-	public String messageComplainList(Model model) {
+	public String messageComplainList(Model model
+									,@RequestParam(value="currentPage",defaultValue="1")int currentPage
+									,@RequestParam(value="pagePerRow",defaultValue="10")int pagePerRow) {
 		logger.debug("messageController.messageComplainList GET");
-		List<MessageComplain> messageComplainList=messageService.messageComplainList();
-		model.addAttribute("messageComplainList",messageComplainList);
+		Map<String,Object> map=messageService.messageComplainList(currentPage,pagePerRow);
+		model.addAttribute("messageComplainList",map.get("messageComplainList"));
+		model.addAttribute("endPage",map.get("endPage"));
+		model.addAttribute("startPage",map.get("startPage"));
+		model.addAttribute("lastPage",map.get("lastPage"));
+		model.addAttribute("currentPage",currentPage);
 		return "message/messageComplainList";
 	}
 	//신고 받은 메시지 세부 내용
@@ -97,6 +103,14 @@ public class MessageController {
 		MessageComplain messageComplain = messageService.messageComplainContent(sendMessageNo);
 		model.addAttribute("messageComplain",messageComplain);
 		return "message/messageComplainContent";
+	}
+	//관리자 메시지 삭제
+	@RequestMapping(value = "/deleteMessageAll", method = RequestMethod.GET)
+	public String deleteMessageAll(@RequestParam(value = "sendMessageNo") String sendMessageNo) {
+		logger.debug("messageController.deleteMessageAll GET");
+		logger.debug("sendMessageNo : "+sendMessageNo);
+		messageService.deleteMessageAll(sendMessageNo);
+		return "redirect:/messageComplainList";
 	}
 	
 

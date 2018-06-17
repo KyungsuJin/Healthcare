@@ -44,7 +44,7 @@ public class MemberController {
 	   return result;
    }
    //기본회원 리스트 폼 출력
-   @RequestMapping(value="/basicMemberLis",method=RequestMethod.GET)
+   @RequestMapping(value="/basicMemberList",method=RequestMethod.GET)
    public String basicMemberLis(Model model,@RequestParam(value="currentPage",defaultValue="1")int currentPage
 		   				,@RequestParam(value="searchSelect",required=false)String searchSelect
 	   					,@RequestParam(value="searchTextTest",required=false)String searchText) {

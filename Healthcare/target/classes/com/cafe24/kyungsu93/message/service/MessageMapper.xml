@@ -146,22 +146,25 @@
 			WHERE sm.send_message_no=sc.send_message_no AND sm.member_send_no=#{memberNo}
   			LIMIT #{beginRoW},#{pagePerRow}
   	</select>
-  	<select id="ReceivemessageId"
+  	<!-- 받는 회원 no -> id 전환  -->
+  	<select id="receivemessageId"
   			parameterType="String"
   			resultType="String">
   			SELECT member_id
          	FROM member
          	WHERE member_no=#{ReceivemessageId}
   	</select>
-  	<delete id="ReceiveMessageDelete"
+  	<!-- 받은메시지 단일 삭제 -->
+  	<delete id="receiveMessageDelete"
   			parameterType="String">
   			DELETE FROM receive_message
-  			WHERE send_message_no =#{ReceivemessageId}
+  			WHERE send_message_no =#{deleteMessageNo}
   	</delete>
-  	<delete id="SendMessageDelete"
+  	<!-- 보낸메시지 단일 삭제 -->
+  	<delete id="sendMessageDelete"
   			parameterType="String">
   			DELETE FROM send_message_content
-  			WHERE send_message_no =#{ReceivemessageId}
+  			WHERE send_message_no =#{deleteMessageNo}
   	</delete>
   	<!-- 보낸 메시지 수신자가 읽었나 확인  -->
   	<select id="sendMessageChk"
@@ -229,6 +232,7 @@
   	</select>
   	<!-- 신고된 메시지 리스트 -->
   	<select id="messageComplainList"
+  			parameterType="java.util.Map"
   			resultType="com.cafe24.kyungsu93.message.service.MessageComplain">
   			SELECT 
 					complain_no AS complainNo
@@ -238,6 +242,14 @@
 					,complain_reason AS complainReason
 					,complain_date AS complainDate
 					,processing_progress AS processingProgress
+  			FROM message_complain
+  			LIMIT #{beginRow},#{pagePerRow}
+  	</select>
+  	<!-- 신고된 메시지 리스트 카운트 -->
+  	<select id="complainListCount"
+  			resultType="Integer">
+  			SELECT 
+					count(*)
   			FROM message_complain
   	</select>
   	<!-- 신고된 메시지 세부 내용 -->

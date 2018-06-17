@@ -11,7 +11,7 @@
 						,"memberListForm","width=1600, height=500,resizable=no,scrollbars=yes");
 			})
 			$("#memberDoctorList").click(function(){
-				window.open("${pageContext.request.contextPath}/DoctorMemberList"
+				window.open("${pageContext.request.contextPath}/doctorMemberList"
 						,"memberListForm","width=1600, height=500,resizable=no,scrollbars=yes");
 			})
 			$("#memberPTList").click(function(){

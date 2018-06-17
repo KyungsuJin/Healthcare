@@ -213,7 +213,7 @@
 		</tbody>
 		<tr>
 			<td colspan="2">
-				<form id="deleteForm"action="${pageContext.request.contextPath}/ReceiveMessageDelete" method="post">
+				<form id="deleteForm"action="${pageContext.request.contextPath}/receiveMessageDelete" method="post">
 					<input type="hidden" id="deleteMessageNo" name="deleteMessageNo" value="${message.sendMessageNo}">
 					<button type=button id="deleteMessage">삭제</button>
 					<button type="button" id="reportMessage">메시지 신고</button>

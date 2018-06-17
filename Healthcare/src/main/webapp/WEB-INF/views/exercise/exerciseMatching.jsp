@@ -10,7 +10,12 @@
 		$(document).ready(function(){
 			$.ajax({
 				type: "POST"
-				,data :{"currentPage" :$("#currentPage").val()}
+				,data :{"currentPage" :$("#currentPage").val()
+						,"searchSelect" : $("#searchSelect").val()
+						,"searchText" :$("#searchText").val()
+						,"exerciseDateStart" :$("#exerciseDateStart").val()
+						,"exerciseDateEnd" : $("#exerciseDateEnd").val()
+						}
 				,url : "${pageContext.request.contextPath}/exerciseMatchingList"
 				,dateType: "json"
 				,success:function(data){
@@ -41,13 +46,13 @@
 					}
 				});
 				if(data.currentPage>1){
-					$("#page").append('<a href="${pageContext.request.contextPath}/exerciseMatchingList?currentPage='+(data.currentPage-1)+'">이전 </a>');
+					$("#page").append('<a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage='+(data.currentPage-1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">이전 </a>');
 				}
 				for(var i =data.startPage; i <=data.endPage ; i++){
-					$("#page").append('<a href="${pageContext.request.contextPath}/exerciseMatchingList?currentPage='+i+'">'+i+'</a>');
+					$("#page").append('<a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage='+i+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">'+i+'</a>');
 				}
 				if(data.currentPage<data.lastPage){
-					$("#page").append('<a href="${pageContext.request.contextPath}/exerciseMatchingList?currentPage='+(data.currentPage+1)+'">다음</a>');
+					$("#page").append('<a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage='+(data.currentPage+1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">다음</a>');
 				}
 			}
 			$(document).on("click",".matchingPlace",function(){
@@ -56,6 +61,31 @@
 				    	window.open("${pageContext.request.contextPath}/exercisePlaceView"
 				    			,"Registration","width=800, height=500,resizable=no,scrollbars=yes");
 			});
+
+			/* $("#dateDiv").hide();
+			$("#searchSelect").change(function(){
+				console.log($(this).val());
+				if($(this).val()=="exercise_matching_schedule_date"){
+					$("#searchTextTest").hide();
+					$("#searchBtn").hide();
+					$("#dateDiv").show();
+				}else{
+					$("#searchTextTest").show();
+					$("#searchBtn").show();
+					$("#dateDiv").hide();
+				} 
+			});*/
+			$("#searchBtn").click(function(){
+				window.location.href='${pageContext.request.contextPath}/exerciseSearchList?searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchTextTest").val();
+			})
+			$("#dateBtn").click(function(){
+				if($("#exerciseDateStart").val() <= $("#exerciseDateEnd").val()){
+					window.location.href='${pageContext.request.contextPath}/exerciseSearchList?searchSelect=exercise.exercise_matching_schedule_date&exerciseDateStart='+$("#exerciseDateStart").val()+'&exerciseDateEnd='+$("#exerciseDateEnd").val();	
+				}else{
+					alert('검색 시작날짜가 더클수는 없습니다.');
+				}
+				
+			})
 		});
 	</script>
 </head>
@@ -67,6 +97,7 @@
 	<input type="hidden" name="sessionId"id="sessionId" value="${sessionScope.memberSessionId}">
 	<input type="hidden" name="exercisePlaceView"id="exercisePlaceView">
 	<input type="hidden" name="currnetPage" id="currentPage"  value="${currentPage}">
+	<input type="hidden" name="searchText" id="searchText" value="${searchText}">
 	<table border="1" class="table" id="tb">
 		<thead>
 			<tr>
@@ -83,5 +114,21 @@
 		</tbody>
 	</table>
 	<div id="page"></div>
+		<div>
+			<select id="searchSelect" name="searchSelect">
+				<option value="exercise_matching_place">장소</option>
+				<option <c:out value="${searchSelect eq 'member.member_no' ? 'selected=selected':''}"/> value="member.member_no">아이디</option>
+				<option <c:out value="${searchSelect eq 'exercise_no' ? 'selected=selected':''}"/> value="exercise_no">종목</option>
+				<%-- <option <c:out value="${searchSelect eq 'exercise_matching_schedule_date' ? 'selected=selected':''}"/> value="exercise_matching_schedule_date">기간별검색</option> --%>
+			</select>
+			<input type="text" id="searchTextTest" name="searchTextTest" value="${searchText}">
+			<button type="button" id="searchBtn">검색</button>
+		</div>
+		
+		<div id="dateDiv">
+			기간 : <input type="date" id="exerciseDateStart" value="${exerciseDateStart}">~<input type="date" id="exerciseDateEnd" value="${exerciseDateEnd}">
+			<button type="button" id="dateBtn">기간검색</button>
+		</div>
+		
 </body>
 </html>

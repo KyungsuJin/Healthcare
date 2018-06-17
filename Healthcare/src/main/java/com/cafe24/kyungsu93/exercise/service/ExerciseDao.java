@@ -15,6 +15,11 @@ public class ExerciseDao {
 	@Autowired SqlSessionTemplate sqlSession;
 	private static final Logger logger = LoggerFactory.getLogger(ExerciseDao.class);
 	final String NS = "com.cafe24.kyungsu93.ExerciseMapper.";
+	//memberNo -> memberId
+	public String changeMemberNo(String memberId) {
+		logger.debug("ExerciseDao.changeMemberNo");
+		return sqlSession.selectOne(NS + "changeMemberNo", memberId);
+	}
 	//보증금 등록 체크
 	public int exerciseDepositChk(String memberNo) {
 		logger.debug("ExerciseDao.exerciseDepositChk");
@@ -54,6 +59,26 @@ public class ExerciseDao {
 	public List<ExerciseRegistration> exerciseMatchingList(Map<String,Integer> map) {
 		logger.debug("ExerciseDao.exerciseMatchingList");
 		return sqlSession.selectList(NS+"exerciseMatchingList",map);
+	}
+	//운동매칭 검색 리스트
+	public List<ExerciseRegistration> exerciseMatchingSearchList(Map<String,Object> map) {
+		logger.debug("ExerciseDao.exerciseMatchingSearchList");
+		return sqlSession.selectList(NS + "exerciseMatchingSearchList", map);
+	}
+	//운동매칭 검색 리스트 count
+	public int totalCountSearchList(Map<String, Object> map) {
+		logger.debug("ExerciseDao.totalCountSearchList");
+		return sqlSession.selectOne(NS + "totalCountSearchList", map);
+	}
+	// 운동매칭 기간별 검색 
+	public List<ExerciseRegistration> exerciseMatchingSearchDateList(Map<String, Object> map) {
+		logger.debug("ExerciseDao.exerciseMatchingSearchDateList");
+		return sqlSession.selectList(NS + "exerciseMatchingSearchDateList", map);
+	}
+	// 운동매칭 기간별 검색 카운트
+	public int totalCountSearchDateList(Map<String, Object> map) {
+		logger.debug("ExerciseDao.totalCountSearchDateList");
+		return sqlSession.selectOne(NS + "totalCountSearchDateList", map);
 	}
 	//운동매칭 리스트
 	public int totalCountList() {

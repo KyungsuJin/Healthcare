@@ -5,7 +5,19 @@
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
+	<script>
+		$(document).ready(function(){
+			$("#deleteMessageAll").click(function(){
+				if(confirm('사용자의 보낸메시지,받은메시지가 삭제됩니다 진행하시겠습니까?')){
+					window.location.href="${pageContext.request.contextPath}/deleteMessageAll?sendMessageNo=${messageComplain.sendMessageNo}"
+				}else{
+					alert('취소되었습니다');
+					return false;
+				}
+			});
+		});
+	
+	</script>
 </head>
 <body>
 	<h1>신고된 메시지 세부내용</h1>
@@ -39,5 +51,6 @@
 		</tbody>
 	</table>
 	<a href="${pageContext.request.contextPath}/messageComplainList">목록으로</a>
+	<a id="deleteMessageAll" href="#">메시지 삭제</a>
 </body>
 </html>

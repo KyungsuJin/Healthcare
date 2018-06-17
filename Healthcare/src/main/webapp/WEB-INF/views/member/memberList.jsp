@@ -35,20 +35,20 @@
 											);
 						});
 							if(data.currentPage>1){
-								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberLis?currentPage=1&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> << </a>');
-								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberLis?currentPage='+(data.currentPage-1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">이전</a>');
+								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberList?currentPage=1&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> << </a>');
+								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberList?currentPage='+(data.currentPage-1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">이전</a>');
 							}
 							for(var i = data.startPage;i<=data.endPage; i++){
-								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberLis?currentPage='+i+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> ' +i+ ' </a>');
+								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberList?currentPage='+i+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> ' +i+ ' </a>');
 							}
 							if(data.lastPage>data.currentPage){
-								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberLis?currentPage='+(data.currentPage+1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">다음</a>');
-								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberLis?currentPage='+data.lastPage+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> >> </a>');
+								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberList?currentPage='+(data.currentPage+1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">다음</a>');
+								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberList?currentPage='+data.lastPage+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> >> </a>');
 							}
 					}
 				});
 			 $("#searchBtn").click(function(){
-				 window.location.href='${pageContext.request.contextPath}/basicMemberLis?searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchTextTest").val();
+				 window.location.href='${pageContext.request.contextPath}/basicMemberList?searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchTextTest").val();
 			}); 
 			
 		});

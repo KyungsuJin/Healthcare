@@ -38,5 +38,28 @@
 			</c:forEach>
 		</tbody>
 	</table>
+		<nav>
+				<div id="pageDiv">
+	  				<ul class="pagination pagination-sm">
+	  					<li>
+							<c:if test="${currentPage>1}">
+								<a href="${pageContext.request.contextPath}/messageComplainList?currentPage=1" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+								<a href="${pageContext.request.contextPath}/messageComplainListcurrentPage=${currentPage-1}">이전</a>
+							</c:if>
+						</li>
+						<c:forEach begin="${startPage}" end="${endPage}" step="1" var="i">
+							
+								<li <c:out value="${currentPage eq i ? 'class=active': ''}"/>><a class="" href="${pageContext.request.contextPath}/messageComplainList?currentPage=${i}">${i}</a></li>
+							
+						</c:forEach>
+						<li>
+							<c:if test="${lastPage>currentPage}">
+								<a href="${pageContext.request.contextPath}/messageComplainList?currentPage=${currentPage+1}">다음</a>
+								<a href="${pageContext.request.contextPath}/messageComplainList?currentPage=${lastPage}"><span aria-hidden="true">&raquo;</span></a>
+							</c:if>
+						</li>
+					</ul>
+				</div>
+			</nav>
 </body>
 </html>
