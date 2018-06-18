@@ -73,6 +73,8 @@
 				<value>classpath:com/cafe24/kyungsu93/exercisefeedback/service/ExerciseFeedbackResponseMapper.xml</value>
 				<value>classpath:com/cafe24/kyungsu93/doctorrequest/service/DoctorRequestMapper.xml</value>
 				<value>classpath:com/cafe24/kyungsu93/doctorfeedback/service/DoctorFeedbackMapper.xml</value>
+				<value>classpath:com/cafe24/kyungsu93/address/service/AddressMapper.xml</value>
+				<value>classpath:com/cafe24/kyungsu93/medical/service/MedicalMapper.xml</value>
             </list>
         </property>
     </bean>

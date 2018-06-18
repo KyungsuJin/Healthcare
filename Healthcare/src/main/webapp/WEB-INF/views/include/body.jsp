@@ -30,8 +30,8 @@
                title="getMedicationList">복약기록</a></li>
             <li><a href="${pageContext.request.contextPath}/getMedicineList" data-toggle="tooltip" data-placement="bottom"
                title="getMedicineList">약품검색</a></li>
-            <li><a href="${pageContext.request.contextPath}/getHospitalPharmacy" data-toggle="tooltip" data-placement="bottom"
-               title="getHospitalPharmacy">병원,약국 검색</a></li>
+            <li><a href="${pageContext.request.contextPath}/getMedicalList" data-toggle="tooltip" data-placement="bottom"
+               title="getMedicalList">병원,약국 검색</a></li>
          </ul>
          <ul class="nav navbar-nav navbar-right">
             <c:choose>

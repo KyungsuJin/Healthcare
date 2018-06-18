@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.cafe24.kyungsu93.address.service.AddressMapper">
+
+	<select id="getAddressNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(CAST(SUBSTRING(address_no,9)as decimal)),0) 
+		FROM address_city
+	</select>
+	
+	<insert id="addCity" parameterType="com.cafe24.kyungsu93.address.service.Address">
+		INSERT INTO address_city(
+			address_no
+			,city_name
+		)
+		VALUES(
+			#{addressNo}
+			,#{cityName}
+		)
+	</insert>
+	
+	<insert id="addDistrict" parameterType="com.cafe24.kyungsu93.address.service.Address">
+		INSERT INTO address_district(
+			address_no
+			,district_name
+		)
+		VALUES(
+			#{addressNo}
+			,#{districtName}
+		)
+	</insert>
+	
+	<select id="getCityList" resultType="com.cafe24.kyungsu93.address.service.Address">
+		SELECT
+			address_no AS addressNo
+			,city_name AS cityName
+		FROM address_city
+	</select>
+	
+	<select id="getDistrictList" parameterType="com.cafe24.kyungsu93.address.service.Address"
+								 resultType="com.cafe24.kyungsu93.address.service.Address">
+		SELECT
+			address_no AS addressNo
+			,district_name AS districtName
+		FROM address_district
+		WHERE address_no = #{addressNo}
+	</select>
+	
+	<select id="getAddressNoForDistrict" parameterType="com.cafe24.kyungsu93.address.service.Address" resultType="String">
+		SELECT
+			address_no AS addressNo
+		FROM address_city
+		WHERE city_name = #{cityName}
+	</select>
+	
+</mapper>
