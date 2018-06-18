@@ -74,7 +74,7 @@ public class AddressService {
 	
 	public List<Address> getDistrictList(Address address) {
 		address.setAddressNo(addressDao.getAddressNo(address));
-		System.out.println(address.toString());
+		System.out.println("service : " + address.toString());
 		return addressDao.getDistrictList(address);
 	}
 }

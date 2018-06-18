@@ -15,12 +15,12 @@ import com.cafe24.kyungsu93.address.service.AddressDao;
 
 @RestController
 public class AddressRestController {
-	@Autowired AddressDao addressDao;
+	@Autowired AddressDao addressService;
 	
 	@RequestMapping(value="/getDistrictList", method=RequestMethod.POST)
 	public Map<String, Object> getDistrictList(Model model, Address address) {
 		System.out.println("test 1");
-		List<Address> districtList = addressDao.getDistrictList(address);
+		List<Address> districtList = addressService.getDistrictList(address);
 		System.out.println(districtList);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("districtList", districtList);
