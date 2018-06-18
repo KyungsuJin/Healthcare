@@ -21,6 +21,7 @@ public class MedicalDao {
 	}
 	
 	public List<Medical> getMedicalAddressList(Medical medical){
+		System.out.println("dao rest : " + medical.toString());
 		return sqlSession.selectList(NS+"getMedicalAddressList", medical);
 	}
 }

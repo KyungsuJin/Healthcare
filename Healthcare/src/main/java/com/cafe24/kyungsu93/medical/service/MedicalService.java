@@ -96,6 +96,7 @@ public class MedicalService {
 	
 	public List<Medical> getMedicalAddressList(Medical medical){
 		medical.setMedicalAddress(medical.getMedicalAddress()+"%");
+		medical.setMedicalName("%"+medical.getMedicalName()+"%");
 		return medicalDao.getMedicalAddressList(medical);
 	}
 }

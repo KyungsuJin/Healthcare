@@ -5,11 +5,58 @@
 <head>
 <jsp:include page="../include/header.jsp"></jsp:include>
 <style>
+	#cityName{ width : 100px; }
+	#districtName{ width : 100px; }
 	#medicalList{ overflow:scroll; width:800px; height:500px; }
 	#containerMedical{ width: 1000px; margin: auto; }
 </style>
+<!-- <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=QISM4er6cEE21gYJHlUg&submodules=geocoder"></script> -->
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=n_ZxRkO2ivuJYTV3q96V&submodules=geocoder"></script>
 <script>
 	$(document).ready(function(){
+		//naver 지도 api
+		var map = new naver.maps.Map("map", {
+		    center: new naver.maps.LatLng(35.853386500000,127.122277500000),
+		    zoom: 10,
+		    mapTypeControl: true
+		});
+		var marker = new naver.maps.Marker({
+            position: new naver.maps.LatLng(35.853386500000,127.122277500000),
+            map: map
+        });
+		
+		map.setCursor('pointer');
+
+		// result by latlng coordinate
+		function searchAddressToCoordinate(address) {
+		    naver.maps.Service.geocode({
+		        address: address
+		    }, function(status, response) {
+		        if (status === naver.maps.Service.Status.ERROR) {
+		            return alert('Something Wrong!');
+		        }
+
+		        var item = response.result.items[0],
+		            addrType = item.isRoadAddress ? '[도로명 주소]' : '[지번 주소]',
+		            point = new naver.maps.Point(item.point.x, item.point.y);
+	            console.log("x : " + item.point.x);
+	            console.log("y : " + item.point.y);
+	            marker.setPosition(item.point.x, item.point.y);
+		        map.setCenter(point);
+		    });
+		}
+
+		function initGeocoder() { }
+		naver.maps.onJSContentLoaded = initGeocoder;
+		
+		$(document).on('click', '#showGeo', function() {
+	        console.log($(this).closest('td').siblings('#medicalAddress'));
+	        searchAddressToCoordinate($(this).closest('td').siblings('#medicalAddress').text());
+	    });
+		
+		
+		
+		
 		$("#cityName").change(function(){
 			$("#districtName").text("");
 			console.log($("#cityName"));
@@ -29,28 +76,31 @@
 		});
 		
 		$("#medicalBtn").click(function(){ 
-			console.log($("#cityName").text());
-			console.log($("#districtName")[0].value);
-			console.log($("#medicalAddress").val());
-/* 			$.ajax({
-		    	url : '${pageContext.request.contextPath}/getAddressList',
+			$("#medicalList").text("");
+			var addressValue = $("#cityName")[0].value + " " + $("#districtName")[0].value;
+			var medicalValue = $("#medicalName").val();
+ 			$.ajax({
+		    	url : '${pageContext.request.contextPath}/getMedicalAddressList',
 		        type : 'POST',
-		        data : { medicalAddress : addressValue },
+		        data : 	{ 
+			        		medicalAddress : addressValue 
+			        		,medicalName : medicalValue
+		        		},
 		        dataType : 'json',
 		        success : function(data) {
-		        	$("#medicalList").append("<table>");
-		        	$.each(data.districtList, function(idx, val) {
-		        		$("#medicalList").append("<tr>");
-		        		$("#medicalList").append("<td>");
-		        		
-		        		$("#medicalList").append("</td>");
-		        		$("#medicalList").append("</tr>");
+		        	$.each(data.medicalList, function(idx, val) {
+		        		$("#medicalList").append("<tr><td>" + val.medicalName + "</td>"
+													+"<td>" + val.medicalType + "</td>"
+													+"<td id='medicalAddress'>" + val.medicalAddress + "</td>"
+													+"<td>" + val.medicalTel + "</td>"
+													+"<td><input type='button' id='showGeo' value='위치보기'></td></tr>");
 		        	});
-		        	$("#medicalList").append("</table>");
+		        	
 		        },
 		        error : function() { console.log('error');}
-			}); */
-		});
+			});
+		});		
+
 	});	
 </script>
 </head>
@@ -74,15 +124,13 @@
 				<td>	
 					<select id="districtName" name="districtName"></select>
 					
-					<input type="text" id="medicalAddress" name="medicalAddress">
-					<input type="button" id="medicalBtn" name="medicalBtn">
+					병원 명 : <input type="text" id="medicalName" name="medicalName">
+					<input type="button" id="medicalBtn" name="medicalBtn" value="검색">
 				</td>
 			</tr>
 		</table>
-		
-		<div id="medicalList">
-			
-		</div>
+		<div id="map" style="width:100%;height:400px;"></div>
+		<div id="medicalList"></div>
 		
 	</div>
 
