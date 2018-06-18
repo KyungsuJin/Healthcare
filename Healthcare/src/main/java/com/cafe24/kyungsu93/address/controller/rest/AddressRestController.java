@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.kyungsu93.address.service.Address;
 import com.cafe24.kyungsu93.address.service.AddressDao;
+import com.cafe24.kyungsu93.address.service.AddressService;
 
 @RestController
 public class AddressRestController {
-	@Autowired AddressDao addressService;
+	@Autowired AddressService addressService;
 	
 	@RequestMapping(value="/getDistrictList", method=RequestMethod.POST)
 	public Map<String, Object> getDistrictList(Model model, Address address) {
