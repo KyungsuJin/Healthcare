@@ -18,16 +18,16 @@ public class DoctorRequestDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.doctorrequest.service.DoctorRequestMapper.";
-	public List<DoctorRequest> doctorrequestList(Map<String,Integer> map) {
+	/*public List<DoctorRequest> doctorrequestList(Map<String,Integer> map) {
 	logger.debug("2번-2"+map);
 	logger.debug("DoctorRequestDao 에서 DoctorRequest 실행");
 	return sqlSession.selectList(NS+"doctorrequestList",map);
-	}
+	}*/
 	
 	public List<DoctorRequest> doctorRequestList(Map<String,Integer> map) {
 		logger.debug("DoctorRequestDao 에서 doctorRequestList 실행");
 		logger.debug("3번"+map);
-		return sqlSession.selectList(NS+"doctorRequestList",map);
+		return sqlSession.selectList(NS+"DoctorRequestList",map);
 	}
 	
 	public int doctorRequestCount() {

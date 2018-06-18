@@ -20,25 +20,7 @@ public class DoctorRequestController {
 	private DoctorRequestService doctorRequestService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(DoctorRequestController.class);
-	
-	/*@RequestMapping(value="/DoctorRequest", method = RequestMethod.POST)
-	public String doctorrequestList(Model model,@RequestParam(value="currentPage", defaultValue="1") int currentPage
-												,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
-	logger.debug("DoctorrequestController 에서 DoctorrequestList 실행");
-	Map<String,Object> map = doctorRequestService.doctorRequestList(currentPage, pagePerRow);
-	logger.debug("1번"+map);
-	model.addAttribute("lastPage", map.get("lastPage"));
-	model.addAttribute("currentPage", currentPage);
-	model.addAttribute("list", map.get("list"));
-	model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
-	model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
-	model.addAttribute("totalBlock", map.get("totalBlock"));
-	return "/doctorrequest/DoctorRequestList";
-	}
-	*/
-
-
-	
+	//일반회원이 자신에게 요청한 의사를 볼 수 있고 제목 내용 등도 같이 보여준다. 요청날짜도 알 수 있다.
 	@RequestMapping(value="/DoctorRequestList", method=RequestMethod.GET)
 	public String DoctorRequestList(Model model
 								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
@@ -54,6 +36,7 @@ public class DoctorRequestController {
 		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 		model.addAttribute("totalBlock", map.get("totalBlock"));
+		logger.debug("30번"+map.get("list"));
 		return "/doctorrequest/DoctorRequestList";
 	}
 	

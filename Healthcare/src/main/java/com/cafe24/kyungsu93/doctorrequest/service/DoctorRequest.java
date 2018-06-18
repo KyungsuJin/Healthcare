@@ -2,52 +2,52 @@ package com.cafe24.kyungsu93.doctorrequest.service;
 
 public class DoctorRequest {
 
-	private String RequestHealthInformationNo;
-	private String TeacherNo;
-	private String MemberNo;
-	private String RequestTitle;
-	private String RequestContent;
-	private String RequestDate;
+	private String requestHealthInformationNo;
+	private String teacherNo;
+	private String memberNo;
+	private String requestTitle;
+	private String requestContent;
+	private String requestDate;
 	public String getRequestHealthInformationNo() {
-		return RequestHealthInformationNo;
+		return requestHealthInformationNo;
 	}
 	public void setRequestHealthInformationNo(String requestHealthInformationNo) {
-		RequestHealthInformationNo = requestHealthInformationNo;
+		this.requestHealthInformationNo = requestHealthInformationNo;
 	}
 	public String getTeacherNo() {
-		return TeacherNo;
+		return teacherNo;
 	}
 	public void setTeacherNo(String teacherNo) {
-		TeacherNo = teacherNo;
+		this.teacherNo = teacherNo;
 	}
 	public String getMemberNo() {
-		return MemberNo;
+		return memberNo;
 	}
 	public void setMemberNo(String memberNo) {
-		MemberNo = memberNo;
+		this.memberNo = memberNo;
 	}
 	public String getRequestTitle() {
-		return RequestTitle;
+		return requestTitle;
 	}
 	public void setRequestTitle(String requestTitle) {
-		RequestTitle = requestTitle;
+		this.requestTitle = requestTitle;
 	}
 	public String getRequestContent() {
-		return RequestContent;
+		return requestContent;
 	}
 	public void setRequestContent(String requestContent) {
-		RequestContent = requestContent;
+		this.requestContent = requestContent;
 	}
 	public String getRequestDate() {
-		return RequestDate;
+		return requestDate;
 	}
 	public void setRequestDate(String requestDate) {
-		RequestDate = requestDate;
+		this.requestDate = requestDate;
 	}
 	@Override
 	public String toString() {
-		return "DoctorRequest [RequestHealthInformationNo=" + RequestHealthInformationNo + ", TeacherNo=" + TeacherNo
-				+ ", MemberNo=" + MemberNo + ", RequestTitle=" + RequestTitle + ", RequestContent=" + RequestContent
-				+ ", RequestDate=" + RequestDate + "]";
+		return "DoctorRequest [requestHealthInformationNo=" + requestHealthInformationNo + ", teacherNo=" + teacherNo
+				+ ", memberNo=" + memberNo + ", requestTitle=" + requestTitle + ", requestContent=" + requestContent
+				+ ", requestDate=" + requestDate + "]";
 	}
 }

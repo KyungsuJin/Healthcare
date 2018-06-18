@@ -8,35 +8,11 @@
 <title>DoctorRequestList</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-
- <!-- <script>
-    $(document).ready(function(){
-    	 $('#searchBtn').click(function(){
-			var searchValue = jQuery('#formSearch #searchValue').val(); 
-			if (searchValue == '') { 
-				alert('검색어를 입력하세요.'); 
-				} else { 
-					jQuery('#formSearch').submit(); 
-				} 
-			JQuery('#formSearch #searchCode value').val('${mapSearch.searchCode}');
-		});
-	});
-</script>
  -->
 </head>
 <body>
 	<h1>DoctorRequestList</h1>
 	<form id="DoctorRequestList" action="${pageContext.request.contextPath}/DoctorRequestList" method="POST">
-	<!-- 검색 -->
-	 <%-- <form id="formSearch" name="formSearch"  action="${pageContext.request.contextPath}/BloodsugarSearch" method="post"> 
-		<select id="searchCode" name="searchCode"> 
-		<option value="fastingbloodsugar" selected="Bloodsugarno">혈당코드</option> 
-		<option value="memberno">회원코드</option> 
-		</select>		
-		<input type="text" id="searchValue" name="searchValue" value="${mapSearch.searchCode}"/> 
-		<button type="button" id="searchBtn">검색</button> 
-	</form>	 --%>
-	 
 	<table>
 		<thead>
 			<tr>
@@ -51,18 +27,19 @@
 		<tbody>
 			<c:forEach var="DoctorRequest" items="${list}">
 				<tr>
-					<td>${doctorRequest.RequestHealthInformationNo}</td>
-					<td>${doctorRequest.TeacherNo}</td>
-					<td>${doctorRequest.MemberNo }</td>
-					<td>${doctorRequest.RequestTitle }</td>
-					<td>${doctorRequest.RequestContent }</td>
-					<td>${doctorRequest.RequestDate }</td>
+					<td>${DoctorRequest.requestHealthInformationNo}</td>
+					<td>${DoctorRequest.teacherNo}</td>
+					<td>${DoctorRequest.memberNo }</td>
+					<td>${DoctorRequest.requestTitle }</td>
+					<td>${DoctorRequest.requestContent }</td>
+					<td>${DoctorRequest.requestDate }</td>
 					<%-- <td><a type="button" href="${pageContext.request.contextPath}/modifyBloodsugar?bloodsugarno=${bloodsugar.bloodsugarno}" id="buttonModify">수정</a></td>
 					<td><a type="button" href="${pageContext.request.contextPath}/deleteBloodsugar?bloodsugarno=${bloodsugar.bloodsugarno}" id="buttonDelete">삭제</a></td>   --%>
 				</tr>
 			</c:forEach>	
 		</tbody>
 	</table>
+	
 	<%-- <a id="addBloodsugar" href="${pageContext.request.contextPath}/addBloodsugar">혈압등록하기</a> --%>
 
 	<nav>

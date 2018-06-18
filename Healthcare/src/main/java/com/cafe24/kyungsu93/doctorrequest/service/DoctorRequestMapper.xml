@@ -4,13 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.cafe24.kyungsu93.doctorrequest.service.DoctorRequestMapper">  
   
-  <select id="doctorRequestList" parameterType="java.util.Map" resultType="com.cafe24.kyungsu93.doctorrequest.service.DoctorRequest">
- 	 SELECT r.request_health_information_no AS RequestHealthInformationNo
-  			,r.teacher_no AS TeacherNo 
-  			,r.member_no AS MemberNo
-  			,r.request_title AS RequestTitle 
-  			,r.request_content AS RequestContent
-  			,r.request_date AS RequestDate
+  <select id="DoctorRequestList" parameterType="java.util.Map" resultType="com.cafe24.kyungsu93.doctorrequest.service.DoctorRequest">
+ 	 SELECT r.request_health_information_no AS requestHealthInformationNo
+  			,r.teacher_no AS teacherNo 
+  			,r.member_no AS memberNo
+  			,r.request_title AS requestTitle 
+  			,r.request_content AS requestContent
+  			,r.request_date AS requestDate
   			
 	FROM request_health_information AS r
 	JOIN member AS m
