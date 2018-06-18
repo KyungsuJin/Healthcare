@@ -28,11 +28,12 @@ public class BodyMassIndexController {
 	}
 	//체질량 입력완료후 등록
 	@RequestMapping(value="/addBodyMassIndex",method=RequestMethod.POST)
-	public String addBodyMassIndex(BodyMassIndex bodyMassIndex) {
+	public String addBodyMassIndex(Model model,BodyMassIndex bodyMassIndex) {
 		logger.debug("BodyMassIndexController.addBodyMassIndex POST");
 		logger.debug(bodyMassIndex.toString());
 		bodyMassIndexService.addBodyMassIndex(bodyMassIndex);
-		return "redirect:/addBodyMassIndex";
+		model.addAttribute("memberNo",bodyMassIndex.getMemberNo());
+		return "redirect:/bodyMassIndexList";
 	}
 	//체질량 입력 페이지
 	@RequestMapping(value = "/bodyMassIndexList", method = RequestMethod.GET)

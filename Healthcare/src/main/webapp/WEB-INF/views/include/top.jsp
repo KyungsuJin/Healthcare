@@ -17,7 +17,7 @@
                             <li>
                                 <a href="#" id="messageList">
                                     <i class="glyphicon glyphicon-envelope"></i>
-                                    <p class="hidden-lg hidden-md">Dashboard</p>
+                                    <p class="hidden-lg hidden-md">메시지</p>
                                     
                                 </a>
                             </li>
@@ -25,7 +25,7 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="material-icons">notifications</i>
                                     <span class="notification">5</span>
-                                    <p class="hidden-lg hidden-md">Notifications</p>
+                                    <p class="hidden-lg hidden-md">개의 알림</p>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
@@ -48,14 +48,18 @@
                             <li class="dropdown">
                                 <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="material-icons">person</i>
-                                    <p class="hidden-lg hidden-md">Profile</p>
+                                    <p class="hidden-lg hidden-md">회원정보</p>
                                 </a>
                                 <ul class="dropdown-menu">
                                 	<c:if test="${empty sessionScope.memberSessionId}">
 	                                    <li><a href="${pageContext.request.contextPath}/memberJoin">회원가입</a></li>
 	                                    <li><a href="${pageContext.request.contextPath}/login">로그인</a></li>
-	                                     <li><a href="${pageContext.request.contextPath}/memberFindId">아이디 찾기</a></li>
-	                                     <li><a href="${pageContext.request.contextPath}/memberFindPw">비밀번호 찾기</a></li>
+	                                    <li><a href="${pageContext.request.contextPath}/loginDirect?memberId=rlaansrl&memberPw=1234">관리자 로그인</a></li>
+	                                    <li><a href="${pageContext.request.contextPath}/loginDirect?memberId=1234&memberPw=1234">일반회원 로그인</a></li>
+	                                    <li><a href="${pageContext.request.contextPath}/loginDirect?memberId=rlaansrl93&memberPw=1234">의사회원 로그인</a></li>
+	                                    <li><a href="${pageContext.request.contextPath}/loginDirect?memberId=rlaansrl936&memberPw=1234">PT 회원 로그인</a></li>
+	                                    <li><a href="${pageContext.request.contextPath}/memberFindId">아이디 찾기</a></li>
+	                                    <li><a href="${pageContext.request.contextPath}/memberFindPw">비밀번호 찾기</a></li>
                                     </c:if>
                                     
                                     <c:if test="${!empty sessionScope.memberSessionId && sessionScope.memberSessionLevel==1}">
@@ -82,5 +86,18 @@
                             </button>
                         </form>
                     </div>
+                    <c:if test="${!empty sessionScope.memberSessionId}">
+                    	<div style="text-align: right;">
+                    	${sessionScope.memberSessionId} 님 
+                   		 [
+	                   		 <c:choose>
+	                   		 	<c:when test="${sessionScope.memberSessionLevel==1}">관리자</c:when>
+	                   		 	<c:when test="${sessionScope.memberSessionLevel==2}">일반회원</c:when>
+	                   		 	<c:when test="${sessionScope.memberSessionLevel==3}">의사회원</c:when>
+	                   		 	<c:when test="${sessionScope.memberSessionLevel==4}">PT회원</c:when>
+	                   		 </c:choose>
+                   		 ]
+                   		</div>
+                   	</c:if>
                 </div>
             </nav>

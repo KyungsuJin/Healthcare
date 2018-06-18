@@ -112,6 +112,7 @@ public class MessageController {
 		messageService.deleteMessageAll(sendMessageNo);
 		return "redirect:/messageComplainList";
 	}
+
 	
 
 }

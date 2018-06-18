@@ -5,7 +5,8 @@
 <html>
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet"	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
 			$.ajax({
@@ -90,45 +91,51 @@
 	</script>
 </head>
 <body>
-	<h1> 운동매칭 </h1>
-
-	<a href="${pageContext.request.contextPath}/addExerciseMatching">운동매칭 등록</a>
-	<a href="${pageContext.request.contextPath}/attendExerciseMatching?memberNo=${sessionScope.memberSessionNo}">자신의 운동참가 리스트</a>
-	<input type="hidden" name="sessionId"id="sessionId" value="${sessionScope.memberSessionId}">
-	<input type="hidden" name="exercisePlaceView"id="exercisePlaceView">
-	<input type="hidden" name="currnetPage" id="currentPage"  value="${currentPage}">
-	<input type="hidden" name="searchText" id="searchText" value="${searchText}">
-	<table border="1" class="table" id="tb">
-		<thead>
-			<tr>
-				<th>현재상태</th>
-				<th>제목</th>
-				<th>종목</th>
-				<th>장소</th>
-				<th>참가/모집(인원)</th>
-				<th>일시</th>
-				<th>아이디</th>
-			</tr>
-		</thead>
-		<tbody id="tbody">
-		</tbody>
-	</table>
-	<div id="page"></div>
-		<div>
-			<select id="searchSelect" name="searchSelect">
-				<option value="exercise_matching_place">장소</option>
-				<option <c:out value="${searchSelect eq 'member.member_no' ? 'selected=selected':''}"/> value="member.member_no">아이디</option>
-				<option <c:out value="${searchSelect eq 'exercise_no' ? 'selected=selected':''}"/> value="exercise_no">종목</option>
-				<%-- <option <c:out value="${searchSelect eq 'exercise_matching_schedule_date' ? 'selected=selected':''}"/> value="exercise_matching_schedule_date">기간별검색</option> --%>
-			</select>
-			<input type="text" id="searchTextTest" name="searchTextTest" value="${searchText}">
-			<button type="button" id="searchBtn">검색</button>
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<h1>운동매칭</h1>
+				<a href="${pageContext.request.contextPath}/addExerciseMatching">운동매칭
+					등록</a> <a
+					href="${pageContext.request.contextPath}/attendExerciseMatching?memberNo=${sessionScope.memberSessionNo}">자신의
+					운동참가 리스트</a> <input type="hidden" name="sessionId" id="sessionId"
+					value="${sessionScope.memberSessionId}"> <input
+					type="hidden" name="exercisePlaceView" id="exercisePlaceView">
+				<input type="hidden" name="currnetPage" id="currentPage"
+					value="${currentPage}"> <input type="hidden"
+					name="searchText" id="searchText" value="${searchText}">
+				<table border="1" class="table" id="tb">
+					<thead>
+						<tr>
+							<th>현재상태</th>
+							<th>제목</th>
+							<th>종목</th>
+							<th>장소</th>
+							<th>참가/모집(인원)</th>
+							<th>일시</th>
+							<th>아이디</th>
+						</tr>
+					</thead>
+					<tbody id="tbody">
+					</tbody>
+				</table>
+				<div id="page"	style="text-align:center"></div>
+				<div>
+					<select id="searchSelect" name="searchSelect">
+						<option value="exercise_matching_place">장소</option>
+						<option <c:out value="${searchSelect eq 'member.member_no' ? 'selected=selected':''}"/> value="member.member_no">아이디</option>
+						<option <c:out value="${searchSelect eq 'exercise_no' ? 'selected=selected':''}"/> value="exercise_no">종목</option>
+					</select> <input type="text" id="searchTextTest" name="searchTextTest" value="${searchText}">
+					<button type="button" id="searchBtn">검색</button>
+				</div>
+				<div id="dateDiv">
+					기간 : <input type="date" id="exerciseDateStart" value="${exerciseDateStart}">~<input type="date" id="exerciseDateEnd" value="${exerciseDateEnd}">
+					<button type="button" id="dateBtn">기간검색</button>
+				</div>
+			</div>
 		</div>
-		
-		<div id="dateDiv">
-			기간 : <input type="date" id="exerciseDateStart" value="${exerciseDateStart}">~<input type="date" id="exerciseDateEnd" value="${exerciseDateEnd}">
-			<button type="button" id="dateBtn">기간검색</button>
-		</div>
-		
+	</div>
 </body>
 </html>

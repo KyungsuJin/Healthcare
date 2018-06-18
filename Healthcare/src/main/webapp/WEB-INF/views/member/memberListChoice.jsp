@@ -7,7 +7,7 @@
 	<script>
 		$(document).ready(function(){
 			$("#memberList").click(function(){
-				window.open("${pageContext.request.contextPath}/basicMemberLis"
+				window.open("${pageContext.request.contextPath}/basicMemberList"
 						,"memberListForm","width=1600, height=500,resizable=no,scrollbars=yes");
 			})
 			$("#memberDoctorList").click(function(){

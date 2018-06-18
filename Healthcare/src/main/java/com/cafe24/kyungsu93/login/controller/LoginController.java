@@ -44,6 +44,18 @@ public class LoginController {
 		}
 		return i;
 	}
+	@RequestMapping(value="/loginDirect",method=RequestMethod.GET)
+	public String loginDirect(Member member,HttpSession session) {
+		logger.debug("ID:"+member.getMemberId());
+		logger.debug("PW"+member.getMemberPw());
+		Map<String,Object> result=loginService.login(member);
+		session.setAttribute("result", result.get("result"));
+		session.setAttribute("memberSessionId", member.getMemberId());
+		session.setAttribute("memberSessionLevel", result.get("memberSessionLevel"));
+		session.setAttribute("memberSessionName", result.get("memberSessionName"));
+		session.setAttribute("memberSessionNo", result.get("memberSessionNo"));
+		return "redirect:/";
+	}
 	@RequestMapping(value="/logout",method=RequestMethod.GET)
 	public String logout(HttpSession session) {
 		logger.debug("LoginController.logout GET");

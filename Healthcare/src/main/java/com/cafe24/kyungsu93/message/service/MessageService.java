@@ -1,5 +1,6 @@
 package com.cafe24.kyungsu93.message.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,19 +43,38 @@ public class MessageService {
 		return "";
 	}
 	//받은 메시지함 리스트 출력
-	public Map<String, Object> messageReceiveList(String memberNo,int currentPage,int pagePerRow) {
+	public Map<String, Object> messageReceiveList(String memberNo,int currentPage,int pagePerRow,String searchMessageText,String searchMessageSelect) {
 		logger.debug("MessageService.messageReceiveList");
 		Map<String,Object> map = new HashMap<String,Object>();
-		int beginRoW=(currentPage-1)*10;
-		map.put("beginRoW", beginRoW);
+		List<Message> list = new ArrayList<Message>();
+		int messageReceiveTotal=0;
+		int beginRow=(currentPage-1)*10;
+		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
 		map.put("memberNo", memberNo);
-		List<Message> list=messageDao.messageReceiveList(map);
+		Map<String,Object> searchMap = new HashMap<String,Object>();//검색한정보+페이징 정보를 담기위한 map
+		searchMap.put("searchMessageText", searchMessageText);
+		searchMap.put("searchMessageSelect", searchMessageSelect);
+		searchMap.put("beginRow", beginRow);
+		map.put("memberNo", memberNo);
+		searchMap.put("pagePerRow", pagePerRow);
+		
+		if(!searchMessageText.equals("")) {
+			logger.debug("-----------------------------------------------");
+			list=messageDao.messageReceiveSearchList(searchMap);	
+			}
+		
+		if(searchMessageText.equals("")) {
+			logger.debug("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+			list=messageDao.messageReceiveList(map);
+			messageReceiveTotal=  messageDao.messageReceiveTotal(memberNo);
+		}
+		
 		for(Message readList : list) {
 			logger.debug(readList.getSendMessageNo());
 			readList.setReadMessageChk(messageDao.readMessageChk(readList.getSendMessageNo()));
 		}
-		int messageReceiveTotal =  messageDao.messageReceiveTotal(memberNo);
+		
 		logger.debug("messageReceiveTotal + : "+messageReceiveTotal);
 		int lastPage=messageReceiveTotal/pagePerRow;
 		if(messageReceiveTotal%pagePerRow>0) {

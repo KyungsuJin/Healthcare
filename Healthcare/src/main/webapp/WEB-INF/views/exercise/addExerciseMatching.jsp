@@ -4,11 +4,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+	
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
 		    $.datepicker.setDefaults({
@@ -83,21 +85,30 @@
 	</script>
 </head>
 <body>
-	<h1> 운동 등록하기</h1>
-	<form id="addExerciseForm" name="addExerciseForm" action="${pageContext.request.contextPath}/addExerciseMatching" method="post">
-		<c:set var="now" value="<%=new java.util.Date()%>" />
-		<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}">
-		<input type="hidden" id="currentDate" value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" />">
-		<input type="hidden" id="currentTime" value="<fmt:formatDate value="${now}" pattern="k:mm" />">
-		<div>
-			예정날짜:<input id="exerciseScheduleDate" name="exerciseMatchingScheduleDate" type="text" readonly>
-			운동시간 :<input type="time" id="startTime" name="exerciseMatchingTime">~<input type="time" name="exerciseMatchingTime"id="endTime">
-			운동장소 : <input type="text" id="exercisePlace" name="exerciseMatchingPlace" placeholder="운동선택하기">
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<h1>운동등록하기</h1>
+				<form id="addExerciseForm" name="addExerciseForm" action="${pageContext.request.contextPath}/addExerciseMatching" method="post">
+					<c:set var="now" value="<%=new java.util.Date()%>" />
+					<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}">
+					<input type="hidden" id="currentDate" value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" />">
+					<input type="hidden" id="currentTime" value="<fmt:formatDate value="${now}" pattern="k:mm" />">
+					<div>
+						예정날짜:<input id="exerciseScheduleDate" name="exerciseMatchingScheduleDate" type="text" readonly>
+						운동시간 :<input type="time" id="startTime" name="exerciseMatchingTime">~<input type="time" name="exerciseMatchingTime"id="endTime">
+						운동장소 : <input type="text" id="exercisePlace" name="exerciseMatchingPlace" placeholder="운동선택하기">
+					</div>
+					<div> 인원수 :<input type="number" name="exerciseMatchingCount"id="exerciseCount" min="1" max="100"> 운동종류 : <input type="text" name="exerciseNo"id="exerciseNo"></div>
+					<div>제목 : <input type="text" id="exerciseMatchingTitle" name="exerciseMatchingTitle"></div>
+					<div><textarea class="form-control" rows="20" name="exerciseMatchingContent"></textarea></div>
+					<button type="button" id="addExerciseBtn">등록</button>
+				</form>
+			</div>
 		</div>
-		<div> 인원수 :<input type="number" name="exerciseMatchingCount"id="exerciseCount" min="1" max="100"> 운동종류 : <input type="text" name="exerciseNo"id="exerciseNo"></div>
-		<div>제목 : <input type="text" id="exerciseMatchingTitle" name="exerciseMatchingTitle"></div>
-		<div><textarea class="form-control" rows="20" name="exerciseMatchingContent"></textarea></div>
-		<button type="button" id="addExerciseBtn">등록</button>
-	</form>
+	</div>
+
 </body>
 </html>

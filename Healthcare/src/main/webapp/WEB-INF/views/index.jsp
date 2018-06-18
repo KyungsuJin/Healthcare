@@ -4,7 +4,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
+   <%--  <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -20,41 +20,14 @@
     <!--     Fonts and icons     -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons" rel='stylesheet'>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>
-		$(document).ready(function(){
-			$("#messageList").click(function(){
-				window.open("${pageContext.request.contextPath}/messageList"
-						,"messageList","width=700, height=700,resizable=no,scrollbars=yes");
-			});
-			$("#exercise").click(function(){
-				$.ajax({
-					type:"get"
-					,url : "${pageContext.request.contextPath}/exerciseDepositChk"
-					,data : {"memberNo" : $("#memberNo").val()}
-					,dataType: "text"
-					,success:function(data){
-						if(data==0){
-							alert('보증금등록을 하지않았습니다.');
-							if(confirm('보증금등록을 하시겠습니까?')){
-								window.open("${pageContext.request.contextPath}/exerciseDepositRegistration"
-										,"Registration","width=450, height=300,resizable=no,scrollbars=yes");
-							}else{
-								return false;
-							}
-						}else{
-							window.location.href="${pageContext.request.contextPath}/exerciseMatching";
-						}
-					}
-				});
-			});
-		});
-	</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> --%>
+    <jsp:include page="include/header.jsp"></jsp:include>
+ 
 </head>
 
 <body>
 	<input type="hidden" id="memberNo" value="${sessionScope.memberSessionNo}">
-    <div class="wrapper">
+    <div class="sidebar-wrapper">
        <jsp:include page="include/left.jsp"></jsp:include>
         <div class="main-panel">
             <jsp:include page="include/top.jsp"></jsp:include>
@@ -484,7 +457,7 @@
         </div>
     </div>
 </body>
-<!--   Core JS Files   -->
+<%-- <!--   Core JS Files   -->
 <script src="<c:url value="/templatejs1/jquery-3.2.1.min.js" />"></script>
 
 <script src="<c:url value="/templatejs1/bootstrap.min.js" />"></script>
@@ -502,7 +475,7 @@
 <!-- Material Dashboard javascript methods -->
 <script src="<c:url value="/templatejs1/material-dashboard.js?v=1.2.0" />"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
-<script src="<c:url value="/templatejs1/demo.js" />"></script>
+<script src="<c:url value="/templatejs1/demo.js" />"></script> --%>
 <script type="text/javascript">
     $(document).ready(function() {
 
@@ -512,4 +485,4 @@
     });
 </script>
 
-</html>6
+</html>

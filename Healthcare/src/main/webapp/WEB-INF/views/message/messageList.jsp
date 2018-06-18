@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<script>
 		$(document).ready(function(){
+			$("#searchDiv").hide();
 			//메시지 쓰기 새창
 			$("#messageWrite").click(function(){
 					window.open("${pageContext.request.contextPath}/message"
@@ -14,12 +15,15 @@
 			});
 			//메시지 받은 리스트
 			$("#messageReceive").click(function(){
+				$("#searchDiv").show();
 				console.log($("#memberReceiveNo").val());
 				 $.ajax({
 					type:"POST"
 					,url : "${pageContext.request.contextPath}/messageReceiveList"
 					,data :{"memberReceiveNo" :$("#memberReceiveNo").val()
-							,"currentPage" : $("#receiveCurrentPage").val()}
+							,"currentPage" : $("#receiveCurrentPage").val()
+							,"searchMessageSelect" :$("#searchMessageSelect").val()
+							,"searchMessageText" :$("#searchMessageText").val()}
 					,dataType:"json"
 					,success:function(data){
 						console.log(data);
@@ -27,7 +31,7 @@
 						$("#deletBtn").empty();
 						$("#page").empty();
 						$("#deletBtn").append('<button type="button" id="deleteMessageBtn">삭제</button>');
-						$("#tb").append('<tr><td><input type="checkbox" id="allChk">보낸사람</td><td>내용</td><td>날짜</td></tr>');
+						$("#tb").append('<tr><td><input type="checkbox" id="allChk">보낸사람</td><td>제목</td><td>날짜</td></tr>');
 						$.each(data.list,function(key,val){
 							$("#tb").append(
 											"<tr><td><input type='checkbox' name='deletMessageChk' value='"+val.sendMessageNo+"'>"+val.sendMessageId+"</td>"+
@@ -49,6 +53,7 @@
 						if(data.currentPage<data.lastPage){
 							$("#page").append("<a class='receiveMessagePageNext' href='javascript:void(0);'>다음</a>");
 						}
+						
 					}
 				});
 			});
@@ -72,7 +77,9 @@
 					type:"POST"
 					,url : "${pageContext.request.contextPath}/sendMessageList"
 					,data :{"sendMemberNo" :$("#memberReceiveNo").val(),
-							"currentPage" : $("#sendCurrentPage").val()}
+							"currentPage" : $("#sendCurrentPage").val()
+							
+							}
 					,dataType:"json"
 					,success:function(data){
 						console.log(data);
@@ -164,6 +171,23 @@
 					}
 				})
 			});
+			$("#messageSearch").click(function(){
+				$.ajax({
+					type:"GET"
+						,url : "${pageContext.request.contextPath}/messageSearchList"
+						,data :{"searchMessageSelect" :$("#searchMessageSelect").val()
+								,"searchMessageText" : $("#searchMessageText").val()
+								,"memberReceiveNo" :$("#memberReceiveNo").val()
+								}
+						,dataType:"json"
+						,success:function(data){
+							console.log(data.searchMessageText);
+							$("#searchDiv").append("<input type='hidden' id='searchMessageSelect' value='"+data.searchMessageSelect+"'>");
+							$("#searchDiv").append("<input type='hidden' id='searchMessageText' value='"+data.searchMessageText+"'>");
+							$("#messageReceive").click();
+						}
+				});
+			});
 		});
 	</script>
 </head>
@@ -181,5 +205,13 @@
 	<table border="1" class="table" id="tb">
 	</table>
 	<div id="page" style="text-align: center;"></div>
+	<div style="text-align: center;" id="searchDiv">
+		<select id ="searchMessageSelect">
+			<option value="rs.send_member_id">보낸사람</option>
+			<option value="rs.message_title">제목</option>
+		</select>
+		<input type="text" id="searchMessageText" >
+		<button type="button"  id="messageSearch">검색</button>
+	</div>
 </body>
 </html>

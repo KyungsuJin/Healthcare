@@ -5,6 +5,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
 			$("#bmiChart").click(function(){
@@ -121,11 +122,19 @@
 	</script>
 </head>
 <body>
-	<h1>체질량 차트</h1>
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<h1>체질량 차트</h1>
+				<a href="#" id="bmiChart">BMI 차트</a>
+				<a href="#"id="bodyWeightChart">몸무게 차트</a>
+				<input type="hidden" id="memberNo" value="${sessionScope.memberSessionNo}">
+				<div id="curve_chart" style="width: 900px; height: 500px" class="container"></div>
+			</div>
+		</div>
+	</div>
 	
-	<a href="#" id="bmiChart">BMI 차트</a>
-	<a href="#"id="bodyWeightChart">몸무게 차트</a>
-	<input type="hidden" id="memberNo" value="${sessionScope.memberSessionNo}">
-	<div id="curve_chart" style="width: 900px; height: 500px" class="container"></div>
 </body>
 </html>

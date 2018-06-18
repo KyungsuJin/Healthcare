@@ -15,9 +15,6 @@
 					<th>소속 병원</th>
 					<th>진료 과목</th>
 					<th>파일 이름</th>
-					<th>MemberBirth</th>
-					<th>Content</th>
-					<th>Approval</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -26,8 +23,10 @@
 					<td>${member.hospitalName}</td>
 					<td>${member.treatmentDepartment}</td>
 					<td>${member.memberFile.memberFileRealName}</td>
-					<img src="${path}${member.memberFile.memberFileName }.${member.memberFile.memberFileExt}"/>
 				</tr>
+				<tr>
+					<td colspan="4"><img src="${path}${member.memberFile.memberFileName }.${member.memberFile.memberFileExt}"/></td>
+				<tr>
 			</tbody>
 		</table>
 	</c:if>
@@ -37,7 +36,7 @@
 				<tr>
 					<th>PT 면허 번호</th>
 					<th>근무지 정보</th>
-					<th>Approval</th>
+					<th>파일이름</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -45,10 +44,13 @@
 					<td>${member.doctorRegisterNo}</td>
 					<td>${member.memberWorkSpace}</td>
 					<td>${member.memberFile.memberFileRealName}</td>
-					<img src="${path}${member.memberFile.memberFileName }.${member.memberFile.memberFileExt}">
 				</tr>
+				<tr>
+					<td colspan="4"><img src="${path}${member.memberFile.memberFileName }.${member.memberFile.memberFileExt}"></td>
+				<tr>
 			</tbody>
 		</table>
 	</c:if>
+	<a href="${pageContext.request.contextPath}/memberApprovalList">목록으로</a>
 </body>
 </html>

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,11 +34,15 @@ public class MessageRestController {
 	@RequestMapping(value = "/messageReceiveList", method = RequestMethod.POST)
 	public Map<String, Object> messageReceiveList(@RequestParam(value = "memberReceiveNo") String memberNo
 												,@RequestParam(value="currentPage",defaultValue="1")int currentPage
-												,@RequestParam(value="pagePerRow",defaultValue="10")int pagePerRow){
+												,@RequestParam(value="pagePerRow",defaultValue="10")int pagePerRow
+												,@RequestParam(value="searchMessageText",defaultValue="")String searchMessageText
+												,@RequestParam(value="searchMessageSelect",defaultValue="")String searchMessageSelect){
 		logger.debug("MessageRestController.messageReceiveList");
 		logger.debug("memberNo: "+memberNo);
 		logger.debug("currnetPage : "+currentPage);
-		Map<String, Object> map=messageService.messageReceiveList(memberNo,currentPage,pagePerRow);
+		logger.debug("searchMessageSelect : "+searchMessageSelect);
+		logger.debug("searchMessageText : "+searchMessageText);
+		Map<String, Object> map=messageService.messageReceiveList(memberNo,currentPage,pagePerRow,searchMessageText,searchMessageSelect);
 		map.put("currentPage", currentPage);
 		return map;
 	}
@@ -83,5 +88,18 @@ public class MessageRestController {
 		logger.debug("선택 값 sv :" + complainReason);
 		logger.debug("선택 값  asdf :" + messageNo);
 		return messageService.messageComplain(complainReason,messageNo);
+	}
+	//받은 메시지 신고 처리
+	@RequestMapping(value = "/messageSearchList", method = RequestMethod.GET)
+	public Map<String,String> messageSearchList(Model model,@RequestParam(value = "memberReceiveNo") String memberNo
+								,@RequestParam(value="searchMessageText",defaultValue="")String searchMessageText
+								,@RequestParam(value="searchMessageSelect",defaultValue="")String searchMessageSelect) {
+		logger.debug("messageController.messageSearchList GET");
+		logger.debug("선택 값 sv :" + searchMessageText);
+		logger.debug("선택 값  asdf :" + searchMessageSelect);
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("searchMessageSelect", searchMessageSelect);
+		map.put("searchMessageText", searchMessageText);
+		return map;
 	}
 }

@@ -31,7 +31,7 @@ public class MemberController {
 	   logger.debug("MemberController.memberExpulsion GET");
 	   logger.debug("memberNo : "+member.getMemberNo());
 	   logger.debug("memberLevel:"+member.getMemberLevel());
-	   String path = session.getServletContext().getRealPath("/resources/upload/");
+	   String path = session.getServletContext().getRealPath("/resources/img/");
 	   memberService.memberLeaveRequest(member,path);
 	   String result="";
 	   if(member.getMemberLevel()==2) {
@@ -124,7 +124,7 @@ public class MemberController {
 	   memberService.approval(member);
 	   return "redirect:/memberApprovalList";
    }
-   //승인을 기다리는 회원들의 리스트 페이지
+   //승인을 기다리는 회원의 상세내용
    @RequestMapping(value="/memberApprovalContent",method=RequestMethod.GET)
    public String memberApprovalContent(Model model,Member member
 		   							,HttpSession session) {
@@ -132,7 +132,7 @@ public class MemberController {
 	   logger.debug("MemberNo : "+member.getMemberNo());
 	   logger.debug("MemberLevel : "+member.getMemberLevel());
 	   Member memberContent=memberService.memberApprovalContent(member);
-	   String path = session.getServletContext().getRealPath("/resources/upload/");
+	   String path = session.getServletContext().getRealPath("/resources/img/");
 	   model.addAttribute("member",memberContent);
 	   model.addAttribute("path",path);
 	   return "member/memberApprovalContent";
@@ -164,7 +164,7 @@ public class MemberController {
 	   logger.debug("MemberController.memberLeaveRequest GET");
 	   logger.debug(member.getMemberId());
 	   logger.debug("asd"+member.getMemberLevel());
-	   String path = session.getServletContext().getRealPath("/resources/upload/");
+	   String path = session.getServletContext().getRealPath("/resources/img/");
 	   memberService.memberLeaveRequest(member,path);
 	   session.invalidate();
 	   return "redirect:/";
@@ -206,7 +206,7 @@ public class MemberController {
    public String memberInsert(Member member,HttpSession session) {
 	   logger.debug("MemberController.memberInsert POST");
 	   logger.debug(member.toString());
-	   String path = session.getServletContext().getRealPath("/resources/upload/");
+	   String path = session.getServletContext().getRealPath("/resources/img/");
 	   memberService.memberInsert(member,path);
 	   
 	   return "redirect:/";

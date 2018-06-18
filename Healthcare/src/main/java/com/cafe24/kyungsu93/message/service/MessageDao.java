@@ -54,6 +54,11 @@ public class MessageDao {
 		logger.debug("MessageDao.messageReceiveTotal");
 		return sqlSession.selectOne(NS + "messageReceiveTotal", memberNo);
 	}
+	//받은 메시지 검색 리스트
+	public List<Message> messageReceiveSearchList(Map<String, Object> map) {
+		logger.debug("MessageDao.messageReceiveSearchList");
+		return sqlSession.selectList(NS + "messageReceiveSearchList", map);
+	}
 	//받은 보낸메시지 총 total
 	public int messageSendTotal(String memberNo) {
 		logger.debug("MessageDao.messageSendTotal");

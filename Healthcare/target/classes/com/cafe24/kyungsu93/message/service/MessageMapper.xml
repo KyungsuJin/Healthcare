@@ -94,7 +94,7 @@
 				,sm.message_date
 			FROM send_message sm,receive_message rs
 			WHERE sm.send_message_no=rs.send_message_no AND sm.member_receive_no=#{memberNo}
-			LIMIT #{beginRoW},#{pagePerRow}
+			LIMIT #{beginRow},#{pagePerRow}
   	</select>
   	<!-- 받은 메시지 총 total -->
   	<select id="messageReceiveTotal"
@@ -104,6 +104,21 @@
 			FROM send_message sm, receive_message rm
 			WHERE sm.send_message_no=rm.send_message_no 
 				AND sm.member_receive_no=#{memberNo}
+  	</select>
+  	<!-- 받은 메시지 검색 리스트  -->
+  	<select id="messageReceiveSearchList"
+  			parameterType="java.util.Map"
+  			resultMap="message">
+  			SELECT 
+  				rs.send_message_no
+  				,rs.send_member_id
+				,rs.message_title
+				,rs.message_content
+				,sm.message_date
+			FROM send_message sm,receive_message rs
+			WHERE sm.send_message_no=rs.send_message_no AND sm.member_receive_no=#{memberNo}
+			AND ${searchMessageSelect}  LIKE '%${searchMessageText}%'
+			LIMIT #{beginRow},#{pagePerRow}
   	</select>
   	<!-- 보낸 메시지 총 total -->
   	<select id="messageSendTotal"
