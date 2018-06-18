@@ -31,10 +31,10 @@ public class BloodPressureController {
 		logger.debug("BloodPressureRestController - searchList bloodPressureSearch ModelAndView 실행");
 		List<BloodPressure> list = bloodPressureService.bloodPressureSearchDate(startDate, endDate);
 		int result = 0;
+		ModelAndView modelAndView = new ModelAndView();
 		if(list.size()>0) {
 			result = 1;
 		}
-		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("bloodpressure/bloodPressure");
 		modelAndView.addObject("list", list);
 		modelAndView.addObject("startDate", startDate);

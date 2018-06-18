@@ -1,7 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cafe24.kyungsu93.group.service.GroupInviteMapper">
-	<insert id="inviteMemberApproval" 
+	<select id="memberNameSearch" parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
+		SELECT
+			a.member_no as memberNo,
+			c.group_name as groupName,
+			c.group_no as groupNo,
+			b.member_name as memberName
+		FROM group_invite a
+		INNER JOIN member b
+		ON a.member_no = b.member_no
+		INNER JOIN group_create c
+		ON a.group_no = c.group_no
+		WHERE group_name = #{groupName}
+	</select>
+	<select id="groupMembersListCount" resultType="Integer">
+		SELECT
+		count(*)
+		FROM group_invite_approval_result
+		WHERE group_name = #{groupName}	
+	</select>	
+	<select id="groupMembersList" parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
+		SELECT
+		a.group_invite_no as groupInviteNo,
+		a.group_name as groupName,
+		a.personal_information_approval as personalInformationApproval,
+		a.group_invite_approval_date as groupInviteApprovalDate,
+		b.member_name as memberName,
+		b.member_id as memberId,
+		c.group_no as groupNo
+		FROM group_invite_approval_result a 
+		INNER JOIN member b
+		ON a.member_no = b.member_no	
+		INNER JOIN group_invite c
+		ON a.group_invite_no = c.group_invite_no
+		ORDER BY groupInviteNo DESC
+	</select>	
+	<insert id="acceptGroupList" 
 			parameterType="com.cafe24.kyungsu93.group.service.GroupInvite">
 	INSERT INTO group_invite_approval_result(
 	group_invite_no, member_no, group_name, personal_information_approval, group_invite_approval_date
@@ -28,16 +65,19 @@
 			parameterType="String" 
 			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
 		SELECT
-			group_name as groupName,
-			member_name as memberName,
-			member_id as memberId,
-			group_no as groupNo,
-			group_Info as groupInfo,
-			group_kind_Name as groupKindName
-		FROM group_table a
+			a.group_name as groupName,
+			a.group_no as groupNo,
+			a.group_info as groupInfo,
+			a.group_create_date as groupCreatDate,	
+			b.group_kind_name as groupKindName,
+			c.member_name as memberName,
+			c.member_id as memberId
+		FROM group_create a
 		INNER JOIN group_kind b
 		ON a.group_kind_no = b.group_kind_no
-		ORDER BY group_invite_date DESC
+		INNER JOIN member c
+		ON a.member_no = c.member_no
+		ORDER BY groupName DESC
 		LIMIT #{beginRow},#{pagePerRow}
 	</select>
 	<select id="groupInviteMemberName" 
@@ -50,13 +90,13 @@
 		FROM member
 		WHERE member_id = #{memberId}	
 	</select>
-		<select id="personalAgreeMember" 
+		<select id="personalAgreeSearch" 
 			parameterType="String" 
 			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
 		SELECT
-			member_agree as memberAgree
+			member_agree as personalInformationApproval
 		FROM member
-		WHERE member_name = #{memberName}	
+		WHERE member_no = #{memberNo}	
 	</select>
 	<select id="groupInviteMemberId" 
 			parameterType="String" 
@@ -76,6 +116,7 @@
 			parameterType="Integer" 
 			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
 	 	SELECT
+	 		a.group_invite_no as groupInviteNo,
 			a.group_no as groupNo,
 			a.group_invite_date as groupInviteDate,
 			a.group_invite_message as groupInviteMessage,
@@ -83,10 +124,10 @@
 			b.group_Info as groupInfo,			
 			c.group_kind_name as groupKindName
 		FROM group_invite a
-		INNER JOIN group_table b
+		INNER JOIN group_create b
 		ON a.group_no = b.group_no		
 		INNER JOIN group_kind c
-		ON b.group_kind_no = c.group_kind_no		
+		ON b.group_kind_no = c.group_kind_no
 		ORDER BY group_invite_date DESC
 		LIMIT #{beginRow},#{pagePerRow}
 	</select>
@@ -101,7 +142,7 @@
 			c.member_name as memberName,
 			c.member_id as memberId
 		FROM group_invite a
-		INNER JOIN group_table b
+		INNER JOIN group_create b
 		ON a.group_no = b.group_no
 		INNER JOIN member c
 		ON a.member_no = c.member_no		

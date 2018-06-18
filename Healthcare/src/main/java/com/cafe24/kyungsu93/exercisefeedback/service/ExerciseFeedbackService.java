@@ -33,6 +33,7 @@ public class ExerciseFeedbackService {
 	 */
 	public void feedbackapprovalAccept(String exerciseFeedbackRequestNo) {
 		logger.debug("ExerciseFeedbackService - feedbackapprovalAccept실행");	
+		
 		exerciseFeedbackDao.feedbackapprovalAccept(exerciseFeedbackRequestNo);
 	}
 	

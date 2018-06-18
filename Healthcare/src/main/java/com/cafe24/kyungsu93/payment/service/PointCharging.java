@@ -5,7 +5,8 @@ public class PointCharging {
 	private String memberNo;
 	private String memberName;
 	private String memberId;
-	private String pointChargingSum;
+	private int memberPoint;
+	private int pointChargingSum;
 	private String pointChargingDate;
 	private String pointChargingDirectorNo;
 	private String pointChargingApproval;
@@ -34,10 +35,16 @@ public class PointCharging {
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
-	public String getPointChargingSum() {
+	public int getMemberPoint() {
+		return memberPoint;
+	}
+	public void setMemberPoint(int memberPoint) {
+		this.memberPoint = memberPoint;
+	}
+	public int getPointChargingSum() {
 		return pointChargingSum;
 	}
-	public void setPointChargingSum(String pointChargingSum) {
+	public void setPointChargingSum(int pointChargingSum) {
 		this.pointChargingSum = pointChargingSum;
 	}
 	public String getPointChargingDate() {
@@ -66,10 +73,11 @@ public class PointCharging {
 	}
 	@Override
 	public String toString() {
-		return "Refund [pointChargingNo=" + pointChargingNo + ", memberNo=" + memberNo + ", memberName=" + memberName
-				+ ", memberId=" + memberId + ", pointChargingSum=" + pointChargingSum + ", pointChargingDate="
-				+ pointChargingDate + ", pointChargingDirectorNo=" + pointChargingDirectorNo
-				+ ", pointChargingApproval=" + pointChargingApproval + ", pointChargingApprovalDate="
-				+ pointChargingApprovalDate + "]";
+		return "PointCharging [pointChargingNo=" + pointChargingNo + ", memberNo=" + memberNo + ", memberName="
+				+ memberName + ", memberId=" + memberId + ", memberPoint=" + memberPoint + ", pointChargingSum="
+				+ pointChargingSum + ", pointChargingDate=" + pointChargingDate + ", pointChargingDirectorNo="
+				+ pointChargingDirectorNo + ", pointChargingApproval=" + pointChargingApproval
+				+ ", pointChargingApprovalDate=" + pointChargingApprovalDate + "]";
 	}
+
 }

@@ -6,6 +6,7 @@
 <title>addGroup</title>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
+var count = 0;
 	function checkName(){		
 		var groupName = $('#groupName').val();
 		var checkCHar = /[!#$%^&*()?+=\/]/;
@@ -19,19 +20,18 @@
             data : {groupName : groupName},
             url : "${pageContext.request.contextPath}/checkGroupName",
             dataType : "json",
-            contentType: "application/json; charset=UTF-8"
-        });    
-       
-       checkName.done(function(data){
-    	   console.log(data);   
-       	if(data.result> 0){
-       		$('#Name').html('입력하신 그룹명은 현재 사용중이므로 사용할 수 없습니다. 다시 입력해주세요.');
-       	}else if(data.result == 0){
-       		$('#Name').html('사용가능한 그룹명입니다.');
-       		return count = 1;
-       	}
-       }); 
-       
+            contentType: "application/json; charset=UTF-8",
+            success : function(data){
+            	console.log(data);   
+            	if(data.result> 0){
+            		$('#Name').html('입력하신 그룹명은 현재 사용중이므로 사용할 수 없습니다. 다시 입력해주세요.');
+            		return count = 0;
+            	}else if(data.result == 0){
+            		$('#Name').html('사용가능한 그룹명입니다.');
+            		return count = 1;
+            	}
+            }
+        });       
        checkName.fail(function(jqXHR, textStatus){
     	   alert( "Request failed: " + textStatus );
 		});

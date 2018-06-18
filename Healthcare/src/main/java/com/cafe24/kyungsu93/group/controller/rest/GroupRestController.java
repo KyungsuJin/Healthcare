@@ -23,6 +23,17 @@ public class GroupRestController {
 	private GroupInviteService groupInviteService;
 	private static final Logger logger = LoggerFactory.getLogger(GroupRestController.class);
 	
+	//그룹 삭제유예기간 등록 검색
+	@RequestMapping(value="/deleteGroupSearch", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> memberCountSearch(@RequestParam(value="groupName") String groupName) {
+		logger.debug("GroupController - deleteApproval ajax 실행.");
+		Map<String,Object> resultmap = groupService.memberCountSearch(groupName);
+		logger.debug("resultmap:"+resultmap);
+		return resultmap;
+	}
+	
+	//회원 아이디검색
 	@RequestMapping(value="/invitefind", method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> searchMember(@RequestParam(value="memberId") String memberId) {
@@ -34,6 +45,7 @@ public class GroupRestController {
 		return map;
 	}
 	
+	//그룹명 중복확인
 	@RequestMapping(value="/checkGroupName", method=RequestMethod.GET)
 	@ResponseBody
     public Map<String, Object> checkGroupName(@RequestParam(value="groupName") String groupName) {

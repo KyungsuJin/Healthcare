@@ -65,7 +65,7 @@ $(document).ready(function(){
 			<c:if test="${map.exerciseFeedbackResultDetail.exerciseFeedbackResult eq '대기'}">
 				<br>아직 ${map.exerciseFeedbackDetail.memberName }님의 운동 피드백 요청에 대한 답변을 하지 않았습니다. 
 				<br>
-				<a type="button" href="${pageContext.request.contextPath}/exerciseFeedResponse?exerciseFeedbackRequestNo=${map.exerciseFeedbackDetail.exerciseFeedbackRequestNo }">운동 피드백 답변하기</a>
+				<a type="button" href="${pageContext.request.contextPath}/exerciseFeedResponse?exerciseFeedbackRequestNo=${map.nextExerciseFeedback.exerciseFeedbackRequestNo}">운동 피드백 답변하기</a>
 			</c:if>
 		</c:if>
 	</div>
@@ -73,18 +73,18 @@ $(document).ready(function(){
 		<c:if test="${map.countNext > 0 }">
 			<p>다음글 : <a type="button" href="${pageContext.request.contextPath}/exerciseFeedbackRequestDetail?exerciseFeedbackRequestNo=${map.nextExerciseFeedback.exerciseFeedbackRequestNo}">${map.nextExerciseFeedback.exerciseFeedbackRequestTitle }</a></p>
 		</c:if>
+		<c:if test="${map.countNext eq 0 }">
+			<p>다음글이 없습니다.</p>
+		</c:if>
 		<c:if test="${map.countPrev >0 }">
 			<p>이전글 : <a type="button" href="${pageContext.request.contextPath}/exerciseFeedbackRequestDetail?exerciseFeedbackRequestNo=${map.prevExerciseFeedback.exerciseFeedbackRequestNo}">${map.prevExerciseFeedback.exerciseFeedbackRequestTitle }</a></p>
 		</c:if>
 		<c:if test="${map.countPrev eq 0 }">
 			<p>이전글이 없습니다.</p>
 		</c:if>
-		<c:if test="${map.countNext eq 0 }">
-			<p>다음글이 없습니다.</p>
-		</c:if>
 	</div>
 	<div>
-		<button id="listBtn">리스트로 돌아가기</button>
+		<button onclick="listBtn()">리스트로 돌아가기</button>
 	</div>
 </body>
 </html>

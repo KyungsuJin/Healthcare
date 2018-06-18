@@ -4,9 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<jsp:include page="../include/header.jsp"></jsp:include>
 <title>pointChargingList</title>
 </head>
 <body>
+<jsp:include page="../include/body.jsp"></jsp:include>
 <h1>결제 승인 대기 리스트</h1>
 	<table>
 		<thead>
@@ -32,5 +34,34 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	<nav>
+		<ul class="pagination pagination-sm">
+			<c:if test="${currentPage > 10}">
+				<li>
+					<a aria-label="first" href="${pageContext.request.contextPath }/pointChargingList?currentPage=1">&laquo;</a>
+				</li>
+			</c:if>
+			<c:if test="${firstBlockPage > 2}">
+				<li>
+					<a aria-label="first" href="${pageContext.request.contextPath }/pointChargingList?currentPage=${firstBlockPage-1}">&lsaquo;</a>
+				</li>
+			</c:if>
+				<li>
+				<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
+					<a href="${pageContext.request.contextPath}/pointChargingList?currentPage=${i}">${i}</a>				
+				</c:forEach>		
+				</li>
+			<c:if test="${lastBlockPage < totalBlock}">
+				<li>
+					<a aria-label="last" href="${pageContext.request.contextPath}/pointChargingList?currentPage=${lastBlockPage+1}">&rsaquo;</a>
+				</li>
+			</c:if>
+			<c:if test="${currentPage < lastPage}">
+				<li>
+					<a aria-label="last" href="${pageContext.request.contextPath}/pointChargingList?currentPage=${lastPage}">&raquo;</a>
+				</li>
+			</c:if>
+		</ul>
+	</nav>
 </body>
 </html>

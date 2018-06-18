@@ -1,10 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cafe24.kyungsu93.payment.service.PointChargingMapper">
+	<update id="updateMemberPointCharging" parameterType="com.cafe24.kyungsu93.payment.service.PointCharging">
+	UPDATE member
+	SET
+		member_point = #{memberPoint}
+	WHERE member_no = #{memberNo}
+	</update>
+	<select id="selectMemberPoint" parameterType="String" resultType="com.cafe24.kyungsu93.payment.service.PointCharging">
+	SELECT 
+	member_point as memberPoint
+	FROM member
+	where member_no = #{memberNo}
+	</select>
+	<select id="pointCahrgingSearchMemberNo" parameterType="String" resultType="com.cafe24.kyungsu93.payment.service.PointCharging">
+	SELECT
+	member_no as memberNo,
+	point_charging_sum as pointChargingSum
+	FROM point_charging
+	WHERE point_charging_no = #{pointChargingNo}
+	</select>
+	<delete id="deletePointCharging" parameterType="com.cafe24.kyungsu93.payment.service.PointCharging">
+	DELETE FROM point_charging 
+	WHERE point_charging_no = #{pointChargingNo}
+	</delete>
+	<select id="pointChargingNoResultCount" resultType="Integer">
+	SELECT
+	count(*)
+	FROM point_charging_approval_result
+	WHERE point_charging_no = #{pointChargingNo}
+	</select>
+	<insert id="deniedPointCharging" parameterType="com.cafe24.kyungsu93.payment.service.PointCharging">
+	INSERT INTO point_charging_approval_result
+	(point_charging_no, point_charging_director_no, point_charging_approval, point_charging_approval_date)
+	VALUES (
+	#{pointChargingNo}, #{pointChargingDirectorNo}, 'F', NOW()
+	)
+	</insert>
+	<insert id="acceptPointCharging" parameterType="com.cafe24.kyungsu93.payment.service.PointCharging">
+	INSERT INTO point_charging_approval_result
+	(point_charging_no, point_charging_director_no, point_charging_approval, point_charging_approval_date)
+	VALUES (
+	#{pointChargingNo}, #{pointChargingDirectorNo}, 'T', NOW()
+	)
+	</insert>
+	<select id="pointChargingSum" parameterType="String" resultType="com.cafe24.kyungsu93.payment.service.PointCharging">
+	SELECT
+	point_charging_sum as pointChargingSum
+	FROM point_charging
+	WHERE member_no = #{memberNo}
+	</select>
 	<select id="PointChargingNo" resultType="Integer">
-		SELECT
-		max(CAST(substring(point_charging_no,16) AS DECIMAL))
-		FROM point_charging
+	SELECT
+	max(CAST(substring(point_charging_no,16) AS DECIMAL))
+	FROM point_charging
 	</select>
 	<insert id="addPointCharging" parameterType="com.cafe24.kyungsu93.payment.service.PointCharging">
 	INSERT INTO point_charging(

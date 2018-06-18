@@ -26,6 +26,46 @@ public class GroupController {
 	private GroupInviteService groupInviteService;
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 	
+	//그룹초대 수락
+	@RequestMapping(value="/accpetGroup", method=RequestMethod.GET)
+	public String acceptGroupList(GroupInvite groupInvite) {
+		logger.debug("GroupController - acceptGroupList 포워드 실행");
+		groupInviteService.acceptGroupList(groupInvite);
+		return "redirect:/inviteGroupList";
+	}
+
+	//그룹 회원 리스트
+	@RequestMapping(value="/groupMembersList", method=RequestMethod.GET)
+	public String groupMemberList(Model model
+					,@RequestParam(value="groupName") String groupName
+					,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+					,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
+		logger.debug("GroupController - groupMemberList 포워드 실행");
+		logger.debug("groupName:"+groupName);
+		Map<String,Object> map = groupInviteService.groupMemberList(currentPage, pagePerRow, groupName);
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
+		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
+		model.addAttribute("totalBlock", map.get("totalBlock"));
+		model.addAttribute("groupNameSelect", map.get("groupNameSelect"));
+		model.addAttribute("groupNo", map.get("groupNo"));
+		model.addAttribute("memberCountResult", map.get("memberCountResult"));
+		return "group/groupMembersList";
+	}
+	
+	//그룹 상세보기
+	@RequestMapping(value="/groupDetail", method=RequestMethod.GET)
+	public String groupDetail(Model model
+					,@RequestParam(value="groupNo") String groupNo ) {
+		logger.debug("GroupController - groupDetail 포워드 실행");
+		Map<String,Object> map = groupService.groupDetail(groupNo);
+		model.addAttribute("map", map);
+		logger.debug("map:"+map);
+		return "group/groupDetail";
+	}
+	
 	//나를 초대한 그룹 리스트
 	@RequestMapping(value="/inviteGroupList", method=RequestMethod.GET)
 	public String inviteGroupList(Model model
@@ -101,14 +141,6 @@ public class GroupController {
 		Map<String,Object> map = groupService.deleteGroupList();
 		model.addAttribute("list", map.get("list"));
 		return "group/deleteGroupList";
-	}
-	
-	//그룹 삭제유예기간 등록
-	@RequestMapping(value="/deleteGroup", method=RequestMethod.POST)
-	public String deleteApproval(@RequestParam(value="groupNo") String groupNo) {
-		logger.debug("GroupController - deleteApproval 리다이렉트 실행.");
-		groupService.deleteGroup(groupNo);
-		return "redirect:/groupList";
 	}
 	
 	//생성된 그룹 리스트

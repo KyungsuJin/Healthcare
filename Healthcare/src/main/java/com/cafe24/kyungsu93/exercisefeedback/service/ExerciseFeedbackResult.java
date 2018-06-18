@@ -5,10 +5,13 @@ public class ExerciseFeedbackResult {
 	private String exerciseFeedbackTitle;
 	private String exerciseFeedbackContent;
 	private String exerciseFeedbackResultDate;
-	private String foodInfoNo;
+	private String foodNo;
 	private int ingestionAmount;
 	private String foodFeedbackDate;
 	private String exerciseNo;
+	private String exerciseName;
+	private int exerciseCalorie;
+	private String exerciseDate;
 	private int exerciseTime;
 	private String exerciseFeedbackDate;
 	private int exerciseFeedbackEvaluationGrade;
@@ -48,11 +51,11 @@ public class ExerciseFeedbackResult {
 	public void setExerciseFeedbackResultDate(String exerciseFeedbackResultDate) {
 		this.exerciseFeedbackResultDate = exerciseFeedbackResultDate;
 	}
-	public String getFoodInfoNo() {
-		return foodInfoNo;
+	public String getFoodNo() {
+		return foodNo;
 	}
-	public void setFoodInfoNo(String foodInfoNo) {
-		this.foodInfoNo = foodInfoNo;
+	public void setFoodNo(String foodNo) {
+		this.foodNo = foodNo;
 	}
 	public int getIngestionAmount() {
 		return ingestionAmount;
@@ -71,6 +74,24 @@ public class ExerciseFeedbackResult {
 	}
 	public void setExerciseNo(String exerciseNo) {
 		this.exerciseNo = exerciseNo;
+	}
+	public String getExerciseName() {
+		return exerciseName;
+	}
+	public void setExerciseName(String exerciseName) {
+		this.exerciseName = exerciseName;
+	}
+	public int getExerciseCalorie() {
+		return exerciseCalorie;
+	}
+	public void setExerciseCalorie(int exerciseCalorie) {
+		this.exerciseCalorie = exerciseCalorie;
+	}
+	public String getExerciseDate() {
+		return exerciseDate;
+	}
+	public void setExerciseDate(String exerciseDate) {
+		this.exerciseDate = exerciseDate;
 	}
 	public int getExerciseTime() {
 		return exerciseTime;
@@ -114,61 +135,62 @@ public class ExerciseFeedbackResult {
 	public void setFoodOnece(int foodOnece) {
 		this.foodOnece = foodOnece;
 	}
-	public Double getFoodKcal() {
+	public double getFoodKcal() {
 		return foodKcal;
 	}
-	public void setFoodKcal(Double foodKcal) {
+	public void setFoodKcal(double foodKcal) {
 		this.foodKcal = foodKcal;
 	}
-	public Double getFoodCarbohydrate() {
+	public double getFoodCarbohydrate() {
 		return foodCarbohydrate;
 	}
-	public void setFoodCarbohydrate(Double foodCarbohydrate) {
+	public void setFoodCarbohydrate(double foodCarbohydrate) {
 		this.foodCarbohydrate = foodCarbohydrate;
 	}
-	public Double getFoodProtein() {
+	public double getFoodProtein() {
 		return foodProtein;
 	}
-	public void setFoodProtein(Double foodProtein) {
+	public void setFoodProtein(double foodProtein) {
 		this.foodProtein = foodProtein;
 	}
-	public Double getFoodFat() {
+	public double getFoodFat() {
 		return foodFat;
 	}
-	public void setFoodFat(Double foodFat) {
+	public void setFoodFat(double foodFat) {
 		this.foodFat = foodFat;
 	}
-	public Double getFoodSugar() {
+	public double getFoodSugar() {
 		return foodSugar;
 	}
-	public void setFoodSugar(Double foodSugar) {
+	public void setFoodSugar(double foodSugar) {
 		this.foodSugar = foodSugar;
 	}
-	public Double getFoodNatrium() {
+	public double getFoodNatrium() {
 		return foodNatrium;
 	}
-	public void setFoodNatrium(Double foodNatrium) {
+	public void setFoodNatrium(double foodNatrium) {
 		this.foodNatrium = foodNatrium;
 	}
-	public Double getFoodCholesterol() {
+	public double getFoodCholesterol() {
 		return foodCholesterol;
 	}
-	public void setFoodCholesterol(Double foodCholesterol) {
+	public void setFoodCholesterol(double foodCholesterol) {
 		this.foodCholesterol = foodCholesterol;
 	}
-	public Double getFoodTransfat() {
+	public double getFoodTransfat() {
 		return foodTransfat;
 	}
-	public void setFoodTransfat(Double foodTransfat) {
+	public void setFoodTransfat(double foodTransfat) {
 		this.foodTransfat = foodTransfat;
 	}
 	@Override
 	public String toString() {
 		return "ExerciseFeedbackResult [exerciseFeedbackRequestNo=" + exerciseFeedbackRequestNo
 				+ ", exerciseFeedbackTitle=" + exerciseFeedbackTitle + ", exerciseFeedbackContent="
-				+ exerciseFeedbackContent + ", exerciseFeedbackResultDate=" + exerciseFeedbackResultDate
-				+ ", foodInfoNo=" + foodInfoNo + ", ingestionAmount=" + ingestionAmount + ", foodFeedbackDate="
-				+ foodFeedbackDate + ", exerciseNo=" + exerciseNo + ", exerciseTime=" + exerciseTime
+				+ exerciseFeedbackContent + ", exerciseFeedbackResultDate=" + exerciseFeedbackResultDate + ", foodNo="
+				+ foodNo + ", ingestionAmount=" + ingestionAmount + ", foodFeedbackDate=" + foodFeedbackDate
+				+ ", exerciseNo=" + exerciseNo + ", exerciseName=" + exerciseName + ", exerciseCalorie="
+				+ exerciseCalorie + ", exerciseDate=" + exerciseDate + ", exerciseTime=" + exerciseTime
 				+ ", exerciseFeedbackDate=" + exerciseFeedbackDate + ", exerciseFeedbackEvaluationGrade="
 				+ exerciseFeedbackEvaluationGrade + ", exerciseFeedbackEvaluationDate=" + exerciseFeedbackEvaluationDate
 				+ ", foodGroup=" + foodGroup + ", foodName=" + foodName + ", foodOnece=" + foodOnece + ", foodKcal="

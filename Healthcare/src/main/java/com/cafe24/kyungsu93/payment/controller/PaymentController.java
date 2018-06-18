@@ -2,8 +2,6 @@ package com.cafe24.kyungsu93.payment.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.cafe24.kyungsu93.group.service.Group;
 import com.cafe24.kyungsu93.payment.service.PointCharging;
 import com.cafe24.kyungsu93.payment.service.PointChargingService;
 import com.cafe24.kyungsu93.payment.service.Refund;
@@ -27,6 +24,53 @@ public class PaymentController {
 	@Autowired
 	private RefundService refundService;
 	private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
+	
+	//포인트 지급
+	@RequestMapping(value="/addPoint", method=RequestMethod.POST)
+	public String addPoint(PointCharging pointCharging) {
+		logger.debug("PaymentController - addPoint 실행");
+		pointChargingService.addPoint(pointCharging);
+		return "redirect:/addPointResult";
+	}
+	
+	//환불 지급 완료
+	@RequestMapping(value="/completeRefund", method=RequestMethod.GET)
+	public String completeRefund(@RequestParam(value="refundNo") String refundNo) {
+		logger.debug("PaymentController - completeRefund 실행");
+		refundService.completeRefund(refundNo);
+		return "redirect:/refundCompleteList";
+	}
+	
+	//환불 거절
+	@RequestMapping(value="/deniedRefund", method=RequestMethod.GET)
+	public String deniedRefund(@RequestParam(value="refundNo") String refundNo) {
+		logger.debug("PaymentController - deniedRefund 실행");
+		refundService.deniedRefund(refundNo);
+		return "redirect:/refundList";
+	}
+	
+	//환불 승인
+	@RequestMapping(value="/acceptRefund", method=RequestMethod.GET)
+	public String acceptRefund(@RequestParam(value="refundNo") String refundNo) {
+		logger.debug("PaymentController - acceptRefund 실행");
+		refundService.acceptRefund(refundNo);
+		return "redirect:/refundList";
+	}
+	//포인트 결제 신청 거절
+	@RequestMapping(value="/deniedCharging", method=RequestMethod.GET)
+	public String deniedPointCharging(@RequestParam(value="pointChargingNo") String pointChargingNo) {
+		logger.debug("PaymentController - deniedPointCharging 실행");
+		pointChargingService.deniedPointCharging(pointChargingNo);
+		return "redirect:/pointChargingList";
+	}
+	
+	//포인트 결제 승인
+	@RequestMapping(value="/acceptCharging", method=RequestMethod.GET)
+	public String acceptPointCharging(@RequestParam(value="pointChargingNo") String pointChargingNo) {
+		logger.debug("PaymentController - acceptPointCharging 실행");
+		pointChargingService.acceptPointCharging(pointChargingNo);
+		return "redirect:/pointChargingList";
+	}
 	
 	//환불 신청 완료 결과
 	@RequestMapping(value="/refundResult", method=RequestMethod.GET)
@@ -45,15 +89,19 @@ public class PaymentController {
 	
 	//환불 신청 
 	@RequestMapping(value="/addRefund", method=RequestMethod.GET)
-	public String addRefund() {
+	public String addRefund(Model model) {
 		logger.debug("PaymentController - addRefund 포워드 실행");
+		Map<String,Object> map = refundService.memberPoint();
+		model.addAttribute("map",map);
 		return "payment/addRefund";
 	}
 	
 	//포인트 결제 신청 완료 결과
 	@RequestMapping(value="/pointChargingResult", method=RequestMethod.GET)
-	public String pointChargingResult() {
+	public String pointChargingResult(Model model) {
 		logger.debug("PaymentController - pointChargingResult 포워드 실행");
+		/*PointCharging pointCharging = pointChargingService.pointChargingSum(memberNo);
+		model.addAttribute("pointCharging",pointCharging);*/
 		return "payment/pointChargingResult";
 	}
 	

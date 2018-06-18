@@ -1,6 +1,5 @@
 package com.cafe24.kyungsu93.exercisefeedback.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -24,13 +23,12 @@ public class ExerciseFeedbackController {
 	private ExerciseFeedbackResponseService exerciseFeedbackResponseService;
 	private static final Logger logger = LoggerFactory.getLogger(ExerciseFeedbackController.class);
 	
-	//운동피드백 답변
+	//운동피드백 답변 작성
 	@RequestMapping(value="/exerciseFeedResponse", method=RequestMethod.GET)
-	public String exerciseFeedResponse(Model model,@RequestParam(value="exerciseFeedbackRequestNo") String exerciseFeedbackRequestNo) {
+	public String exerciseFeedResponse(Model model, @RequestParam(value="exerciseFeedbackRequestNo") String exerciseFeedbackRequestNo) {
 		logger.debug("ExerciseFeedbackController - exerciseFeedResponse 포워드 실행.");
-		Map<String,Object> map =  exerciseFeedbackResponseService.exerciseFeedResponse(exerciseFeedbackRequestNo);
-		model.addAttribute("map", map);
-		logger.debug("map : "+map);
+		Map<String,Object> map = exerciseFeedbackResponseService.exerciseFeedResponse(exerciseFeedbackRequestNo);
+		model.addAttribute("memberName", map.get("memberName"));
 		logger.debug("ExerciseFeedbackController - exerciseFeedResponse 포워드 완료");
 		return "exercisefeedback/exerciseFeedResponse";
 	}	
@@ -50,7 +48,7 @@ public class ExerciseFeedbackController {
 	@RequestMapping(value="/deniedExerciseFeedback",method=RequestMethod.GET)
 	public String feedbackapprovalDenied(@RequestParam(value="exerciseFeedbackRequestNo") String exerciseFeedbackRequestNo) {
 		logger.debug("ExerciseFeedbackController - feedbackapprovalDenied 거절 실행.");
-		exerciseFeedbackService.feedbackapprovalAccept(exerciseFeedbackRequestNo);
+		exerciseFeedbackService.feedbackapprovalDenied(exerciseFeedbackRequestNo);
 		logger.debug("ExerciseFeedbackController - feedbackapprovalDenied 거절 완료");
 		return "redirect:/exerciseFeedbackRequestDetail?exerciseFeedbackRequestNo="+exerciseFeedbackRequestNo;
 	}

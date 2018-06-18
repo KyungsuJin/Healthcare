@@ -2,7 +2,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>addpointCharging</title>
+<jsp:include page="../include/header.jsp"></jsp:include>
+<title>addPointCharging</title>
 <script type="text/javascript">
 	function check() {
 	if(confirm("포인트 결제를 신청하시겠습니까?")){
@@ -18,6 +19,7 @@
 </script>
 </head>
 <body>
+<jsp:include page="../include/body.jsp"></jsp:include>
 <h1>포인트 결제 신청</h1>
 	<form id="pointChargingForm" onsubmit="return check()" action="${pageContext.request.contextPath}/pointCharging" method="post">
 <%-- <input type="hidden" name="memberNo" value="${sessionScope.memberNo}"> --%>

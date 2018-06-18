@@ -74,7 +74,7 @@ function cancleBtn() {
 		<input type="hidden" name="groupNo" value="${groupTable.groupNo }">
 		그룹명 : ${groupTable.groupName } 그룹 종류 : ${groupTable.groupKindName}
 		<div>
-			초대하고자 하는  회원의 아이디를 입력해주세요.
+			초대하고자 하는  회원의 아이디를 검색해주세요.
 			<input type="text" id="memberId" name="memberId" >
 			<input type="button" value="아이디검색하기" onclick="checkmemberId()">
 			<span id="result"></span><br>

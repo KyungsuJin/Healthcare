@@ -16,7 +16,65 @@ public class RefundService {
 
 	@Autowired
 	private RefundDao refundDao;
+	@Autowired
+	private PointChargingDao pointChargingDao;
 	private static final Logger logger = LoggerFactory.getLogger(RefundService.class);
+
+	/**
+	 * 환불 지급완료
+	 * @param refundNo
+	 */
+	public void completeRefund(String refundNo) {
+		logger.debug("RefundService - completeRefund실행");
+		Refund refund = new Refund();
+		refund.setRefundNo(refundNo);
+		String refundCompleteDirectorNo = "member_1";
+		refund.setRefundCompleteDirectorNo(refundCompleteDirectorNo);
+		refundDao.completeRefund(refund);
+		}	
+		
+	/**
+	 * 환불 거절
+	 * @param refundNo
+	 */
+	public void deniedRefund(String refundNo) {
+		logger.debug("RefundService - deniedRefund실행");
+		Refund refund = new Refund();
+		refund.setRefundNo(refundNo);
+		String refundDirectorNo = "member_1";
+		refund.setRefundDirectorNo(refundDirectorNo);
+		refundDao.deniedRefund(refund);
+		}	
+	
+	/**
+	 * 환불 승인
+	 * @param refundNo
+	 */
+	public void acceptRefund(String refundNo) {
+		logger.debug("RefundService - acceptRefund실행");
+		Refund refund = new Refund();
+		refund.setRefundNo(refundNo);
+		String refundDirectorNo = "member_1";
+		refund.setRefundDirectorNo(refundDirectorNo);
+		refundDao.acceptRefund(refund);
+		}	
+	
+	/**
+	 * 회원 포인트 조회
+	 * @return
+	 */
+	public Map<String,Object> memberPoint() {
+		logger.debug("RefundService - memberPoint실행");
+		PointCharging pointCharging = new PointCharging();
+		String memberNo = "member_99";/*pointCharging.getMemberNo();*/
+		PointCharging memberPointSearch = pointChargingDao.selectMemberPoint(memberNo);
+		
+		int memberPoint = memberPointSearch.getMemberPoint();
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("memberPoint", memberPoint);
+		returnMap.put("memberNo", memberNo);
+		return returnMap;
+	}
 	
 	/**
 	 * 환불 신청 등록
@@ -26,7 +84,7 @@ public class RefundService {
 		logger.debug("RefundService - addrefund실행");		
 		String refundNo = refund.getRefundNo();
 		logger.debug("refundNo:"+refundNo);
-		String refundSum = refund.getRefundNo();
+		int refundSum = refund.getRefundSum();
 		logger.debug("refundSum:"+refundSum);
 		try {
 			if(refundNo == null) {

@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cafe24.kyungsu93.group.service.GroupMapper">
+
+	<select id="nextGroupCount" resultType="Integer">
+		SELECT
+		count(*)
+		FROM group_create
+		WHERE group_no > #{groupNo}
+		 ORDER BY group_no DESC LIMIT 1
+	</select>
+	<select id="prevGroupDetail" 
+			parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.Group">
+		SELECT 
+			group_no as groupNo, 
+			group_name as groupName
+		FROM group_create
+		 WHERE #{groupNo} > group_no
+		 ORDER BY group_no DESC LIMIT 1
+	</select>
+	<select id="prevGroupDetailCount" resultType="Integer">
+		SELECT
+		count(*)
+		FROM group_create
+		WHERE #{groupNo} > group_no
+		 ORDER BY group_no DESC LIMIT 1
+	</select>
+	<select id="nextGroupDetail" 
+			parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.Group">
+		SELECT 
+			group_no as groupNo, 
+			group_name as groupName
+		FROM group_create
+		WHERE group_no > #{groupNo}
+		 ORDER BY group_no DESC LIMIT 1
+	</select>
 	<select id="deleteGroupList" parameterType="String" 
 			resultType="com.cafe24.kyungsu93.group.service.Group">
 		SELECT
@@ -13,7 +48,7 @@
 			b.group_create_date as groupCreateDate,
 			d.group_kind_name as groupKindName
 		FROM group_delete a
-		INNER JOIN group_table b
+		INNER JOIN group_create b
 		ON a.group_no = b.group_no
 		INNER JOIN member c
 		ON b.member_no = c.member_no
@@ -29,13 +64,13 @@
 	<select id="groupDeleteCheckMemberCount" parameterType="String" resultType="Integer">
 		SELECT
 			count(*)
-		FROM group_invite_approval
+		FROM group_invite_approval_result
 		WHERE group_name = #{groupName}
 	</select>
 	<select id="groupDeleteCheckgroupNo" parameterType="String" resultType="com.cafe24.kyungsu93.group.service.Group">
 		SELECT
 			group_name as groupName
-		FROM group_invite_approval
+		FROM group_create
 		WHERE group_no = #{groupNo}
 	</select>
 	<select id="groupDdayNo" parameterType="String" resultType="com.cafe24.kyungsu93.group.service.Group">
@@ -63,7 +98,7 @@
 	</delete>
 	 <delete id="deleteGroup"  parameterType="com.cafe24.kyungsu93.group.service.Group">
 		DELETE 
-		FROM group_table 
+		FROM group_create 
 		WHERE group_no = #{groupNo}
 	</delete>
 	<select id="groupList" 
@@ -75,7 +110,7 @@
 			a.group_info as groupInfo,
 			a.group_create_date as groupCreateDate,
 			c.group_kind_name as groupKindName
-		FROM group_table a		
+		FROM group_create a		
 		INNER JOIN group_kind c
 		ON a.group_kind_no = c.group_kind_no			
 		ORDER BY group_create_date DESC
@@ -83,7 +118,7 @@
 	</select>
 	<select id="modifyGroupResult"  
 				 parameterType="com.cafe24.kyungsu93.group.service.Group">
-	 	UPDATE group_table
+	 	UPDATE group_create
 		SET	
 			group_kind_no = #{groupKindNo},
 			group_info = #{groupInfo},
@@ -96,11 +131,15 @@
 	 	SELECT 
 	 		a.group_no as groupNo,
 	 		a.member_no as memberNo,
+	 		b.member_name as memberName,
+	 		b.member_id as memberId,
 			a.group_name as groupName,
 			a.group_info as groupInfo,
 			a.group_create_date as groupCreateDate,	
 			c.group_kind_name as groupKindName
-		FROM group_table a		
+		FROM group_create a	
+		INNER JOIN member b
+		ON a.member_no = b.member_no	
 		INNER JOIN group_kind c
 		ON a.group_kind_no = c.group_kind_no	
 	 	WHERE group_no = #{groupNo}
@@ -109,21 +148,21 @@
 				 resultType="Integer">
 	 	SELECT 
 	 	COUNT(*)
-	 	FROM group_table
+	 	FROM group_create
 	 	WHERE group_name = #{groupName}
 	 </select>
 	 <select id="groupNo" resultType="Integer">
 		SELECT
 		max(CAST(substring(group_no,7) AS DECIMAL))
-		FROM group_table
+		FROM group_create
 	</select>
 	<select id="groupCount" resultType="Integer">
 		SELECT
 		count(*)
-		FROM group_table
+		FROM group_create
 	</select>
 	<insert id="addGroup" parameterType="com.cafe24.kyungsu93.group.service.Group">
-		INSERT INTO group_table (
+		INSERT INTO group_create (
 			group_no, group_kind_no, member_no, group_name, group_info, group_create_date
 			)
 			VALUES (

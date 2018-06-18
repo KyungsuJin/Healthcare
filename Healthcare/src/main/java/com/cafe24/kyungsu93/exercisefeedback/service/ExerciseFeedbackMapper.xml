@@ -22,7 +22,7 @@
 		INSERT INTO exercise_feedback_approval_result(
 		exercise_feedback_request_no, exercise_feedback_approval, exercise_feedback_result, exercise_feedback_approval_date)
 		VALUES (
-		#{exerciseFeedbackRequestNo}, '거절', '거정', NOW()
+		#{exerciseFeedbackRequestNo}, '거절', '거절', NOW()
 		)
 	</insert>
 	<insert id="feedbackapprovalAccept" 

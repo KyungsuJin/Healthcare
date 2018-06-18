@@ -5,20 +5,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>groupList</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+</script>
 </head>
 <body>
-<h1>groupList</h1>
+<h1>생성된 그룹 리스트</h1>
 	<table>
 		<thead>
 			<tr>
 				<th>번호</th>
 				<th>그룹명</th>
 				<th>그룹종류</th>
-				<th>그룹상세</th>
 				<th>날짜</th>
-				<th>수정</th>
-				<th>회원초대하기</th>
-				<th>삭제</th>
+				<th>그룹상세보기</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -27,12 +28,8 @@
 				<td>${groupTable.groupNo }</td>
 				<td>${groupTable.groupName }</td>
 				<td>${groupTable.groupKindName }</td>
-				<td>${groupTable.groupInfo }</td>
 				<td>${groupTable.groupCreateDate }</td>
-				<td><a type="button" href="${pageContext.request.contextPath}/modifyGroup?groupNo=${groupTable.groupNo}" id="buttonModify">수정</a></td>
-				<td><a type="button" href="${pageContext.request.contextPath}/inviteMemberForm?groupNo=${groupTable.groupNo}" id="buttonModify">회원초대하기</a></td>
-				<td><a type="button" href="${pageContext.request.contextPath}/deleteGroup?groupNo=${groupTable.groupNo}" id="buttonDelete">삭제</a></td>
-				
+				<td><a type="button" href="${pageContext.request.contextPath}/groupDetail?groupNo=${groupTable.groupNo}" id="buttonModify">그룹상세보기</a></td>				
 			</tr>
 			</c:forEach>
 		</tbody>
@@ -42,27 +39,27 @@
 		<ul class="pagination pagination-sm">
 			<c:if test="${currentPage > 10}">
 				<li>
-					<a aria-label="first" href="${pageContext.request.contextPath }/bloodPressure?currentPage=1">&laquo;</a>
+					<a aria-label="first" href="${pageContext.request.contextPath }/groupList?currentPage=1">&laquo;</a>
 				</li>
 			</c:if>
 			<c:if test="${firstBlockPage > 2}">
 				<li>
-					<a aria-label="first" href="${pageContext.request.contextPath }/bloodPressure?currentPage=${firstBlockPage-1}">&lsaquo;</a>
+					<a aria-label="first" href="${pageContext.request.contextPath }/groupList?currentPage=${firstBlockPage-1}">&lsaquo;</a>
 				</li>
 			</c:if>
 				<li>
 				<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
-					<a href="${pageContext.request.contextPath}/bloodPressure?currentPage=${i}">${i}</a>	
+					<a href="${pageContext.request.contextPath}/groupList?currentPage=${i}">${i}</a>	
 				</c:forEach>		
 				</li>
 			<c:if test="${lastBlockPage < totalBlock}">
 				<li>
-					<a aria-label="last" href="${pageContext.request.contextPath}/bloodPressure?currentPage=${lastBlockPage+1}">&rsaquo;</a>
+					<a aria-label="last" href="${pageContext.request.contextPath}/groupList?currentPage=${lastBlockPage+1}">&rsaquo;</a>
 				</li>
 			</c:if>
 			<c:if test="${currentPage < lastPage}">
 				<li>
-					<a aria-label="last" href="${pageContext.request.contextPath}/bloodPressure?currentPage=${lastPage}">&raquo;</a>
+					<a aria-label="last" href="${pageContext.request.contextPath}/groupList?currentPage=${lastPage}">&raquo;</a>
 				</li>
 			</c:if>
 		</ul>

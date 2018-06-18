@@ -18,6 +18,55 @@ public class GroupService {
 	@Autowired
 	private GroupDao groupDao;
 	private static final Logger logger = LoggerFactory.getLogger(GroupService.class);
+		
+	/**
+	 * 그룹 상세 
+	 * @param groupNo
+	 * @return returnMap
+	 */
+	public Map<String, Object> groupDetail(String groupNo){
+		logger.debug("GroupService - groupDetail실행");
+		Group group = new Group();
+		group.setGroupNo(groupNo);
+		logger.debug("groupNo:"+groupNo);
+		Group groupDetail = groupDao.modifyGroup(groupNo);
+		logger.debug("groupDetail:"+groupDetail);
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("groupDetail", groupDetail);
+		logger.debug("groupDetail:"+groupDetail);
+		//이전글 다음글 
+		int countPrev = 0;
+		int countNext = 0;
+		//이전글 다음글 카운트 
+		countPrev = groupDao.prevGroupDetailCount(groupNo);
+		countNext = groupDao.nextGroupCount(groupNo);
+		if(countNext != 0){
+			Group nextGroup = groupDao.nextGroupDetail(groupNo);
+			returnMap.put("nextGroup", nextGroup);
+			returnMap.put("countNext", countNext);
+			if(countPrev != 0){
+				//둘다있을경우
+				logger.debug("이전글,다음글이 있습니다.");
+				Group prevGroup = groupDao.prevGroupDetail(groupNo);
+				returnMap.put("prevGroup", prevGroup);
+				returnMap.put("countPrev", countPrev);
+			}else {
+				//이전글이 없을경우
+				logger.debug("이전글이 없습니다.");
+				returnMap.put("countPrev", countPrev);
+			}
+		}else {
+			if(countPrev != 0) {
+				//다음글이 없을 경우
+				logger.debug("다음글이 없습니다.");
+				Group prevGroup = groupDao.prevGroupDetail(groupNo);
+				returnMap.put("prevGroup", prevGroup);
+				returnMap.put("countNext", countNext);
+				returnMap.put("countPrev", countPrev);
+			}
+		}
+		return returnMap;
+	}
 	
 	/**
 	 * 그룹 수정
@@ -95,21 +144,30 @@ public class GroupService {
 	 * 그룹삭제 회원이 있을 경우 유예기간 등록
 	 * @param groupNo
 	 */
+	public Map<String, Object> memberCountSearch(String groupName) {	
+		logger.debug("GroupService -  실행");
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		int memberCount = 0;
+		memberCount = groupDao.groupDeleteCheckMemberCount(groupName);
+		returnMap.put("memberCount", memberCount);
+		return returnMap;
+	}
+	
 	public void deleteGroup(String groupNo) {
 		logger.debug("GroupService - deleteGroup 실행");
 		//그룹번호로 그룹명 검색
 		Group group = groupDao.groupDeleteCheckgroupNo(groupNo);
 		String groupName = group.getGroupName();
-		//그룹명으로 회원검색
-		int count = 0;
-		count = groupDao.groupDeleteCheckMemberCount(groupName);
-		if(count>0) {
+		//그룹명으로  총 회원검색
+		int memberCount = 0;
+		memberCount = groupDao.groupDeleteCheckMemberCount(groupName);
+		if(memberCount>0) {
 			//회원이 있을경우 유예기간 등록
 			groupDao.deleteApproval(groupNo);
 		}else {
 			//회원이 없을 경우 바로 삭제
 			groupDao.deleteGroup(groupNo);
-		}
+		}		
 	}	
 	
 	/**

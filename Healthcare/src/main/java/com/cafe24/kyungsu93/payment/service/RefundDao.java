@@ -16,7 +16,28 @@ public class RefundDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.payment.service.RefundMapper.";
-		
+	
+	//환불 지급완료
+	public int completeRefund(Refund refund) {
+		logger.debug("RefundDao - completeRefund 실행");
+		int row = sqlSession.insert(NS+"completeRefund", refund);
+		return row;
+	}
+	
+	//환불 신청 거절
+	public int deniedRefund(Refund refund) {
+		logger.debug("RefundDao - deniedRefund 실행");
+		int row = sqlSession.insert(NS+"deniedRefund", refund);
+		return row;
+	}
+	
+	//환불 신청 승인
+	public int acceptRefund(Refund refund) {
+		logger.debug("RefundDao - acceptRefund 실행");
+		int row = sqlSession.insert(NS+"acceptRefund", refund);
+		return row;
+	}
+	
 	//환불 등록번호 최대값 검색
 	public int refundMaxNo() {
 		logger.debug("RefundDao - refundNo 실행");

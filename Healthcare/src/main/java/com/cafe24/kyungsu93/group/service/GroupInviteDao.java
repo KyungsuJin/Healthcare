@@ -15,16 +15,43 @@ public class GroupInviteDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.group.service.GroupInviteMapper.";
+
+	//멤버 이름 검색
+	public GroupInvite memberNameSearch(String groupName) {
+		logger.debug("GroupInviteDao - memberNameSearch 실행");
+		return sqlSession.selectOne(NS+"memberNameSearch",groupName);
+	}	
+
+	//그룹 초대 수락
+	public int acceptGroupList(GroupInvite groupInvite) {
+		logger.debug("GroupInviteDao - acceptGroupList 실행");
+		int row = sqlSession.insert(NS+"acceptGroupList",groupInvite);
+		return row;
+	}	
 	
+	//그룹 회원리스트 카운트
+	public int groupMemberListCount(String groupName) {
+		logger.debug("GroupInviteDao - groupMemberListCount 실행");
+		return sqlSession.selectOne(NS+"groupMembersListCount",groupName);
+	}		
+	
+	//그룹 회원 리스트
+	public List<GroupInvite> groupMemberList(Map<String, Integer> map) {
+		logger.debug("GroupInviteDao - groupMemberList 실행");
+		 List<GroupInvite> list = sqlSession.selectList(NS+"groupMembersList",map);
+		return list;
+	}
+	
+	//그룹초대리스트
 	public List<GroupInvite> inviteGroupList(Map<String,Integer> map) {
 		logger.debug("GroupInviteDao - inviteGroupList 실행");
 		 List<GroupInvite> list = sqlSession.selectList(NS+"inviteGroupList",map);
 		return list;
 	}	
 	
-	public GroupInvite personalAgreeMember(String memberName) {
-		logger.debug("GroupInviteDao - personalAgreeMember 실행");
-		return sqlSession.selectOne(NS+"personalAgreeMember",memberName);
+	public GroupInvite personalAgreeSearch(String memberNo) {
+		logger.debug("GroupInviteDao - personalAgreeSearch 실행");
+		return sqlSession.selectOne(NS+"personalAgreeSearch",memberNo);
 	}
 	
 	public int inviteMember(GroupInvite groupInvite) {

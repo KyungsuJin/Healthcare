@@ -133,6 +133,7 @@ public class BloodPressureService {
 		logger.debug("block:"+block);
 		logger.debug("totalBlock:"+totalBlock);
 		logger.debug("======================page block=========================");
+		//컨트롤러에 보낼 리턴값 
 		Map<String,Object> returnMap = new HashMap<String,Object>();
 		returnMap.put("list", list);
 		returnMap.put("lastPage", lastPage);

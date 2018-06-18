@@ -7,9 +7,9 @@ public class Refund {
 	private String memberId;
 	private String refundTitle;
 	private String refundContent;
-	private String refundSum;
+	private int refundSum;
 	private String refundDate;
-	private String refundDirector;
+	private String refundDirectorNo;
 	private String refundApproval;
 	private String refundApprovalDate;
 	private String refundCompleteDate;
@@ -50,10 +50,10 @@ public class Refund {
 	public void setRefundContent(String refundContent) {
 		this.refundContent = refundContent;
 	}
-	public String getRefundSum() {
+	public int getRefundSum() {
 		return refundSum;
 	}
-	public void setRefundSum(String refundSum) {
+	public void setRefundSum(int refundSum) {
 		this.refundSum = refundSum;
 	}
 	public String getRefundDate() {
@@ -62,11 +62,11 @@ public class Refund {
 	public void setRefundDate(String refundDate) {
 		this.refundDate = refundDate;
 	}
-	public String getRefundDirector() {
-		return refundDirector;
+	public String getRefundDirectorNo() {
+		return refundDirectorNo;
 	}
-	public void setRefundDirector(String refundDirector) {
-		this.refundDirector = refundDirector;
+	public void setRefundDirectorNo(String refundDirectorNo) {
+		this.refundDirectorNo = refundDirectorNo;
 	}
 	public String getRefundApproval() {
 		return refundApproval;
@@ -96,9 +96,10 @@ public class Refund {
 	public String toString() {
 		return "Refund [refundNo=" + refundNo + ", memberNo=" + memberNo + ", memberName=" + memberName + ", memberId="
 				+ memberId + ", refundTitle=" + refundTitle + ", refundContent=" + refundContent + ", refundSum="
-				+ refundSum + ", refundDate=" + refundDate + ", refundDirector=" + refundDirector + ", refundApproval="
-				+ refundApproval + ", refundApprovalDate=" + refundApprovalDate + ", refundCompleteDate="
-				+ refundCompleteDate + ", refundCompleteDirectorNo=" + refundCompleteDirectorNo + "]";
+				+ refundSum + ", refundDate=" + refundDate + ", refundDirectorNo=" + refundDirectorNo
+				+ ", refundApproval=" + refundApproval + ", refundApprovalDate=" + refundApprovalDate
+				+ ", refundCompleteDate=" + refundCompleteDate + ", refundCompleteDirectorNo="
+				+ refundCompleteDirectorNo + "]";
 	}
-	
+
 }
