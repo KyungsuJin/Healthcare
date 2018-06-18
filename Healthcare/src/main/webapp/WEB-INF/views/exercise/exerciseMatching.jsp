@@ -47,13 +47,16 @@
 					}
 				});
 				if(data.currentPage>1){
-					$("#page").append('<a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage='+(data.currentPage-1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">이전 </a>');
+					$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage=1&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>');
+					$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage='+(data.currentPage-1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">이전 </a></li>');
 				}
 				for(var i =data.startPage; i <=data.endPage ; i++){
-					$("#page").append('<a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage='+i+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">'+i+'</a>');
+						$("#pageUl").append('<li id="pageBtn"><a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage='+i+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">'+i+'</a></li>');
 				}
+				
 				if(data.currentPage<data.lastPage){
-					$("#page").append('<a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage='+(data.currentPage+1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">다음</a>');
+					$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage='+(data.currentPage+1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">다음</a></li>');
+					$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage='+(data.lastPage)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"><span aria-hidden="true">&raquo;</span></a></li>');
 				}
 			}
 			$(document).on("click",".matchingPlace",function(){
@@ -62,7 +65,7 @@
 				    	window.open("${pageContext.request.contextPath}/exercisePlaceView"
 				    			,"Registration","width=800, height=500,resizable=no,scrollbars=yes");
 			});
-
+			
 			/* $("#dateDiv").hide();
 			$("#searchSelect").change(function(){
 				console.log($(this).val());
@@ -121,18 +124,31 @@
 					<tbody id="tbody">
 					</tbody>
 				</table>
-				<div id="page"	style="text-align:center"></div>
-				<div>
-					<select id="searchSelect" name="searchSelect">
+				<div id="page"	style="text-align:center">
+					<ul class="pagination pagination-sm" id="pageUl">
+							<li id="pageBtn" class="active"> </li>
+						<li id="pageNext">
+						</li>
+					</ul>
+				</div>
+				<div class="navbar-form navbar-right">
+					<select class="form-control" id="searchSelect" name="searchSelect">
 						<option value="exercise_matching_place">장소</option>
 						<option <c:out value="${searchSelect eq 'member.member_no' ? 'selected=selected':''}"/> value="member.member_no">아이디</option>
 						<option <c:out value="${searchSelect eq 'exercise_no' ? 'selected=selected':''}"/> value="exercise_no">종목</option>
-					</select> <input type="text" id="searchTextTest" name="searchTextTest" value="${searchText}">
-					<button type="button" id="searchBtn">검색</button>
+					</select> 
+					<input class="form-control" type="text" id="searchTextTest" name="searchTextTest" value="${searchText}">
+					<button class="btn btn-white btn-round btn-just-icon" type="button" id="searchBtn"><i class="material-icons">search</i></button>
 				</div>
-				<div id="dateDiv">
-					기간 : <input type="date" id="exerciseDateStart" value="${exerciseDateStart}">~<input type="date" id="exerciseDateEnd" value="${exerciseDateEnd}">
-					<button type="button" id="dateBtn">기간검색</button>
+				<div  class="navbar-form navbar-left "id="dateDiv">
+					<div class="form-group">
+						<label class="">기간</label>
+						
+						<input class="form-control" type="date" id="exerciseDateStart" value="${exerciseDateStart}">
+						<label class="control-label">~</label>
+						<input class="form-control" type="date" id="exerciseDateEnd" value="${exerciseDateEnd}">
+						<button type="button" class="btn btn-white btn-round btn-just-icon" id="dateBtn"><i class="material-icons">search</i></button>
+					</div>
 				</div>
 			</div>
 		</div>

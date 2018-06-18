@@ -4,13 +4,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-	
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<jsp:include page="../include/header.jsp"></jsp:include>
+	
+	<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+	
+	
+	
 	<script>
 		$(document).ready(function(){
 		    $.datepicker.setDefaults({
@@ -90,25 +93,74 @@
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<h1>운동등록하기</h1>
-				<form id="addExerciseForm" name="addExerciseForm" action="${pageContext.request.contextPath}/addExerciseMatching" method="post">
-					<c:set var="now" value="<%=new java.util.Date()%>" />
-					<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}">
-					<input type="hidden" id="currentDate" value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" />">
-					<input type="hidden" id="currentTime" value="<fmt:formatDate value="${now}" pattern="k:mm" />">
-					<div>
-						예정날짜:<input id="exerciseScheduleDate" name="exerciseMatchingScheduleDate" type="text" readonly>
-						운동시간 :<input type="time" id="startTime" name="exerciseMatchingTime">~<input type="time" name="exerciseMatchingTime"id="endTime">
-						운동장소 : <input type="text" id="exercisePlace" name="exerciseMatchingPlace" placeholder="운동선택하기">
+				<div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header" data-background-color="purple">
+                                    <h4 class="title">운동 등록</h4>
+                                </div>
+                                <div class="card-content">
+									<form id="addExerciseForm" name="addExerciseForm" action="${pageContext.request.contextPath}/addExerciseMatching" method="post">
+										<c:set var="now" value="<%=new java.util.Date()%>" />
+										<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}">
+										<input type="hidden" id="currentDate" value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" />">
+										<input type="hidden" id="currentTime" value="<fmt:formatDate value="${now}" pattern="k:mm" />">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="col-md-6">
+													<div class="form-group">
+														 <label class="control-label">예정날짜</label>
+														 <input class="form-control" id="exerciseScheduleDate" name="exerciseMatchingScheduleDate" type="text" readonly>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														 <label class="control-label">운동장소</label>
+														 <input class="form-control"type="text" id="exercisePlace" name="exerciseMatchingPlace">
+													</div>
+												</div>
+											
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label">운동 시작 시간</label>
+														<input class="form-control" type="time" id="startTime" name="exerciseMatchingTime">
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label">운동 끝나는 시간</label>
+														<input class="form-control" type="time" name="exerciseMatchingTime"id="endTime">
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label">인원수</label>
+														<input class="form-control" type="number" name="exerciseMatchingCount"id="exerciseCount" min="1" max="100">
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label">운동종류</label>
+														<input class="form-control" type="text" name="exerciseNo"id="exerciseNo">
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="control-label" style="text-align:center;">제목</label>
+													<input class="form-control" type="text" id="exerciseMatchingTitle" name="exerciseMatchingTitle">
+												</div>
+												<div class="form-group">
+													<textarea class="form-control" rows="20" name="exerciseMatchingContent"></textarea>
+												</div>
+											</div>
+										</div>
+										<button type="button" id="addExerciseBtn"class="btn btn-primary pull-right">등록</button>
+								</form>
+							</div>
+						</div>
 					</div>
-					<div> 인원수 :<input type="number" name="exerciseMatchingCount"id="exerciseCount" min="1" max="100"> 운동종류 : <input type="text" name="exerciseNo"id="exerciseNo"></div>
-					<div>제목 : <input type="text" id="exerciseMatchingTitle" name="exerciseMatchingTitle"></div>
-					<div><textarea class="form-control" rows="20" name="exerciseMatchingContent"></textarea></div>
-					<button type="button" id="addExerciseBtn">등록</button>
-				</form>
+				</div>
 			</div>
 		</div>
 	</div>
-
 </body>
 </html>

@@ -34,7 +34,7 @@
 	<div class="sidebar" data-color="purple" data-image="${pageContext.request.contextPath}/templateimg1/sidebar-1.jpg">
             <div class="logo">
                 <a href="http://www.creative-tim.com" class="simple-text">
-                	메뉴
+                	메뉴${sessionScope.memberSessionLevel}f
                 </a>
             </div>
             <div class="sidebar-wrapper">

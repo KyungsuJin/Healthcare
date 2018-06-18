@@ -85,7 +85,7 @@
 		  				<ul class="pagination pagination-sm">
 		  					<li>
 								<c:if test="${currentPage>1}">
-									<a href="${pageContext.request.contextPath}/bodyMassIndexList?currentPage=1&memberNo=${sessionScope.memberSessionNo}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+									<a href="${pageContext.request.contextPath}/bodyMassIndexList?currentPage=1&memberNo=${sessionScope.memberSessionNo}"><span aria-hidden="true">&laquo;</span></a>
 									<a href="${pageContext.request.contextPath}/bodyMassIndexList?currentPage=${currentPage-1}&memberNo=${sessionScope.memberSessionNo}">이전</a>
 								</c:if>
 							</li>

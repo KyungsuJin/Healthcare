@@ -22,13 +22,12 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons" rel='stylesheet'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> --%>
     <jsp:include page="include/header.jsp"></jsp:include>
- 
 </head>
 
 <body>
-	<input type="hidden" id="memberNo" value="${sessionScope.memberSessionNo}">
-    <div class="sidebar-wrapper">
-       <jsp:include page="include/left.jsp"></jsp:include>
+	<div class="wrapper">
+			<input type="hidden" id="memberNo" value="${sessionScope.memberSessionNo}">
+			<jsp:include page="include/left.jsp"></jsp:include>
         <div class="main-panel">
             <jsp:include page="include/top.jsp"></jsp:include>
             <div class="content">
