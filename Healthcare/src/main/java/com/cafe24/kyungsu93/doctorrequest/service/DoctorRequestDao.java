@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cafe24.kyungsu93.bloodsugar.controller.BloodsugarController;
 import com.cafe24.kyungsu93.bloodsugar.service.Bloodsugar;
+import com.cafe24.kyungsu93.member.service.Member;
 
 @Repository
 public class DoctorRequestDao {
@@ -27,11 +28,15 @@ public class DoctorRequestDao {
 	public List<DoctorRequest> doctorRequestList(Map<String,Integer> map) {
 		logger.debug("DoctorRequestDao 에서 doctorRequestList 실행");
 		logger.debug("3번"+map);
-		return sqlSession.selectList(NS+"DoctorRequestList",map);
+		return sqlSession.selectList(NS+"doctorRequestList",map);
 	}
 	
 	public int doctorRequestCount() {
 		logger.debug("DoctorRequestDao 에서 doctorRequestCount 실행");
 		return sqlSession.selectOne(NS+"doctorRequestCount");
+	}
+	public List<Member> memberNo(String memberNo) {
+		logger.debug("23번"+memberNo);
+		return sqlSession.selectList(NS+"memberNo",memberNo);
 	}
 }

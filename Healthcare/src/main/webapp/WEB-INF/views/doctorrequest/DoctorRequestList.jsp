@@ -8,11 +8,11 @@
 <title>DoctorRequestList</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
- -->
+ 
 </head>
 <body>
-	<h1>DoctorRequestList</h1>
-	<form id="DoctorRequestList" action="${pageContext.request.contextPath}/DoctorRequestList" method="POST">
+	<h1>doctorRequestList</h1>
+	<form id="doctorRequestList" action="${pageContext.request.contextPath}/doctorRequestList" method="POST">
 	<table>
 		<thead>
 			<tr>
@@ -25,14 +25,37 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="DoctorRequest" items="${list}">
+			<c:forEach var="doctorRequest" items="${list}">
 				<tr>
-					<td>${DoctorRequest.requestHealthInformationNo}</td>
-					<td>${DoctorRequest.teacherNo}</td>
-					<td>${DoctorRequest.memberNo }</td>
-					<td>${DoctorRequest.requestTitle }</td>
-					<td>${DoctorRequest.requestContent }</td>
-					<td>${DoctorRequest.requestDate }</td>
+					<td>${doctorRequest.requestHealthInformationNo}</td>
+					<td>${doctorRequest.teacherNo}</td>
+					<td>${doctorRequest.memberNo }</td>
+					<td>${doctorRequest.requestTitle }</td>
+					<td>${doctorRequest.requestContent }</td>
+					<td>${doctorRequest.requestDate }</td>
+					<%-- <td><a type="button" href="${pageContext.request.contextPath}/modifyBloodsugar?bloodsugarno=${bloodsugar.bloodsugarno}" id="buttonModify">수정</a></td>
+					<td><a type="button" href="${pageContext.request.contextPath}/deleteBloodsugar?bloodsugarno=${bloodsugar.bloodsugarno}" id="buttonDelete">삭제</a></td>   --%>
+				</tr>
+			</c:forEach>	
+		</tbody>
+	</table>
+	<!-- 의사가 일반회원 전체 리스트 보는곳 -->
+	<form id="memberListForDoctor" action="${pageContext.request.contextPath}/memberListForDoctor" method="GET">
+	<table>
+		<thead>
+			<tr>
+				<th>회원코드</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="member" items="${list}">
+				<tr>
+					<td>${member.memberNo } 
+					
+					<a href="${pageContext.request.contextPath}/memberList?memberNo=${member.memberNo }">넘버값 넘겨</a>
+					</td>
+					
+					
 					<%-- <td><a type="button" href="${pageContext.request.contextPath}/modifyBloodsugar?bloodsugarno=${bloodsugar.bloodsugarno}" id="buttonModify">수정</a></td>
 					<td><a type="button" href="${pageContext.request.contextPath}/deleteBloodsugar?bloodsugarno=${bloodsugar.bloodsugarno}" id="buttonDelete">삭제</a></td>   --%>
 				</tr>
@@ -46,27 +69,27 @@
 			<ul class="pagination pagination-sm">
 				<c:if test="${currentPage > 10}">
 					<li>
-						<a aria-label="first" href="${pageContext.request.contextPath }/doctorrequest/DoctorRequestList?currentPage=1">&laquo;</a>
+						<a aria-label="first" href="${pageContext.request.contextPath }/doctorrequest/doctorRequestList?currentPage=1">&laquo;</a>
 					</li>
 				</c:if>
 				<c:if test="${firstBlockPage > 2}">
 					<li>
-						<a aria-label="first" href="${pageContext.request.contextPath }/doctorrequest/DoctorRequestList?currentPage=${firstBlockPage-1}">&lsaquo;</a>
+						<a aria-label="first" href="${pageContext.request.contextPath }/doctorrequest/doctorRequestList?currentPage=${firstBlockPage-1}">&lsaquo;</a>
 					</li>
 				</c:if>
 					<li>
 					<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
-						<a href="${pageContext.request.contextPath}/doctorrequest/DoctorRequestList?currentPage=${i}">${i}</a>				
+						<a href="${pageContext.request.contextPath}/doctorrequest/doctorRequestList?currentPage=${i}">${i}</a>				
 					</c:forEach>		
 					</li>
 				<c:if test="${lastBlockPage < totalBlock}">
 					<li>
-						<a aria-label="last" href="${pageContext.request.contextPath}/doctorrequest/DoctorRequestList?currentPage=${lastBlockPage+1}">&rsaquo;</a>
+						<a aria-label="last" href="${pageContext.request.contextPath}/doctorrequest/doctorRequestList?currentPage=${lastBlockPage+1}">&rsaquo;</a>
 					</li>
 				</c:if>
 				<c:if test="${currentPage < lastPage}">
 					<li>
-						<a aria-label="last" href="${pageContext.request.contextPath}/doctorrequest/DoctorRequestList?currentPage=${lastPage}">&raquo;</a>
+						<a aria-label="last" href="${pageContext.request.contextPath}/doctorrequest/doctorRequestList?currentPage=${lastPage}">&raquo;</a>
 					</li>
 				</c:if>
 			</ul>

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.cafe24.kyungsu93.bloodsugar.controller.BloodsugarController;
 import com.cafe24.kyungsu93.bloodsugar.service.Bloodsugar;
 import com.cafe24.kyungsu93.bloodsugar.service.BloodsugarDao;
+import com.cafe24.kyungsu93.member.service.Member;
 
 @Service
 public class DoctorRequestService {
@@ -70,8 +71,11 @@ public  Map<String, Object> doctorRequestList(int currentPage, int pagePerRow) {
 	returnMap.put("lastBlockPage", lastBlockPage);
 	returnMap.put("totalBlock", totalBlock);
 	return returnMap;
-}
-
-
-
+	}
+	public List<Member> memberList(String memberNo) {
+		List<Member> resultlistmember = doctorRequestDao.memberNo(memberNo);
+		logger.debug("22번"+memberNo);
+		return resultlistmember;
+	
+	}
 }

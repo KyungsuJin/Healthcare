@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.cafe24.kyungsu93.doctorrequest.service.DoctorRequestMapper">  
   
-  <select id="DoctorRequestList" parameterType="java.util.Map" resultType="com.cafe24.kyungsu93.doctorrequest.service.DoctorRequest">
+  <select id="doctorRequestList" parameterType="java.util.Map" resultType="com.cafe24.kyungsu93.doctorrequest.service.DoctorRequest">
  	 SELECT r.request_health_information_no AS requestHealthInformationNo
   			,r.teacher_no AS teacherNo 
   			,r.member_no AS memberNo
@@ -22,6 +22,12 @@
 		SELECT
 		count(*)
 		FROM request_health_information
+	</select>
+	
+	<select id="memberNo" resultType="com.cafe24.kyungsu93.member.service.Member">
+		SELECT 
+	 	member_no
+		FROM member
 	</select>
 	
 </mapper>
