@@ -5,6 +5,7 @@
 <head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
 				$.ajax({
@@ -19,7 +20,8 @@
 					,datatype : "json"
 					,success:function(data){
 						console.log(data.endPage);
-						$.each(data.memberList,function(key,val){						 
+						$.each(data.memberList,function(key,val){	
+							console.log(data.memberList);
 							$("#tbody").append('<tr><td>'+val.memberNo+'</td>'+
 											'<td>'+val.memberId+'</td>'+
 											'<td>'+val.memberName+'</td>'+
@@ -35,15 +37,15 @@
 											);
 						});
 							if(data.currentPage>1){
-								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberList?currentPage=1&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> << </a>');
-								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberList?currentPage='+(data.currentPage-1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">이전</a>');
+								$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/basicMemberList?currentPage=1&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"><span aria-hidden="true">&laquo;</span></a></li>');
+								$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/basicMemberList?currentPage='+(data.currentPage-1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">이전</a></li>');
 							}
 							for(var i = data.startPage;i<=data.endPage; i++){
-								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberList?currentPage='+i+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> ' +i+ ' </a>');
+								$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/basicMemberList?currentPage='+i+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> ' +i+ ' </a></li>');
 							}
 							if(data.lastPage>data.currentPage){
-								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberList?currentPage='+(data.currentPage+1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">다음</a>');
-								$("#page").append('<a href="${pageContext.request.contextPath}/basicMemberList?currentPage='+data.lastPage+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> >> </a>');
+								$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/basicMemberList?currentPage='+(data.currentPage+1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">다음</a></li>');
+								$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/basicMemberList?currentPage='+data.lastPage+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"><span aria-hidden="true">&raquo;</span></a></li>');
 							}
 					}
 				});
@@ -56,7 +58,11 @@
 	</script>
 </head>
 <body>
-	<h1>회원 리스트</h1>
+	<div class="card">
+		<div class="card-header" data-background-color="purple">
+			<h4 class="title">회원 리스트</h4>
+		</div>
+	</div>
 	<table border="1" class="table">
 		<thead>
 			<tr>
@@ -74,25 +80,25 @@
 				<th>강퇴</th>
 			</tr>
 		</thead>
-		
 		<tbody id="tbody">
-
 		</tbody>
 	</table>
-	<div id="page"></div>
-	<form>
-		<input type="hidden" name="currentPage" id="currentPage" value="${currentPage}">
-		<input type="hidden" name="searchText" id="searchText" value="${searchText}">
-		
-		<div>
-			<select id="searchSelect" name="searchSelect">
-				<option value="member_id">아이디</option>
-				<option <c:out value="${searchSelect eq 'member_name' ? 'selected=selected':''}"/> value="member_name">이름</option>
-				<option <c:out value="${searchSelect eq 'member_no' ? 'selected=selected':''}"/> value="member_no">회원번호</option>
-			</select>
-			<input type="text" id="searchTextTest" name="searchTextTest">
-			<button type="button" id="searchBtn">검색</button>
-		</div>
-	</form>
+	<div id="page"	style="text-align:center">
+		<ul class="pagination pagination-sm" id="pageUl">
+		</ul>
+	</div>
+	<div class="navbar-form navbar-right">
+		<form>
+			<input type="hidden" name="currentPage" id="currentPage" value="${currentPage}">
+			<input type="hidden" name="searchText" id="searchText" value="${searchText}">
+				<select class="form-control" id="searchSelect" name="searchSelect">
+					<option value="member_id">아이디</option>
+					<option <c:out value="${searchSelect eq 'member_name' ? 'selected=selected':''}"/> value="member_name">이름</option>
+					<option <c:out value="${searchSelect eq 'member_no' ? 'selected=selected':''}"/> value="member_no">회원번호</option>
+				</select>
+				<input class="form-control" type="text" id="searchTextTest" name="searchTextTest">
+				<button  class="btn btn-white btn-round btn-just-icon" type="button" id="searchBtn"><i class="material-icons">search</i></button>
+		</form>
+	</div>
 </body>
 </html>

@@ -5,13 +5,14 @@
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
 			$("#searchDiv").hide();
 			//메시지 쓰기 새창
 			$("#messageWrite").click(function(){
 					window.open("${pageContext.request.contextPath}/message"
-							,"messageWrite","width=700, height=700,resizable=no,scrollbars=yes");
+							,"messageWrite","width=850, height=700,resizable=no,scrollbars=yes");
 			});
 			//메시지 받은 리스트
 			$("#messageReceive").click(function(){
@@ -30,7 +31,7 @@
 						$("#tb").empty();
 						$("#deletBtn").empty();
 						$("#page").empty();
-						$("#deletBtn").append('<button type="button" id="deleteMessageBtn">삭제</button>');
+						$("#deletBtn").append('<button type="button" id="deleteMessageBtn" class="btn btn-primary">삭제</button>');
 						$("#tb").append('<tr><td><input type="checkbox" id="allChk">보낸사람</td><td>제목</td><td>날짜</td></tr>');
 						$.each(data.list,function(key,val){
 							$("#tb").append(
@@ -86,8 +87,8 @@
 						$("#tb").empty();
 						$("#deletBtn").empty();
 						$("#page").empty();
-						$("#deletBtn").append('<button type="button" id="deleteSendMessageBtn">삭제</button>');
-						$("#tb").append('<tr><td><input type="checkbox" id="allChk">내용</td><td>날짜</td><td>수신여부</td></tr>');
+						$("#deletBtn").append('<button type="button" id="deleteSendMessageBtn" class="btn btn-primary">삭제</button>');
+						$("#tb").append('<tr><td><label><input type="checkbox" id="allChk">내용</td><td>날짜</td><td>수신여부</td></tr></label>');
 						$.each(data.list,function(key,val){
 							var sendMessageChk;
 							if(val.sendMessageChk==1){
@@ -97,7 +98,7 @@
 							}
 							$("#tb").append(
 											"<tr>"+
-											"<td><input type='checkbox' name='deletMessageChk' value='"+val.sendMessageNo+"'><a href='${pageContext.request.contextPath}/messageSendContent?sendMessageNo="+val.sendMessageNo+"&sendMessageId="+val.sendMessageId+"&messageTitle="+val.messageTitle+"&messageContent="+val.messageContent+"&messageDate="+val.messageDate+"&memberReceiveId="+val.memberReceiveId+"' class='messageContent'>"+val.messageTitle+"</a></td>"+
+											"<td><label><input type='checkbox' name='deletMessageChk' value='"+val.sendMessageNo+"'></label><a href='${pageContext.request.contextPath}/messageSendContent?sendMessageNo="+val.sendMessageNo+"&sendMessageId="+val.sendMessageId+"&messageTitle="+val.messageTitle+"&messageContent="+val.messageContent+"&messageDate="+val.messageDate+"&memberReceiveId="+val.memberReceiveId+"' class='messageContent'>"+val.messageTitle+"</a></td>"+
 											"<td>"+val.messageDate+"</td>"+
 											"<td>"+sendMessageChk+"</td></tr>"
 											);
@@ -192,15 +193,26 @@
 	</script>
 </head>
 <body>
-	<h1> 메시지함</h1>
-	<input type="hidden" id="memberReceiveNo" name="memberReceiveNo" value="${sessionScope.memberSessionNo}">
-	<input type="hidden" id="receiveCurrentPage">
-	<input type="hidden" id="sendCurrentPage">
-	<div id="deletBtn" style="margin-right:5px;float:left;"></div>
-	<div style="float:left;">
-		<button type="button" id="messageWrite">메시지 작성</button>
-		<button type="button" id="sendMessage">보낸 메시지</button>
-		<button type="button" id="messageReceive">받은 메시지</button>
+	<div class="card">
+		 <div class="card-header" data-background-color="purple">
+		 	<h4 class="title">메시지</h4>
+		 </div>
+		 <div class="card-content">
+			 <div class="row">
+				 <div class="col-md-2"></div>
+				 <div class="col-md-8">
+					<input type="hidden" id="memberReceiveNo" name="memberReceiveNo" value="${sessionScope.memberSessionNo}">
+					<input type="hidden" id="receiveCurrentPage">
+					<input type="hidden" id="sendCurrentPage">
+					<div id="deletBtn" style="margin-right:5px;float:left;"></div>
+					<div style="float:left;">
+						<button type="button" id="messageWrite" class="btn btn-primary">메시지 작성</button>
+						<button type="button" id="sendMessage" class="btn btn-primary" >보낸 메시지</button>
+						<button type="button" id="messageReceive" class="btn btn-primary">받은 메시지</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<table border="1" class="table" id="tb">
 	</table>

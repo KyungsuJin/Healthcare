@@ -6,6 +6,7 @@
 <head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
 			/*내용보기를 눌렀을때 참가신청이 되어있는지와 운완료를 했는지 여부를 파악해 1이넘어오면 운동신청 2가넘어오면 운동완료를 눌름 */
@@ -75,51 +76,60 @@
 	</script>
 </head>
 <body>
-	<h1> 운동매칭 </h1>
-	<a href="${pageContext.request.contextPath}/addExerciseMatching">운동매칭 등록</a>
-	<a href="${pageContext.request.contextPath}/attendExerciseMatching?memberNo=${sessionScope.memberSessionNo}">자신의 운동참가 리스트</a>
-	<input type="hidden" name="exercisePlaceView"id="exercisePlaceView" value="${exercise.exerciseMatchingPlace}">
-	<input type="hidden" name="memberNo" id="memberNo" value="${sessionScope.memberSessionNo}">
-	<input type="hidden" name="exerciseMatchingNo"id="exerciseMatchingNo" value="${exercise.exerciseMatchingNo}">
-	<table border="1" class="table" id="tb">
-		<thead>
-			<tr>
-				<th>작성자</th>
-				<th>종목</th>
-				<th>장소</th>
-				<th>모집인원</th>
-				<th>일시</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>${exercise.memberId}</td>
-				<td>${exercise.exerciseNo}</td>
-				<td><a href="#" id="matchingPlace">${exercise.exerciseMatchingPlace}</a></td>
-				<td>${exercise.exerciseMatchingCount}</td>
-				<td>${exercise.exerciseMatchingScheduleDate} / ${exercise.exerciseMatchingTime.replace(",","~")}</td>
-			</tr>
-			<tr>
-				<td colspan="5">제목:${exercise.exerciseMatchingTitle}</td>
-			</tr>
-			<tr>
-				<td colspan="5">
-					<textarea class="form-control" rows="20" name="exerciseMatchingContent" readonly>${exercise.exerciseMatchingContent}</textarea>
-				</td>
-			</tr>
-	</tbody>
-	</table>
-	<div>
-		<a href="${pageContext.request.contextPath}/exerciseMatching">목록으로</a>
-		<c:if test="${exercise.memberId eq sessionScope.memberSessionId or sessionScope.memberSessionLevel==1}">
-			<a href="${pageContext.request.contextPath}/deleteExerciseMatching?exerciseMatchingNo=${exercise.exerciseMatchingNo}">삭제</a>
-			<a href="${pageContext.request.contextPath}/modifyExerciseMatching?exerciseMatchingNo=${exercise.exerciseMatchingNo}">수정</a>
-		</c:if>
-		<div id="exerciseDiv">
-			<c:if test="${exercise.exerciseMatchingCount > exercise.exerciseMatchingAttendCount}">
-				<a href="#" id="exerciseSignUp">참가신청</a>
-			</c:if>
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<h1> 운동매칭 </h1>
+				<a href="${pageContext.request.contextPath}/addExerciseMatching">운동매칭 등록</a>
+				<a href="${pageContext.request.contextPath}/attendExerciseMatching?memberNo=${sessionScope.memberSessionNo}">자신의 운동참가 리스트</a>
+				<input type="hidden" name="exercisePlaceView"id="exercisePlaceView" value="${exercise.exerciseMatchingPlace}">
+				<input type="hidden" name="memberNo" id="memberNo" value="${sessionScope.memberSessionNo}">
+				<input type="hidden" name="exerciseMatchingNo"id="exerciseMatchingNo" value="${exercise.exerciseMatchingNo}">
+				<table border="1" class="table" id="tb">
+					<thead>
+						<tr>
+							<th>작성자</th>
+							<th>종목</th>
+							<th>장소</th>
+							<th>모집인원</th>
+							<th>일시</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>${exercise.memberId}</td>
+							<td>${exercise.exerciseNo}</td>
+							<td><a href="#" id="matchingPlace">${exercise.exerciseMatchingPlace}</a></td>
+							<td>${exercise.exerciseMatchingCount}</td>
+							<td>${exercise.exerciseMatchingScheduleDate} / ${exercise.exerciseMatchingTime.replace(",","~")}</td>
+						</tr>
+						<tr>
+							<td colspan="5">제목:${exercise.exerciseMatchingTitle}</td>
+						</tr>
+						<tr>
+							<td colspan="5">
+								<textarea class="form-control" rows="20" name="exerciseMatchingContent" readonly>${exercise.exerciseMatchingContent}</textarea>
+							</td>
+						</tr>
+				</tbody>
+				</table>
+				<div>
+					<a href="${pageContext.request.contextPath}/exerciseMatching">목록으로</a>
+					<c:if test="${exercise.memberId eq sessionScope.memberSessionId or sessionScope.memberSessionLevel==1}">
+						<a href="${pageContext.request.contextPath}/deleteExerciseMatching?exerciseMatchingNo=${exercise.exerciseMatchingNo}">삭제</a>
+						<a href="${pageContext.request.contextPath}/modifyExerciseMatching?exerciseMatchingNo=${exercise.exerciseMatchingNo}">수정</a>
+					</c:if>
+					<div id="exerciseDiv">
+						<c:if test="${exercise.exerciseMatchingCount > exercise.exerciseMatchingAttendCount}">
+							<a href="#" id="exerciseSignUp">참가신청</a>
+						</c:if>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+	
 </body>
 </html>

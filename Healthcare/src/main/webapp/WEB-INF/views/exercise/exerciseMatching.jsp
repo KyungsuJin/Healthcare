@@ -47,7 +47,7 @@
 					}
 				});
 				if(data.currentPage>1){
-					$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage=1&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>');
+					$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage=1&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'" ><span aria-hidden="true">&laquo;</span></a></li>');
 					$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage='+(data.currentPage-1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">이전 </a></li>');
 				}
 				for(var i =data.startPage; i <=data.endPage ; i++){
@@ -126,9 +126,7 @@
 				</table>
 				<div id="page"	style="text-align:center">
 					<ul class="pagination pagination-sm" id="pageUl">
-							<li id="pageBtn" class="active"> </li>
-						<li id="pageNext">
-						</li>
+							
 					</ul>
 				</div>
 				<div class="navbar-form navbar-right">
@@ -140,10 +138,9 @@
 					<input class="form-control" type="text" id="searchTextTest" name="searchTextTest" value="${searchText}">
 					<button class="btn btn-white btn-round btn-just-icon" type="button" id="searchBtn"><i class="material-icons">search</i></button>
 				</div>
-				<div  class="navbar-form navbar-left "id="dateDiv">
+				<div  class="navbar-form navbar-left" id="dateDiv">
 					<div class="form-group">
 						<label class="">기간</label>
-						
 						<input class="form-control" type="date" id="exerciseDateStart" value="${exerciseDateStart}">
 						<label class="control-label">~</label>
 						<input class="form-control" type="date" id="exerciseDateEnd" value="${exerciseDateEnd}">

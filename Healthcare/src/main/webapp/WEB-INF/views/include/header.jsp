@@ -52,6 +52,6 @@ IE를  이전 버전의 브라우저에서 보는 것처럼 내용을 표시하�
 <!--  Google Maps Plugin    -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
 <!-- Material Dashboard javascript methods -->
-<script src="<c:url value="/templatejs1/material-dashboard.js?v=1.2.0" />"></script>
+<script src="<c:url value="/templatejs1/material-dashboard.js?v=1.2.1" />"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="<c:url value="/templatejs1/demo.js" />"></script>

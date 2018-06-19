@@ -5,6 +5,7 @@
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
 			$("#memberReceiveId").blur(function(){
@@ -17,10 +18,10 @@
 						console.log(data);
 						if(data.count==1){
 							$("#idChk1").remove();
-							$("#idChk").append('<span id="idChk1">발송가능한 아이디</span>');
+							$("#idChk").append('<span id="idChk1">전송가능한 아이디</span>');
 						}else{
 							$("#idChk1").remove();
-							$("#idChk").append('<span id="idChk1">불가능한 아이디</span>');
+							$("#idChk").append('<span id="idChk1">전송불가능한 아이디</span>');
 						}
 						$("input[name=memberReceiveNo]").val(data.memberReceiveNo);
 					}
@@ -45,18 +46,38 @@
 
 </head>
 <body>
-	<h1> 메시지 쓰기</h1>
-	<div>
-		<form action="${pageContext.request.contextPath}/sendMessage" method="post" id="messageForm">
-			<input type="hidden" name="memberSendNo" value="${sessionScope.memberSessionNo}">
-			<input type="hidden" name="memberReceiveNo">
-			<div>발송인 : <input type="text"  name="sendMessageId" value="${sessionScope.memberSessionId}" readonly></div>
-			<div id="idChk">수신인 : <input type="text" id="memberReceiveId" ></div>
-			<div> 제목 : <input type="text" id="messageTitle" name="messageTitle"></div>
-			<div><textarea cols="70" rows="20" id="messageContent" name="messageContent"></textarea></div>
-			<div><button type="button" id="messageSubmit">전송</button></div>
-		</form>
+	 <div class="card">
+		 <div class="card-header" data-background-color="purple">
+		 	<h4 class="title">메시지 쓰기</h4>
+		 </div>
+		 <div class="card-content">
+		 	<form action="${pageContext.request.contextPath}/sendMessage" method="post" id="messageForm">
+				<input type="hidden" name="memberSendNo" value="${sessionScope.memberSessionNo}">
+				<input type="hidden" name="memberReceiveNo">
+				<div class="row">
+					<div class="col-xs-2">
+					</div>
+					<div class="col-xs-8">
+						<div class="form-group">
+						 	<label class="control-label">발송인</label>
+						 	<input class="form-control" type="text"  name="sendMessageId" value="${sessionScope.memberSessionId}" readonly>
+						</div>
+						<div class="form-group" id="idChk">
+						 	<label class="control-label">수신인</label>
+						 	<input class="form-control" type="text" id="memberReceiveId" >
+						</div>
+						<div class="form-group">
+						 	<label class="control-label">제목 </label>
+						 	<input class="form-control" type="text" id="messageTitle" name="messageTitle">
+						</div>
+						<div class="form-group">
+						 	<textarea  cols="70" rows="20" id="messageContent" name="messageContent"></textarea>
+						</div>
+						<button type="button" id="messageSubmit" class="btn btn-primary pull-right">전송</button>
+					</div>
+				</div>
+			</form>
+		</div>
 	</div>
-
 </body>
 </html>

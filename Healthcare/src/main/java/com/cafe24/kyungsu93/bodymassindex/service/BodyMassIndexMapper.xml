@@ -16,6 +16,7 @@
   	<!--체질량 등록  -->
   	<insert id="addBodyMassIndex"
   			parameterType="com.cafe24.kyungsu93.bodymassindex.service.BodyMassIndex">
+  			
   			INSERT INTO body_mass_index(
   				body_mass_index_no
   				,member_no

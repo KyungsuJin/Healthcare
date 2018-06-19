@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -11,10 +12,17 @@
 	<jsp:include page="../include/header.jsp"></jsp:include>
 	
 	<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-	
-	
-	
+
 	<script>
+		jQuery.browser = {};
+		(function () {
+		    jQuery.browser.msie = false;
+		    jQuery.browser.version = 0;
+		    if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
+		        jQuery.browser.msie = true;
+		        jQuery.browser.version = RegExp.$1;
+		    }
+		})();
 		$(document).ready(function(){
 		    $.datepicker.setDefaults({
 		        dateFormat: 'yy-mm-dd',
@@ -94,7 +102,9 @@
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
 				<div class="row">
-                        <div class="col-md-12">
+					<div class="col-md-2">
+					</div>
+                        <div class="col-md-8">
                             <div class="card">
                                 <div class="card-header" data-background-color="purple">
                                     <h4 class="title">운동 등록</h4>
@@ -106,58 +116,47 @@
 										<input type="hidden" id="currentDate" value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" />">
 										<input type="hidden" id="currentTime" value="<fmt:formatDate value="${now}" pattern="k:mm" />">
 										<div class="row">
-											<div class="col-md-12">
-												<div class="col-md-6">
+											<div class="col-md-2"></div>
+											<div class="col-md-8">
 													<div class="form-group">
 														 <label class="control-label">예정날짜</label>
 														 <input class="form-control" id="exerciseScheduleDate" name="exerciseMatchingScheduleDate" type="text" readonly>
 													</div>
-												</div>
-												<div class="col-md-6">
 													<div class="form-group">
 														 <label class="control-label">운동장소</label>
 														 <input class="form-control"type="text" id="exercisePlace" name="exerciseMatchingPlace">
 													</div>
-												</div>
-											
-												<div class="col-md-6">
 													<div class="form-group">
 														<label class="control-label">운동 시작 시간</label>
 														<input class="form-control" type="time" id="startTime" name="exerciseMatchingTime">
 													</div>
-												</div>
-												<div class="col-md-6">
 													<div class="form-group">
 														<label class="control-label">운동 끝나는 시간</label>
-														<input class="form-control" type="time" name="exerciseMatchingTime"id="endTime">
+														<input class="form-control" type="time" name="exerciseMatchingTime" id="endTime">
 													</div>
-												</div>
-												<div class="col-md-6">
 													<div class="form-group">
 														<label class="control-label">인원수</label>
-														<input class="form-control" type="number" name="exerciseMatchingCount"id="exerciseCount" min="1" max="100">
+														<input class="form-control" type="number" name="exerciseMatchingCount" id="exerciseCount" min="1" max="100">
 													</div>
-												</div>
-												<div class="col-md-6">
 													<div class="form-group">
 														<label class="control-label">운동종류</label>
-														<input class="form-control" type="text" name="exerciseNo"id="exerciseNo">
+														<input class="form-control" type="text" name="exerciseNo" id="exerciseNo">
+													</div>
+													<div class="form-group">
+														<label class="control-label" style="text-align:center;">제목</label>
+														<input class="form-control" type="text" id="exerciseMatchingTitle" name="exerciseMatchingTitle">
+													</div>
+													<div class="form-group">
+														<textarea class="form-control" rows="20" name="exerciseMatchingContent"></textarea>
 													</div>
 												</div>
-												<div class="form-group">
-													<label class="control-label" style="text-align:center;">제목</label>
-													<input class="form-control" type="text" id="exerciseMatchingTitle" name="exerciseMatchingTitle">
-												</div>
-												<div class="form-group">
-													<textarea class="form-control" rows="20" name="exerciseMatchingContent"></textarea>
-												</div>
 											</div>
-										</div>
-										<button type="button" id="addExerciseBtn"class="btn btn-primary pull-right">등록</button>
-								</form>
+										<button type="button" id="addExerciseBtn" class="btn btn-primary pull-right">등록</button>
+									</form>
+								</div>
 							</div>
 						</div>
-					</div>
+					<div class="col-md-2"></div>
 				</div>
 			</div>
 		</div>

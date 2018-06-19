@@ -3,6 +3,7 @@
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<jsp:include page="../include/header.jsp"></jsp:include>
 <script>
    $(document).ready(function(){
       $("#memberIdCheck").val(window.opener.document.homeForm.memberId.value);
@@ -48,10 +49,24 @@
 </script>
 </head>
 <body>
-   <div>아이디 중복 체크<input type="text" id="memberIdCheck" maxlength="16">
-      <input type="hidden" id="memberUserIdCheck">
-      <button type="button" id="DuplicateCheckId">중복체크</button>
-      <button type="button" id="useId">사용하기</button>
-   </div>
+	 <div class="card">
+		 <div class="card-header" data-background-color="purple">
+		 	<h4 class="title">아이디 중복체크</h4>
+		 </div>
+		 <div class="card-content">
+			 <div class="row">
+				 <div class="col-md-2"></div>
+				 <div class="col-md-8">
+				 	<div class="form-group">
+					 	<label class="control-label">아이디 중복 체크</label>
+					 	<input class="form-control" type="text" id="memberIdCheck" maxlength="16">
+					 	<input type="hidden" id="memberUserIdCheck">
+				 	</div>
+				 	 <button type="button" id="DuplicateCheckId" class="btn btn-primary pull-right">중복체크</button>
+     				 <button type="button" id="useId" class="btn btn-primary pull-right">사용하기</button>
+			 	</div>
+		 	</div>
+		 </div>
+	</div>
 </body>
 </html>

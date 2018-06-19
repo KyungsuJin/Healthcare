@@ -5,6 +5,7 @@
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
 			var re = /[~!@\#$%^&*\()\-=+_']/gi;
@@ -167,65 +168,141 @@
 	</script>
 </head>
 <body>
-	<h1>회원정보 수정</h1>
-	<form action="${pageContext.request.contextPath}/memberModify" method="post" id="modifyForm">
-		<input type="hidden" name="memberTel" id="memberTel" value="${member.memberTel}">
-		<input type="hidden" name="memberEmail" id="memberEmail" value="${member.memberEmail}">
-		<input type="hidden" name="memberAddress" id="memberAddress" value="${member.memberAddress}">
-		<input type="hidden" name="memberLevel" id="memberLevel" value="${sessionScope.memberSessionLevel}">
-
-		<div>
-			아이디 :<input type="text" name="memberId" id="memberId" value="${sessionScope.memberSessionId}" readonly>
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header" data-background-color="purple">
+                                    <h4 class="title">회원정보 수정</h4>
+                                </div>
+                                <div class="card-content">
+									<form action="${pageContext.request.contextPath}/memberModify" method="post" id="modifyForm">
+										<input type="hidden" name="memberTel" id="memberTel" value="${member.memberTel}">
+										<input type="hidden" name="memberEmail" id="memberEmail" value="${member.memberEmail}">
+										<input type="hidden" name="memberAddress" id="memberAddress" value="${member.memberAddress}">
+										<input type="hidden" name="memberLevel" id="memberLevel" value="${sessionScope.memberSessionLevel}">
+										<div class="row">
+											<div class="col-md-2"></div>
+											<div class="col-md-8">
+												<div class="form-group">
+													<label class="control-label">아이디</label>
+													<input class="form-control" type="text" name="memberId" id="memberId" value="${sessionScope.memberSessionId}" readonly>
+												</div>
+												<div class="form-group">
+													<label class="control-label">이름</label>
+													<input class="form-control" type="text" id="memberName" name="memberName" value="${member.memberName}">
+												</div>
+												<div class="form-group">
+													<label class="control-label">비밀번호</label>
+													<input class="form-control" type="password" name="memberPw" id="memberPw" maxlength="16">
+												</div>
+												<div class="form-group">
+													<label class="control-label">비밀번호 확인</label>
+													<input class="form-control" type="password" name="pwCheck" id="pwCheck" maxlength="16">
+												</div>
+												<div class="form-group">
+													 <label class="control-label">주소</label>
+													 <input class="form-control" type="text" name="postCode" id="postCode" readonly>
+												</div>
+												<input type="button" id="postCodeSearch"  class="btn btn-primary pull-right" value="우편번호 찾기">
+												<div class="form-group">
+													 <label class="control-label">도로명 주소</label>
+													 <input class="form-control" type="text" name="memberAddr1" id="memberAddr1"  readonly>
+												</div>
+												<div class="form-group">
+													 <label class="control-label">상세 주소</label>
+													 <input class="form-control" type="text" name="memberAddr2" id="memberAddr2">
+												</div>
+												<div class="row">
+													<div class="form-group col-md-4">
+														 <label class="control-label">이메일</label>
+														 <input class="form-control" type="text" name="memberEmail1" id="memberEmail1">
+													</div>
+													<div class="form-group col-md-4">
+														 <label class="control-label">도메인</label>
+														 <input class="form-control" type="text" name="memberEmail2" id="memberEmail2" readonly>
+													</div>
+													<div class="form-group col-md-4">
+														<label class="control-label">선택</label>
+														<select class="form-control" id="emailSelect">
+												            <option>-이메일 선택-</option>
+												            <option value="naver.com">naver.com</option>
+												            <option value="daum.net">daum.net</option>
+												            <option value="nate.com">nate.com</option>
+							         					</select>
+													</div>
+												</div>
+												<div class="form-group">
+													 <label class="control-label">생년월일</label>
+													 <input class="form-control" type="text" id="memberBirth" name="memberBirth" value="${member.memberBirth}">
+												</div>
+												<div class="row">
+													<div class="form-group col-md-4">
+														 <label class="control-label">앞자리</label>
+														  <select class="form-control" id="memberTel1">
+												            <option value="010" selected=selected>010</option>
+												            <option value="011">011</option>
+												            <option value="016">016</option>
+												            <option value="017">017</option>
+												            <option value="018">018</option>
+												            <option value="019">019</option>
+												         </select>
+													</div>
+													<div class="form-group col-md-4">
+														 <label class="control-label">중간자리</label>
+														 <input class="form-control" type="text"  id="memberTel2" maxlength="4">
+													</div>
+													<div class="form-group col-md-4">
+														<label class="control-label">뒷자리</label>
+														<input class="form-control" type="text"  id="memberTel3" maxlength="4">
+													</div>
+												</div>
+												<div id="doctor">
+													<div class="row">
+														<div class="form-group col-md-6">
+															 <label class="control-label">의사면허번호</label>
+															 <input class="form-control" type="text" name="doctorRegisterNo" id="memberRegister" value="${member.doctorRegisterNo}">
+														</div>
+														<div class="form-group col-md-6">
+															 <label class="control-label">진료과목</label>
+															 <input class="form-control" type="text" name="treatmentDepartment" id="memberDepartMent" value="${member.treatmentDepartment}">
+														</div>
+													</div>
+													<div class="row">
+														<div class="form-group col-md-12">
+															 <label class="control-label">소속병원명</label>
+															 <input class="form-control" type="text" name="hospitalName" id="memberHospitalName" value="${member.hospitalName}">
+														</div>
+													</div>
+												</div>
+												<div id="pt">
+													<div class="row">
+														<div class="form-group col-md-6">
+															 <label class="control-label">트레이너면허번호</label>
+															 <input type="text" name="teacherRegisterNo" id="teacherRegister" value="${member.teacherRegisterNo}">
+														</div>
+														<div class="form-group col-md-6">
+															 <label class="control-label">현재 근무지 </label>
+															 <input type="text" name="memberWorkSpace" id="workSpace" value="${member.memberWorkSpace}">
+														</div>
+													</div>
+												</div>
+												<button type="button" id="modifySubmit" class="btn btn-primary pull-right">정보수정완료</button>	
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div>
-			성명 :<input type="text" id="memberName" name="memberName" value="${member.memberName}">
-		</div>
-		<div>비밀번호:<input type="password" name="memberPw" id="memberPw" maxlength="16"></div>
-      	<div>비밀번호 확인:<input type="password" name="pwCheck" id="pwCheck" maxlength="16"></div>
-		<div>
-			주소: <input type="text" name="postCode" id="postCode" placeholder="우편번호" readonly> 
-				<input type="button" id="postCodeSearch" value="우편번호 찾기">
-		</div>
-		<div>
-			<input type="text"  id="memberAddr1" placeholder="도로명주소" readonly> 
-			<input type="text"  id="memberAddr2" placeholder="상세주소">
-		</div>
-		<div>
-			EMAIL:<input type="email" id="memberEmail1">@
-				  <input type="text"  id="memberEmail2" readonly>
-			<select id="emailSelect">
-				<option>-이메일 선택-</option>
-				<option value="naver.com">naver.com</option>
-				<option value="daum.net">daum.net</option>
-				<option value="nate.com">nate.com</option>
-			</select>
-		</div>
-
-		<div>
-			생년월일 :<input type="text" id="memberBirth" name="memberBirth" value="${member.memberBirth}">
-		</div>
-		<div>
-			Tel :<select id="memberTel1">
-				<option value="010">010</option>
-				<option value="011">011</option>
-				<option value="016">016</option>
-				<option value="017">017</option>
-				<option value="018">018</option>
-				<option value="019">019</option>
-			</select>- <input type="text" id="memberTel2" maxlength="4">-<input type="text" id="memberTel3" maxlength="4">
-		</div>
-		<div id="doctor">
-			<div>의사면허번호 :<input type="text" name="doctorRegisterNo" id="memberRegister" value="${member.doctorRegisterNo}"></div>
-			<div>소속병원명 :<input type="text" name="hospitalName" id="memberHospitalName" value="${member.hospitalName}"></div>
-			<div>진료과목 :<input type="text" name="treatmentDepartment" id="memberDepartMent" value="${member.treatmentDepartment}"></div>
-		</div>
-		<div id="pt">
-			<div>트레이너면허번호 :<input type="text" name="teacherRegisterNo" id="teacherRegister" value="${member.teacherRegisterNo}"></div>
-			<div>현재 근무지 :<input type="text" name="memberWorkSpace" id="workSpace" value="${member.memberWorkSpace}"></div>
-		</div>
-		<div>
-			<button type="button" id="modifySubmit">정보수정완료</button>
-		</div>
-	</form>
 </body>
 </html>

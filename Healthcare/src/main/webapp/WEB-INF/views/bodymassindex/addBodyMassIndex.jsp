@@ -42,23 +42,46 @@
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<h1>체질량 등록</h1>
-				<form id="addBoayMassIndexForm"action="${pageContext.request.contextPath}/addBodyMassIndex" method="post">
-				<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}">
-					<div>
-						키 :  <input type="text" id="bodyHeight" name="bodyHeight" maxlength="5">
+				<div class="row">
+					<div class="col-md-2">
 					</div>
-					<div>
-						체중: <input type="text" id="bodyWeight" name="bodyWeight" maxlength="5">
+                     <div class="col-md-8">
+                         <div class="card">
+                         	<div class="card-header" data-background-color="purple">
+								<h4 class="title">체질량 등록</h4>
+							</div>
+							<div class="card-content">
+								<form id="addBoayMassIndexForm"action="${pageContext.request.contextPath}/addBodyMassIndex" method="post">
+									<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}">
+									<div class="row">
+										<div class="col-md-2"></div>
+										<div class="col-md-8">	
+											<div class="form-group">
+												<label class="control-label">키</label>
+												<input class="form-control" type="text" id="bodyHeight" name="bodyHeight" maxlength="5">
+											</div>
+											<div class="form-group">
+												<label class="control-label">체중</label>
+												<input class="form-control" type="text" id="bodyWeight" name="bodyWeight" maxlength="5">
+											</div>
+											<div class="form-group">
+												<label class="control-label">허리둘레 cm</label>
+												<input class="form-control" type="text" id="bodyWaistSizeCm" maxlength="5">
+												<label class="control-label">Inch</label>
+												<input class="form-control" type="text" id="bodyWaistSizeIn" name="bodyWaistSize" maxlength="5" readonly>
+												</div>
+											<div class="form-group">
+												<label class="control-label">BMI</label>
+												<input class="form-control" type="text" id="bodyMassIndex" name="bodyMassIndex" readonly>
+											</div>
+											<button type="button" id="addBodyMassIndexSubmit" class="btn btn-primary pull-right">등록</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
 					</div>
-					<div>
-						허리둘레 : <input type="text" id="bodyWaistSizeCm" maxlength="5"> inch :<input type="text" id="bodyWaistSizeIn" name="bodyWaistSize" maxlength="5" readonly>
-					</div>
-					<div>
-						BMI : <input type="text" id="bodyMassIndex" name="bodyMassIndex" readonly>
-					</div>
-					<button type="button" id="addBodyMassIndexSubmit">등록</button>
-				</form>
+				</div>
 			</div>
 		</div>
 	</div>

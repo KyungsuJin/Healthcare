@@ -367,6 +367,7 @@
 	  			,member_email
 	  			,member_birth
 	  			,member_tel
+	  			,member_point
 	  			,member_agree
 	  			,member_join_date
   			FROM member 

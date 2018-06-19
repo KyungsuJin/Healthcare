@@ -34,10 +34,11 @@
 	<div class="sidebar" data-color="purple" data-image="${pageContext.request.contextPath}/templateimg1/sidebar-1.jpg">
             <div class="logo">
                 <a href="http://www.creative-tim.com" class="simple-text">
-                	메뉴${sessionScope.memberSessionLevel}f
+                	메뉴
                 </a>
             </div>
             <div class="sidebar-wrapper">
+            <!-- 관리자 메뉴 -->
              	<c:if test="${!empty sessionScope.memberSessionId && sessionScope.memberSessionLevel==1}">		
 	                <ul class="nav">
 	                    <li>
@@ -65,9 +66,9 @@
 	                        </a>
 	                    </li>
 	                    <li>
-	                        <a href="./icons.html">
+	                        <a href="${pageContext.request.contextPath}/getHealthSurveyList">
 	                            <i class="material-icons">bubble_chart</i>
-	                            <p>Icons</p>
+	                            <p>건강설문 전체리스트</p>
 	                        </a>
 	                    </li>
 	                    <li>
@@ -90,7 +91,8 @@
 	                    </li>
 	                </ul>
                 </c:if>
-                <c:if test="${!empty sessionScope.memberSessionId && sessionScope.memberSessionLevel!=1}">			
+               <!--일반회원 ,그룹장 레벨 2 메뉴  -->
+				 <c:if test="${!empty sessionScope.memberSessionId && sessionScope.memberSessionLevel==2}">			
 					<ul class="nav">
 	                    <li>
 	                       <a href="#" id="exercise">
@@ -102,6 +104,59 @@
 	                        <a href="${pageContext.request.contextPath}/bodyMassIndexList?memberNo=${sessionScope.memberSessionNo}">
 	                            <i class="material-icons">dashboard</i>
 	                            <p>체질량관리</p>
+	                        </a>
+	                    </li>
+	                    <li>
+	                        <a href="${pageContext.request.contextPath}/getHealthScreenList">
+	                            <i class="material-icons">content_paste</i>
+	                            <p>건강검진표 목록</p>
+	                        </a>
+	                    </li>
+	                    <li>
+	                        <a href="${pageContext.request.contextPath}/getHealthSurveyList">
+	                            <i class="material-icons">library_books</i>
+	                            <p>건강설문 목록</p>
+	                        </a>
+	                    </li>
+	                    <li>
+	                        <a href="${pageContext.request.contextPath}/getHealthSurveyResultList">
+	                            <i class="material-icons">bubble_chart</i>
+	                            <p>나의 건강설문 목록</p>
+	                        </a>
+	                    </li>
+	                    <li>
+	                        <a href="${pageContext.request.contextPath}/getMedicationList">
+	                            <i class="material-icons">location_on</i>
+	                            <p>복약 목록</p>
+	                        </a>
+	                    </li>
+	                    <li>
+	                        <a href="${pageContext.request.contextPath}/getTreatmentList">
+	                            <i class="material-icons text-gray">notifications</i>
+	                            <p>진료기록</p>
+	                        </a>
+	                    </li>
+	                    <li class="active-pro">
+	                        <a href="${pageContext.request.contextPath}/">
+	                            <i class="material-icons">unarchive</i>
+	                            <p>Upgrade to PRO</p>
+	                        </a>
+	                    </li>
+	                </ul>
+				</c:if>
+				<!-- 의사회원 레벨 3메뉴 -->
+				  <c:if test="${!empty sessionScope.memberSessionId && sessionScope.memberSessionLevel==3}">			
+					<ul class="nav">
+	                    <li>
+	                       <a href="${pageContext.request.contextPath}/getHealthSurveyList">
+	                            <i class="material-icons">person</i>
+	                            <p>건강설문 목록</p>
+	                        </a>
+	                    </li>
+	                    <li class="active">
+	                        <a href="#">
+	                            <i class="material-icons">dashboard</i>
+	                            <p>**</p>
 	                        </a>
 	                    </li>
 	                    <li>
@@ -117,45 +172,121 @@
 	                        </a>
 	                    </li>
 	                    <li>
-	                        <a href="./icons.html">
+	                        <a href="#">
 	                            <i class="material-icons">bubble_chart</i>
-	                            <p>Icons</p>
+	                            <p>**</p>
 	                        </a>
 	                    </li>
 	                    <li>
-	                        <a href="./maps.html">
+	                        <a href="#">
 	                            <i class="material-icons">location_on</i>
-	                            <p>Maps</p>
+	                            <p>**</p>
 	                        </a>
 	                    </li>
 	                    <li>
-	                        <a href="./notifications.html">
+	                        <a href="#">
 	                            <i class="material-icons text-gray">notifications</i>
-	                            <p>Notifications</p>
+	                            <p>**</p>
 	                        </a>
 	                    </li>
 	                    <li class="active-pro">
-	                        <a href="upgrade.html">
+	                        <a href="${pageContext.request.contextPath}/">
 	                            <i class="material-icons">unarchive</i>
 	                            <p>Upgrade to PRO</p>
 	                        </a>
 	                    </li>
 	                </ul>
 				</c:if>
-				<c:if test="${sessionScope.memberSessionLevel eq null}">			
-					<ul class="nav">
+				<!-- PT회원 레벨 4메뉴-->
+				<c:if test="${!empty sessionScope.memberSessionId && sessionScope.memberSessionLevel==4}">	
+
+  			 
+					<ul class="nav"  data-placement="right">
 	                    <li>
-	                       <a href="#">
+	                       <a href="#sss" data-toggle="collapse">
 	                            <i class="material-icons">person</i>
-	                            <p>운동 매칭</p>
+	                            <p>큰메뉴</p>
 	                        </a>
 	                    </li>
+	                    <ul class="sidenav-second-level collapse" id="sss" style="list-style:none;">
+				            <li>
+				              <a href="login.html">1번 작은메뉴</a>
+				            </li>
+				             <li>
+				              <a href="login.html">2번 작은메뉴</a>
+				            </li>
+				             <li>
+				              <a href="login.html">3번 작은메뉴</a>
+				            </li>
+				             <li>
+				              <a href="login.html">4번 작은메뉴</a>
+				            </li>
+			            </ul>
+			            
+			            <!-- ------------------------- -->
 	                    <li class="active">
 	                        <a href="#">
 	                            <i class="material-icons">dashboard</i>
-	                            <p>체질량관리</p>
+	                            <p>**</p>
 	                        </a>
 	                    </li>
+	                    <li>
+	                        <a href="#">
+	                            <i class="material-icons">content_paste</i>
+	                            <p>**</p>
+	                        </a>
+	                    </li>
+	                    <li>
+	                        <a href="#">
+	                            <i class="material-icons">library_books</i>
+	                            <p>**</p>
+	                        </a>
+	                    </li>
+	                    <li>
+	                        <a href="#">
+	                            <i class="material-icons">bubble_chart</i>
+	                            <p>**</p>
+	                        </a>
+	                    </li>
+	                    <li>
+	                        <a href="#">
+	                            <i class="material-icons">location_on</i>
+	                            <p>**</p>
+	                        </a>
+	                    </li>
+	                    <li>
+	                        <a href="#">
+	                            <i class="material-icons text-gray">notifications</i>
+	                            <p>**</p>
+	                        </a>
+	                    </li>
+	                    <li class="active-pro">
+	                        <a href="${pageContext.request.contextPath}/">
+	                            <i class="material-icons">unarchive</i>
+	                            <p>Upgrade to PRO</p>
+	                        </a>
+	                    </li>
+	                </ul>
+				</c:if>
+				<!-- 비회원 메뉴 -->
+				<c:if test="${sessionScope.memberSessionLevel eq null}">
+					
+					<ul class="nav"  data-placement="right">
+	                    <li>
+	                       <a href="#searchMedical" data-toggle="collapse">
+	                            <i class="material-icons">person</i>
+	                            <p>검색</p>
+	                        </a>
+	                    </li>
+	                    <ul class="sidenav-second-level collapse" id="searchMedical" style="list-style:none;">
+	                    	<li>
+	                    		<a href="${pageContext.request.contextPath}/getMedicineList">약품검색</a>
+				            </li>
+				            <li>
+				            	<a href="${pageContext.request.contextPath}/getMedicalList">병원,약국 검색</a>
+				            </li>
+				        </ul>
+				        
 	                    <li>
 	                        <a href="#">
 	                            <i class="material-icons">content_paste</i>

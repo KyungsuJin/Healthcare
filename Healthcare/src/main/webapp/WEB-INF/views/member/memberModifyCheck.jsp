@@ -4,6 +4,7 @@
 <html>
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
 			$("#memberPw").keypress(function(e){
@@ -34,10 +35,38 @@
 	</script>
 </head>
 <body>
-	<h1>회원 정보 수정</h1>
-		<input type="hidden" id="memberId" value="${sessionScope.memberSessionId}">
-		<input type="hidden" id="memberLevel" value="${sessionScope.memberSessionLevel}">
-		<div>비밀번호 : <input type="password" id="memberPw"></div>
-		<div><button type="button" id="checkButton">확인</button></div>
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+                        <div class="col-md-8">
+							 <div class="card">
+								 <div class="card-header" data-background-color="purple">
+								 	<h4 class="title">회원 정보 수정</h4>
+								 </div>
+								 <div class="card-content">
+									 <div class="row">
+									 	<input type="hidden" id="memberId" value="${sessionScope.memberSessionId}">
+										<input type="hidden" id="memberLevel" value="${sessionScope.memberSessionLevel}">
+										 <div class="col-md-2"></div>
+										 <div class="col-md-8">
+										 	<div class="form-group">
+										 		<label class="control-label">비밀번호</label>
+											 	<input class="form-control" type="password" id="memberPw">
+										 	</div>
+										 	<button type="button" id="checkButton"  class="btn btn-primary pull-right">확인</button>
+										 </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 </body>
 </html>

@@ -4,6 +4,7 @@
 <html>
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
 			$("#ModifyCheckForm").keypress(function(e){
@@ -42,13 +43,40 @@
 	</script>
 </head>
 <body>
-	<h1>회원 탈퇴</h1>
-	<form action="${pageContext.request.contextPath}/memberModifyCheck" id="ModifyCheckForm" method="POST">
-		<input type="hidden" id="memberId" value="${sessionScope.memberSessionId}">
-		<input type="hidden" id="memberLevel" value="${sessionScope.memberSessionLevel}">
-		<div>비밀번호 : <input type="password" id="memberPw"></div>
-		<div><input type="button" id="checkButton" value="회원탈퇴"></div>
-	</form>
-
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+                        <div class="col-md-8">
+							 <div class="card">
+								 <div class="card-header" data-background-color="purple">
+								 	<h4 class="title">회원 탈퇴</h4>
+								 </div>
+								 <div class="card-content">
+									 <div class="row">
+										<form action="${pageContext.request.contextPath}/memberModifyCheck" id="ModifyCheckForm" method="POST">
+											<input type="hidden" id="memberId" value="${sessionScope.memberSessionId}">
+											<input type="hidden" id="memberLevel" value="${sessionScope.memberSessionLevel}">
+											 <div class="col-md-2"></div>
+										 	<div class="col-md-8">
+											 	<div class="form-group">
+											 		<label class="control-label">비밀번호</label>
+												 	<input class="form-control" type="password" id="memberPw">
+											 	</div>
+											 	<input type="button" id="checkButton" value="회원탈퇴" class="btn btn-primary pull-right">
+										 	</div>
+										 </form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 </body>
 </html>

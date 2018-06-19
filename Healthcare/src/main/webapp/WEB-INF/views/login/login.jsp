@@ -4,6 +4,7 @@
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<jsp:include page="../include/header.jsp"></jsp:include>
 <script>
 	$(document).ready(function(){
 		$("#loginForm").keypress(function(e){
@@ -48,11 +49,42 @@
 </script>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/login" id="loginForm" method="POST">
-	<div>id : <input type="text" name="memberId" id="memberId"></div>
-	<div>pw : <input type="passWord" name="memberPw" id="memberPw"></div>
-	<div><button type="button" id="signButton">sign in</button></div>
-	
-</form>
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+					<div class="col-md-8">
+						<div class="card">
+							<div class="card-header" data-background-color="purple">
+								<h4 class="title">로그인</h4>
+                             </div>
+                             <div class="card-content">
+                             	<form action="${pageContext.request.contextPath}/login" id="loginForm" method="POST">
+									<div class="row">
+										<div class="col-md-2"></div>
+										<div class="col-md-8">
+											<div class="form-group">
+												<label class="control-label">아이디</label>
+												<input class="form-control" type="text" name="memberId" id="memberId">
+											</div>
+											<div class="form-group">
+												<label class="control-label">패스워드</label>
+												<input class="form-control" type="passWord" name="memberPw" id="memberPw">
+											</div>
+											<button type="button" id="signButton" class="btn btn-primary pull-right">로그인</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

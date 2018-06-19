@@ -28,10 +28,22 @@
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<h1>회원별 리스트 보기</h1>
-				<button type="button" id="memberList">회원 리스트</button>
-				<button type="button" id="memberDoctorList">의사회원 리스트</button>
-				<button type="button" id="memberPTList">PT회원 리스트</button>
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+                    <div class="col-md-8">
+                    	<div class="card">
+                    		<div class="card-header" data-background-color="purple">
+							 	<h4 class="title">회원별 리스트</h4>
+							 </div>
+							 <div class="card-content" style="text-align:center;">
+								<button  class="btn btn-primary" type="button" id="memberList">회원 리스트</button>
+								<button  class="btn btn-primary type="button" id="memberDoctorList">의사회원 리스트</button>
+								<button  class="btn btn-primary type="button" id="memberPTList">PT회원 리스트</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
