@@ -5,6 +5,7 @@
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
 			var number = /^[0-9]*$/;
@@ -38,28 +39,54 @@
 
 </head>
 <body>
-<h1>체질량 수정</h1>
-	<form id="addBoayMassIndexForm"action="${pageContext.request.contextPath}/modifyBmi" method="post">
-	<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}">
-	<input type="hidden" name="bodyMassIndexNo" value="${bodyMassIndex.bodyMassIndexNo}">
-		<div>
-			키 :  <input type="text" id="bodyHeight" name="bodyHeight" value=" ${bodyMassIndex.bodyHeight} "maxlength="5">
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+                     <div class="col-md-8">
+                         <div class="card">
+                         	<div class="card-header" data-background-color="purple">
+								<h4 class="title">체질량 수정</h4>
+							</div>
+							<div class="card-content">
+								<form id="addBoayMassIndexForm"action="${pageContext.request.contextPath}/modifyBmi" method="post">
+									<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}">
+									<input type="hidden" name="bodyMassIndexNo" value="${bodyMassIndex.bodyMassIndexNo}">
+									<div class="row">
+										<div class="col-md-2"></div>
+										<div class="col-md-8">
+											<div class="form-group">
+												<label class="control-label">키</label>
+												<input class="form-control" type="text" id="bodyHeight" name="bodyHeight" value=" ${bodyMassIndex.bodyHeight} "maxlength="5">
+											</div>
+											<div class="form-group">
+												<label class="control-label">체중</label>
+												<input class="form-control" type="text" id="bodyWeight" name="bodyWeight" value="${bodyMassIndex.bodyWeight}" maxlength="5">
+											</div>
+											<div class="form-group">
+												<label class="control-label">허리둘레 cm</label>
+												<input class="form-control" type="text" id="bodyWaistSizeCm" maxlength="5">
+												<label class="control-label">Inch</label>
+												<input class="form-control" type="text" id="bodyWaistSizeIn" value=" ${bodyMassIndex.bodyWaistSize}" name="bodyWaistSize" maxlength="5" readonly>
+											</div>
+											<div class="form-group">
+												<label class="control-label">BMI</label>
+												<input class="form-control" type="text" id="bodyMassIndex" name="bodyMassIndex" value=" ${bodyMassIndex.bodyMassIndex}" readonly>
+											</div>
+											<button type="button" id="addBodyMassIndexSubmit" class="btn btn-primary pull-right">수정</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div>
-			체중: <input type="text" id="bodyWeight" name="bodyWeight" value="${bodyMassIndex.bodyWeight}" maxlength="5">
-		</div>
-		<div>
-			허리둘레 : <input type="text" id="bodyWaistSizeCm" maxlength="5"> inch :<input type="text" id="bodyWaistSizeIn" value=" ${bodyMassIndex.bodyWaistSize}" name="bodyWaistSize" maxlength="5" readonly>
-		</div>
-		<div>
-			BMI : <input type="text" id="bodyMassIndex" name="bodyMassIndex" value=" ${bodyMassIndex.bodyMassIndex}" readonly>
-		</div>
-		<button type="button" id="addBodyMassIndexSubmit">수정</button>
-	</form>
-
- 
- 
-  
-
+	</div>
 </body>
 </html>

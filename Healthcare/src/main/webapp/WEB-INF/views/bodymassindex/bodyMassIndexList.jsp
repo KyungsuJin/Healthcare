@@ -46,14 +46,12 @@
 	
 </head>
 <body>
-	<div class="wrapper">
+	<div class="sidebar-wrapper">
 		<jsp:include page="../include/left.jsp"></jsp:include>
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
 				<h1>체질량 관리</h1>
-				<a href="${pageContext.request.contextPath}/addBodyMassIndex">체질량 등록</a>
-				<a href="${pageContext.request.contextPath}/bodyMassIndexChart">체질량 차트</a>
 				<table border="1" class="table">
 					<thead>
 						<tr>
@@ -101,6 +99,17 @@
 						</ul>
 					</div>
 				</nav>
+				<div  class="navbar-form navbar-right" id="dateDiv">
+					<form>
+						<div class="form-group">
+							<label class="">기간</label>
+							<input class="form-control" type="date" id="exerciseDateStart" value="${exerciseDateStart}">
+							<label class="control-label">~</label>
+							<input class="form-control" type="date" id="exerciseDateEnd" value="${exerciseDateEnd}">
+							<button type="button" class="btn btn-white btn-round btn-just-icon" id="dateBtn"><i class="material-icons">search</i></button>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

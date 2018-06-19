@@ -56,13 +56,16 @@ public class MessageService {
 		searchMap.put("searchMessageText", searchMessageText);
 		searchMap.put("searchMessageSelect", searchMessageSelect);
 		searchMap.put("beginRow", beginRow);
-		map.put("memberNo", memberNo);
+		searchMap.put("memberNo", memberNo);
 		searchMap.put("pagePerRow", pagePerRow);
 		
 		if(!searchMessageText.equals("")) {
 			logger.debug("-----------------------------------------------");
-			list=messageDao.messageReceiveSearchList(searchMap);	
-			}
+			list=messageDao.messageReceiveSearchList(searchMap);
+			messageReceiveTotal=messageDao.messageReceiveSearchCount(searchMap);
+			logger.debug("memberNo"+searchMap.get("memberNo"));
+			
+		}
 		
 		if(searchMessageText.equals("")) {
 			logger.debug("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");

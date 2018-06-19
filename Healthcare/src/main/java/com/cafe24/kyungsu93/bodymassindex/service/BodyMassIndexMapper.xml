@@ -55,6 +55,7 @@
   				,body_date
   			FROM body_mass_index
   			WHERE member_no =#{memberNo}
+  			ORDER BY body_date desc
   			LIMIT #{beginRow},#{pagePerRow}
   	</select>
   	<select id="bodyMassIndexListCount"

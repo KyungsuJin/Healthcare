@@ -59,15 +59,22 @@ public class MessageDao {
 		logger.debug("MessageDao.messageReceiveSearchList");
 		return sqlSession.selectList(NS + "messageReceiveSearchList", map);
 	}
-	//받은 보낸메시지 총 total
+	//받은 메시지 검색 count
+		public int messageReceiveSearchCount(Map<String, Object> map) {
+			logger.debug("MessageDao.messageReceiveSearchCount");
+			return sqlSession.selectOne(NS + "messageReceiveSearchCount", map);
+		}
+	//보낸메시지 총 total
 	public int messageSendTotal(String memberNo) {
 		logger.debug("MessageDao.messageSendTotal");
 		return sqlSession.selectOne(NS + "messageSendTotal", memberNo);
 	}
+	//메시지 읽은 시간 등록
 	public void messageContent(String messageNo) {
 		logger.debug("MessageDao.messageContent");
 		sqlSession.insert(NS+"messageContent",messageNo);
 	}
+	//중복등록 방지
 	public int selectMessageContent(String messageNo) {
 		logger.debug("MessageDao.selectMessageContent");
 		return sqlSession.selectOne(NS+"selectMessageContent",messageNo);

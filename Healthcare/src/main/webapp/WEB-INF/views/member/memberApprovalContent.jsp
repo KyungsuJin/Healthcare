@@ -57,7 +57,7 @@
 						</tbody>
 					</table>
 				</c:if>
-				<a href="${pageContext.request.contextPath}/memberApprovalList">목록으로</a>
+				<a href="${pageContext.request.contextPath}/memberApprovalList" class="btn btn-primary">목록으로</a>
 			</div>
 		</div>
 	</div>

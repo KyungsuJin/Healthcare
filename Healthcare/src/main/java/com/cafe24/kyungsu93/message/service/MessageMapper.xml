@@ -120,6 +120,16 @@
 			AND ${searchMessageSelect}  LIKE '%${searchMessageText}%'
 			LIMIT #{beginRow},#{pagePerRow}
   	</select>
+  	<!-- 받은 메시지 검색 총 total -->
+  	<select id="messageReceiveSearchCount"
+  			parameterType="java.util.Map"
+  			resultType="Integer">
+  			SELECT COUNT(*)
+			FROM send_message sm, receive_message rs
+			WHERE sm.send_message_no=rs.send_message_no 
+				AND sm.member_receive_no=#{memberNo}
+				AND ${searchMessageSelect}  LIKE '%${searchMessageText}%'
+  	</select>
   	<!-- 보낸 메시지 총 total -->
   	<select id="messageSendTotal"
   			parameterType="String"
@@ -129,6 +139,7 @@
 			WHERE sm.send_message_no=sc.send_message_no 
 				AND sm.member_send_no=#{memberNo}
   	</select>
+  	<!--message_receive_date 메시지 내용을읽으면 해당 테이블에 정보가 등록된다.  -->
   	<insert id="messageContent"
   			parameterType="String">
   			INSERT INTO message_receive_date(
@@ -139,6 +150,7 @@
   				,now()
   			)
   	</insert>
+  	<!--중복등록 방지  -->
   	<select id="selectMessageContent"
   			parameterType="String"
   			resultType="Integer">

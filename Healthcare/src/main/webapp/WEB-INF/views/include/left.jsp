@@ -5,7 +5,7 @@
 		$(document).ready(function(){
 			$("#messageList").click(function(){
 				window.open("${pageContext.request.contextPath}/messageList"
-						,"messageList","width=700, height=700,resizable=no,scrollbars=yes");
+						,"messageList","width=1100, height=700,resizable=no,scrollbars=yes");
 			});
 			$("#exercise").click(function(){
 				$.ajax({
@@ -47,7 +47,7 @@
 	                            <p>회원  리스트</p>
 	                        </a>
 	                    </li>
-	                    <li class="active">
+	                    <li>
 	                        <a href="${pageContext.request.contextPath}/messageComplainList">
 	                            <i class="material-icons">dashboard</i>
 	                            <p>메시지 관리</p>
@@ -92,20 +92,61 @@
 	                </ul>
                 </c:if>
                <!--일반회원 ,그룹장 레벨 2 메뉴  -->
-				 <c:if test="${!empty sessionScope.memberSessionId && sessionScope.memberSessionLevel==2}">			
-					<ul class="nav">
+				 <c:if test="${!empty sessionScope.memberSessionId && sessionScope.memberSessionLevel==2}">
+				<%--  <ul class="nav"  data-placement="right">
 	                    <li>
-	                       <a href="#" id="exercise">
+	                       <a href="#searchMedical" data-toggle="collapse">
+	                            <i class="material-icons">person</i>
+	                            <p>검색</p>
+	                        </a>
+	                    </li>
+	                    <ul class="sidenav-second-level collapse" id="searchMedical" style="list-style:none;">
+	                    	<li>
+	                    		<a href="${pageContext.request.contextPath}/getMedicineList">약품검색</a>
+				            </li>
+				            <li>
+				            	<a href="${pageContext.request.contextPath}/getMedicalList">병원,약국 검색</a>
+				            </li>
+				        </ul>	
+				         --%>
+					<ul class="nav" data-placement="right">
+	                    <li>
+	                       <a href="#exerciseMatching" data-toggle="collapse">
 	                            <i class="material-icons">person</i>
 	                            <p>운동 매칭</p>
 	                        </a>
 	                    </li>
-	                    <li class="active">
-	                        <a href="${pageContext.request.contextPath}/bodyMassIndexList?memberNo=${sessionScope.memberSessionNo}">
+	                     <ul class="sidenav-second-level collapse" id="exerciseMatching" style="list-style:none;">
+	                    	<li>
+	                    		<a href="#" id="exercise">운동매칭 리스트</a>
+				            </li>
+				            <li>
+				            	<a href="${pageContext.request.contextPath}/addExerciseMatching">운동매칭 글등록</a>
+				            </li>
+				            <li>
+				            	<a href="${pageContext.request.contextPath}/attendExerciseMatching?memberNo=${sessionScope.memberSessionNo}">참가한 운동매칭 경기</a>
+				            </li>
+				        </ul>	
+				        
+				        
+	                    <li>
+	                        <a href="#bodyMassIndex" data-toggle="collapse">
 	                            <i class="material-icons">dashboard</i>
-	                            <p>체질량관리</p>
+	                            <p>체질량 관리</p>
 	                        </a>
 	                    </li>
+	                    <ul class="sidenav-second-level collapse" id="bodyMassIndex" style="list-style:none;">
+	                    	<li>
+	                    		<a href="${pageContext.request.contextPath}/bodyMassIndexList?memberNo=${sessionScope.memberSessionNo}" >체질량 등록 리스트</a>
+				            </li>
+				            <li>
+				            	<a href="${pageContext.request.contextPath}/addBodyMassIndex">체질량 등록</a>
+				            </li>
+				            <li>
+				            	<a href="${pageContext.request.contextPath}/bodyMassIndexChart">체질량 차트</a>
+				            </li>
+				        </ul>
+				        
 	                    <li>
 	                        <a href="${pageContext.request.contextPath}/getHealthScreenList">
 	                            <i class="material-icons">content_paste</i>
@@ -224,7 +265,7 @@
 			            </ul>
 			            
 			            <!-- ------------------------- -->
-	                    <li class="active">
+	                    <li >
 	                        <a href="#">
 	                            <i class="material-icons">dashboard</i>
 	                            <p>**</p>

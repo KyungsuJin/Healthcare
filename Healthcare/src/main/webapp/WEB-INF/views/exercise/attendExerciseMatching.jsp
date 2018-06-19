@@ -53,9 +53,6 @@
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
 				<h1> 운동매칭 </h1>
-				<a href="${pageContext.request.contextPath}/exerciseMatching">운동매칭 리스트</a>
-				<a href="${pageContext.request.contextPath}/addExerciseMatching">운동매칭 등록</a>
-				<a href="${pageContext.request.contextPath}/attendExerciseMatching?memberNo=${sessionScope.memberSessionNo}">자신의 운동참가 리스트</a>
 				<c:set var="now" value="<%=new java.util.Date()%>"/>
 				<input type="hidden" name="exercisePlaceView"id="exercisePlaceView">
 				<input type="hidden" id="currentDate" value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="currentDate"/>">

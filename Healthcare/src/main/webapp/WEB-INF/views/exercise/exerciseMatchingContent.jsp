@@ -20,7 +20,7 @@
 				,success:function(data){
 					if(data==1){
 						$("#exerciseDiv").empty();
-						$("#exerciseDiv").append('<a href="#" id="exerciseCancel">참가신청 취소</a>')
+						$("#exerciseDiv").append('<a href="#" id="exerciseCancel" class="btn btn-primary">참가신청 취소</a>')
 					}else{
 						$("#exerciseDiv").empty();
 					}
@@ -82,8 +82,6 @@
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
 				<h1> 운동매칭 </h1>
-				<a href="${pageContext.request.contextPath}/addExerciseMatching">운동매칭 등록</a>
-				<a href="${pageContext.request.contextPath}/attendExerciseMatching?memberNo=${sessionScope.memberSessionNo}">자신의 운동참가 리스트</a>
 				<input type="hidden" name="exercisePlaceView"id="exercisePlaceView" value="${exercise.exerciseMatchingPlace}">
 				<input type="hidden" name="memberNo" id="memberNo" value="${sessionScope.memberSessionNo}">
 				<input type="hidden" name="exerciseMatchingNo"id="exerciseMatchingNo" value="${exercise.exerciseMatchingNo}">
@@ -116,14 +114,14 @@
 				</tbody>
 				</table>
 				<div>
-					<a href="${pageContext.request.contextPath}/exerciseMatching">목록으로</a>
+					<a href="${pageContext.request.contextPath}/exerciseMatching" class="btn btn-primary">목록으로</a>
 					<c:if test="${exercise.memberId eq sessionScope.memberSessionId or sessionScope.memberSessionLevel==1}">
-						<a href="${pageContext.request.contextPath}/deleteExerciseMatching?exerciseMatchingNo=${exercise.exerciseMatchingNo}">삭제</a>
-						<a href="${pageContext.request.contextPath}/modifyExerciseMatching?exerciseMatchingNo=${exercise.exerciseMatchingNo}">수정</a>
+						<a href="${pageContext.request.contextPath}/modifyExerciseMatching?exerciseMatchingNo=${exercise.exerciseMatchingNo}" class="btn btn-primary">수정</a>
+						<a href="${pageContext.request.contextPath}/deleteExerciseMatching?exerciseMatchingNo=${exercise.exerciseMatchingNo}" class="btn btn-primary">삭제</a>
 					</c:if>
 					<div id="exerciseDiv">
 						<c:if test="${exercise.exerciseMatchingCount > exercise.exerciseMatchingAttendCount}">
-							<a href="#" id="exerciseSignUp">참가신청</a>
+							<a href="#" id="exerciseSignUp" class="btn btn-primary">참가신청</a>
 						</c:if>
 					</div>
 				</div>

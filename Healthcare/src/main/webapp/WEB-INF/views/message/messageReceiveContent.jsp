@@ -5,29 +5,35 @@
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 	$(document).ready(function(){
+		$("#searchDiv").hide();
 		//메시지 쓰기 새창
 		$("#messageWrite").click(function(){
 				window.open("${pageContext.request.contextPath}/message"
-						,"messageWrite","width=700, height=700,resizable=no,scrollbars=yes");
+						,"messageWrite","width=850, height=700,resizable=no,scrollbars=yes");
 		});
 		//메시지 받은 리스트
 		$("#messageReceive").click(function(){
+			$("#searchDiv").show();
 			console.log($("#memberReceiveNo").val());
 			 $.ajax({
 				type:"POST"
 				,url : "${pageContext.request.contextPath}/messageReceiveList"
 				,data :{"memberReceiveNo" :$("#memberReceiveNo").val()
-						,"currentPage" : $("#receiveCurrentPage").val()}
+						,"currentPage" : $("#receiveCurrentPage").val()
+						,"searchMessageSelect" :$("#searchMessageSelect").val()
+						,"searchMessageText" :$("#searchMessageText").val()}
 				,dataType:"json"
 				,success:function(data){
-					console.log(data);
+					console.log(data.endPage);
 					$("#tb").empty();
 					$("#deletBtn").empty();
-					$("#page").empty();
-					$("#deletBtn").append('<button type="button" id="deleteMessageBtn">삭제</button>');
-					$("#tb").append('<tr><td><input type="checkbox" id="allChk">보낸사람</td><td>내용</td><td>날짜</td></tr>');
+					$("#pageUl").empty();
+					$("#pageUl").append("<input type='hidden' id='endPage' value='"+data.endPage+"'>");
+					$("#deletBtn").append('<button type="button" id="deleteMessageBtn" class="btn btn-primary">삭제</button>');
+					$("#tb").append('<tr><td><input type="checkbox" id="allChk">보낸사람</td><td>제목</td><td>날짜</td></tr>');
 					$.each(data.list,function(key,val){
 						$("#tb").append(
 										"<tr><td><input type='checkbox' name='deletMessageChk' value='"+val.sendMessageNo+"'>"+val.sendMessageId+"</td>"+
@@ -37,17 +43,21 @@
 
 						if(val.readMessageChk==1){
 							$(".messageContent"+key).css('color','black');
+							
 						}
 					});
 					if(data.currentPage>1){
-						$("#page").append("<a class='receiveMessagePageBack' href='javascript:void(0);'>이전</a>");
+						$("#pageUl").append("<li><a class='receiveMessagePageStart' href='javascript:void(0);'><span aria-hidden='true'>&laquo;</span></a></li>");
+						$("#pageUl").append("<li><a class='receiveMessagePageBack' href='javascript:void(0);'>이전</a></li>");
 					}
 					for(var i =data.startPage; i <=data.endPage ; i++){
-						$("#page").append("<a class='receiveMessagePage' href='javascript:void(0);'>"+i+"</a>");
+						$("#pageUl").append("<li><a class='receiveMessagePage' href='javascript:void(0);'>"+i+"</a></li>");
 					}
 					if(data.currentPage<data.lastPage){
-						$("#page").append("<a class='receiveMessagePageNext' href='javascript:void(0);'>다음</a>");
+						$("#pageUl").append("<li><a class='receiveMessagePageNext' href='javascript:void(0);'>다음</a></li>");
+						$("#pageUl").append("<li><a class='receiveMessagePageEnd' href='javascript:void(0);'><span aria-hidden='true'>&raquo;</span></a></li>");
 					}
+					
 				}
 			});
 		});
@@ -65,21 +75,33 @@
 			$("#receiveCurrentPage").val(Number($("#receiveCurrentPage").val())+1);
 			$("#messageReceive").click();
 		});
+		$(document).on("click",".receiveMessagePageStart",function(){
+			$("#receiveCurrentPage").val(1);
+			$("#messageReceive").click();
+		});
+		$(document).on("click",".receiveMessagePageEnd",function(){
+			$("#receiveCurrentPage").val(Number($("#endPage").val()));
+			$("#messageReceive").click();
+		});
 		//메시지 보낸 리스트
 		$("#sendMessage").click(function(){
+			$("#searchDiv").hide();
 			 $.ajax({
 				type:"POST"
 				,url : "${pageContext.request.contextPath}/sendMessageList"
 				,data :{"sendMemberNo" :$("#memberReceiveNo").val(),
-						"currentPage" : $("#sendCurrentPage").val()}
+						"currentPage" : $("#sendCurrentPage").val()
+						
+						}
 				,dataType:"json"
 				,success:function(data){
 					console.log(data);
 					$("#tb").empty();
 					$("#deletBtn").empty();
-					$("#page").empty();
-					$("#deletBtn").append('<button type="button" id="deleteSendMessageBtn">삭제</button>');
-					$("#tb").append('<tr><td><input type="checkbox" id="allChk">내용</td><td>날짜</td><td>수신여부</td></tr>');
+					$("#pageUl").empty();
+					$("#pageUl").append("<input type='hidden' id='endPage' value='"+data.endPage+"'>");
+					$("#deletBtn").append('<button type="button" id="deleteSendMessageBtn" class="btn btn-primary">삭제</button>');
+					$("#tb").append('<tr><td><label><input type="checkbox" id="allChk">내용</td><td>날짜</td><td>수신여부</td></tr></label>');
 					$.each(data.list,function(key,val){
 						var sendMessageChk;
 						if(val.sendMessageChk==1){
@@ -89,19 +111,21 @@
 						}
 						$("#tb").append(
 										"<tr>"+
-										"<td><input type='checkbox' name='deletMessageChk' value='"+val.sendMessageNo+"'><a href='${pageContext.request.contextPath}/messageSendContent?sendMessageNo="+val.sendMessageNo+"&sendMessageId="+val.sendMessageId+"&messageTitle="+val.messageTitle+"&messageContent="+val.messageContent+"&messageDate="+val.messageDate+"&memberReceiveId="+val.memberReceiveId+"' class='messageContent'>"+val.messageTitle+"</a></td>"+
+										"<td><label><input type='checkbox' name='deletMessageChk' value='"+val.sendMessageNo+"'></label><a href='${pageContext.request.contextPath}/messageSendContent?sendMessageNo="+val.sendMessageNo+"&sendMessageId="+val.sendMessageId+"&messageTitle="+val.messageTitle+"&messageContent="+val.messageContent+"&messageDate="+val.messageDate+"&memberReceiveId="+val.memberReceiveId+"' class='messageContent'>"+val.messageTitle+"</a></td>"+
 										"<td>"+val.messageDate+"</td>"+
 										"<td>"+sendMessageChk+"</td></tr>"
 										);
 					});
 					if(data.currentPage>1){
-						$("#page").append("<a class='sendMessagePageBack' href='javascript:void(0);'>이전</a>");
+						$("#pageUl").append("<li><a class='sendMessagePageStart' href='javascript:void(0);'><span aria-hidden='true'>&laquo;</span></a></li>");
+						$("#pageUl").append("<li><a class='sendMessagePageBack' href='javascript:void(0);'>이전</a></li>");
 					}
 					for(var i =data.startPage; i <=data.endPage ; i++){
-						$("#page").append("<a class='sendMessagePage' href='javascript:void(0);'>"+i+"</a>");
+						$("#pageUl").append("<li><a class='sendMessagePage' href='javascript:void(0);'>"+i+"</a></li>");
 					}
 					if(data.currentPage<data.lastPage){
-						$("#page").append("<a class='sendMessagePageNext' href='javascript:void(0);'>다음</a>");
+						$("#pageUl").append("<li><a class='sendMessagePageNext' href='javascript:void(0);'>다음</a></li>");
+						$("#pageUl").append("<li><a class='sendMessagePageEnd' href='javascript:void(0);'><span aria-hidden='true'>&raquo;</span></a></li>");
 					}
 				}
 			});
@@ -120,6 +144,15 @@
 			$("#sendCurrentPage").val(Number($("#sendCurrentPage").val())+1);
 			$("#sendMessage").click();
 		});
+		$(document).on("click",".sendMessagePageStart",function(){
+			$("#sendCurrentPage").val(1);
+			$("#sendMessage").click();
+		});
+		$(document).on("click",".sendMessagePageEnd",function(){
+			$("#sendCurrentPage").val(Number($("#endPage").val()));
+			$("#sendMessage").click();
+		});
+		
 		$(document).on("click","#allChk",function(){
 			if($("#allChk").prop("checked")){
 				$("input[name=deletMessageChk]").prop("checked",true);
@@ -163,6 +196,23 @@
 				}
 			})
 		});
+		$("#messageSearch").click(function(){
+			$.ajax({
+				type:"GET"
+					,url : "${pageContext.request.contextPath}/messageSearchList"
+					,data :{"searchMessageSelect" :$("#searchMessageSelect").val()
+							,"searchMessageText" : $("#searchMessageText").val()
+							,"memberReceiveNo" :$("#memberReceiveNo").val()
+							}
+					,dataType:"json"
+					,success:function(data){
+						console.log(data.searchMessageText);
+						$("#searchDiv").append("<input type='hidden' id='searchMessageSelect' value='"+data.searchMessageSelect+"'>");
+						$("#searchDiv").append("<input type='hidden' id='searchMessageText' value='"+data.searchMessageText+"'>");
+						$("#messageReceive").click();
+					}
+			});
+		});
 		//메시지 삭제
 			$("#deleteMessage").click(function(){
 				if(confirm('정말 삭제하시겠습니까?')){
@@ -180,16 +230,27 @@
 	</script>
 </head>
 <body>
-	<h1> 메시지함</h1>
-	<input type="hidden" id="memberReceiveNo" name="memberReceiveNo" value="${sessionScope.memberSessionNo}">
-	<input type="hidden" id="receiveCurrentPage">
-	<input type="hidden" id="sendCurrentPage">
-	<input type="hidden" id="sendMessageNo" name="sendMessageNo" value="${message.sendMessageNo}">
-	<div id="deletBtn" style="margin-right:5px;float:left;"></div>
-	<div style="float:left;">
-		<button type="button" id="messageWrite">메시지 작성</button>
-		<button type="button" id="sendMessage">보낸 메시지</button>
-		<button type="button" id="messageReceive">받은 메시지</button>
+	<div class="card">
+		 <div class="card-header" data-background-color="purple">
+		 	<h4 class="title">메시지</h4>
+		 </div>
+		 <div class="card-content">
+			 <div class="row">
+				 <div class="col-md-3"></div>
+				 <div class="col-md-8">
+					<input type="hidden" id="memberReceiveNo" name="memberReceiveNo" value="${sessionScope.memberSessionNo}">
+					<input type="hidden" id="receiveCurrentPage">
+					<input type="hidden" id="sendCurrentPage">
+					<input type="hidden" id="sendMessageNo" name="sendMessageNo" value="${message.sendMessageNo}">
+					<div id="deletBtn" style="margin-right:5px;float:left;"></div>
+					<div style="float:left;">
+						<button type="button" id="messageWrite" class="btn btn-primary">메시지 작성</button>
+						<button type="button" id="sendMessage" class="btn btn-primary">보낸 메시지</button>
+						<button type="button" id="messageReceive" class="btn btn-primary">받은 메시지</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<table border="1" class="table" id="tb">
 		<thead>
@@ -215,12 +276,27 @@
 			<td colspan="2">
 				<form id="deleteForm"action="${pageContext.request.contextPath}/receiveMessageDelete" method="post">
 					<input type="hidden" id="deleteMessageNo" name="deleteMessageNo" value="${message.sendMessageNo}">
-					<button type=button id="deleteMessage">삭제</button>
-					<button type="button" id="reportMessage">메시지 신고</button>
+					<button type=button id="deleteMessage" class="btn btn-primary">삭제</button>
+					<button type="button" id="reportMessage" class="btn btn-primary">메시지 신고</button>
 				</form>
 			</td>
 		<tr>
 	</table>
-	<div id="page" style="text-align: center;"></div>
+	<div id="page"	style="text-align:center">
+		<ul class="pagination pagination-sm" id="pageUl">
+		</ul>
+	</div>
+	<div class="navbar-form navbar-left">
+	<div class="form-group">
+		<div id="searchDiv">
+			<select class="form-control" id ="searchMessageSelect">
+				<option value="rs.send_member_id">보낸사람</option>
+				<option value="rs.message_title">제목</option>
+			</select>
+			<input class="form-control" type="text" id="searchMessageText" >
+			<button class="btn btn-white btn-round btn-just-icon" type="button"  id="messageSearch"><i class="material-icons">search</i></button>
+		</div>
+	</div>
+	</div>
 </body>
 </html>
