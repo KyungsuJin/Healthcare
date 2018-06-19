@@ -24,8 +24,25 @@
 		$("#modifyMedicationBtn").click(function(){
 			$(location).attr('href', "${pageContext.request.contextPath}/modifyMedication?medicationNo=${medicationResponse.medicationNo}&currentPage=${currentPage}&pagePerRow=${pagePerRow}");
 		});
+		$('#calendar').fullCalendar({
+	        header: {
+	            left: 'prev,next today',
+	            center: 'title',
+	            right: 'month,basicWeek,basicDay'
+	        },
+	        defaultDate: new Date(),
+	        navLinks: true, 
+	        editable: false,
+	        eventLimit: true,
+		});
 	});
 </script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.9.4/scheduler.css">
+<script type="text/javascript" src="https://fullcalendar.io/releases/fullcalendar-scheduler/1.9.4/scheduler.min.js"></script>
 </head>
 <body>
 	<jsp:include page="../include/body.jsp"></jsp:include>
@@ -38,11 +55,6 @@
 		<div>${medicationResponse.medicineNo}</div>
 		<div>${medicationResponse.medicineName}</div>
 		<div>${medicationResponse.memberName}</div>
-		<%-- <div>
-			<c:forEach var="i" begin="${medicationResponse.medicationStartDate}" end="${medicationResponse.medicationEndDate}" step="1">
-				<div>i</div>
-			</c:forEach>
-		</div> --%>
 		<div>${medicationResponse.medicationStartDate}</div>
 		<div>${medicationResponse.medicationEndDate}</div>
 		<div>${medicationResponse.dosage}</div>
@@ -50,6 +62,7 @@
 		<div>${medicationResponse.medicationTitle}</div>
 		<div>${medicationResponse.medicationContent}</div>
 		<div>${medicationResponse.medicationDate}</div>
+		<div id='calendar'></div>
 		<input id="medicationListBtn" class="btn btn-default" type="button" value="목록">
 	</div>
 </body>

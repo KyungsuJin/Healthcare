@@ -14,16 +14,15 @@
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=n_ZxRkO2ivuJYTV3q96V&submodules=geocoder"></script>
 <script>
 	$(document).ready(function(){
+		
 		//naver 지도 api
 		var map = new naver.maps.Map("map", {
 		    center: new naver.maps.LatLng(35.853386500000,127.122277500000),
 		    zoom: 10,
 		    mapTypeControl: true
 		});
-		var marker = new naver.maps.Marker({
-            position: new naver.maps.LatLng(35.853386500000,127.122277500000),
-            map: map
-        });
+		
+		var marker;
 		
 		map.setCursor('pointer');
 
@@ -35,13 +34,21 @@
 		        if (status === naver.maps.Service.Status.ERROR) {
 		            return alert('Something Wrong!');
 		        }
-
 		        var item = response.result.items[0],
 		            addrType = item.isRoadAddress ? '[도로명 주소]' : '[지번 주소]',
 		            point = new naver.maps.Point(item.point.x, item.point.y);
 	            console.log("x : " + item.point.x);
 	            console.log("y : " + item.point.y);
-	            marker.setPosition(item.point.x, item.point.y);
+	            if(marker == null){
+	            	marker = new naver.maps.Marker({
+		                position: new naver.maps.LatLng(item.point.y, item.point.x),
+		                map: map
+		            });
+	            } else{
+	            	marker.setPosition(new naver.maps.LatLng(item.point.y, item.point.x));
+	            }
+	            
+	            marker.setMap(map);
 		        map.setCenter(point);
 		    });
 		}
@@ -53,9 +60,6 @@
 	        console.log($(this).closest('td').siblings('#medicalAddress'));
 	        searchAddressToCoordinate($(this).closest('td').siblings('#medicalAddress').text());
 	    });
-		
-		
-		
 		
 		$("#cityName").change(function(){
 			$("#districtName").text("");
@@ -101,7 +105,7 @@
 			});
 		});		
 
-	});	
+	});
 </script>
 </head>
 <body>

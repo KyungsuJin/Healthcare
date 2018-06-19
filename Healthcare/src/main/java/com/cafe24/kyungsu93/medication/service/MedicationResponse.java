@@ -4,6 +4,7 @@ public class MedicationResponse {
 	private String medicationNo;
 	private String medicineNo;
 	private String medicineName;
+	private String memberNo;
 	private String memberName;
 	private String medicationStartDate;
 	private String medicationEndDate;
@@ -30,6 +31,12 @@ public class MedicationResponse {
 	}
 	public void setMedicineName(String medicineName) {
 		this.medicineName = medicineName;
+	}
+	public String getMemberNo() {
+		return memberNo;
+	}
+	public void setMemberNo(String memberNo) {
+		this.memberNo = memberNo;
 	}
 	public String getMemberName() {
 		return memberName;
@@ -82,10 +89,10 @@ public class MedicationResponse {
 	@Override
 	public String toString() {
 		return "MedicationResponse [medicationNo=" + medicationNo + ", medicineNo=" + medicineNo + ", medicineName="
-				+ medicineName + ", memberName=" + memberName + ", medicationStartDate=" + medicationStartDate
-				+ ", medicationEndDate=" + medicationEndDate + ", dosage=" + dosage + ", totalDosage=" + totalDosage
-				+ ", medicationTitle=" + medicationTitle + ", medicationContent=" + medicationContent
-				+ ", medicationDate=" + medicationDate + "]";
+				+ medicineName + ", memberNo=" + memberNo + ", memberName=" + memberName + ", medicationStartDate="
+				+ medicationStartDate + ", medicationEndDate=" + medicationEndDate + ", dosage=" + dosage
+				+ ", totalDosage=" + totalDosage + ", medicationTitle=" + medicationTitle + ", medicationContent="
+				+ medicationContent + ", medicationDate=" + medicationDate + "]";
 	}
 	
 }

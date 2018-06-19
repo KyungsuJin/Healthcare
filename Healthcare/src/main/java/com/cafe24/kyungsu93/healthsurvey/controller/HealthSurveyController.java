@@ -29,99 +29,119 @@ public class HealthSurveyController {
 	private static final Logger logger = LoggerFactory.getLogger(HealthSurveyController.class);
 	@Autowired HealthSurveyService healthSurveyService;
 	
+	//건강설문 리스트 출력을 위한 메서드
 	@RequestMapping(value="/getHealthSurveyList", method=RequestMethod.GET)
 	public String getHealthSurveyList(Model model
 			,@RequestParam(value="currentPage", defaultValue="1") int currentPage
-			,@RequestParam(value="pagePerRow", defaultValue="10") int pagePerRow) {
+			,@RequestParam(value="pagePerRow", defaultValue="10") int pagePerRow
+			,HttpSession session) {
 		logger.debug("HealthSurveyController.getHealthSurveyList 메서드 실행");
-		Map map = healthSurveyService.getHealthSurveyList(currentPage, pagePerRow);
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("firstPage", map.get("firstPage"));
-		model.addAttribute("lastPage", map.get("lastPage"));
-		model.addAttribute("beforePage", map.get("beforePage"));
-		model.addAttribute("afterPage", map.get("afterPage"));
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("pagePerRow", pagePerRow);
-		return "healthsurvey/getHealthSurveyList";
+		if(session.getAttribute("memberSessionLevel") != null) {
+			Map map = healthSurveyService.getHealthSurveyList(currentPage, pagePerRow);
+			model.addAttribute("list", map.get("list"));
+			model.addAttribute("firstPage", map.get("firstPage"));
+			model.addAttribute("lastPage", map.get("lastPage"));
+			model.addAttribute("beforePage", map.get("beforePage"));
+			model.addAttribute("afterPage", map.get("afterPage"));
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("pagePerRow", pagePerRow);
+			return "healthsurvey/getHealthSurveyList";
+		} else {
+			return "redirect:/";
+		}
 	}
 	
+	//건강설문 내용 출력을 위한 메서드
 	@RequestMapping(value="getHealthSurveyContent", method=RequestMethod.GET)
-	public String getHealthSurveyContent(Model model, HealthSurveyRequest healthSurveyRequest) {
-		HealthSurveyResponse healthSurveyResponse = healthSurveyService.getHealthSurveyContent(healthSurveyRequest);
-		model.addAttribute("healthSurveyContent", healthSurveyResponse);
-		return "healthsurvey/getHealthSurveyContent";
+	public String getHealthSurveyContent(Model model, HealthSurveyRequest healthSurveyRequest, HttpSession session) {
+		if(session.getAttribute("memberSessionLevel") != null) {
+			HealthSurveyResponse healthSurveyResponse = healthSurveyService.getHealthSurveyContent(healthSurveyRequest);
+			model.addAttribute("healthSurveyContent", healthSurveyResponse);
+			return "healthsurvey/getHealthSurveyContent";
+		} else {
+			return "redirect:/";
+		}
 	}
 	
+	//건강설문 등록을 위한 메서드
 	@RequestMapping(value="/addHealthSurvey", method=RequestMethod.GET)
-	public String addHealthSurvey(Model model) {
-		List<Disease> list = healthSurveyService.selectListForAdd();
-		model.addAttribute("list", list);
-		return "healthsurvey/addHealthSurvey";
+	public String addHealthSurvey(Model model, HttpSession session) {
+		if(session.getAttribute("memberSessionLevel").toString().equals("3")) {
+			//건강설문 등록전 특정 질병에 대한 설문이라는것을 선택해야하기때문에 질병 리스트를 가져온다.
+			List<Disease> list = healthSurveyService.selectListForAdd();
+			model.addAttribute("list", list);
+			return "healthsurvey/addHealthSurvey";
+		} else {
+			return "redirect:/getHealthSurveyList";
+		}
 	}
 	
+	//건강설문 등록을 위한 메서드
 	@RequestMapping(value="/addHealthSurvey", method=RequestMethod.POST)
-	public String addHealthSurvey(HealthSurveyRequest healthSurveyRequest, HealthSurveyQuestion healthSurveyQuestion, HealthSurveySelection healthSurveySelection) {
-		System.out.println("여기오---------------");
-		System.out.println(healthSurveyRequest.toString());
-		System.out.println(healthSurveyQuestion.toString());
-		System.out.println(healthSurveySelection.toString());
-		System.out.println("여기오---------------");
-		healthSurveyService.addHealthSurvey(healthSurveyRequest, healthSurveyQuestion, healthSurveySelection);
+	public String addHealthSurvey(HealthSurveyRequest healthSurveyRequest, HealthSurveyQuestion healthSurveyQuestion, HealthSurveySelection healthSurveySelection, HttpSession session) {
+		if(session.getAttribute("memberSessionLevel").toString().equals("3")) {
+			healthSurveyService.addHealthSurvey(healthSurveyRequest, healthSurveyQuestion, healthSurveySelection);
+		}
 		return "redirect:/getHealthSurveyList";
 	}
 	
+	//특정 설문의 질문내용과 선택지를 가져오기 위한 메서드
 	@RequestMapping(value="/getHealthSurveyQuestion", method=RequestMethod.GET)
-	public String addHealthSurveyResult(Model model, HealthSurveyRequest healthSurveyRequest) {
-		System.out.println(healthSurveyRequest.toString());
-		Map<String, Object> map = healthSurveyService.getHealthSurveyQuestion(healthSurveyRequest);
-		for(String name : map.keySet()) {
-			model.addAttribute(name, map.get(name));
-			System.out.println("1 : " + name);
-			System.out.println("2 : " + map.get(name));
+	public String getHealthSurveyQuestion(Model model, HealthSurveyRequest healthSurveyRequest, HttpSession session) {
+		if(session.getAttribute("memberSessionLevel") != null) {
+			Map<String, Object> map = healthSurveyService.getHealthSurveyQuestion(healthSurveyRequest);
+			for(String name : map.keySet()) {
+				model.addAttribute(name, map.get(name));
+			}
+			return "healthsurvey/addHealthSurveyResult";
+		} else {
+			return "redirect:/";
 		}
-		
-		return "healthsurvey/addHealthSurveyResult";
 	}
 	
 	@RequestMapping(value="/removeHealthSurvey", method=RequestMethod.GET)
-	public String addHealthSurveyResult(HealthSurveyRequest healthSurveyRequest) {
-		healthSurveyService.removeHealthSurvey(healthSurveyRequest);
+	public String removeHealthSurvey(HealthSurveyRequest healthSurveyRequest, HttpSession session) {
+		if(session.getAttribute("memberSessionLevel").toString().equals("1")) {
+			healthSurveyService.removeHealthSurvey(healthSurveyRequest);
+		}
 		return "redirect:/getHealthSurveyList";
 	}
 	
 	@RequestMapping(value="/getHealthSurveyResult", method=RequestMethod.GET)
-	public String getHealthSurveyResult(Model model, HealthSurveyResultRequest healthSurveyResultRequest) {
-		System.out.println("11111"+healthSurveyResultRequest.toString());
-		HealthSurveyResultResponse healthSurveyResultResponse = healthSurveyService.getHealthSurveyResultOne(healthSurveyResultRequest);
-		model.addAttribute("healthSurveyResultResponse", healthSurveyResultResponse);
-		System.out.println("22222"+healthSurveyResultResponse.toString());
+	public String getHealthSurveyResult(Model model, HealthSurveyResultRequest healthSurveyResultRequest, HttpSession session) {
+		String memberSessionLevel = session.getAttribute("memberSessionLevel").toString();
+		if(memberSessionLevel.equals("2") || memberSessionLevel.equals("3")) {
+			HealthSurveyResultResponse healthSurveyResultResponse = healthSurveyService.getHealthSurveyResultOne(healthSurveyResultRequest);
+			model.addAttribute("healthSurveyResultResponse", healthSurveyResultResponse);
+			return "healthsurvey/getHealthSurveyResult";
+		} else {
+			return "redirect:/";
+		}
 		
-		return "healthsurvey/getHealthSurveyResult";
+		
 	}
 	
 	@RequestMapping(value="/getHealthSurveyResultList", method=RequestMethod.GET)
 	public String getHealthSurveyResultList(Model model, HttpSession session
-			,@RequestParam(value="currentPage", defaultValue="1") int currentPage
-			,@RequestParam(value="pagePerRow", defaultValue="10") int pagePerRow
-			,Member member) {
-		if(member.getMemberNo() == null) {
-			if(session.getAttribute("memberSessionNo") != null) {
-				member.setMemberNo(session.getAttribute("memberSessionNo").toString());
-			} else {
-				return "redirect:/";
-			}
-			
+											,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+											,@RequestParam(value="pagePerRow", defaultValue="10") int pagePerRow
+											,Member member) {
+		if(session.getAttribute("memberSessionLevel") != null && session.getAttribute("memberSessionLevel").toString().equals("2")) {
+			member.setMemberNo(session.getAttribute("memberSessionNo").toString());
+			logger.debug("HealthSurveyController.getHealthSurveyResultList 메서드 실행");
+			Map map = healthSurveyService.getHealthSurveyResultList(currentPage, pagePerRow, member);
+			model.addAttribute("list", map.get("list"));
+			model.addAttribute("firstPage", map.get("firstPage"));
+			model.addAttribute("lastPage", map.get("lastPage"));
+			model.addAttribute("beforePage", map.get("beforePage"));
+			model.addAttribute("afterPage", map.get("afterPage"));
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("pagePerRow", pagePerRow);
+			return "healthsurvey/getHealthSurveyResultList";
+		} else {
+			return "redirect:/";
 		}
-		logger.debug("HealthSurveyController.getHealthSurveyResultList 메서드 실행");
-		Map map = healthSurveyService.getHealthSurveyResultList(currentPage, pagePerRow, member);
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("firstPage", map.get("firstPage"));
-		model.addAttribute("lastPage", map.get("lastPage"));
-		model.addAttribute("beforePage", map.get("beforePage"));
-		model.addAttribute("afterPage", map.get("afterPage"));
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("pagePerRow", pagePerRow);
-		return "healthsurvey/getHealthSurveyResultList";
+
 	}
 
 }

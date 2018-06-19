@@ -64,6 +64,7 @@
 			medication.medication_no AS medicationNo
 			,medication.medicine_no AS medicineNo
 			,medicine.medicine_name AS medicineName
+			,medication.member_no AS memberNo
 			,member.member_name AS memberName
 			,medication.medication_start_date AS medicationStartDate
 			,medication.medication_end_date AS medicationEndDate

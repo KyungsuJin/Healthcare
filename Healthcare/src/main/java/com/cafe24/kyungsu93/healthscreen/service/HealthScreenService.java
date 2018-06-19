@@ -9,60 +9,98 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cafe24.kyungsu93.bloodpressure.service.BloodPressure;
+import com.cafe24.kyungsu93.bloodpressure.service.BloodPressureDao;
+import com.cafe24.kyungsu93.bloodsugar.service.Bloodsugar;
+import com.cafe24.kyungsu93.bloodsugar.service.BloodsugarDao;
+import com.cafe24.kyungsu93.bodymassindex.service.BodyMassIndex;
+import com.cafe24.kyungsu93.bodymassindex.service.BodyMassIndexDao;
+import com.cafe24.kyungsu93.bodymassindex.service.BodyMassIndexService;
+
 
 @Service
 public class HealthScreenService {
 	private static final Logger logger = LoggerFactory.getLogger(HealthScreenService.class);
 
 	@Autowired HealthScreenDao healthScreenDao;
+	@Autowired BodyMassIndexDao bodyMassIndexDao;
+	@Autowired BloodsugarDao bloodSugarDao;
+	@Autowired BloodPressureDao bloodPressureDao;
 	
+	//건강검진표 리스트 출을 위한 메서드
 	public Map<String,Object> getHealthScreenList(int currentPage, int pagePerRow, HealthScreenRequest heatlhScreenRequest){
 		logger.debug("HealthScreenService.getHealthScreenList 호출");
+		//자신이 등록한 건강검진표의 총 row수를 가져온다.
 		int totalRow = healthScreenDao.healthScreenTotalCount(heatlhScreenRequest);
+		//게시판에서 가장 첫번째 페이지를 나타내는값
 		int firstPage = 1;
+		//게시판에서 가장 마지막 페이지를 나타내는값
 		int lastPage = totalRow/pagePerRow;
+		//만약 나누어 떨어지지않는다면, 마지막페이지가 하나 더 있으므로 ++ 해준다.
 		if(totalRow%pagePerRow != 0) {
 			lastPage++;
 		}
+		//현재 currentPage에서  이전페이지를 나타내는 값
 		int beforePage = ((currentPage-1)/10)*10;
+		//현재 currentPage에서  다음페이지를 나타내는 값
 		int afterPage = ((currentPage-1)/10)*10 +11;
 		
+		//한페이지당 10개의 row를 출력을 해주고, 그 범위를 정하기 위해 beginRow와 pagePerRow를 담은뒤 호출한다..
 		Map pageMap = new HashMap<String, Object>();
 		pageMap.put("memberNo", heatlhScreenRequest.getMemberNo());
 		pageMap.put("beginRow", (currentPage-1)*10);
 		pageMap.put("pagePerRow", pagePerRow);
-		
-		Map map = new HashMap<String, Object>();
 		List<HealthScreenResponse> list = healthScreenDao.getHealthScreenList(pageMap);
+		
+		//위에서 구한 값들을 리턴하기 위하여 map을 생성하여 담는다.
+		Map map = new HashMap<String, Object>();
 		map.put("list", list);
 		map.put("firstPage", firstPage);
 		map.put("lastPage", lastPage);
 		map.put("beforePage", beforePage);
 		map.put("afterPage", afterPage);
+		logger.debug("HealthScreenService.getHealthScreenList.map : " + map);
 		return map;
 	}
 	
-	public void addHealthScreen(HealthScreenRequest healthScreenRequest) {
-		//여기에서 체질량, 혈당, 혈압을 먼저 insert 한다음 key값을 healthScreenRequest에 넣고, insert 한다.
+	//건강검진표 등록을 위한 메서드
+	public void addHealthScreen(HealthScreenRequest healthScreenRequest, BodyMassIndex bodyMassIndex, /*Bloodsugar bloodSugar,*/ BloodPressure bloodPressure) {
+		//체질량테이블의 다음 key값을 리턴받아와 setting하고, insert 한 뒤 해당 key값을 healthScreenRequest에 setting한다.
+		bodyMassIndex.setBodyMassIndexNo("body_mass_index_" + (bodyMassIndexDao.bodyMassIndexEndNo()+1));
+		bodyMassIndexDao.addBodyMassIndex(bodyMassIndex);
+		healthScreenRequest.setBodyMassIndexNo(bodyMassIndex.getBodyMassIndexNo());
 		
+		//혈당테이블의 다음 key값을 리턴받아와 setting하고, insert 한 뒤 해당 key값을 healthScreenRequest에 setting한다.
+		/*bloodSugar.setBloodSugarNo("blood_sugar_" + (bloodSugarDao.getBloodSugarNo()+1));
+		bloodSugarDao.addBloodSugar(bloodSugar);
+		healthScreenRequest.setBloodSugarNo(bloodSugar.getBloodSugarNo());
+
+		//혈압테이블의 다음 key값을 리턴받아와 setting하고, insert 한 뒤 해당 key값을 healthScreenRequest에 setting한다.
+		bloodPressure.setBloodPressureNo("blood_pressure_" + (bloodPressureDao.selectBloodPressureNo()+1));*/
+		bloodPressureDao.addBloodPressure(bloodPressure);
+		healthScreenRequest.setBloodPressureNo(bloodPressure.getBloodPressureNo());
 		
-		int number = healthScreenDao.getHealthScreenNo() +1;
-		healthScreenRequest.setHealthScreenNo("health_screen_"+number);
+		//건강검진표테이블의 다음 key값을 리턴받아와 setting하고, insert 한다.
+		healthScreenRequest.setHealthScreenNo("health_screen_" + (healthScreenDao.getHealthScreenNo()+1));
 		healthScreenDao.addHealthScreen(healthScreenRequest);
 	}
 	
+	//건강검진표 결과 출력을 위한 메서드
 	public HealthScreenResponse getHealthScreenResult(HealthScreenRequest healthScreenRequest) {
 		return healthScreenDao.getHealthScreenResult(healthScreenRequest);
 	}
 	
+	//건강검진표 삭제를 위한 메서드
 	public void removeHealthScreen(HealthScreenRequest healthScreenRequest) {
 		healthScreenDao.removeHealthScreen(healthScreenRequest);
 	}
 	
+	//건강검진표 수정을 위해 특정 건강검진표의 내용을 가져오는 메서드
 	public HealthScreenResponse getHealthScreenOne(HealthScreenRequest healthScreenRequest) {
 		return healthScreenDao.getHealthScreenOne(healthScreenRequest);
 	}
 	
+	//건강검진표 수정을 위한 메서드
 	public void modifyHealthScreen(HealthScreenRequest healthScreenRequest) {
 		healthScreenDao.modifyHealthScreen(healthScreenRequest);
 	}

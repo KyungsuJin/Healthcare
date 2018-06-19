@@ -32,8 +32,6 @@ public class HealthSurveyRestController {
 	public String addHealthSurveyEvaluation(@RequestParam(value="healthSurveyResultNo") String healthSurveyResultNo
 											,@RequestParam(value="healthSurveyRegisterNo") String healthSurveyRegisterNo
 											,@RequestParam(value="healthSurveyEvaluationAverageGrade") int healthSurveyEvaluationAverageGrade) {
-		System.out.println("값 1 : " + healthSurveyResultNo);
-		System.out.println("값 2 : " + healthSurveyEvaluationAverageGrade);
 		healthSurveyService.addHealthSurveyEvaluation(healthSurveyResultNo, healthSurveyRegisterNo, healthSurveyEvaluationAverageGrade);
 		return "";
 	}

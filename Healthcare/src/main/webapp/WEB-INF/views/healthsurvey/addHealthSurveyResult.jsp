@@ -56,12 +56,12 @@
 			${question[i].healthSurveyQuestion}<br>
 			<c:set var="tempName">selection${i}</c:set>
 			<c:forEach var = "healthSelection" items = "${question[i].healthSurveySelection}">
-			<div>
-				<input type="radio" id="healthSurveyRecordNo" name="${tempName}" value="${healthSelection.healthSurveySelectionNo}">
-				<input type="hidden" id="selectionScore" value="${healthSelection.healthSurveySelectionScore}">
-				${healthSelection.selectionNo}.
-				${healthSelection.healthSurveySelection}<br>
-			</div>
+				<div>
+					<input type="radio" id="healthSurveyRecordNo" name="${tempName}" value="${healthSelection.healthSurveySelectionNo}">
+					<input type="hidden" id="selectionScore" value="${healthSelection.healthSurveySelectionScore}">
+					${healthSelection.selectionNo}.
+					${healthSelection.healthSurveySelection}<br>
+				</div>
 			</c:forEach>
 			<br>
 		</c:forEach>

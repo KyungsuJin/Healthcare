@@ -30,16 +30,10 @@
 			
 			공복여부 : <input type="radio" name="fastingState" value="T"> <br>
 			혈당 : <input type="number" id="fastingBloodSugar" name="fastingBloodSugar"><br>
+			
+			
 			수축혈압 : <input type="number" id="systolicPressure" name="systolicPressure"><br>
 			이완혈압 : <input type="number" id="diastolicPressure" name="diastolicPressure"><br>
-			
-			<input type="text" id="bloodSugarNo" name="bloodSugarNo"><br>
-			<input type="text" id="bloodPressureNo" name="bloodPressureNo"><br>
-			<input type="text" id="bodyMassIndexNo" name="bodyMassIndexNo"><br>
-			
-			
-			
-			
 			
 			
 			총 콜레스테롤 : <input type="text" id="totalCholesterol" name="totalCholesterol"><br>

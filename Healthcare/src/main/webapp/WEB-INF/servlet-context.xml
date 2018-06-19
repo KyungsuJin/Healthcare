@@ -46,35 +46,7 @@
         <property name="dataSource" ref="dataSource" />
         <property name="mapperLocations">
             <list>
-            
-				<value>classpath:com/cafe24/kyungsu93/healthscreen/service/HealthScreenMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/healthsurvey/service/HealthSurveyMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/disease/service/DiseaseMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/member/service/MemberMapper.xml</value>
-                <value>classpath:com/cafe24/kyungsu93/member/service/MemberFileMapper.xml</value>
-                <value>classpath:com/cafe24/kyungsu93/login/service/LoginMapper.xml</value>
-                <value>classpath:com/cafe24/kyungsu93/bloodpressure/service/BloodPressureMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/group/service/GroupMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/group/service/GroupInviteMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/bloodsugar/service/BloodsugarMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/notice/service/NoticeMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/diet/service/DietMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/message/service/MessageMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/exercise/service/ExerciseMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/treatment/service/TreatmentMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/treatment/service/TreatmentFileMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/medication/service/MedicationMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/medicine/service/MedicineMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/food/service/FoodMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/bodymassindex/service/BodyMassIndexMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/payment/service/PointChargingMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/payment/service/RefundMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/exercisefeedback/service/ExerciseFeedbackMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/exercisefeedback/service/ExerciseFeedbackResponseMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/doctorrequest/service/DoctorRequestMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/doctorfeedback/service/DoctorFeedbackMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/address/service/AddressMapper.xml</value>
-				<value>classpath:com/cafe24/kyungsu93/medical/service/MedicalMapper.xml</value>
+				<value>classpath:com/cafe24/kyungsu93/**/service/*.xml</value>
             </list>
         </property>
     </bean>
