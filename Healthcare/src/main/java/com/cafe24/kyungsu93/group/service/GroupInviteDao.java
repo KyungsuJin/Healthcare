@@ -36,7 +36,7 @@ public class GroupInviteDao {
 	}		
 	
 	//그룹 회원 리스트
-	public List<GroupInvite> groupMemberList(Map<String, Integer> map) {
+	public List<GroupInvite> groupMemberList(Map<String, Object> map) {
 		logger.debug("GroupInviteDao - groupMemberList 실행");
 		 List<GroupInvite> list = sqlSession.selectList(NS+"groupMembersList",map);
 		return list;

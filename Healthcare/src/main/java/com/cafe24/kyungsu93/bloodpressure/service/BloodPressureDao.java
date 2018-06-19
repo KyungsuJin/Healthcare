@@ -15,7 +15,12 @@ public class BloodPressureDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.bloodpressure.service.BloodPressureMapper.";
-
+	
+	public int bloodPressureNoCountToHealthScreen(String bloodPressureNo) {
+		logger.debug("BloodPressureDao - bloodPressureNoCountToHealthScreen 실행");
+		return sqlSession.selectOne(NS+"bloodPressureNoCountToHealthScreen",bloodPressureNo);
+	}
+	
 	public int bloodPressureSearchCount(Map<String, Object> map) {
 		logger.debug("BloodPressureDao - bloodPressureCount 실행");
 		return sqlSession.selectOne(NS+"bloodPressureSearchCount",map);

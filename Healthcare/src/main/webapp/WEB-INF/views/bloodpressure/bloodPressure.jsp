@@ -26,6 +26,31 @@
 			return true;
 		}
 	}
+   	
+   	function deleteBtn(data){
+		var bloodPressureNo = document.getAttribute('data');
+		console("bloodPressureNo:"+bloodPressureNo);
+   		var checkName = $.ajax({
+            type : "GET",
+            data : {bloodPressureNo : bloodPressureNo},
+            url : "${pageContext.request.contextPath}/bloodPressureNoCountToHealthScreen",
+            dataType : "json",
+            contentType: "application/json; charset=UTF-8",
+            success : function(data){
+            	console.log(data);   
+            	if(data.count> 0){
+            		alert('현재 건강검진표에서 사용중인 혈압 차트이기 때문에 삭제가 불가능합니다.');
+            		return count = 0;
+            	}else if(data.count == 0){
+            		alert('삭제가 완료되었습니다.');
+            		 location.href="${pageContext.request.contextPath}/deleteBloodPressure?bloodPressureNo="+bloodPressureNo;
+            	}
+            }
+        });       
+       checkName.fail(function(jqXHR, textStatus){
+    	   alert( "Request failed: " + textStatus );
+		});
+  	}
 </script>
 </head>
 <body>
@@ -59,24 +84,23 @@
 		<table>		
 			<thead>
 				<tr>
+					<td><input type="checkbox" name="checkall" onclick="javascript:CheckAll()"></th>
 					<th>번호</th>
 					<th>수축기</th>
 					<th>이완기</th>
 					<th>날짜</th>
 					<th>수정</th>
-					<th>삭제</th>
-
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="bloodPressure" items="${list}">
 					<tr>
+						<td><input type="checkbox" id="del_id" name="del_unit[]" value="${bloodPressure.bloodPressureNo }"></td>
 						<td>${bloodPressure.bloodPressureNo }</td>
 						<td>${bloodPressure.bloodPressureDate}</td>
 						<td>${bloodPressure.systolicPressure }</td>
 						<td>${bloodPressure.diastolicPressure }</td>
 						<td><a type="button" href="${pageContext.request.contextPath}/modifyBloodPressure?bloodPressureNo=${bloodPressure.bloodPressureNo}" id="modifyBtn">수정</a></td>
-						<td><a type="button" href="${pageContext.request.contextPath}/deleteBloodPressure?bloodPressureNo=${bloodPressure.bloodPressureNo}" id="deleteBtn">삭제</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>	

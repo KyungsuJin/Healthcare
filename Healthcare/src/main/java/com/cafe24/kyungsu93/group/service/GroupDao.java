@@ -15,7 +15,13 @@ public class GroupDao{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.group.service.GroupMapper.";
-		
+	
+	//그룹 번호 검색
+	public Group groupNoSearch(String groupName) {
+		logger.debug("GroupDao - groupNoSearch 실행");
+		return sqlSession.selectOne(NS+"groupNoSearch",groupName);
+	}
+	
 	//그룹 상세 이전글 카운트
 	public int prevGroupDetailCount(String groupNo) {
 		logger.debug("GroupDao - prevGroupDetailCount 실행");
@@ -58,7 +64,7 @@ public class GroupDao{
 	
 	public Group groupDeleteCheckgroupNo(String groupNo) {
 		logger.debug("GroupDao - groupDeleteCheckgroupNo 실행");
-		return sqlSession.selectOne(NS+"groupDeleteCheckgroupNo", groupNo);
+		return sqlSession.selectOne(NS+"groupDeleteCheckgroupName", groupNo);
 	}
 		
 	public Group groupDdaycheck() {

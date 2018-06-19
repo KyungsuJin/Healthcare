@@ -76,6 +76,7 @@
 		INNER JOIN group_kind b
 		ON a.group_kind_no = b.group_kind_no
 		INNER JOIN member c
+		WHERE group_name = #{groupName}
 		ON a.member_no = c.member_no
 		ORDER BY groupName DESC
 		LIMIT #{beginRow},#{pagePerRow}
@@ -90,7 +91,7 @@
 		FROM member
 		WHERE member_id = #{memberId}	
 	</select>
-		<select id="personalAgreeSearch" 
+	<select id="personalAgreeSearch" 
 			parameterType="String" 
 			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
 		SELECT

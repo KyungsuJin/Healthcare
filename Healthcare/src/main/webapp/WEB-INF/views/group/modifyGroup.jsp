@@ -38,7 +38,7 @@ function cancleBtn() {
 			</select>
 		</div>
 		<div>
-			그룹명 : ${groupTable.groupName }
+			그룹명 : ${groupTable.groupName } ※그룹명은 변경이 불가능합니다.※
 		</div>
 		<div>
 			그룹 소개:

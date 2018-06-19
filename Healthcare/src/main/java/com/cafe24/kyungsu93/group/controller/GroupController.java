@@ -25,6 +25,20 @@ public class GroupController {
 	@Autowired
 	private GroupInviteService groupInviteService;
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
+
+	//그룹 캘린더 
+	@RequestMapping(value="/groupCalendar", method=RequestMethod.GET)
+	public String groupCalendar() {
+		logger.debug("GroupController - groupCalendar 포워드 실행");
+		return "group/groupCalendar";
+	}	
+	//그룹 삭제 진행
+	@RequestMapping(value="/deleteGroup", method=RequestMethod.GET)
+	public String acceptGroupList(@RequestParam(value="groupNo") String groupNo) {
+		logger.debug("GroupController - deleteGroup 리다이렉트 실행");
+		groupService.deleteGroup(groupNo);
+		return "redirect:/groupList";
+	}
 	
 	//그룹초대 수락
 	@RequestMapping(value="/accpetGroup", method=RequestMethod.GET)
@@ -49,8 +63,7 @@ public class GroupController {
 		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 		model.addAttribute("totalBlock", map.get("totalBlock"));
-		model.addAttribute("groupNameSelect", map.get("groupNameSelect"));
-		model.addAttribute("groupNo", map.get("groupNo"));
+		model.addAttribute("groupNoSend", map.get("groupNoSend"));
 		model.addAttribute("memberCountResult", map.get("memberCountResult"));
 		return "group/groupMembersList";
 	}
@@ -95,6 +108,7 @@ public class GroupController {
 		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 		model.addAttribute("totalBlock", map.get("totalBlock"));
+		model.addAttribute("groupNoSend", map.get("groupNoSend"));
 		return "group/inviteMemberList";
 	}
 	

@@ -8,12 +8,14 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	var groupNo = $('#groupNo').val();
-	var groupName= $('#groupName').val();
-	console.log(groupNo);
+
 	}); 
 	function deleteBtn(){	
 		alert('삭제가 진행됩니다.');
+		var groupName= $('#groupName').val();
+		var groupNo = $('#groupNo').val();
+		console.log("groupNo:"+groupNo);
+		console.log("groupName:"+groupName);
 		var checkGroupNo = $.ajax({
 			type : "GET",
 	        data : {groupName : groupName},
@@ -22,11 +24,11 @@ $(document).ready(function(){
 	        contentType: "application/json; charset=UTF-8"
 	    });  
 		checkGroupNo.done(function(data){
-		   console.log(msg);   
-			if(msg.memberCount> 0){
+		   console.log(data);   
+			if(data.memberCount> 0){
 		   		alert('현재 그룹에 회원이 있어 그룹 유예기간에 들어갑니다.');
 		   		location.href="${pageContext.request.contextPath}/deleteGroup?groupNo="+groupNo;
-			}else if(msg.memberCount == 0){
+			}else{
 		   		alert('삭제가 완료되었습니다.');
 		   		location.href="${pageContext.request.contextPath}/deleteGroup?groupNo="+groupNo;
 			}
@@ -43,9 +45,8 @@ $(document).ready(function(){
 </head>
 <body>
 <h1>그룹 상세보기</h1>
-
 <input type="hidden" id="groupNo" value="${map.groupDetail.groupNo}">
-<input type="hidden" id="groupName" value="${map.groupDetail.groupName }">
+<input type="hidden" id="groupName" value="${map.groupDetail.groupName}">
 	<table>
 		<tr>
 			<td>그룹명</td>

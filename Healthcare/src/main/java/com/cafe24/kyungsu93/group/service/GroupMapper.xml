@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cafe24.kyungsu93.group.service.GroupMapper">
-
+	<select id="groupNoSearch" 
+			parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.Group">
+		SELECT group_no as groupNo
+		FROM group_create
+		WHERE group_name = #{groupName}
+	</select>
 	<select id="nextGroupCount" resultType="Integer">
 		SELECT
 		count(*)
@@ -70,7 +76,7 @@
 	<select id="groupDeleteCheckgroupNo" parameterType="String" resultType="com.cafe24.kyungsu93.group.service.Group">
 		SELECT
 			group_name as groupName
-		FROM group_create
+		FROM group_invite
 		WHERE group_no = #{groupNo}
 	</select>
 	<select id="groupDdayNo" parameterType="String" resultType="com.cafe24.kyungsu93.group.service.Group">

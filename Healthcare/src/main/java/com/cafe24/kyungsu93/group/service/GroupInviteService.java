@@ -49,7 +49,7 @@ public class GroupInviteService {
 			groupInviteDao.acceptGroupList(groupInvite);
 		}
 	}
-	
+		
 	/**
 	 * 그룹 회원 리스트
 	 * @param currentPage
@@ -60,61 +60,61 @@ public class GroupInviteService {
 	public Map<String, Object> groupMemberList(int currentPage, int pagePerRow, String groupName) {
 		logger.debug("GroupService - groupMemberList 실행");
 		logger.debug("groupName:"+groupName);
-		Map<String,Object> returnMap = new HashMap<String,Object>();
 		//회원 수 조회
 		int total = 0;
 		total = groupInviteDao.groupMemberListCount(groupName);
-		GroupInvite memberSearch = groupInviteDao.memberNameSearch(groupName);
-		String groupNo = memberSearch.getGroupNo();
-		logger.debug("groupNo:"+groupNo);
-			//회원이 있을경우 리스트 출력
-			Map<String,Integer> map = new HashMap<String,Integer>();
-			int beginRow = (currentPage-1)*pagePerRow;
-			map.put("beginRow", beginRow);
-			map.put("pagePerRow", pagePerRow);
-			List<GroupInvite> list = groupInviteDao.groupMemberList(map);
-			int lastPage = total/pagePerRow;
-	        if(total % pagePerRow != 0) {
-	            lastPage++;
-	        }
-	        logger.debug("list:"+list);
-	        logger.debug("lastPage:"+lastPage);
-	        logger.debug("currentPage:"+currentPage);
-	        logger.debug("beginRow:"+beginRow);
-	        logger.debug("pagePerRow:"+pagePerRow);
-	        logger.debug("====================== page block =========================");
-	       
-	        int pagePerBlock = 10; //보여줄 블록 수 
-	        int block = currentPage/pagePerBlock;
-	        int totalBlock = total/pagePerBlock;//총 블록수
-	        
-	        if(currentPage % pagePerBlock != 0) {
-	        	block ++;
-	        }
-	        int firstBlockPage = (block-1)*pagePerBlock+1;
-	        int lastBlockPage = block*pagePerBlock;
-	        
-			if(lastPage > 0) {			
-				if(lastPage % pagePerBlock != 0) {
-					totalBlock++;
-				}
+		//회원이 있을경우 리스트 출력
+		Group groupNoSearch = groupDao.groupNoSearch(groupName);
+		String groupNoSend = groupNoSearch.getGroupNo();
+		logger.debug("groupNoSend:"+groupNoSend);
+		Map<String,Object> map = new HashMap<String,Object>();
+		int beginRow = (currentPage-1)*pagePerRow;
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		map.put("groupName", groupName);
+		List<GroupInvite> list = groupInviteDao.groupMemberList(map);
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		int lastPage = total/pagePerRow;
+        if(total % pagePerRow != 0) {
+            lastPage++;
+        }
+        logger.debug("list:"+list);
+        logger.debug("lastPage:"+lastPage);
+        logger.debug("currentPage:"+currentPage);
+        logger.debug("beginRow:"+beginRow);
+        logger.debug("pagePerRow:"+pagePerRow);
+        logger.debug("====================== page block =========================");
+       
+        int pagePerBlock = 10; //보여줄 블록 수 
+        int block = currentPage/pagePerBlock;
+        int totalBlock = total/pagePerBlock;//총 블록수
+        
+        if(currentPage % pagePerBlock != 0) {
+        	block ++;
+        }
+        int firstBlockPage = (block-1)*pagePerBlock+1;
+        int lastBlockPage = block*pagePerBlock;
+        
+		if(lastPage > 0) {			
+			if(lastPage % pagePerBlock != 0) {
+				totalBlock++;
 			}
-			if(lastBlockPage >= totalBlock) {
-				lastBlockPage = totalBlock;
-			}
-			logger.debug("firstBlockPage:"+firstBlockPage);
-			logger.debug("lastBlockPage:"+lastBlockPage);
-			logger.debug("block:"+block);
-			logger.debug("totalBlock:"+totalBlock);
-			logger.debug("====================== page block =========================");
-			returnMap.put("list", list);
-			returnMap.put("lastPage", lastPage);
-			returnMap.put("firstBlockPage", firstBlockPage);
-			returnMap.put("lastBlockPage", lastBlockPage);
-			returnMap.put("totalBlock", totalBlock);
-			returnMap.put("memberCountResult", total);
-			returnMap.put("groupNo", groupNo);
-			returnMap.put("groupNameSelect", groupName);
+		}
+		if(lastBlockPage >= totalBlock) {
+			lastBlockPage = totalBlock;
+		}
+		logger.debug("firstBlockPage:"+firstBlockPage);
+		logger.debug("lastBlockPage:"+lastBlockPage);
+		logger.debug("block:"+block);
+		logger.debug("totalBlock:"+totalBlock);
+		logger.debug("====================== page block =========================");
+		returnMap.put("groupNoSend", groupNoSend);
+		returnMap.put("list", list);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("firstBlockPage", firstBlockPage);
+		returnMap.put("lastBlockPage", lastBlockPage);
+		returnMap.put("totalBlock", totalBlock);
+		returnMap.put("memberCountResult", total);
 		return returnMap;
 	}
 	

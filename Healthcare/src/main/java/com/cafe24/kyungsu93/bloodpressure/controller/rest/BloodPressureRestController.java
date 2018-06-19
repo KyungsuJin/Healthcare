@@ -2,6 +2,7 @@ package com.cafe24.kyungsu93.bloodpressure.controller.rest;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,6 +26,16 @@ public class BloodPressureRestController {
 	@Autowired
 	private BloodPressureService bloodPressureService;
 	private static final Logger logger = LoggerFactory.getLogger(BloodPressureRestController.class);
+	
+	//그룹 삭제유예기간 등록 검색
+	@RequestMapping(value="/bloodPressureNoCountToHealthScreen", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Integer> bloodPressureNoCountToHealthScreen(@RequestParam(value="bloodPressureNo") String bloodPressureNo) {
+		logger.debug("BloodPressureRestController - bloodPressureNoCountToHealthScreen ajax 실행.");
+		Map<String,Integer> resultmap = bloodPressureService.bloodPressureNoCountToHealthScreen(bloodPressureNo);
+		logger.debug("resultmap:"+resultmap);
+		return resultmap;
+	}
 	
 	 @RequestMapping(value="/bloodPressureChart", method=RequestMethod.POST)
 	 @ResponseBody

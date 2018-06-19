@@ -141,7 +141,7 @@ public class GroupService {
 	}
 	
 	/**
-	 * 그룹삭제 회원이 있을 경우 유예기간 등록
+	 * 그룹 회원 수 검색
 	 * @param groupNo
 	 */
 	public Map<String, Object> memberCountSearch(String groupName) {	
@@ -153,21 +153,28 @@ public class GroupService {
 		return returnMap;
 	}
 	
+	/**
+	 * 그룹삭제 회원이 있을 경우 유예기간 등록
+	 * @param groupNo
+	 */
 	public void deleteGroup(String groupNo) {
 		logger.debug("GroupService - deleteGroup 실행");
 		//그룹번호로 그룹명 검색
-		Group group = groupDao.groupDeleteCheckgroupNo(groupNo);
-		String groupName = group.getGroupName();
-		//그룹명으로  총 회원검색
-		int memberCount = 0;
-		memberCount = groupDao.groupDeleteCheckMemberCount(groupName);
-		if(memberCount>0) {
-			//회원이 있을경우 유예기간 등록
-			groupDao.deleteApproval(groupNo);
-		}else {
-			//회원이 없을 경우 바로 삭제
-			groupDao.deleteGroup(groupNo);
-		}		
+		Group groupname = groupDao.groupDeleteCheckgroupNo(groupNo);
+		String groupName = groupname.getGroupName();
+		logger.debug("groupName:"+groupName);
+		if(groupName != null) {
+			//그룹명으로  총 회원검색
+			int memberCount = 0;
+			memberCount = groupDao.groupDeleteCheckMemberCount(groupName);
+			if(memberCount>0) {
+				//회원이 있을경우 유예기간 등록
+				groupDao.deleteApproval(groupNo);
+			}else {
+				//회원이 없을 경우 바로 삭제
+				groupDao.deleteGroup(groupNo);
+			}		
+		}
 	}	
 	
 	/**
