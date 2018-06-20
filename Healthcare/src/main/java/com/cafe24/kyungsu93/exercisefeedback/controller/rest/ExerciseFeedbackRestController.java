@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackResponseService;
 import com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackResult;
 import com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackService;
+import com.cafe24.kyungsu93.payment.service.PointCharging;
 
 @RestController
 public class ExerciseFeedbackRestController {
@@ -24,6 +25,15 @@ public class ExerciseFeedbackRestController {
 	private ExerciseFeedbackResponseService exerciseFeedbackResponseService;
 	private static final Logger logger = LoggerFactory.getLogger(ExerciseFeedbackRestController.class);
 	
+	@RequestMapping(value="/exerciseFeedbackMemberPointCheck", method=RequestMethod.GET)
+	@ResponseBody
+    public int exerciseFeedbackMemberPointCheck(@RequestParam(value="memberNo") String memberNo) {
+		logger.debug("ExerciseFeedbackRestController - exerciseFeedbackMemberPointCheck ajax 실행");
+		int count = exerciseFeedbackService.exerciseFeedbackMemberPointCheck(memberNo);
+		logger.debug("count:"+count);
+		return count;
+    }
+	//운동검색
 	@RequestMapping(value="/exerciseSearch", method=RequestMethod.GET)
 	@ResponseBody
     public Map<String, Object> exerciseSearch() {
@@ -32,7 +42,7 @@ public class ExerciseFeedbackRestController {
 		logger.debug("exerciseSearch:"+map.get("exerciseSearch"));
 		return map;
     }
-	
+	//음식검색
 	@RequestMapping(value="/feedbackFoodSearch", method=RequestMethod.GET)
 	@ResponseBody
     public Map<String, Object> feedbackFoodSearch(ExerciseFeedbackResult exerciseFeedbackResult) {

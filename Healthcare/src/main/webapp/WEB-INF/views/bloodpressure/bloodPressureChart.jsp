@@ -180,17 +180,11 @@
 	<div id="addBtn">
 		<a href="${pageContext.request.contextPath}/addBloodPressure">혈압 등록하기</a>
 	</div>
+	
 	<!-- 차트가 그려지는 위치 -->
 	<div id="linechart_material"></div>
 	<!-- 혈압 결과값 계산 -->
 	<div id="bloodPressureResult">
-		<div>
-			수축기 혈압(최고혈압)이 140 mmHg 이상이거나 이완기 혈압(확장기 혈압 혹은 최저혈압)이 90 mmHg 이상
-			정상	120 미만	80미만
-			고혈압 전단계 120-139	80-89
-			1기	140-159	90-99
-			2기	160 또는 그 이상	100 또는 그 이상
-		</div>
 		<div>
 			수축기 혈압 : <span id="systolicPressure"></span>
 		</div>

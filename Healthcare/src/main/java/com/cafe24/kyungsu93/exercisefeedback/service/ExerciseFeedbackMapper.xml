@@ -1,6 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackMapper">
+	<select id="exerciseFeedbackRequestListSearch" 
+			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
+		SELECT 
+			a.exercise_feedback_request_no as exerciseFeedbackRequestNo, 
+			b.member_id as memberId,
+			b.member_name as memberName, 
+			a.exercise_feedback_request_title as exerciseFeedbackRequestTitle, 
+			a.exercise_feedback_request_content as exerciseFeedbackRequestContent, 
+			a.exercise_feedback_request_date as exerciseFeedbackRequestDate
+		FROM exercise_feedback_request a
+		INNER JOIN member b
+		ON a.member_no = b.member_no
+			<where>
+			<if test="keyOption == 'exerciseFeedbackRequestNo'"> 
+				 member_name like CONCAT(#{keyWord}, '%') 
+			</if> 
+			<if test="keyOption == 'exerciseFeedbackRequestTitle'"> 
+				exercise_feedback_request_title like CONCAT(#{keyWord}, '%') 
+			</if> 
+			<if test="keyOption == 'memberName'">
+				exercise_feedback_request_no = #{keyWord}
+			</if>
+		</where> 
+		ORDER BY exercise_feedback_request_date DESC
+		LIMIT #{beginRow},#{pagePerRow}
+	</select>
+	<select id="exerciseFeedbackPtListSearch" 
+			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
+		SELECT 
+			a.member_name as memberName,
+			a.member_id as memberId,
+			b.member_no as memberNo,
+			b.member_work_space as memberWorkSpace, 
+			b.member_total_feedback as memberTotalFeedback,
+			b.member_agree_feedback as memberAgreeFeedback, 
+			b.evaluation_average_grade as evaluationAverageGrade
+		FROM member a
+		INNER JOIN member_teacher b
+		ON a.member_no = b.member_no
+		WHERE feedback_availablilty = 'T'
+		<choose>
+			<when test="keyOption == 'memberName'"> 
+				AND member_name like CONCAT(#{keyWord}, '%') 
+			</when> 
+			<when test="keyOption == 'memberId'"> 
+				AND memberId like CONCAT(#{keyWord}, '%') 
+			</when> 
+			<when test="keyOption == 'evaluationAverageGrade'">
+				AND evaluation_average_grade = #{keyWord}
+			</when>
+		</choose> 
+		ORDER BY member_approval_date DESC
+		LIMIT #{beginRow},#{pagePerRow}
+	</select>
+	<select id="exerciseFeedbackListSearchDate" 
+			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
+		SELECT 
+			a.exercise_feedback_request_no as exerciseFeedbackRequestNo,  
+			a.exercise_feedback_request_title as exerciseFeedbackRequestTitle, 
+			a.exercise_feedback_request_content as exerciseFeedbackRequestContent, 
+			a.exercise_feedback_request_date as exerciseFeedbackRequestDate,
+			b.member_name as memberName,
+			c.exercise_feedback_result as exerciseFeedbackResult
+		FROM exercise_feedback_request a
+		INNER JOIN member b
+		ON a.teacher_no = b.member_no
+		INNER JOIN exercise_feedback_approval_result c
+		ON a.exercise_feedback_request_no = c.exercise_feedback_request_no
+		WHERE exercise_feedback_request_date >= #{startDate} AND #{endDate} > exercise_feedback_request_date
+		ORDER BY exercise_feedback_request_date DESC
+		LIMIT #{beginRow},#{pagePerRow}
+	</select>
 	<select id="exerciseFeedbackApprovalResult" 
 				parameterType="String" 
 				resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
@@ -129,6 +201,7 @@
 			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
 		SELECT 
 			a.member_name as memberName,
+			a.member_id as memberId,
 			b.member_no as memberNo,
 			b.member_work_space as memberWorkSpace, 
 			b.member_total_feedback as memberTotalFeedback,

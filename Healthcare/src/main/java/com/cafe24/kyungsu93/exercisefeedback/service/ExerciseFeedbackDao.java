@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
 public class ExerciseFeedbackDao {
 
@@ -17,6 +16,24 @@ public class ExerciseFeedbackDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackMapper.";
+	
+	//운동피드백 요청 리스트 검색
+	public List<ExerciseFeedbackRequest> exerciseFeedbackRequestListSearch(Map<String, Object> map) {
+		logger.debug("ExerciseFeedbackDao - exerciseFeedbackRequestListSearch 실행");
+		return sqlSession.selectList(NS+"exerciseFeedbackRequestListSearch",map);
+	}
+	
+	//운동피드 pt회원리스트 검색
+	public List<ExerciseFeedbackRequest> exerciseFeedbackPtListSearch(Map<String, Object> map) {
+		logger.debug("ExerciseFeedbackDao - exerciseFeedbackPtListSearch 실행");
+		return sqlSession.selectList(NS+"exerciseFeedbackPtListSearch",map);
+	}
+	
+	//운동피드백 기간별 검색
+	public List<ExerciseFeedbackRequest> exerciseFeedbackListSearchDate(Map<String, Object> map) {
+		logger.debug("ExerciseFeedbackDao - exerciseFeedbackListSearchDate 실행");
+		return sqlSession.selectList(NS+"exerciseFeedbackListSearchDate",map);
+	}
 	
 	//운동피드백 요청결과 디테일 검색
 	public ExerciseFeedbackRequest exerciseFeedbackApprovalResult(String exerciseFeedbackRequestNo) {

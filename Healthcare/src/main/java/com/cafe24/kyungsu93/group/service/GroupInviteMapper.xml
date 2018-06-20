@@ -23,7 +23,8 @@
 	<select id="groupRelationMember" parameterType="String" resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
 		SELECT
 		b.member_no as memberNo,
-		b.member_name as memberName
+		b.member_name as memberName,
+		b.member_id as memberId
 		FROM group_invite_approval_result a
 		INNER JOIN member b
 		ON a.member_no = b.member_no

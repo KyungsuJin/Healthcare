@@ -7,24 +7,30 @@
 <head>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
-var checkPoint = 1000;
-		var checkName = $.ajax({
-		type : 'GET',
-		data : {bloodPressureNo : bloodPressureNo},
-		url : '${pageContext.request.contextPath}/bloodPressureNoCountToHealthScreen',
-		dataType : 'json',
-		contentType: 'application/json; charset=UTF-8',
-		success : function(data){
-			console.log(data);   
-		if(data.count> 0){
-			alert('현재 건강설문에서 사용중인 혈압 차트이기 때문에 삭제가 불가능합니다.');
-		return count = 0;
-		}else if(data.count == 0){
-			alert('현재 고객님께서는 포인트 잔액이 부족하여 운동 피드백 신청이 불가능합니다.');
-		}
-	});
-		
- 	function check() {
+	var checkPoint = 1000;
+	var memberNo = "member_1";
+	$(document).ready(function(){
+ 		ajaxData();
+	});		
+	function ajaxData() {
+		var check = $.ajax({
+			type : 'GET',
+			data : {memberNo : memberNo},
+			url : '${pageContext.request.contextPath}/exerciseFeedbackMemberPointCheck',
+			dataType : 'json',
+			contentType: 'application/json; charset=UTF-8',
+			success : function(data){
+				console.log(data);   
+				if(data<checkPoint){
+					alert('현재 고객님께서는 포인트 잔액이 부족하여 운동 피드백 신청이 불가능합니다.');
+					return location.href="${pageContext.request.contextPath}/exerciseFeedbackPtList";
+				}
+			});
+			check.fail(function(jqXHR, textStatus){
+				alert( "Request failed: " + textStatus );
+			}); 
+	}
+ 	function checkForm() {
  		
 	if(confirm("선택한 강사님으로  운동피드백을 요청하시겠습니까?")){
 		if(exercisefeedbackForm.exerciseFeedbackTitle.value == "") {
@@ -49,7 +55,7 @@ function cancleBtn() {
 </head>
 <body>
 <h1>운동 피드백 요청 스텝2</h1>
-	<form id="exercisefeedbackForm" onsubmit="return check()" action="${pageContext.request.contextPath}/exerciseFeedbackRequest" method="POST">
+	<form id="exercisefeedbackForm" onsubmit="return checkForm()" action="${pageContext.request.contextPath}/exerciseFeedbackRequest" method="POST">
 		<div>
 		선택한 강사 : ${map.ptMemberName }
 			<input type="hidden" name="teacherNo" value="${map.ptMemberNo}">

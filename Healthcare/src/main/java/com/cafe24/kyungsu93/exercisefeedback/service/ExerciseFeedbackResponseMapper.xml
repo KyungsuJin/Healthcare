@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackResponseMapper">
+ 	<insert id="addExerciseFeedback" parameterType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackResult">
+	 	INSERT INTO exercise_feedback
+		(exercise_feedback_request_no, exercise_no, exercise_time, exercise_feedback_date)
+		VALUES (
+		#{exerciseFeedbackRequestNo}, #{exerciseNo}, #{exerciseTime}, NOW()
+		)
+ 	</insert> 	
  	<select id="exerciseSearch" parameterType="Integer" resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackResult">
 	 	SELECT
 		exercise_no as exerciseNo,

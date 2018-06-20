@@ -30,7 +30,7 @@
 			<c:forEach var="refund" items="${list}">
 			<tr>
 				<td>${refund.refundNo }</td>
-				<td>${refund.refundTitle }</td>
+				<td><a href="${pageContext.request.contextPath }/refundListDetail?refundNo=${refund.refundNo}">${refund.refundTitle }</a></td>
 				<td>${refund.memberId }</td>
 				<td>${refund.refundDate }</td>
 			</tr>

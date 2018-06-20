@@ -8,6 +8,8 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 	var count = 1;	
+	var exerciseId = 1;
+	var foodId = 1;
 	$(document).ready(function(){
 		
 		$('#foodFeedback').hide();
@@ -55,8 +57,8 @@
 	function foodInfoAddBtn() {
 		var foodNoSelect = $("#FoodInfo option:selected").val();
 		var foodNameSelect = $("#FoodInfo option:selected").text();
-		var fieldid = 1;
-		var count = $("input[name=comment]").length;
+		
+		var count = $("input[name=foodNo]").length;
 		console.log("현재개수:"+count);
 		if(foodNameSelect == '음식을 선택해주세요'){
 			alert('하단의 음식을 선택해주세요');
@@ -70,7 +72,7 @@
 		var input1 = document.createElement("input");
 		input1.setAttribute("type","hidden");
 		input1.setAttribute("name","foodNo");
-		input1.setAttribute('lastId', fieldid);
+		input1.setAttribute('lastId', foodId);
 		input1.setAttribute("value", foodNoSelect);
 		document.getElementById('foodSelect').appendChild(input1);
 		var br3 = document.createElement("br");
@@ -82,25 +84,9 @@
 		input2.setAttribute('lastId', fieldid);
 		input2.setAttribute("placeholder","섭취량");
 		document.getElementById('foodSelect').appendChild(input2);	
-
-		var input3 = document.createElement("input");
-		input3.setAttribute("type","text");
-		input3.setAttribute("name","comment");
-		input3.setAttribute('lastId', fieldid);
-		input3.setAttribute("placeholder","남기실 말을 작성해주세요.");
-		document.getElementById('foodSelect').appendChild(input3);
-		
-		var input4 = document.createElement("input");
-		input4.setAttribute("type","button");
-		input4.setAttribute("onclick","deleteSelect(this)");
-		input4.setAttribute("name","delete");
-		input4.setAttribute("id","delete");
-		input4.setAttribute('lastId', fieldid);
-		input4.setAttribute("value","삭제");
-		document.getElementById('foodSelect').appendChild(input4);
-		var br2 = document.createElement("br");
-		document.getElementById('foodSelect').appendChild(br2);	
 		}
+		foodId++;
+		console.log("클릭한횟수:"+foodId);
 	}
 	//운동피드백 
 	function exerciseFeedbackBtn(){
@@ -126,11 +112,11 @@
 			alert( "Request failed: " + textStatus );
 		});
    	}
+
 	function exerciseAddBtn() {
 		var exerciseNoSelect = $("#exercise option:selected").val();
 		var exerciseNameSelect = $("#exercise option:selected").text();
-		var fieldid = 1;
-		var count = $("input[name=comment]").length;
+		var count = $("input[name=exerciseNo]").length;
 		console.log("현재개수:"+count);
 		if(exerciseSelect == '운동을 선택해주세요'){
 			alert('하단의 운동을 선택해주세요');
@@ -139,42 +125,19 @@
 			alert('음식 피드백은 총 3개까지만 가능합니다.');
 			return false;
 		}else{
-		console.log("fieldid현재개수:"+fieldid);
-		document.getElementById('exerciseSelect').append(exerciseNameSelect+'가 선택되었습니다.');		
+		console.log("exerciseId현재개수:"+exerciseId);
+		document.getElementById('exerciseSelect'+exerciseId).append(exerciseNameSelect+'가 선택되었습니다.');		
 		var input1 = document.createElement("input");
 		input1.setAttribute("type","hidden");
 		input1.setAttribute("name","exerciseNo");
-		input1.setAttribute('lastId', fieldid);
+		input1.setAttribute("lastId", exerciseId);
 		input1.setAttribute("value", exerciseNoSelect);
 		document.getElementById('exerciseSelect').appendChild(input1);
 		var br3 = document.createElement("br");
 		document.getElementById('exerciseSelect').appendChild(br3);	
-		
-		var input2 = document.createElement("input");
-		input2.setAttribute("type","text");
-		input2.setAttribute("name","ingestionAmount");
-		input2.setAttribute('lastId', fieldid);
-		input2.setAttribute("placeholder","섭취량");
-		document.getElementById('exerciseSelect').appendChild(input2);	
-
-		var input3 = document.createElement("input");
-		input3.setAttribute("type","text");
-		input3.setAttribute("name","comment");
-		input3.setAttribute('lastId', fieldid);
-		input3.setAttribute("placeholder","남기실 말을 작성해주세요.");
-		document.getElementById('exerciseSelect').appendChild(input3);
-		
-		var input4 = document.createElement("input");
-		input4.setAttribute("type","button");
-		input4.setAttribute("onclick","deleteSelect(this)");
-		input4.setAttribute("name","delete");
-		input4.setAttribute("id","delete");
-		input4.setAttribute('lastId', fieldid);
-		input4.setAttribute("value","삭제");
-		document.getElementById('exerciseSelect').appendChild(input4);
-		var br2 = document.createElement("br");
-		document.getElementById('exerciseSelect').appendChild(br2);	
 		}
+		exerciseId++;
+		console.log("클릭한횟수:"+exerciseId);
 	}
 	
 	function cancleBtn() {
@@ -195,15 +158,10 @@
 			제목 :
 			<input type="text"  id="exerciseFeedbackTitle" name="exerciseFeedbackTitle">
 		</div>
-
-		<div>
-			내용:
-			<textarea name="exerciseFeedbackContent" style="resize: none;" cols="40" rows="8" placeholder="내용을 입력해주세요"></textarea>
-		</div>
 		<input type="button" onclick="foodFeedbackBtn()" value="음식피드백 등록하기">
 		<div id="foodFeedback">
-			<div><br>
-				음식을 검색해주세요.<br>
+			<div>
+				음식을 검색해주세요. 총 3개까지만 선택이 가능합니다.<br>
 				음식 카테고리 선택:
 				<select name="foodGroup" id="foodGroup">
 				  <option value="감자 및 전분류" selected="selected">감자 및 전분류</option>
@@ -232,7 +190,7 @@
 		<input type="button" onclick="exerciseFeedbackBtn()" value="운동피드백 등록하기">
 		<div id="exerciseFeedback">
 			<div><br>
-				운동을 선택해주세요.<br>
+				운동을 선택해주세요. 총 3개까지만 선택이 가능합니다.<br>
 				운동 선택:
 				<select name="exercise" id="exercise">
 					<option value="운동을 선택해주세요" selected="selected">운동을 선택해주세요</option>
@@ -243,8 +201,11 @@
 			<div id="exerciseInfoPanel">
 				<span id="exerciseResult"></span>
 				<div id="exerciseSelect"></div>
-				
 			</div>
+		</div>
+		<div>
+			내용:
+			<textarea name="exerciseFeedbackContent" style="resize: none;" cols="40" rows="8" placeholder="내용을 입력해주세요"></textarea>
 		</div>
 		<input id="submitBtn" type="submit" value="등록하기">
 	</form>

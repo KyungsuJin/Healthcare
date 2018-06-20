@@ -40,7 +40,15 @@ $(document).ready(function(){
 			<td>${map.exerciseFeedbackDetail.exerciseFeedbackRequestNo }</td>
 		<tr>
 		<tr>
-			<td>요청회원명</td>
+			<td>등록일</td>
+			<td>${map.exerciseFeedbackDetail.exerciseFeedbackRequestDate }</td>
+		</tr>
+		<tr>
+			<td>아이디</td>
+			<td>${map.exerciseFeedbackDetail.memberId }</td>
+		<tr>
+		<tr>
+			<td>회원명</td>
 			<td>${map.exerciseFeedbackDetail.memberName }</td>
 		<tr>
 		<tr>
@@ -50,10 +58,6 @@ $(document).ready(function(){
 		<tr>
 			<td>내용</td>
 			<td>${map.exerciseFeedbackDetail.exerciseFeedbackRequestContent }</td>
-		<tr>
-			<td>등록일</td>
-			<td>${map.exerciseFeedbackDetail.exerciseFeedbackRequestDate }</td>
-		</tr>
 	</table>
 	<div>
 		<c:if test="${map.approvalResult eq 0}"> 

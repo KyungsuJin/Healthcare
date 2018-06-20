@@ -10,14 +10,224 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cafe24.kyungsu93.payment.service.PointCharging;
+import com.cafe24.kyungsu93.payment.service.PointChargingDao;
+
 @Service
 @Transactional
 public class ExerciseFeedbackService {
 
 	@Autowired
 	private ExerciseFeedbackDao exerciseFeedbackDao;
+	@Autowired
+	private PointChargingDao pointChargingDao;
 	private static final Logger logger = LoggerFactory.getLogger(ExerciseFeedbackService.class);
+	/**
+	 * 요청한 회원 리스트
+	 * @param keyOption
+	 * @param keyword
+	 * @param currentPage
+	 * @param pagePerRow
+	 * @return
+	 */
+	public Map<String,Object> exerciseFeedbackRequestListSearch(String keyOption, String keyword,int currentPage, int pagePerRow) {
+		logger.debug("ExerciseFeedbackService - exerciseFeedbackRequestListSearch 실행");
+		Map<String,Object> map = new HashMap<String,Object>();
+		int beginRow = (currentPage-1)*pagePerRow;
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		map.put("keyword", keyword);
+		map.put("keyOption", keyOption);
+		logger.debug("가져온 데이터:"+keyword+","+keyOption);
+		List<ExerciseFeedbackRequest> list = exerciseFeedbackDao.exerciseFeedbackRequestListSearch(map);
+		int total = list.size();
+		logger.debug("total:"+total);
+		int lastPage = total/pagePerRow;
+        if(total % pagePerRow != 0) {
+            lastPage++;
+        }
+        logger.debug("list:"+list);
+        logger.debug("lastPage:"+lastPage);
+        logger.debug("currentPage:"+currentPage);
+        logger.debug("beginRow:"+beginRow);
+        logger.debug("pagePerRow:"+pagePerRow);
+        logger.debug("======================page block=========================");
+       
+        int pagePerBlock = 10; //보여줄 블록 수 
+        int block = currentPage/pagePerBlock;
+        int totalBlock = total/pagePerBlock;//총 블록수
+        
+        if(currentPage % pagePerBlock != 0) {
+        	block ++;
+        }
+        int firstBlockPage = (block-1)*pagePerBlock+1;
+        int lastBlockPage = block*pagePerBlock;
+        
+		if(lastPage > 0) {			
+			if(lastPage % pagePerBlock != 0) {
+				totalBlock++;
+			}
+		}
+		if(lastBlockPage >= totalBlock) {
+			lastBlockPage = totalBlock;
+		}
+		logger.debug("firstBlockPage:"+firstBlockPage);
+		logger.debug("lastBlockPage:"+lastBlockPage);
+		logger.debug("block:"+block);
+		logger.debug("totalBlock:"+totalBlock);
+		logger.debug("======================page block=========================");
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("list", list);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("firstBlockPage", firstBlockPage);
+		returnMap.put("lastBlockPage", lastBlockPage);
+		returnMap.put("totalBlock", totalBlock);
+		returnMap.put("keyword", keyword);
+		returnMap.put("keyOption", keyOption);
+		returnMap.put("total", total);
+		return returnMap;
+	}
+	/**
+	 * 피드백 전 포인트 검색
+	 * @param memberNo
+	 * @return
+	 */
+	public int exerciseFeedbackMemberPointCheck(String memberNo) {
+		PointCharging pointCharging = pointChargingDao.selectMemberPoint(memberNo);
+		int count = pointCharging.getMemberPoint();
+		return count;
+	}
+	/**
+	 * 운동 피드백 PT 회원 검색
+	 * @param keyOption
+	 * @param keyword
+	 * @param currentPage
+	 * @param pagePerRow
+	 * @return
+	 */
+	public Map<String,Object> exerciseFeedbackPtListSearch(String keyOption, String keyword,int currentPage, int pagePerRow) {
+		logger.debug("ExerciseFeedbackService - exerciseFeedbackPtListSearch 실행");
+		Map<String,Object> map = new HashMap<String,Object>();
+		int beginRow = (currentPage-1)*pagePerRow;
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		map.put("keyword", keyword);
+		map.put("keyOption", keyOption);
+		logger.debug("가져온 데이터:"+keyword+","+keyOption);
+		List<ExerciseFeedbackRequest> list = exerciseFeedbackDao.exerciseFeedbackPtListSearch(map);
+		int total = list.size();
+		logger.debug("total:"+total);
+		int lastPage = total/pagePerRow;
+        if(total % pagePerRow != 0) {
+            lastPage++;
+        }
+        logger.debug("list:"+list);
+        logger.debug("lastPage:"+lastPage);
+        logger.debug("currentPage:"+currentPage);
+        logger.debug("beginRow:"+beginRow);
+        logger.debug("pagePerRow:"+pagePerRow);
+        logger.debug("======================page block=========================");
+       
+        int pagePerBlock = 10; //보여줄 블록 수 
+        int block = currentPage/pagePerBlock;
+        int totalBlock = total/pagePerBlock;//총 블록수
+        
+        if(currentPage % pagePerBlock != 0) {
+        	block ++;
+        }
+        int firstBlockPage = (block-1)*pagePerBlock+1;
+        int lastBlockPage = block*pagePerBlock;
+        
+		if(lastPage > 0) {			
+			if(lastPage % pagePerBlock != 0) {
+				totalBlock++;
+			}
+		}
+		if(lastBlockPage >= totalBlock) {
+			lastBlockPage = totalBlock;
+		}
+		logger.debug("firstBlockPage:"+firstBlockPage);
+		logger.debug("lastBlockPage:"+lastBlockPage);
+		logger.debug("block:"+block);
+		logger.debug("totalBlock:"+totalBlock);
+		logger.debug("======================page block=========================");
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("list", list);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("firstBlockPage", firstBlockPage);
+		returnMap.put("lastBlockPage", lastBlockPage);
+		returnMap.put("totalBlock", totalBlock);
+		returnMap.put("keyword", keyword);
+		returnMap.put("keyOption", keyOption);
+		returnMap.put("total", total);
+		return returnMap;
+	}
 	
+	/**
+	 * 운동 피드백 기간별 검색
+	 * @param startDate
+	 * @param endDate
+	 * @param currentPage
+	 * @param pagePerRow
+	 * @return
+	 */
+	public Map<String,Object> exerciseFeedbackListSearchDate(String startDate, String endDate,int currentPage, int pagePerRow) {
+		logger.debug("ExerciseFeedbackService - exerciseFeedbackListSearchDate 실행");
+		Map<String,Object> map = new HashMap<String,Object>();
+		int beginRow = (currentPage-1)*pagePerRow;
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
+		logger.debug("가져온 데이터:"+startDate+","+endDate);
+		List<ExerciseFeedbackRequest> list = exerciseFeedbackDao.exerciseFeedbackListSearchDate(map);
+		int total = list.size();
+		logger.debug("total:"+total);
+		int lastPage = total/pagePerRow;
+        if(total % pagePerRow != 0) {
+            lastPage++;
+        }
+        logger.debug("list:"+list);
+        logger.debug("lastPage:"+lastPage);
+        logger.debug("currentPage:"+currentPage);
+        logger.debug("beginRow:"+beginRow);
+        logger.debug("pagePerRow:"+pagePerRow);
+        logger.debug("======================page block=========================");
+       
+        int pagePerBlock = 10; //보여줄 블록 수 
+        int block = currentPage/pagePerBlock;
+        int totalBlock = total/pagePerBlock;//총 블록수
+        
+        if(currentPage % pagePerBlock != 0) {
+        	block ++;
+        }
+        int firstBlockPage = (block-1)*pagePerBlock+1;
+        int lastBlockPage = block*pagePerBlock;
+        
+		if(lastPage > 0) {			
+			if(lastPage % pagePerBlock != 0) {
+				totalBlock++;
+			}
+		}
+		if(lastBlockPage >= totalBlock) {
+			lastBlockPage = totalBlock;
+		}
+		logger.debug("firstBlockPage:"+firstBlockPage);
+		logger.debug("lastBlockPage:"+lastBlockPage);
+		logger.debug("block:"+block);
+		logger.debug("totalBlock:"+totalBlock);
+		logger.debug("======================page block=========================");
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("list", list);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("firstBlockPage", firstBlockPage);
+		returnMap.put("lastBlockPage", lastBlockPage);
+		returnMap.put("totalBlock", totalBlock);
+		returnMap.put("startDate", startDate);
+		returnMap.put("endDate", endDate);
+		returnMap.put("total", total);
+		return returnMap;
+	}
 	/**
 	 * 운동 피드백 요청 거절
 	 * @param exerciseFeedbackRequestNo
