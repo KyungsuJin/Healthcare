@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cafe24.kyungsu93.bloodpressure.service.BloodPressure;
-import com.cafe24.kyungsu93.bloodsugar.service.Bloodsugar;
-import com.cafe24.kyungsu93.bloodsugar.service.BloodsugarService;
+import com.cafe24.kyungsu93.bloodsugar.service.BloodSugar;
+import com.cafe24.kyungsu93.bloodsugar.service.BloodSugarService;
 import com.cafe24.kyungsu93.notice.service.Notice;
 import com.cafe24.kyungsu93.notice.service.NoticeService;
 

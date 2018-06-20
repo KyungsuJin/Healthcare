@@ -26,20 +26,20 @@ $(document).ready(function(){
 		// 입력폼 
 		//공백 또는 "" 불가
 		$('#addbutton').click(function(){
-			if($('#Bloodsugarno').val()==""){
+			if($('#bloodSugarNo').val()==""){
 				alert("혈당코드를 입력하세요.")
-				$('#bloodsugarno').focus();
-			}else if($('memberno').val()==""){
+				$('#bloodSugarNo').focus();
+			}else if($('memberNo').val()==""){
 				alert("회원코드를 입력하세요.")
-				$('#memberno').focus();
-			}else if($('fastingbloodsugar').val()==""){
+				$('#memberNo').focus();
+			}else if($('fastingBloodSugar').val()==""){
 				alert("혈당을 입력하세요.")
-				$('#fastingbloodsugar').focus();
-			}else if($('fastingstate').val()==""){
+				$('#fastingBloodSugar').focus();
+			}else if($('fastingState').val()==""){
 				alert("공복여부를 입력하세요.")
-				$('#fastingstate').focus();
+				$('#fastingState').focus();
 			}else{
-				$('#bloodsugardate').submit();
+				$('#bloodSugarDate').submit();
 			}
 		});
 	});
@@ -51,27 +51,27 @@ $(document).ready(function(){
 <body>
 <div class="container">
 	<h1>addBloodsugar</h1>
-	<form id="addForm" action="${pageContext.request.contextPath}/addBloodsugar" method="POST">
+	<form id="addForm" action="${pageContext.request.contextPath}/addBloodSugar" method="POST">
 		<div class="form-group">
-			<label for="Bloodsugarno">bloodsugarno : </label>
-			<input class="form-control" name = "bloodsugarno"  id="bloodsugarno" type="text"/>	
+			<label for="bloodSugarNo">bloodSugarNo : </label>
+			<input class="form-control" name = "bloodSugarNo"  id="bloodSugarNo" type="text"/>	
 		</div>
 		<div class="form-group">
-			<label for="memberno">memberno : </label>
-			<input class="form-control" name = "memberno"  id="memberno" type="text"/>	
+			<label for="memberNo">memberNo : </label>
+			<input class="form-control" name = "memberNo"  id="memberNo" type="text"/>	
 		</div>
 		<div class="form-group">
-			<label for="fastingbloodsugar">fastingbloodsugar : </label>
-			<input class="form-control" name = "fastingbloodsugar"  id="fastingbloodsugar" type="text"/>	
+			<label for="fastingBloodSugar">fastingBloodSugar : </label>
+			<input class="form-control" name = "fastingBloodSugar"  id="fastingBloodSugar" type="text"/>	
 		</div>
 		<div class="form-group">
-			<label for="bloodsugardate">bloodsugardate : </label>
-			<input class="form-control" name = "bloodsugardate"  id="bloodsugardate" type="text"/>	
+			<label for="bloodSugarDate">bloodSugarDate : </label>
+			<input class="form-control" name = "bloodSugarDate"  id="bloodSugarDate" type="text"/>	
 		</div>
 		<div>
-			<input class="btn btn-default" id=addButton" type="submit" value="글입력">
+			<input class="btn btn-default" id=addButton" type="submit" value="등록하기">
 			<input class="btn btn-default" type="reset" value="초기화"/>
-			<a class="btn btn-default" id="BloodsugarList" href="${pageContext.request.contextPath}/BloodsugarList">글목록</a>
+			<a class="btn btn-default" id="BloodsugarList" href="${pageContext.request.contextPath}/bloodSugarList">글목록</a>
 		</div>
 		<form>
 			<input type="radio" name ="fastingstate"  checked="checked" value="F" id="fastingstate"/>F

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cafe24.kyungsu93.bloodsugar.controller.BloodsugarController;
-import com.cafe24.kyungsu93.bloodsugar.service.Bloodsugar;
+import com.cafe24.kyungsu93.bloodsugar.service.BloodSugar;
 import com.cafe24.kyungsu93.member.service.Member;
 
 @Repository

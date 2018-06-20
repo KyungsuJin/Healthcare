@@ -15,7 +15,7 @@ import org.springframework.ui.Model;
 
 import com.cafe24.kyungsu93.bloodpressure.service.BloodPressure;
 import com.cafe24.kyungsu93.bloodsugar.controller.BloodsugarController;
-import com.cafe24.kyungsu93.bloodsugar.service.Bloodsugar;
+import com.cafe24.kyungsu93.bloodsugar.service.BloodSugar;
 
 @Service
 public class NoticeService {

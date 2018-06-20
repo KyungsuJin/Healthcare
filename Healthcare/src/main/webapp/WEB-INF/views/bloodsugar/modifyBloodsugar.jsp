@@ -12,24 +12,24 @@
 <table border="1">
 <thead>
 <tr>
-	<td>bloodsugarno</td>
-	<td>memberno</td>
-	<td>fastingbloodsugar</td>
-	<td>fastingstate</td>
-	<td>bloodsugardate</td>
+	<td>bloodSugarNo</td>
+	<td>memberNo</td>
+	<td>fastingBloodsugar</td>
+	<td>fastingState</td>
+	<td>bloodSugardate</td>
 </tr>
 				<%--  ${bloodsugar.memberno}  --%>
 	<tr>
 	<form action="${pageContext.request.contextPath}/modifyBloodsugar" method="POST">
-		<td><input type="hidden" name="bloodsugarno" value="${bloodsugar.bloodsugarno}"></td>
-		<td><input type="text" name="memberno" value="${bloodsugar.memberno}"></td>
-		<td><input type="text" name="fastingbloodsugar" value="${bloodsugar.fastingbloodsugar}"></td>
+		<td><input type="hidden" name="bloodSugarNo" value="${bloodSugar.bloodSugarNo}"></td>
+		<td><input type="text" name="memberNo" value="${bloodSugar.memberNo}"></td>
+		<td><input type="text" name="fastingBloodSugar" value="${bloodSugar.fastingBloodSugar}"></td>
 
-		<td><input type="text" name="bloodsugardate" value="${bloodsugar.bloodsugardate}"></td>
+		<td><input type="text" name="bloodSugarDate" value="${bloodSugar.bloodSugarDate}"></td>
 		<td><input type="submit" value="수정하기">
 		<form>
-			<input type="radio" name ="fastingstate"  checked="checked" value="F" id="fastingstate"/>F
-			<input type="radio" name="fastingstate" value="T">T 	
+			<input type="radio" name ="fastingState"  checked="checked" value="F" id="fastingState"/>F
+			<input type="radio" name="fastingState" value="T">T 	
 		</form>
 		
 	</form>
