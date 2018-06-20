@@ -1,6 +1,8 @@
 package com.cafe24.kyungsu93.healthsurvey.controller.rest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyAverageGrade;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultRequest;
+import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultResponse;
+import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveySelection;
 import com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyService;
 
 @RestController
@@ -34,6 +38,17 @@ public class HealthSurveyRestController {
 											,@RequestParam(value="healthSurveyEvaluationAverageGrade") int healthSurveyEvaluationAverageGrade) {
 		healthSurveyService.addHealthSurveyEvaluation(healthSurveyResultNo, healthSurveyRegisterNo, healthSurveyEvaluationAverageGrade);
 		return "";
+	}
+	
+	@RequestMapping(value="/getHealthSurveyResultSelectionList", method=RequestMethod.POST)
+	public Map<String, Object> getHealthSurveyResultSelectionList(HealthSurveyResultRequest healthSurveyResultRequest) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println(healthSurveyResultRequest.toString());
+		List<HealthSurveySelection> list = healthSurveyService.getHealthSurveyResultSelectionList(healthSurveyResultRequest);
+		System.out.println("testwnd "+list);
+		map.put("list", list);
+		return map;
+
 	}
 	
 }

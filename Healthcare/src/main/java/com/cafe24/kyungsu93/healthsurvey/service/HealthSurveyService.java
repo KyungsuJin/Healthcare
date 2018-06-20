@@ -99,6 +99,24 @@ public class HealthSurveyService {
 		return map;
 	}
 	
+	public Map<String, Object> getHealthSurveyQuestion(HealthSurveyResultRequest healthSurveyResultRequest){
+		Map map = new HashMap<String, Object>();
+		List<HealthSurveyQuestion> questionList = healthSurveyDao.getHealthSurveyQuestion(healthSurveyResultRequest);
+		map.put("question", questionList);
+		map.put("questionSize", questionList.size());
+		System.out.println("사이즈 : " + questionList.size());
+		for(int i = 0 ; i < questionList.size() ; i++) {
+			List<HealthSurveySelection> selectionList = healthSurveyDao.getHealthSurveySelection(questionList.get(i));
+			System.out.println("요거"+questionList.get(i));
+			questionList.get(i).setHealthSurveySelection(selectionList);
+		}
+		return map;
+	}
+	
+	public List<HealthSurveySelection> getHealthSurveyResultSelectionList(HealthSurveyResultRequest healthSurveyResultRequest){
+		return healthSurveyDao.getHealthSurveyResultSelectionList(healthSurveyResultRequest);
+	}
+	
 	//설문 삭제를 위한 메서드. 총 7개의 테이블에 걸쳐서 삭제를 해야함.
 	public void removeHealthSurvey(HealthSurveyRequest healthSurveyRequest) {
 		healthSurveyDao.removeHealthSurveyAverageGrade(healthSurveyRequest);

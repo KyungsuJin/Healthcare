@@ -109,34 +109,38 @@
 </script>
 </head>
 <body>
-	<jsp:include page="../include/body.jsp"></jsp:include>
-	<div id="containerMedical" align="center">
-		<h1>MedicalList</h1>
-		
-		<table>
-			<tr>
-				<td>
-					시
-					<select id="cityName" name="cityName">
-						<c:forEach var = "city" items = "${cityList}">
-							<option value="${city.cityName}">
-								${city.cityName}
-							</option>	
-						</c:forEach>
-					</select>
-				</td>
-				<td>	
-					<select id="districtName" name="districtName"></select>
-					
-					병원 명 : <input type="text" id="medicalName" name="medicalName">
-					<input type="button" id="medicalBtn" name="medicalBtn" value="검색">
-				</td>
-			</tr>
-		</table>
-		<div id="map" style="width:100%;height:400px;"></div>
-		<div id="medicalList"></div>
-		
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<div id="containerMedical" align="center">
+					<h1>MedicalList</h1>
+					<table>
+						<tr>
+							<td>
+								시
+								<select id="cityName" name="cityName">
+									<c:forEach var = "city" items = "${cityList}">
+										<option value="${city.cityName}">
+											${city.cityName}
+										</option>	
+									</c:forEach>
+								</select>
+							</td>
+							<td>	
+								<select id="districtName" name="districtName"></select>
+								
+								병원 명 : <input type="text" id="medicalName" name="medicalName">
+								<input type="button" id="medicalBtn" name="medicalBtn" value="검색">
+							</td>
+						</tr>
+					</table>
+					<div id="map" style="width:100%;height:400px;"></div>
+					<div id="medicalList"></div>
+				</div>
+			</div>
+		</div>
 	</div>
-
 </body>
 </html>

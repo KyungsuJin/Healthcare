@@ -60,27 +60,34 @@
 </script>
 </head>
 <body>
-	<jsp:include page="../include/body.jsp"></jsp:include>
-	<div id="containerTreatment" align="center">
-		<h1>addTreatment</h1>
-		<form id="treatmentForm" action="${pageContext.request.contextPath}/addTreatment" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="memberNo" value="${memberNo}">
-			
-			<div>treatmentDepartment : <input id="treatmentDepartment" class="form-control" type="text" name="treatmentDepartment" value="${treatment.treatmentDepartment}"></div>
-			<div>hospitalName : <input id="hospitalName" class="form-control" type="text" name="hospitalName" value="${treatment.hospitalName}"></div>
-			<div>doctorName : <input id="doctorName" class="form-control" type="text" name="doctorName" value="${treatment.doctorName}"></div>
-			<div>hospitalAddress : <input id="hospitalAddress" class="form-control" type="text" name="hospitalAddress" value="${treatment.hospitalAddress}"></div>
-			
-			<div>treatmentTitle : <input id="treatmentTitle" class="form-control" type="text" name="treatmentTitle" value="${treatment.treatmentTitle}"></div>
-			<div>treatmentContent : <textarea id="treatmentContent" class="form-control" name="treatmentContent" value="${treatment.treatmentContent}"></textarea></div>
-			
-			<div><input id="fileChoose" class="fileChooseList" type="file" name="multipartFile"></div>
-			<input type="hidden" id="fileLine">
-			<div id="submitFile">
-				<button id="treatmentBtn" class="btn btn-default" type="button">저장</button>
-				<input id="cancelBtn" class="btn btn-default" type="button" value="취소">
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<div id="containerTreatment" align="center">
+					<h1>addTreatment</h1>
+					<form id="treatmentForm" action="${pageContext.request.contextPath}/addTreatment" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="memberNo" value="${memberNo}">
+						
+						<div>treatmentDepartment : <input id="treatmentDepartment" class="form-control" type="text" name="treatmentDepartment" value="${treatment.treatmentDepartment}"></div>
+						<div>hospitalName : <input id="hospitalName" class="form-control" type="text" name="hospitalName" value="${treatment.hospitalName}"></div>
+						<div>doctorName : <input id="doctorName" class="form-control" type="text" name="doctorName" value="${treatment.doctorName}"></div>
+						<div>hospitalAddress : <input id="hospitalAddress" class="form-control" type="text" name="hospitalAddress" value="${treatment.hospitalAddress}"></div>
+						
+						<div>treatmentTitle : <input id="treatmentTitle" class="form-control" type="text" name="treatmentTitle" value="${treatment.treatmentTitle}"></div>
+						<div>treatmentContent : <textarea id="treatmentContent" class="form-control" name="treatmentContent" value="${treatment.treatmentContent}"></textarea></div>
+						
+						<div><input id="fileChoose" class="fileChooseList" type="file" name="multipartFile"></div>
+						<input type="hidden" id="fileLine">
+						<div id="submitFile">
+							<button id="treatmentBtn" class="btn btn-default" type="button">저장</button>
+							<input id="cancelBtn" class="btn btn-default" type="button" value="취소">
+						</div>
+					</form>
+				</div>
 			</div>
-		</form>
-	</div>
+		</div>
+	</div>	
 </body>
 </html>

@@ -18,15 +18,14 @@ import com.cafe24.kyungsu93.treatment.service.TreatmentRequest;
 public class MedicineController {
 	private final static Logger logger = LoggerFactory.getLogger(MedicineController.class);
 	
-	@Autowired MedicineService medicineService; 
-	
+	@Autowired MedicineService medicineService;
 	@RequestMapping(value="/getMedicineList", method=RequestMethod.GET)
 	public String getMedicineList(Model model
+			,@RequestParam(value="windowPop", defaultValue="0") String windowPop
 			,@RequestParam(value="medicineNo", defaultValue="1") String medicineNo
 			,@RequestParam(value="medicineName", defaultValue="") String medicineName
 			,@RequestParam(value="currentPage", defaultValue="1" ) int currentPage
 			,@RequestParam(value="pagePerRow", defaultValue="10" ) int pagePerRow) {
-		
 		Map map = medicineService.getMedicineList(currentPage, pagePerRow, medicineName);
 		model.addAttribute("medicineName", medicineName);
 		model.addAttribute("list", map.get("list"));
@@ -36,11 +35,17 @@ public class MedicineController {
 		model.addAttribute("afterPage", map.get("afterPage"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("pagePerRow", pagePerRow);
-		return "medicine/getMedicineList";
+		if(windowPop.equals("1")) {
+			return "medicine/getPopMedicineList";
+		} else {
+			return "medicine/getMedicineList";
+		}
+		
 	}
 	
 	@RequestMapping(value="/getMedicineList", method=RequestMethod.POST)
 	public String getMedicineList(Model model
+				,@RequestParam(value="windowPop", defaultValue="0") String windowPop
 				,@RequestParam(value="medicineName") String medicineName
 				,@RequestParam(value="currentPage", defaultValue="1" ) int currentPage
 				,@RequestParam(value="pagePerRow", defaultValue="10" ) int pagePerRow) {
@@ -53,7 +58,11 @@ public class MedicineController {
 		model.addAttribute("afterPage", map.get("afterPage"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("pagePerRow", pagePerRow);
-		return "medicine/getMedicineList";
+		if(windowPop.equals("1")) {
+			return "medicine/getPopMedicineList";
+		} else {
+			return "medicine/getMedicineList";
+		}
 	}
 	
 	@RequestMapping(value = "/addMedicine", method = RequestMethod.GET)

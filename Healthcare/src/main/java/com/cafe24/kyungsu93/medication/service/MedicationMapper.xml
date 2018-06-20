@@ -28,7 +28,7 @@
 	
 	<select id="getMedicationNo" resultType="Integer">
 		SELECT
-			IFNULL(MAX(CAST(SUBSTRING(medication_no,11)as decimal)),0) 
+			IFNULL(MAX(CAST(SUBSTRING(medication_no,12)as decimal)),0) 
 		FROM medication
 	</select>
 	

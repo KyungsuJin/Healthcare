@@ -25,18 +25,11 @@
 			$(location).attr('href', "${pageContext.request.contextPath}/modifyMedication?medicationNo=${medicationResponse.medicationNo}&currentPage=${currentPage}&pagePerRow=${pagePerRow}");
 		});
 		$('#calendar').fullCalendar({
-	        header: {
-	            left: 'prev,next today',
-	            center: 'title',
-	            right: 'month,basicWeek,basicDay'
-	        },
-	        defaultDate: new Date(),
-	        navLinks: true, 
-	        editable: false,
-	        eventLimit: true,
+			editable: false
 		});
 	});
 </script>
+
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
@@ -45,25 +38,32 @@
 <script type="text/javascript" src="https://fullcalendar.io/releases/fullcalendar-scheduler/1.9.4/scheduler.min.js"></script>
 </head>
 <body>
-	<jsp:include page="../include/body.jsp"></jsp:include>
-	<div id="containerMedication" align="center">
-		<h1>MedicationContent</h1>
-		<input id="removeMedicationBtn" class="btn btn-default" type="button" value="삭제">
-		<input id="modifyMedicationBtn" class="btn btn-default" type="button" value="수정">
-		<br><br>
-		<div>${medicationResponse.medicationNo}</div>
-		<div>${medicationResponse.medicineNo}</div>
-		<div>${medicationResponse.medicineName}</div>
-		<div>${medicationResponse.memberName}</div>
-		<div>${medicationResponse.medicationStartDate}</div>
-		<div>${medicationResponse.medicationEndDate}</div>
-		<div>${medicationResponse.dosage}</div>
-		<div>${medicationResponse.totalDosage}</div>
-		<div>${medicationResponse.medicationTitle}</div>
-		<div>${medicationResponse.medicationContent}</div>
-		<div>${medicationResponse.medicationDate}</div>
-		<div id='calendar'></div>
-		<input id="medicationListBtn" class="btn btn-default" type="button" value="목록">
-	</div>
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<div id="containerMedication" align="center">
+					<h1>MedicationContent</h1>
+					<input id="removeMedicationBtn" class="btn btn-default" type="button" value="삭제">
+					<input id="modifyMedicationBtn" class="btn btn-default" type="button" value="수정">
+					<br><br>
+					<div>${medicationResponse.medicationNo}</div>
+					<div>${medicationResponse.medicineNo}</div>
+					<div>${medicationResponse.medicineName}</div>
+					<div>${medicationResponse.memberName}</div>
+					<div>${medicationResponse.medicationStartDate}</div>
+					<div>${medicationResponse.medicationEndDate}</div>
+					<div>${medicationResponse.dosage}</div>
+					<div>${medicationResponse.totalDosage}</div>
+					<div>${medicationResponse.medicationTitle}</div>
+					<div>${medicationResponse.medicationContent}</div>
+					<div>${medicationResponse.medicationDate}</div>
+					<div id='calendar'></div>
+					<input id="medicationListBtn" class="btn btn-default" type="button" value="목록">
+				</div>
+			</div>
+		</div>
+	</div>	
 </body>
 </html>

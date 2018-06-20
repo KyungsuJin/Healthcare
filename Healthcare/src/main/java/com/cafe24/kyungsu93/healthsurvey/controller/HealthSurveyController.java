@@ -99,26 +99,27 @@ public class HealthSurveyController {
 		}
 	}
 	
-	@RequestMapping(value="/removeHealthSurvey", method=RequestMethod.GET)
-	public String removeHealthSurvey(HealthSurveyRequest healthSurveyRequest, HttpSession session) {
-		if(session.getAttribute("memberSessionLevel").toString().equals("1")) {
-			healthSurveyService.removeHealthSurvey(healthSurveyRequest);
-		}
-		return "redirect:/getHealthSurveyList";
-	}
-	
 	@RequestMapping(value="/getHealthSurveyResult", method=RequestMethod.GET)
 	public String getHealthSurveyResult(Model model, HealthSurveyResultRequest healthSurveyResultRequest, HttpSession session) {
-		String memberSessionLevel = session.getAttribute("memberSessionLevel").toString();
-		if(memberSessionLevel.equals("2") || memberSessionLevel.equals("3")) {
+		if(session.getAttribute("memberSessionLevel") != null && session.getAttribute("memberSessionLevel").toString().equals("2")) {
+			Map<String, Object> map = healthSurveyService.getHealthSurveyQuestion(healthSurveyResultRequest);
+			for(String name : map.keySet()) {
+				model.addAttribute(name, map.get(name));
+			}
 			HealthSurveyResultResponse healthSurveyResultResponse = healthSurveyService.getHealthSurveyResultOne(healthSurveyResultRequest);
 			model.addAttribute("healthSurveyResultResponse", healthSurveyResultResponse);
 			return "healthsurvey/getHealthSurveyResult";
 		} else {
 			return "redirect:/";
 		}
-		
-		
+	}
+	
+	@RequestMapping(value="/removeHealthSurvey", method=RequestMethod.GET)
+	public String removeHealthSurvey(HealthSurveyRequest healthSurveyRequest, HttpSession session) {
+		if(session.getAttribute("memberSessionLevel").toString().equals("1")) {
+			healthSurveyService.removeHealthSurvey(healthSurveyRequest);
+		}
+		return "redirect:/getHealthSurveyList";
 	}
 	
 	@RequestMapping(value="/getHealthSurveyResultList", method=RequestMethod.GET)

@@ -97,6 +97,14 @@ public class HealthSurveyDao {
 		return sqlSession.selectList(NS+"getHealthSurveyQuestion", healthSurveyRequest);
 	}
 	
+	public List<HealthSurveyQuestion> getHealthSurveyQuestion(HealthSurveyResultRequest healthSurveyResultRequest) {
+		return sqlSession.selectList(NS+"getHealthSurveyQuestionResult", healthSurveyResultRequest);
+	}
+	
+	public List<HealthSurveySelection> getHealthSurveyResultSelectionList(HealthSurveyResultRequest healthSurveyResultRequest) {
+		return sqlSession.selectList(NS+"getHealthSurveyResultSelectionList", healthSurveyResultRequest);
+	}
+	
 	public List<HealthSurveySelection> getHealthSurveySelection(HealthSurveyQuestion healthSurveyQuestion) {
 		return sqlSession.selectList(NS+"getHealthSurveySelection", healthSurveyQuestion);
 	}

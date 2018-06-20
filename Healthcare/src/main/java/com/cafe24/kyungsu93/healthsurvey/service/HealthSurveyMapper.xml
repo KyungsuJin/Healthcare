@@ -202,9 +202,32 @@
 		FROM health_survey_question
 		WHERE health_survey_register_no = #{healthSurveyRegisterNo} 
 	</select>
+	
+	<select id="getHealthSurveyQuestionResult" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultRequest"
+											resultType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyQuestion">
+		SELECT
+			question.health_survey_register_no AS healthSurveyRegisterNo
+			,question.health_survey_question_no AS healthSurveyQuestionNo
+			,question.question_no AS questionNo
+			,question.health_survey_question AS healthSurveyQuestion
+		FROM health_survey_question AS question
+			 ,health_survey_register AS register
+			 ,health_survey_result AS result
+		WHERE result.health_survey_result_no = #{healthSurveyResultNo}
+			  AND result.health_survey_register_no = register.health_survey_register_no
+			  AND register.health_survey_register_no = question.health_survey_register_no 
+	</select>
+	
+	<select id="getHealthSurveyResultSelectionList" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyResultRequest"
+													resultType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveySelection">
+		SELECT
+			health_survey_selection_no AS healthSurveySelectionNo
+		FROM health_survey_record
+		WHERE health_survey_result_no = #{healthSurveyResultNo}
+	</select>
   
 	<select id="getHealthSurveySelection" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyQuestion"
-											resultType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveySelection">
+										  resultType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveySelection">
 		SELECT
 			health_survey_selection_no AS healthSurveySelectionNo
 			,selection_no AS selectionNo

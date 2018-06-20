@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.cafe24.kyungsu93.bloodpressure.service.BloodPressure;
 import com.cafe24.kyungsu93.bloodpressure.service.BloodPressureDao;
-import com.cafe24.kyungsu93.bloodsugar.service.Bloodsugar;
-import com.cafe24.kyungsu93.bloodsugar.service.BloodsugarDao;
+import com.cafe24.kyungsu93.bloodsugar.service.BloodSugarDao;
 import com.cafe24.kyungsu93.bodymassindex.service.BodyMassIndex;
 import com.cafe24.kyungsu93.bodymassindex.service.BodyMassIndexDao;
 import com.cafe24.kyungsu93.bodymassindex.service.BodyMassIndexService;
@@ -24,7 +23,7 @@ public class HealthScreenService {
 
 	@Autowired HealthScreenDao healthScreenDao;
 	@Autowired BodyMassIndexDao bodyMassIndexDao;
-	@Autowired BloodsugarDao bloodSugarDao;
+	@Autowired BloodSugarDao bloodSugarDao;
 	@Autowired BloodPressureDao bloodPressureDao;
 	
 	//건강검진표 리스트 출을 위한 메서드

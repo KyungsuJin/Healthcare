@@ -103,44 +103,51 @@
 	</script>
 </head>
 <body>
-	<jsp:include page="../include/body.jsp"></jsp:include>
-	<div id="healthSurveyContainer" align="center">
-		<form id="healthSurveyForm" method="POST" action="${pageContext.request.contextPath}/addHealthSurvey">
-			<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}"><br>
-			<div>
-				질병선택
-				<select name="diseaseNo" class="selectBoxDisease">
-					<c:forEach var="disease" items="${list}">
-						 <option value="${disease.diseaseNo}">${disease.diseaseName}</option>
-					</c:forEach>
-				</select>
-			</div>
-			설문 명 : <input type="text" id="healthSurveyRegisterTitle" name="healthSurveyRegisterTitle"><br>
-			설문 내용 : <input type="text" id="healthSurveyRegisterContent" name="healthSurveyRegisterContent"><br>
-			설문 포인트 : <input type="number" id="healthSurveyPoint" name="healthSurveyPoint" value="1000"><br>
-			<input type="button" id="addQuestion" value="질문 추가"><br>
-			<div id="questionClone">
-				//질문
-				질문 번호 : <input type="text" id="questionNoList" name="questionNoList" value="1" readonly><br>
-				질문 내용 : <input type="text" name="healthSurveyQuestionList"><br>
-				//선택지
-				<input type="button" id="addSelection" value="선택지 추가"><br>
-				<div id="selectionClone">
-					선택지 번호 : <input type="text" id="selectionNoList" name="selectionNoList" value="1" readonly><br>
-					선택지 내용 : <input type="text" name="healthSurveySelectionList"><br>
-					선택지 점수 : <input type="number" id="healthSurveySelectionScoreList" name="healthSurveySelectionScoreList"><br>
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<div id="healthSurveyContainer" align="center">
+					<form id="healthSurveyForm" method="POST" action="${pageContext.request.contextPath}/addHealthSurvey">
+						<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}"><br>
+						<div>
+							질병선택
+							<select name="diseaseNo" class="selectBoxDisease">
+								<c:forEach var="disease" items="${list}">
+									 <option value="${disease.diseaseNo}">${disease.diseaseName}</option>
+								</c:forEach>
+							</select>
+						</div>
+						설문 명 : <input type="text" id="healthSurveyRegisterTitle" name="healthSurveyRegisterTitle"><br>
+						설문 내용 : <input type="text" id="healthSurveyRegisterContent" name="healthSurveyRegisterContent"><br>
+						설문 포인트 : <input type="number" id="healthSurveyPoint" name="healthSurveyPoint" value="1000"><br>
+						<input type="button" id="addQuestion" value="질문 추가"><br>
+						<div id="questionClone">
+							//질문
+							질문 번호 : <input type="text" id="questionNoList" name="questionNoList" value="1" readonly><br>
+							질문 내용 : <input type="text" name="healthSurveyQuestionList"><br>
+							//선택지
+							<input type="button" id="addSelection" value="선택지 추가"><br>
+							<div id="selectionClone">
+								선택지 번호 : <input type="text" id="selectionNoList" name="selectionNoList" value="1" readonly><br>
+								선택지 내용 : <input type="text" name="healthSurveySelectionList"><br>
+								선택지 점수 : <input type="number" id="healthSurveySelectionScoreList" name="healthSurveySelectionScoreList"><br>
+							</div>
+						</div>
+						
+						
+						정상 : <input type="number" id="healthSurveyRegisterNormal" name="healthSurveyRegisterNormal"><br>
+						경고 : <input type="number" id="healthSurveyRegisterWarning" name="healthSurveyRegisterWarning"><br>
+						위험 : <input type="number" id="healthSurveyRegisterDanger" name="healthSurveyRegisterDanger"><br>
+						총점 : <input type="text" id="healthSurveyRegisterTotal" name="healthSurveyRegisterTotal" readonly><br>
+						
+						<input type="button" id="healthSurveyBtn" value="요청">
+					</form>
+					<input id="getHealthSurveyListBtn" class="btn btn-default" type="button" value="목록">
 				</div>
 			</div>
-			
-			
-			정상 : <input type="number" id="healthSurveyRegisterNormal" name="healthSurveyRegisterNormal"><br>
-			경고 : <input type="number" id="healthSurveyRegisterWarning" name="healthSurveyRegisterWarning"><br>
-			위험 : <input type="number" id="healthSurveyRegisterDanger" name="healthSurveyRegisterDanger"><br>
-			총점 : <input type="text" id="healthSurveyRegisterTotal" name="healthSurveyRegisterTotal" readonly><br>
-			
-			<input type="button" id="healthSurveyBtn" value="요청">
-		</form>
-		<input id="getHealthSurveyListBtn" class="btn btn-default" type="button" value="목록">
+		</div>
 	</div>
 </body>
 </html>
