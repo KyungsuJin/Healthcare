@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.cafe24.kyungsu93.bloodsugar.service.BloodSugarMapper">  
+  
+  <select id="searchTable" 
+				resultType="String" 
+				parameterType="com.cafe24.kyungsu93.bloodsugar.service.BloodSugar">
+			SELECT
+				blood_sugar_no as bloodSugarNo
+				,member_no as memberNo
+				FROM blood_sugar
+				INNER JOIN member b
+				ON a.member_no = b.member_no
+  </select>	
+ 
+  <select id="bloodSugarList" 
+		  parameterType="Integer" 
+		  resultType="com.cafe24.kyungsu93.bloodsugar.service.BloodSugar">
+ 	 SELECT b.blood_sugar_no AS bloodSugarNo
+  			,b.member_no AS memberNo 
+  			,b.fasting_blood_sugar AS fastingBloodSugar
+  			,b.fasting_state AS fastingState 
+  			,b.blood_sugar_date AS bloodSugarDate
+	FROM blood_sugar AS b
+	JOIN member AS m
+	ON m.member_no= b.member_no
+	Limit #{beginRow},#{pagePerRow}
+  </select>
+  
+  <select id="bloodSugarCount" resultType="Integer">
+		SELECT
+		count(*)
+		FROM blood_sugar
+	</select>
+  
+  <insert id="addBloodSugar" parameterType="com.cafe24.kyungsu93.bloodsugar.service.BloodSugar">
+    
+  INSERT INTO blood_sugar(
+	blood_sugar_no
+	, member_no
+	, fasting_blood_sugar
+	, fasting_state
+	, blood_sugar_date
+	)
+	VALUES (
+	 #{bloodSugarNo}
+	, #{memberNo} 
+	, #{fastingBloodSugar}
+	, #{fastingState}
+	, now()
+	)
+  
+  </insert>
+  
+  <select id="bloodSugarOne"
+			 parameterType="String"
+			resultType="com.cafe24.kyungsu93.bloodsugar.service.BloodSugar">
+		SELECT
+			blood_sugar_no as bloodSugarNo
+			,b.member_no as memberNo
+			,fasting_blood_sugar as fastingBloodSugar
+			,fasting_state as fastingState
+			,blood_sugar_date as bloodSugarDate
+			FROM blood_sugar AS b		
+			INNER JOIN member AS m
+			ON b.member_no = m.member_no
+		WHERE blood_sugar_no = #{bloodSugarNo}
+		
+	 </select>
+	 <update id="updateBloodSugar" parameterType="com.cafe24.kyungsu93.bloodsugar.service.BloodSugar">
+		UPDATE blood_sugar
+		SET blood_sugar_no =  #{bloodSugarNo}
+	, member_no = #{memberNo} 
+	, fasting_blood_sugar = #{fastingBloodSugar}
+	, fasting_state = #{fastingState}
+	, blood_sugar_date = now()
+	WHERE blood_sugar_no = #{bloodSugarNo}
+
+	</update>
+	
+	<delete id="deleteBloodSugar"  parameterType="com.cafe24.kyungsu93.bloodsugar.service.BloodSugar">
+		DELETE FROM blood_sugar WHERE blood_sugar_no = #{bloodSugarNo}
+	</delete>
+	
+  
+  </mapper>

@@ -21,7 +21,7 @@ $(document).ready(function(){
    console.log($("input[name=myRadio]:checked").val());
 });
 </script>
-<script>
+<!-- <script>
 	$(document).ready(function(){
 		// 입력폼 
 		//공백 또는 "" 불가
@@ -45,13 +45,13 @@ $(document).ready(function(){
 	});
 
 </script>
-
-<title>addBloodsugar</title>
+ -->
+<title>addBloodSugar</title>
 </head>
 <body>
 <div class="container">
-	<h1>addBloodsugar</h1>
-	<form id="addForm" action="${pageContext.request.contextPath}/addBloodSugar" method="POST">
+	<h1>addBloodSugar</h1>
+	<form id="addBloodSugar" action="${pageContext.request.contextPath}/addBloodSugar" method="POST">
 		<div class="form-group">
 			<label for="bloodSugarNo">bloodSugarNo : </label>
 			<input class="form-control" name = "bloodSugarNo"  id="bloodSugarNo" type="text"/>	
@@ -74,8 +74,8 @@ $(document).ready(function(){
 			<a class="btn btn-default" id="BloodsugarList" href="${pageContext.request.contextPath}/bloodSugarList">글목록</a>
 		</div>
 		<form>
-			<input type="radio" name ="fastingstate"  checked="checked" value="F" id="fastingstate"/>F
-			<input type="radio" name ="fastingstate"  id="fastingstate" value="T">T 	
+			<input type="radio" name ="fastingState"  checked="checked" value="F" id="fastingState"/>F
+			<input type="radio" name ="fastingState"  id="fastingState" value="T">T 	
 		</form>
 	</form>
 </div>

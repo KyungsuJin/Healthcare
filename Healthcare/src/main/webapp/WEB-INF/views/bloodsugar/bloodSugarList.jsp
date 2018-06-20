@@ -46,15 +46,15 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="bloodsugar" items="${list}">
+			<c:forEach var="bloodSugar" items="${list}">
 				<tr>
-					<td>${bloodsugar.bloodSugarNo}</td>
-					<td>${bloodsugar.memberNo}</td>
-					<td>${bloodsugar.fastingBloodSugar }</td>
-					<td>${bloodsugar.fastingState }</td>
-					<td>${bloodsugar.bloodSugarDate }</td>
-					<td><a type="button" href="${pageContext.request.contextPath}/modifyBloodsugar?bloodSugarNo=${bloodsugar.bloodSugarNo}" id="buttonModify">수정</a></td>
-					<td><a type="button" href="${pageContext.request.contextPath}/deleteBloodsugar?bloodSugarNo=${bloodsugar.bloodSugarNo}" id="buttonDelete">삭제</a></td>  
+					<td>${bloodSugar.bloodSugarNo}</td>
+					<td>${bloodSugar.memberNo}</td>
+					<td>${bloodSugar.fastingBloodSugar }</td>
+					<td>${bloodSugar.fastingState }</td>
+					<td>${bloodSugar.bloodSugarDate }</td>
+					<td><a type="button" href="${pageContext.request.contextPath}/modifyBloodSugar?bloodSugarNo=${bloodSugar.bloodSugarNo}" id="buttonModify">수정</a></td>
+					<td><a type="button" href="${pageContext.request.contextPath}/deleteBloodSugar?bloodSugarNo=${bloodSugar.bloodSugarNo}" id="buttonDelete">삭제</a></td>  
 				</tr>
 			</c:forEach>	
 		</tbody>

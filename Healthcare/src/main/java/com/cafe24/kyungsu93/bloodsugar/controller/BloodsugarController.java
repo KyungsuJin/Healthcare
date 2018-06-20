@@ -135,11 +135,11 @@ public class BloodsugarController {
 	@RequestMapping(value="/addBloodSugar", method = RequestMethod.GET)
 	public String addBloodSugar() {
 		logger.debug("addBloodSugar 폼 요청");
-		return "bloodSugar/addBloodSugar";
+		return "bloodsugar/addBloodSugar";
 	}
 	
 	@RequestMapping(value="/addBloodSugar", method = RequestMethod.POST)
-		public String bloodSugarList(HttpSession session,BloodSugar bloodSugar) {
+		public String addBloodSugar(HttpSession session,BloodSugar bloodSugar) {
 			System.out.println("bloodSugarList  추가 후 List");
 			System.out.println("bloodSugarList  추가 후 bloodSugar "+bloodSugar.toString());
 			logger.debug("5번"+bloodSugar);
@@ -172,14 +172,15 @@ public class BloodsugarController {
 	
 	@RequestMapping(value="/modifyBloodSugar", method=RequestMethod.GET)
 	public String updateBloodSugarone(Model model
-											,@RequestParam(value="bloodSugarno") String bloodSugarNo) {
+											,@RequestParam(value="bloodSugarNo") String bloodSugarNo) {
 		
 		logger.debug("BloodSugarController 에서 updateBloodSugar 실행 ");
+		logger.debug("9번"+bloodSugarNo);
 		BloodSugar bloodSugar = bloodSugarService.selectBloodSugarOne(bloodSugarNo);
 		model.addAttribute("bloodSugar", bloodSugar);
 		logger.debug("bloodSugarController - bloodbloodSugar :"+ bloodSugar);
 		logger.debug("+++++++++++++++++988"+bloodSugar);
-		return "/bloodsugar/modifyBloodSugar";
+		return "bloodsugar/modifyBloodSugar";
 	}
 	
 	@RequestMapping(value="/deleteBloodSugar", method= {RequestMethod.POST,RequestMethod.GET})
