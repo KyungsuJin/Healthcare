@@ -23,7 +23,43 @@ public class GroupInviteService {
 	@Autowired
 	private GroupDao groupDao;
 	private static final Logger logger = LoggerFactory.getLogger(GroupInviteService.class);
-
+	
+	/**
+	 * 회원 초대 취소
+	 * @param groupInviteNo
+	 */
+	
+	public void groupInviteMemberCancle(String groupInviteNo) {
+		logger.debug("groupInviteDao - groupInviteMemberCancle 실행");
+		groupInviteDao.groupInviteMemberCancle(groupInviteNo);
+	}
+	/**
+	 * 그룹회원추방
+	 * @param memberNo
+	 */
+	public void outGroupMember(String memberNo) {
+		logger.debug("groupInviteDao - outGroupMember 실행");
+		groupInviteDao.outGroupMember(memberNo);
+	}
+	
+	/**
+	 * 그룹관계도리스트
+	 * @param groupName
+	 * @return
+	 */
+	public Map<String, Object> groupRelationChart(String groupName) {
+		logger.debug("GroupService - groupRelationMember 실행");
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		GroupInvite createMember = groupInviteDao.groupRelationGroupCreateMember(groupName);
+		String createMemb = createMember.getMemberName();
+		returnMap.put("createMemb", createMemb);
+		logger.debug("createMember:"+createMemb);
+		List<GroupInvite> groupRelationMember = groupInviteDao.groupRelationMember(groupName);
+		returnMap.put("groupRelationMember", groupRelationMember);
+		logger.debug("groupRelationMember:"+groupRelationMember);
+		return returnMap;
+	}
+	
 	/**
 	 * 그룹초대 수락
 	 * @param inviteGroupNo

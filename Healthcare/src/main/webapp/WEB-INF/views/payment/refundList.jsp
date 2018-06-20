@@ -8,30 +8,31 @@
 </head>
 <body>
 <h1>환불 승인 대기 리스트</h1>
+<%-- 	<form id="formSearch" name="formSearch" onsubmit="return formSearchcheck()" action="${pageContext.request.contextPath}/deleteGroupListSearch" method="post">
+		<select name="keyOption" size="1">
+            <option value="all" <c:if test="${'all'==keyOption }"> selected</c:if>>전체검색</option>
+            <option value="groupName" <c:if test="${'systolicPressure'==keyOption }"> selected</c:if>>개인정보공개유무</option>
+            <option value="groupKindName" <c:if test="${'diastolicPressure'==keyOption }"> selected</c:if>>회원명</option>
+        </select>
+		<input type="text" id="keyWord" name="keyWord" value="${keyWord}"/>
+		<button type="submit">검색</button>  
+    </form> --%>
 	<table>
 		<thead>
 			<tr>
-				<th>회원아이디</th>
-				<th>회원명</th>
-				<th>환불금액</th>
-				<th>환불신청날짜</th>
+				<th>번호</th>
 				<th>환불제목</th>
-				<th>환불사유</th>
-				<th>승인</th>
-				<th>거절</th>
+				<th>회원아이디</th>
+				<th>환불신청날짜</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach var="refund" items="${list}">
 			<tr>
-				<td>${refund.memberId }</td>
-				<td>${refund.memberName }</td>
-				<td>${refund.refundSum }</td>
-				<td>${refund.refundDate }</td>
+				<td>${refund.refundNo }</td>
 				<td>${refund.refundTitle }</td>
-				<td>${refund.refundContent }</td>
-				<td><a type="button" href="${pageContext.request.contextPath}/acceptRefund?refundNo=${refund.refundNo}">승인</a></td>
-				<td><a type="button" href="${pageContext.request.contextPath}/deniedRefund?refundNo=${refund.refundNo}">거절</a></td>
+				<td>${refund.memberId }</td>
+				<td>${refund.refundDate }</td>
 			</tr>
 			</c:forEach>
 		</tbody>

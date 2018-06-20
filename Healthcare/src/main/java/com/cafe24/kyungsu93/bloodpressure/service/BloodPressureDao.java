@@ -21,26 +21,19 @@ public class BloodPressureDao {
 		return sqlSession.selectOne(NS+"bloodPressureNoCountToHealthScreen",bloodPressureNo);
 	}
 	
-	public int bloodPressureSearchCount(Map<String, Object> map) {
-		logger.debug("BloodPressureDao - bloodPressureCount 실행");
-		return sqlSession.selectOne(NS+"bloodPressureSearchCount",map);
+	public int bloodPressureSearchDateCount(Map<String, Object> map) {
+		logger.debug("BloodPressureDao - bloodPressureSearchDateCount 실행");
+		return sqlSession.selectOne(NS+"bloodPressureSearchDateCount",map);
 	}
 	
 	public List<BloodPressure> bloodPressureSearchDate(Map<String, Object> map) {
 		logger.debug("BloodPressureDao - bloodPressureSearchDate 실행");
-		List<BloodPressure> list = sqlSession.selectList(NS+"bloodPressureSearchDate",map);
-		return list;
+		return sqlSession.selectList(NS+"bloodPressureSearchDate",map);
 	}
-		
-	public List<BloodPressure> bloodPressureSearchAll(Map<String, Object> map) {
-		logger.debug("BloodPressureDao - bloodPressureSearchAll 실행");
-		List<BloodPressure> list = sqlSession.selectList(NS+"bloodPressureSearchAll",map);
-		return list;
-	}
-	
-	public List<BloodPressure> selectBloodPressureChart(String memeberNo) {
+			
+	public List<BloodPressure> selectBloodPressureChart(String memberNo) {
 		logger.debug("BloodPressureDao - selectBlppdPressureChart 실행");
-		List<BloodPressure> list = sqlSession.selectList(NS+"bloodPressurechart",memeberNo);
+		List<BloodPressure> list = sqlSession.selectList(NS+"bloodPressurechart",memberNo);
 		return list;
 	}
 	
@@ -54,28 +47,32 @@ public class BloodPressureDao {
 		return sqlSession.selectOne(NS+"bloodPressureOne",bloodPressureNo);
 	}
 	
-	public int deletePressureCount(String bloodPressureNo) {
-		logger.debug("BloodPressureDao - deletePressureCount 실행");
+	public int deleteBloodPressure(String bloodPressureNo) {
+		logger.debug("BloodPressureDao - deleteBloodPressure 실행");
 		return sqlSession.delete(NS+"deleteBloodPressure",bloodPressureNo);
     }
 	
+	//혈압 리스트
 	public List<BloodPressure> bloodPressureList(Map<String,Integer> map) {
 		logger.debug("BloodPressureDao - bloodPressureList 실행");
 		 List<BloodPressure> list = sqlSession.selectList(NS+"bloodPressureList",map);
 		return list;
 	}
-		
+	
+	//혈압 리스트 게시글 카운트
 	public int bloodPressureCount() {
 		logger.debug("BloodPressureDao - bloodPressureCount 실행");
 		return sqlSession.selectOne(NS+"bloodPressureCount");
 	}
 	
-	public int selectBloodPressureId(String bloodPressureNo) {
-		logger.debug("BloodPressureDao - selectBloodPressureId 실행");
-		int row = sqlSession.selectOne(NS+"BloodPressureId",bloodPressureNo);
+	//혈압 번호 선택
+	public int selectBloodPressureNo() {
+		logger.debug("BloodPressureDao - selectBloodPressureNo 실행");
+		int row = sqlSession.selectOne(NS+"bloodPressureNo");
 		return row;
 	}
-		
+	
+	//혈압 등록
 	public int addBloodPressure(BloodPressure bloodPressure) {
 		logger.debug("BloodPressureDao - addBloodPressure 실행");
 		int row = sqlSession.insert(NS+"addBloodPressure",bloodPressure);

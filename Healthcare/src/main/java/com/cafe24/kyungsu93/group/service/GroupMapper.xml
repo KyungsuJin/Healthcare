@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cafe24.kyungsu93.group.service.GroupMapper">
+
 	<select id="groupNoSearch" 
 			parameterType="String" 
 			resultType="com.cafe24.kyungsu93.group.service.Group">
@@ -97,7 +98,7 @@
 			#{groupNo}, NOW()+Interval 1 Month
 		)
 	</insert>
-		 <delete id="deleteGroupDelete"  parameterType="com.cafe24.kyungsu93.group.service.Group">
+	<delete id="deleteGroupDelete"  parameterType="com.cafe24.kyungsu93.group.service.Group">
 		DELETE 
 		FROM group_delete 
 		WHERE group_no = #{groupNo}

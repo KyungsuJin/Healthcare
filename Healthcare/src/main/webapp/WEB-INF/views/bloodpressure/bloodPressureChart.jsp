@@ -19,7 +19,7 @@
 	});	
 	//ajax 실행
 	function ajaxData() {
-	
+
 		var request = $.ajax({
 		type : "POST",
 		url : "${pageContext.request.contextPath}/bloodPressureChart?memberNo="+memberNo
@@ -29,12 +29,12 @@
 		//받아온 데이터 값 확인. 
 		console.log(msg);
 		if(msg.length<2){
-			$('#chartResult').html('최근 일주일동안 등록된 혈압이 2개 미만입니다. 일주일 평균 혈압 차트를 보고싶으시면 혈압을 더 등록해주세요.');
+			$('#chartResult').html('최근 한달동안 등록된 혈압이 2개 미만입니다. 평균 혈압 차트를 보고싶으시면 혈압을 더 등록해주세요.');
 			$('#addBtn').show();
 			$('#bloodPressureResult').hide();
 			return false;
 		}else if(msg.length<1){
-			$('#chartResult').html('최근 일주일동안 등록된 데이터가 없습니다.');
+			$('#chartResult').html('최근 한달동안 등록된 데이터가 없습니다.');
 			$('#addBtn').show();
 			$('#bloodPressureResult').hide();
 			return false;
@@ -76,7 +76,7 @@
 				var options = {
 					//차트 상단의 제목 설정
 					chart:{title : '혈압 그래프',
-						subtitle: '최근 일주일 혈압 수치 그래프'	
+						subtitle: '최근 한달 동안의 혈압 수치 그래프'
 					},
 					//차트 크기 설정
 					width: 900, // 넓이 옵션
@@ -169,7 +169,7 @@
 		  alert( "Request failed: " + textStatus );
 		});
 	}
-
+	//6개월전  혈압 검색
 
 </script>
 </head>
@@ -184,10 +184,25 @@
 	<div id="linechart_material"></div>
 	<!-- 혈압 결과값 계산 -->
 	<div id="bloodPressureResult">
-		수축기 혈압 : <span id="systolicPressure"></span><br/>
-		이완기 혈압 : <span id="diastolicPressure"></span><br/>
-		수축기 혈압은 <span id="systolicresult"></span><br/>
-	 	이완기 혈압은 <span id="diastolicresult"></span><br/>
+		<div>
+			수축기 혈압(최고혈압)이 140 mmHg 이상이거나 이완기 혈압(확장기 혈압 혹은 최저혈압)이 90 mmHg 이상
+			정상	120 미만	80미만
+			고혈압 전단계 120-139	80-89
+			1기	140-159	90-99
+			2기	160 또는 그 이상	100 또는 그 이상
+		</div>
+		<div>
+			수축기 혈압 : <span id="systolicPressure"></span>
+		</div>
+		<div>
+			이완기 혈압 : <span id="diastolicPressure"></span>
+		</div>
+		<div>
+			수축기 혈압은 <span id="systolicresult"></span>
+	 	</div>
+	 	<div>
+	 		이완기 혈압은 <span id="diastolicresult"></span>
+	 	</div>
  	</div>
 </body>
 </html>

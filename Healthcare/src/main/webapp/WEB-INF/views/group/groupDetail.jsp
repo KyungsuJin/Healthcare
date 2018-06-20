@@ -64,6 +64,7 @@ $(document).ready(function(){
 			<td>그룹설명</td>
 			<td>${map.groupDetail.groupInfo }</td>
 		<tr>
+		<tr>
 			<td>생성일</td>
 			<td>${map.groupDetail.groupCreateDate }</td>
 		</tr>
@@ -74,6 +75,7 @@ $(document).ready(function(){
 	</div>
 	<div>
 		<a href="${pageContext.request.contextPath}/groupMembersList?groupName=${map.groupDetail.groupName }">회원리스트</a>
+		<a href="${pageContext.request.contextPath}/groupMemberRelation?groupName=${map.groupDetail.groupName }">그룹관계도</a>
 	</div>
 	<div>
 		<c:if test="${map.countNext > 0 }">

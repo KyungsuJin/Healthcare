@@ -27,7 +27,7 @@ public class BloodPressureRestController {
 	private BloodPressureService bloodPressureService;
 	private static final Logger logger = LoggerFactory.getLogger(BloodPressureRestController.class);
 	
-	//그룹 삭제유예기간 등록 검색
+	//설문에 혈압이 등록되어있는지 검색
 	@RequestMapping(value="/bloodPressureNoCountToHealthScreen", method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Integer> bloodPressureNoCountToHealthScreen(@RequestParam(value="bloodPressureNo") String bloodPressureNo) {
@@ -41,10 +41,10 @@ public class BloodPressureRestController {
 	 @ResponseBody
 	 public void chartData(HttpServletResponse response,@RequestParam(value="memberNo")String memberNo){
 		 logger.debug("BloodPressureRestController - bloodPressureChart chartData ajax 실행");
-		 List<BloodPressure> list = bloodPressureService.selectBloodPressureChart(memberNo);
+		 List<BloodPressure>  list = bloodPressureService.selectBloodPressureChart(memberNo);
 		logger.debug("memberNo : " + memberNo);
 		//배열값 확인
-		logger.debug("list : " + list);
+		logger.debug("list : " +list);
 		//javaScript 타입을 gson을 이용해 ajax에서 사용가능하게 데이터 타입을 변환.
 		Gson gson = new Gson();
 		String json = "";

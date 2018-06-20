@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cafe24.kyungsu93.group.service.GroupInviteMapper">
+	
+	<delete id="groupInviteMemberCancle"  parameterType="com.cafe24.kyungsu93.group.service.GroupInvite">
+		DELETE 
+		FROM group_invite
+		WHERE group_invite_no = #{groupInviteNo}
+	</delete>
+	<delete id="outMember"  parameterType="com.cafe24.kyungsu93.group.service.GroupInvite">
+		DELETE 
+		FROM group_invite_approval_result 
+		WHERE member_no = #{memberNo}
+	</delete>
+	<select id="groupRelationGroupCreateMember" parameterType="String" resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
+		SELECT
+		b.member_name as memberName
+		FROM group_create a
+		INNER JOIN member b
+		ON a.member_no = b.member_no
+		WHERE group_name = #{groupName}
+	</select>
+	<select id="groupRelationMember" parameterType="String" resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
+		SELECT
+		b.member_no as memberNo,
+		b.member_name as memberName
+		FROM group_invite_approval_result a
+		INNER JOIN member b
+		ON a.member_no = b.member_no
+		WHERE group_name = #{groupName}
+		ORDER BY group_invite_approval_date ASC
+	</select>
 	<select id="memberNameSearch" parameterType="String" 
 			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
 		SELECT
@@ -137,6 +166,7 @@
 			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
 	 	SELECT
 			b.group_name as groupName,
+			a.group_invite_no as groupInviteNo,
 			a.group_no as groupNo,
 			a.group_invite_approval as groupInviteApproval,
 			a.group_invite_date as groupInviteDate,

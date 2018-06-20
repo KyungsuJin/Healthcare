@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cafe24.kyungsu93.group.service.Group;
+
 @Service
 @Transactional
 public class RefundService {
@@ -20,6 +22,45 @@ public class RefundService {
 	private PointChargingDao pointChargingDao;
 	private static final Logger logger = LoggerFactory.getLogger(RefundService.class);
 
+	public Map<String, Object> refundListDetail(String refundNo){
+		logger.debug("RefundService - refundListDetail실행");
+		Refund refundDetail = refundDao.refundListDetail(refundNo);
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("refundDetail", refundDetail);
+		logger.debug("refundDetail:"+refundDetail);
+		//이전글 다음글 
+		int countPrev = 0;
+		int countNext = 0;
+		//이전글 다음글 카운트 
+		countPrev = refundDao.prevrefundListDetailCount(refundNo);
+		countNext = refundDao.nextrefundListDetailCount(refundNo);
+		if(countNext != 0){
+			Group nextGroup = refundDao.nextrefundListDetail(refundNo);
+			returnMap.put("nextGroup", nextGroup);
+			returnMap.put("countNext", countNext);
+			if(countPrev != 0){
+				//둘다있을경우
+				logger.debug("이전글,다음글이 있습니다.");
+				Group prevGroup = refundDao.prevrefundListDetail(refundNo);
+				returnMap.put("prevGroup", prevGroup);
+				returnMap.put("countPrev", countPrev);
+			}else {
+				//이전글이 없을경우
+				logger.debug("이전글이 없습니다.");
+				returnMap.put("countPrev", countPrev);
+			}
+		}else {
+			if(countPrev != 0) {
+				//다음글이 없을 경우
+				logger.debug("다음글이 없습니다.");
+				Group prevGroup = refundDao.prevrefundListDetail(refundNo);
+				returnMap.put("prevGroup", prevGroup);
+				returnMap.put("countNext", countNext);
+				returnMap.put("countPrev", countPrev);
+			}
+		}
+		return returnMap;
+	}
 	/**
 	 * 환불 지급완료
 	 * @param refundNo

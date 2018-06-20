@@ -4,9 +4,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>modifyBloodPressure</title>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
-
 function check() {
 	var checkCHar = /^[0-9]*$/;
 	var systolicPressure = $('#systolicPressure').val();
@@ -40,11 +40,12 @@ function check() {
 </head>
 	<body>
 		<h1>modifyBloodPressure</h1>
+			등록번호 : ${bloodPressure.bloodPressureNo }
 			등록일 : ${bloodPressure.bloodPressureDate }
 			<form id="bloodPressureForm" onsubmit="return check()" action="${pageContext.request.contextPath}/modifyBloodPressure" method="post">
 				<input type="hidden" name="bloodPressureNo" value="${bloodPressure.bloodPressureNo }">
-				<input type="text" name="systolicPressure" placeholder="${bloodPressure.systolicPressure}">
-				<input type="text" name="diastolicPressure" placeholder="${bloodPressure.diastolicPressure}">
+				수축기 : <input type="text" name="systolicPressure" placeholder="${bloodPressure.systolicPressure}">
+				이완기 : <input type="text" name="diastolicPressure" placeholder="${bloodPressure.diastolicPressure}">
 				<input type="submit" value="수정하기">
 			</form>
 	</body>

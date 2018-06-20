@@ -1,6 +1,5 @@
 package com.cafe24.kyungsu93.bloodpressure.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -25,21 +24,24 @@ public class BloodPressureController {
 	private BloodPressureService bloodPressureService;
 	private static final Logger logger = LoggerFactory.getLogger(BloodPressureController.class);
 	
-	@RequestMapping(value="/bloodPressureSearch", method=RequestMethod.POST)
+	@RequestMapping(value="/bloodPressureSearch", method= {RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView searchList(@RequestParam(value="startDate") String startDate
-									,@RequestParam(value="endDate")String endDate) {
+									,@RequestParam(value="endDate")String endDate
+									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
 		logger.debug("BloodPressureRestController - searchList bloodPressureSearch ModelAndView 실행");
-		List<BloodPressure> list = bloodPressureService.bloodPressureSearchDate(startDate, endDate);
-		int result = 0;
+		Map<String,Object> map = bloodPressureService.bloodPressureSearch(startDate, endDate, currentPage, pagePerRow);
 		ModelAndView modelAndView = new ModelAndView();
-		if(list.size()>0) {
-			result = 1;
-		}
 		modelAndView.setViewName("bloodpressure/bloodPressure");
-		modelAndView.addObject("list", list);
-		modelAndView.addObject("startDate", startDate);
-		modelAndView.addObject("endDate", endDate);
-		modelAndView.addObject("result", result);
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("startDate", map.get("startDate"));
+		modelAndView.addObject("endDate", map.get("endDate"));
+		modelAndView.addObject("result", map.get("total"));
+		modelAndView.addObject("totalBlock", map.get("totalBlock"));
+		modelAndView.addObject("firstBlockPage", map.get("firstBlockPage"));
+		modelAndView.addObject("lastBlockPage", map.get("lastBlockPage"));
+		modelAndView.addObject("lastPage", map.get("lastPage"));
+		modelAndView.addObject("currentPage", currentPage);
 		return modelAndView;
 	}
 	

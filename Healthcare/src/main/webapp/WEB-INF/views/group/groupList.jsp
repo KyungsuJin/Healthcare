@@ -29,7 +29,7 @@
 				<td>${groupTable.groupName }</td>
 				<td>${groupTable.groupKindName }</td>
 				<td>${groupTable.groupCreateDate }</td>
-				<td><a type="button" href="${pageContext.request.contextPath}/groupDetail?groupNo=${groupTable.groupNo}" id="buttonModify">그룹상세보기</a></td>				
+				<td><a type="button" href="${pageContext.request.contextPath}/groupDetail?groupNo=${groupTable.groupNo}">그룹상세보기</a></td>				
 			</tr>
 			</c:forEach>
 		</tbody>

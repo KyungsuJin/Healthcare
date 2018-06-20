@@ -7,7 +7,7 @@
 <title>exerciseFeedbackList</title>
 </head>
 <body>
-<h1>내가한운동피드백요청리스트</h1>
+<h1>운동피드백요청리스트</h1>
 	<table>
 		<thead>
 			<tr>

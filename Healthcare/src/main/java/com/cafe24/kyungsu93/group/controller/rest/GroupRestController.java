@@ -1,6 +1,9 @@
 package com.cafe24.kyungsu93.group.controller.rest;
 
+import java.io.IOException;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe24.kyungsu93.group.service.GroupInviteService;
 import com.cafe24.kyungsu93.group.service.GroupService;
+import com.google.gson.Gson;
 
 @RestController
 public class GroupRestController {
@@ -22,6 +26,29 @@ public class GroupRestController {
 	@Autowired
 	private GroupInviteService groupInviteService;
 	private static final Logger logger = LoggerFactory.getLogger(GroupRestController.class);
+
+	//그룹 관계도
+	@RequestMapping(value="/groupMemberRelationChart", method=RequestMethod.POST)
+	@ResponseBody
+	public void groupMemberRelationChart(HttpServletResponse response,@RequestParam(value="groupName") String groupName) {
+		logger.debug("GroupController - groupMemberRelationChart ajax 실행");
+		logger.debug("groupName:"+groupName);
+		Map<String,Object> map = groupInviteService.groupRelationChart(groupName);
+		logger.debug("createMemb:"+map.get("createMemb"));
+		logger.debug("groupRelationMember:"+map.get("groupRelationMember"));
+		Gson gson = new Gson();
+		String json = "";
+		json = gson.toJson(map);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("utf-8");
+		try {
+			response.getWriter().print(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 	
 	//그룹 삭제유예기간 등록 검색
 	@RequestMapping(value="/deleteGroupSearch", method=RequestMethod.GET)

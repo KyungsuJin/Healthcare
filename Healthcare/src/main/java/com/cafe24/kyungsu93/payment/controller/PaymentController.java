@@ -25,10 +25,20 @@ public class PaymentController {
 	private RefundService refundService;
 	private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
 	
+	//환불 상세보기
+	@RequestMapping(value="/refundListDetail", method=RequestMethod.GET)
+	public String refundDetail(Model model,@RequestParam(value="refundNo") String refundNo) {
+		logger.debug("PaymentController - refundDetail 포워드 실행");
+		Map<String,Object> map = refundService.refundListDetail(refundNo);
+		model.addAttribute("map", map);
+		logger.debug("map:"+map);
+		return "payment/refundListDetail";
+	}
+	
 	//포인트 지급
 	@RequestMapping(value="/addPoint", method=RequestMethod.POST)
 	public String addPoint(PointCharging pointCharging) {
-		logger.debug("PaymentController - addPoint 실행");
+		logger.debug("PaymentController - addPoint 리다이렉트 실행");
 		pointChargingService.addPoint(pointCharging);
 		return "redirect:/addPointResult";
 	}
@@ -36,7 +46,7 @@ public class PaymentController {
 	//환불 지급 완료
 	@RequestMapping(value="/completeRefund", method=RequestMethod.GET)
 	public String completeRefund(@RequestParam(value="refundNo") String refundNo) {
-		logger.debug("PaymentController - completeRefund 실행");
+		logger.debug("PaymentController - completeRefund 리다이렉트 실행");
 		refundService.completeRefund(refundNo);
 		return "redirect:/refundCompleteList";
 	}
@@ -44,7 +54,7 @@ public class PaymentController {
 	//환불 거절
 	@RequestMapping(value="/deniedRefund", method=RequestMethod.GET)
 	public String deniedRefund(@RequestParam(value="refundNo") String refundNo) {
-		logger.debug("PaymentController - deniedRefund 실행");
+		logger.debug("PaymentController - deniedRefund 리다이렉트 실행");
 		refundService.deniedRefund(refundNo);
 		return "redirect:/refundList";
 	}
@@ -52,7 +62,7 @@ public class PaymentController {
 	//환불 승인
 	@RequestMapping(value="/acceptRefund", method=RequestMethod.GET)
 	public String acceptRefund(@RequestParam(value="refundNo") String refundNo) {
-		logger.debug("PaymentController - acceptRefund 실행");
+		logger.debug("PaymentController - acceptRefund 리다이렉트 실행");
 		refundService.acceptRefund(refundNo);
 		return "redirect:/refundList";
 	}

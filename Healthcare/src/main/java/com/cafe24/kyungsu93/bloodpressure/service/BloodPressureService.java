@@ -41,27 +41,7 @@ public class BloodPressureService {
 	public List<BloodPressure> selectBloodPressureChart(String memberNo) {
 		logger.debug("BloodPressureService - selectBloodPressureChart 실행");
 		return bloodPressureDao.selectBloodPressureChart(memberNo);
-	}
-	
-	/**
-	 * 혈압 기간별 검색
-	 * @param startDate
-	 * @param endDate
-	 * @return list
-	 */
-	public List<BloodPressure> bloodPressureSearchDate(String startDate, String endDate) {
-		logger.debug("BloodPressureService - bloodPressureSearchDate 실행");
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("startDate", startDate);
-		map.put("endDate", endDate);
-		logger.debug("가져온 데이터:"+startDate+","+endDate);
-		
-		List<BloodPressure> list = bloodPressureDao.bloodPressureSearchDate(map);
-		
-		return list;
-	}
-	
+	}	
 	/**
 	 * 혈압 수정
 	 * @param bloodPressureNo
@@ -91,13 +71,78 @@ public class BloodPressureService {
 	/**
 	 * 혈압 삭제
 	 * @param bloodPressureNo
-	 * @return bloodPressureDao.deletePressureCount(bloodPressureNo)
+	 * @return 
 	 */
-	public int deleteBloodPressure(String bloodPressureNo) {
+	public void deleteBloodPressure(String bloodPressureNo) {
 		logger.debug("BloodPressureService - deleteBloodPressure 실행");
-		return bloodPressureDao.deletePressureCount(bloodPressureNo);
-	}
+		bloodPressureDao.deleteBloodPressure(bloodPressureNo);
+	}	
 	
+	/**
+	 * 혈압 기간별 검색
+	 * @param startDate
+	 * @param endDate
+	 * @param currentPage
+	 * @param pagePerRow
+	 * @return returnMap
+	 */
+	public Map<String,Object> bloodPressureSearch(String startDate, String endDate,int currentPage, int pagePerRow) {
+		logger.debug("BloodPressureService - bloodPressureSearch 실행");
+		Map<String,Object> map = new HashMap<String,Object>();
+		int beginRow = (currentPage-1)*pagePerRow;
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
+		logger.debug("가져온 데이터:"+startDate+","+endDate);
+		List<BloodPressure> list = bloodPressureDao.bloodPressureSearchDate(map);
+		int total = list.size();
+		logger.debug("total:"+total);
+		int lastPage = total/pagePerRow;
+        if(total % pagePerRow != 0) {
+            lastPage++;
+        }
+        logger.debug("list:"+list);
+        logger.debug("lastPage:"+lastPage);
+        logger.debug("currentPage:"+currentPage);
+        logger.debug("beginRow:"+beginRow);
+        logger.debug("pagePerRow:"+pagePerRow);
+        logger.debug("======================page block=========================");
+       
+        int pagePerBlock = 10; //보여줄 블록 수 
+        int block = currentPage/pagePerBlock;
+        int totalBlock = total/pagePerBlock;//총 블록수
+        
+        if(currentPage % pagePerBlock != 0) {
+        	block ++;
+        }
+        int firstBlockPage = (block-1)*pagePerBlock+1;
+        int lastBlockPage = block*pagePerBlock;
+        
+		if(lastPage > 0) {			
+			if(lastPage % pagePerBlock != 0) {
+				totalBlock++;
+			}
+		}
+		if(lastBlockPage >= totalBlock) {
+			lastBlockPage = totalBlock;
+		}
+		logger.debug("firstBlockPage:"+firstBlockPage);
+		logger.debug("lastBlockPage:"+lastBlockPage);
+		logger.debug("block:"+block);
+		logger.debug("totalBlock:"+totalBlock);
+		logger.debug("======================page block=========================");
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("list", list);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("firstBlockPage", firstBlockPage);
+		returnMap.put("lastBlockPage", lastBlockPage);
+		returnMap.put("totalBlock", totalBlock);
+		returnMap.put("startDate", startDate);
+		returnMap.put("endDate", endDate);
+		returnMap.put("total", total);
+		return returnMap;
+	}
 	/**
 	 * 혈압 리스트
 	 * @param currentPage
@@ -162,30 +207,7 @@ public class BloodPressureService {
 	 */
 	public void addBloodPressure(BloodPressure bloodPressure) {
 		logger.debug("BloodPressureService - addBloodPressure실행");		
-		String bloodPressureNo = bloodPressure.getBloodPressureNo();
-		try {
-		if(bloodPressureNo == null) {
-			int count = 0;
-			count = bloodPressureDao.bloodPressureCount();
-			if(count > 0) {
-				int result = 0;
-				String bloodPressureNo_temp = "blood_pressure_";
-				result = bloodPressureDao.selectBloodPressureId(bloodPressureNo);
-				if(result > 0) {
-						if(1 <= result) {
-							result++;
-						}			
-					bloodPressureNo = bloodPressureNo_temp + result; 
-				}
-			}else {
-				bloodPressureNo = "blood_pressure_1";
-			}
-		}
-		bloodPressure.setBloodPressureNo(bloodPressureNo);
-		}catch(NullPointerException e) {
-			e.printStackTrace();
-		}
-		
+		bloodPressure.setBloodPressureNo("blood_pressure_"+(bloodPressureDao.selectBloodPressureNo()+1));
 		bloodPressureDao.addBloodPressure(bloodPressure);
 	}
 }

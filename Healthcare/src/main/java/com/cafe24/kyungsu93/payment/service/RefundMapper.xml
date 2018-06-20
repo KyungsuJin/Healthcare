@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cafe24.kyungsu93.payment.service.RefundMapper">
+	<select id="nextrefundListDetailCount" resultType="Integer">
+		SELECT
+		count(*)
+		FROM refund
+		WHERE refund_no > #{refundNo}
+		ORDER BY group_no DESC LIMIT 1
+	</select>
+	<select id="prevrefundListDetail" 
+			parameterType="String" 
+			resultType="com.cafe24.kyungsu93.payment.service.Refund">
+		SELECT 
+			refund_no as refundNo, 
+			refund_title as refundTitle
+		FROM refund
+		WHERE #{refundNo} > refund_no
+		ORDER BY group_no DESC LIMIT 1
+	</select>
+	<select id="prevrefundListDetailCount" resultType="Integer">
+		SELECT
+		count(*)
+		FROM refund
+		WHERE #{refundNo} > refund_no
+		ORDER BY group_no DESC LIMIT 1
+	</select>
+	<select id="nextrefundListDetail" 
+			parameterType="String" 
+			resultType="com.cafe24.kyungsu93.payment.service.Refund">
+		SELECT 
+			refund_no as refundNo, 
+			refund_title as refundTitle
+		FROM refund
+		WHERE refund_no > #{refundNo}
+		ORDER BY group_no DESC LIMIT 1
+	</select>
+	<select id="refundListDetail" 
+			parameterType="String" 
+			resultType="com.cafe24.kyungsu93.payment.service.Refund">
+	 SELECT 
+		a.refund_no as refundNo, 
+		b.member_id as memberId,
+		b.member_name as memberName, 
+		a.refund_title as refundTitle, 
+		a.refund_content as refundContent, 
+		a.refund_sum as refundSum, 
+		a.refund_date as refundDate
+	FROM refund a
+	INNER JOIN member b
+	ON a.member_no = b.member_no
+	WHERE refund_no = #{refundNo}
+	ORDER BY refund_date DESC
+	</select>
 	<insert id="completeRefund" parameterType="com.cafe24.kyungsu93.payment.service.Refund">
 	INSERT INTO refund_complete
 	(refund_no, refund_complete_director_no, refund_complete_date)

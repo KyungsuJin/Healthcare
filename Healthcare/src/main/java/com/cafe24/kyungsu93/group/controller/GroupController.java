@@ -25,13 +25,44 @@ public class GroupController {
 	@Autowired
 	private GroupInviteService groupInviteService;
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
-
+	
+	//회원초대취소
+	@RequestMapping(value="/groupInviteMemberCancle", method=RequestMethod.POST)
+	public String groupInviteMemberCancle(@RequestParam(value="groupInviteNo") String groupInviteNo) {
+		logger.debug("GroupController - groupInviteMemberCancle 리다이렉트 실행");
+		groupInviteService.groupInviteMemberCancle(groupInviteNo);
+		return "redirect:/inviteMemberList";
+	}
+	
+	//그룹회원추방
+	@RequestMapping(value="/outGroupMember", method=RequestMethod.POST)
+	public String outGroupMember(@RequestParam(value="memberNo") String memberNo) {
+		logger.debug("GroupController - outGroupMember 리다이렉트 실행");
+		groupInviteService.outGroupMember(memberNo);
+		return "redirect:/groupMemberList";
+	}
+	
+	//그룹 삭제 진행 취소
+	@RequestMapping(value="/groupDeleteCancle", method=RequestMethod.POST)
+	public String groupDeleteCancle(@RequestParam(value="groupNo") String groupNo) {
+		logger.debug("GroupController - groupDeleteCancle 리다이렉트 실행");
+		groupService.cancleDeleteGroup(groupNo);
+		return "redirect:/deleteGroupList";
+	}
+	//그룹 관계도
+	@RequestMapping(value="/groupMemberRelation", method=RequestMethod.GET)
+	public String groupMemberRelation() {
+		logger.debug("GroupController - groupMemberRelation 포워드 실행");
+		return "group/groupMemberRelation";
+	}
+	
 	//그룹 캘린더 
 	@RequestMapping(value="/groupCalendar", method=RequestMethod.GET)
 	public String groupCalendar() {
 		logger.debug("GroupController - groupCalendar 포워드 실행");
 		return "group/groupCalendar";
-	}	
+	}
+	
 	//그룹 삭제 진행
 	@RequestMapping(value="/deleteGroup", method=RequestMethod.GET)
 	public String acceptGroupList(@RequestParam(value="groupNo") String groupNo) {
@@ -150,10 +181,17 @@ public class GroupController {
 	
 	//삭제 유예 등록된 그룹 리스트
 	@RequestMapping(value="/deleteGroupList", method=RequestMethod.GET)
-	public String deleteGroupList(Model model) {
+	public String deleteGroupList(Model model
+							,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+							,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
 		logger.debug("GroupController - deleteGroupList 포워드 실행");
-		Map<String,Object> map = groupService.deleteGroupList();
+		Map<String,Object> map = groupService.deleteGroupList(currentPage, pagePerRow);
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("list", map.get("list"));
+		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
+		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
+		model.addAttribute("totalBlock", map.get("totalBlock"));
 		return "group/deleteGroupList";
 	}
 	

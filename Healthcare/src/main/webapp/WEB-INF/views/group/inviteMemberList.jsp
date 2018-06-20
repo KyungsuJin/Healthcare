@@ -5,12 +5,40 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>inviteMemberList</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+//체크박스 전체선택
+function checkAll(){
+    if( $('#selectAll').is(':checked') ){
+      $('input:checkbox[name=groupInviteCheck]').prop('checked', true);
+    }else{
+      $('input:checkbox[name=groupInviteCheck]').prop('checked', false);
+    }
+}
+//선택해서 삭제하기
+function outGroupMember(){
+  $('input:checkbox[name="groupInviteCheck"]:checked').each(function() {
+	var groupInviteNo = $(this).val();
+	console.log('groupInviteNo:'+groupInviteNo);
+	if(groupInviteNo == ''){
+		    alert('추방할 회원을 선택하세요.');
+		    return false;
+	}else{
+		if(confirm('추방하시겠습니까?')){
+			alert('회원이 추방 되었습니다.');
+			location.href="${pageContext.request.contextPath}/groupInviteMemberCancle?groupInviteNo="+groupInviteNo;
+		}
+	}	
+  });
+}
+</script>
 </head>
 <body>
 <h1>내가 초대한 회원 리스트</h1>
 	<table>
 		<thead>
 			<tr>
+				<th><input type="checkbox" name="selectAll" id="selectAll" onclick="checkAll();"></th>
 				<th>아이디</th>					
 				<th>이름</th>
 				<th>초대</th>
@@ -22,6 +50,7 @@
 		<tbody>
 			<c:forEach var="groupInvite" items="${list}">
 				<tr>
+					<td><input type="checkbox" name="groupInviteCheck" value="${groupInvite.groupInviteNo}"/></td>
 					<th>${groupInvite.memberId }</th>					
 					<th>${groupInvite.memberName }</th>
 					<th>${groupInvite.groupName}</th>
@@ -31,6 +60,7 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	<input type="button" onclick="outGroupMember()" value="초대취소하기">
 	<nav>
 		<ul class="pagination pagination-sm">
 			<c:if test="${currentPage > 10}">

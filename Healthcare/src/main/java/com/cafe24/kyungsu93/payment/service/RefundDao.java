@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cafe24.kyungsu93.group.service.Group;
+
 @Repository
 public class RefundDao {
 	
@@ -16,6 +18,36 @@ public class RefundDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.payment.service.RefundMapper.";
+
+	//환불 상세 이전글 카운트
+	public int prevrefundListDetailCount(String groupNo) {
+		logger.debug("RefundDao - prevrefundListDetailCount 실행");
+		return sqlSession.selectOne(NS+"prevrefundListDetailCount",groupNo);
+	}		
+	
+	//환불 상세 다음글 카운트
+	public int nextrefundListDetailCount(String groupNo) {
+		logger.debug("RefundDao - nextrefundListDetailCount 실행");
+		return sqlSession.selectOne(NS+"nextrefundListDetailCount",groupNo);
+	}		
+	
+	//환불 상세 다음글 
+	public Group nextrefundListDetail(String groupNo) {
+		logger.debug("RefundDao - nextrefundListDetail 실행");
+		return sqlSession.selectOne(NS+"nextrefundListDetail",groupNo);
+	}
+	
+	//환불상세 이전글
+	public Group prevrefundListDetail(String groupNo) {
+		logger.debug("RefundDao - prevrefundListDetail 실행");
+		return sqlSession.selectOne(NS+"prevrefundListDetail",groupNo);
+	}
+	//환불 리스트 자세히보기
+	public Refund refundListDetail(String refundNo) {
+		logger.debug("RefundDao - refundListDetail 실행");
+		Refund refund = sqlSession.selectOne(NS+"refundListDetail",refundNo);
+		return refund;
+	}
 	
 	//환불 지급완료
 	public int completeRefund(Refund refund) {
