@@ -1,4 +1,4 @@
-package com.cafe24.kyungsu93.notice.controller;
+/*package com.cafe24.kyungsu93.notice.controller;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -115,47 +115,7 @@ public class NoticeController {
 		return "notice/noticeListDetail";
 	}
 }
-	/*@RequestMapping(value ="/searchNoticeList", method = RequestMethod.GET)
-	public String searchNoticeList(Model model											
-									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
-									,@RequestParam(value="pagePerRow", required=true, defaultValue="10") int pagePerRow
-									,@RequestParam(value="searchOption", defaultValue="notice_title") String searchOption
-									,@RequestParam(value="keyword", defaultValue="") ArrayList<Object> keyword) {
-		
-		Map<String, Object> map = noticeService.selectnoticeList(currentPage, pagePerRow, searchOption, keyword);
-		logger.debug("20번"+currentPage);
-		logger.debug("21번"+pagePerRow);
-		logger.debug("22번"+searchOption);
-		logger.debug("23번"+keyword);
-		
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("lastPage", map.get("lastPage"));
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("startPage", map.get("startPage"));
-		model.addAttribute("endPage", map.get("endPage"));
-		model.addAttribute("pagePerRow", pagePerRow);
-		model.addAttribute("searchOption", searchOption);
-		if(keyword.size() == 1) {
-			model.addAttribute("keyword", keyword.get(0));
-		}else if(keyword.size() == 2) {
-			model.addAttribute("keyword", keyword);
-		}else{	
-			model.addAttribute("keyword", "");	
-		}
-		
-		return "NoticeList";
-	}*/
-	
-	
-	
-  /*  public String search(HttpServletRequest request
-    						, Model model
-				    		,@RequestParam(value="searchCode") String searchType
-				    		,@RequestParam(value="searchValue") String searchValue) {
-	logger.debug("BloodsugarSearch controller부분실행");
-	Map<String,Object> map = bloodsugarService.getSearch(request, model, searchCode, searchValue);
-	model.addAttribute("list", map.get("list"));
-		return "/bloodsugar/bloodsugarList";
-	}*/
 
 
+
+*/

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -96,7 +96,7 @@ function changehtml(){
 </head>
 <body>
 	<h1>NoticeList</h1>
-        <%--  <form action="${pageContext.request.contextPath}/searchNoticeList" method="get">
+         <form action="${pageContext.request.contextPath}/searchNoticeList" method="get">
 										<select id="searchOption" name="searchOption" onclick="changehtml();">											
 											<option value="notice_title"  <c:out value="${searchOption == 'notice_title'?'selected':''}"/>>제목</option>
 											<option value="notice_content"  <c:out value="${searchOption == 'notice_content'?'selected':''}"/>>내용</option>											
@@ -106,8 +106,8 @@ function changehtml(){
 										<input type="submit" value="검색버튼" >
 									</form>
     
-    </form>     --%>
-	<%-- <form id="NoticeList" action="${pageContext.request.contextPath}/NoticeList" method="POST">
+    </form>    
+	<form id="NoticeList" action="${pageContext.request.contextPath}/NoticeList" method="POST">
 	<!-- 검색 -->
 	<form id="formSearch" name="formSearch"  action="${pageContext.request.contextPath}/NoticeSearch" method="post"> 
 		<select id="searchType" name="searchType"> 
@@ -116,16 +116,16 @@ function changehtml(){
 		</select>		
 		<input type="text" id="searchValue" name="searchValue" value="${mapSearch.searchType}"/> 
 		<button type="button" id="searchBtn">검색</button> 
-	</form> --%>
+	</form>
 	 
 	<form id="formSearch" name="formSearch"> 
         날짜검색<br>
         <input type="text" id="startDate" name="startDate" placeholder="0000-00-00"> ~ <input type="text" name="endDate" id="endDate" placeholder="0000-00-00"><br>
-<%-- 		<select name="keyOption" size="1">
+		<select name="keyOption" size="1">
             <option value="systolicPressure" <c:if test="${'systolicPressure'==keyOption }"> selected</c:if>>수축기혈압</option>
             <option value="diastolicPressure" <c:if test="${'diastolicPressure'==keyOption }"> selected</c:if>>이완기혈압</option>
         </select>
-		<input type="text" id="keyWord" name="keyWord" value="${keyWord }"/>  --%>
+		<input type="text" id="keyWord" name="keyWord" value="${keyWord }"/> 
       <button type="submit" onclick="formSearchcheck()">검색</button>
       </form>
       <span id="startdate"></span>
@@ -169,7 +169,9 @@ function changehtml(){
 		<tbody>
 			<c:forEach var="notice" items="${list}">
 				<tr>
-					 <td><a type="button" href="${pageContext.request.contextPath}/noticeListDetail" id="noticeListDetail">${notice.noticeTitle}</a>
+					 <td><a type="button" href="${pageContext.request.contextPath}/noticeListDetail?noticeNo=${notice.noticeNo}" id="noticeListDetail">${notice.noticeTitle}</a>
+					 <td><a href="${pageContext.request.contextPath}/noticeListDetail?noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a></td>
+					 <!-- <a href=주소?값=<?=$value?>>링크</a>  -->
 					 <td><a type="button" href="${pageContext.request.contextPath}/modifyNotice?noticeNo=${notice.noticeNo}" id="buttonModify">수정</a></td> 
 					 <td><a type="button" href="${pageContext.request.contextPath}/deleteNotice?noticeNo=${notice.noticeNo}" id="buttonDelete">삭제</a></td> 
 				</tr>
@@ -212,4 +214,4 @@ function changehtml(){
 
 
 </body>
-</html>
+</html> --%>

@@ -5,7 +5,7 @@
 
 <mapper namespace="com.cafe24.kyungsu93.notice.service.NoticeMapper">
 
-	<select id="noticeList" parameterType="java.util.Map"
+	<!-- <select id="noticeList" parameterType="java.util.Map"
 		resultType="com.cafe24.kyungsu93.notice.service.Notice">
 		SELECT
 		notice_no AS noticeNo
@@ -140,6 +140,7 @@
 			,notice_count AS noticeCount
 			,notice_date AS noticeDate
 			FROM notice
+			WHERE notice_no = #{noticeNo}
 
 	</select>
 
@@ -147,28 +148,5 @@
 			SELECT
 			count(*)
 			FROM notice
-	</select>
-
-
-
-	<!-- <select id="selectNoticeList" parameterType="java.util.Map" resultMap="notice">
-		SELECT
-		notice_no,
-		,member_no,
-		,notice_title,
-		,notice_content,
-		,notice_count,
-		,notice_date
-		FROM notice
-		order by notice_no DESC
-		limit #{beginRow},#{pagePerRow}
-	</select>
-
-	<select id="totalCountNotice" resultType="Integer">
-		SELECT
-		count(*)
-		FROM notice
-
-	</select>
-	 -->
+	</select> -->
 </mapper>

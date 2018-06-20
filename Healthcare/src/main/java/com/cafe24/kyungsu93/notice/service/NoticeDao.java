@@ -1,4 +1,4 @@
-package com.cafe24.kyungsu93.notice.service;
+/*package com.cafe24.kyungsu93.notice.service;
 
 import java.util.List;
 import java.util.Map;
@@ -90,17 +90,5 @@ public class NoticeDao {
 		logger.debug("NoticeDao 에서 noticeDetailCount 실행");
 		return sqlSession.selectOne(NS+"noticeDetailCount");
 	}
-	
-	/*public List<Notice> selectNoticeList(Map<String, Object> map) {
-		logger.debug("29번"+map);
-		return sqlSession.selectList(NS+"selectNoticeList", map);
-	}
-	
-	public int totalCountNotice(Map<String, Object> map) {
-		logger.debug("30번"+map);
-		return sqlSession.selectOne(NS+"totalCountNotice"); // 결과값이 하나 이므로 selectOne 사용
-	}*/
-
-	
-	
 }
+*/

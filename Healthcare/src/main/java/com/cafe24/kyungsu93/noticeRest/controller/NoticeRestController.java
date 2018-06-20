@@ -1,4 +1,4 @@
-package com.cafe24.kyungsu93.noticeRest.controller;
+/*package com.cafe24.kyungsu93.noticeRest.controller;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +46,7 @@ public class NoticeRestController {
 
 	      return "notice/NoticeList"; 
 	   }
-	/*
+	
 	 @RequestMapping(value="/bloodPressureChart", method=RequestMethod.POST)
 	 @ResponseBody
 	 public void chartData(HttpServletResponse response,@RequestParam(value="memberNo")String memberNo){
@@ -66,6 +66,7 @@ public class NoticeRestController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
-	/*}*/
+		}
+	}
 }
+*/

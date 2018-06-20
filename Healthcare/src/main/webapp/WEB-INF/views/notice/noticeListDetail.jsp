@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -25,6 +25,7 @@
 		<c:forEach var = "notice" items = "${list}">
 			<tr>
 				<td><a href="${pageContext.request.contextPath}/noticelist?noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a></td>
+				<td>${notice.noticeNo}</td>
 				<td>${notice.memberNo}</td>
 				<td>${notice.noticeTitle}</td>
 				<td>${notice.noticeContent }</td>
@@ -67,4 +68,4 @@
 		</ul>
 	</nav>
 </body>
-</html>
+</html> --%>

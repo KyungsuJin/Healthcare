@@ -1,4 +1,4 @@
-package com.cafe24.kyungsu93.notice.service;
+/*package com.cafe24.kyungsu93.notice.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -247,56 +247,6 @@ public class NoticeService {
 			returnMap.put("totalBlock", totalBlock);
 			return returnMap;
 		}
-			
-	
-	
-	/*public Map<String, Object> selectnoticeList(int currentPage, int pagePerRow, String searchOption, ArrayList<Object> keyword) {	
-		logger.info("selectNoticeList");
-		logger.debug("25번"+currentPage);
-		logger.debug("26번"+pagePerRow);
-		logger.debug("27번"+searchOption);
-		logger.debug("28번"+keyword);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<Notice> list;
-		int total;
-		int beginRow = (currentPage-1)*pagePerRow; //페이지의 첫번째 행을 지정해줌
-		if(keyword.size() == 1) {
-			map.put("beginRow", beginRow);
-			map.put("pagePerRow", pagePerRow);
-			map.put("searchOption", searchOption);
-			map.put("keyword", keyword.get(0));
-			list = noticeDao.selectNoticeList(map);	
-			total = noticeDao.totalCountNotice(map);
-		}else {
-			map.put("beginRow", beginRow);
-			map.put("pagePerRow", pagePerRow);
-			map.put("searchOption", searchOption);		
-			list = noticeDao.selectNoticeList(map);
-			total = noticeDao.totalCountNotice(map);
-		}	
-	
-		int lastPage =0;
-		if(total%pagePerRow ==0) {
-			lastPage = total/pagePerRow;
-		}else {
-			lastPage = total/pagePerRow + 1;
-		}*/
-		
-		/*int pageView = 5;
-		int startPage = ((currentPage-1)/5)*5+1; //페이지 목록이 새로 나올 때, 첫번째로 뜨는 페이지 숫자
-		int endPage = startPage + pageView -1; //페이지 목록이 새로 나올 때, 마지막으로 뜨는 페이지 숫자
-		if(endPage>lastPage) {
-			endPage=lastPage;
-		}
-		
-		Map<String, Object> returnmap = new HashMap<String, Object>();
-		returnmap.put("list", list);
-		returnmap.put("lastPage", lastPage);
-		returnmap.put("startPage", startPage);
-		returnmap.put("endPage", endPage);
-		
-		return returnmap;
-	}*/
 }
 	
+*/
