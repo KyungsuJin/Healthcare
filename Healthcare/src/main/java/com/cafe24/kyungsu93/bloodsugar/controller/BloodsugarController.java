@@ -184,7 +184,7 @@ public class BloodsugarController {
 		return "bloodsugar/modifyBloodSugar";
 	}
 	
-	@RequestMapping(value="/deleteBloodSugar", method= {RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(value="/deleteBloodSugar", method= {RequestMethod.GET})
 	public String deleteBloodSugar(@RequestParam(value="bloodSugarNo") String bloodSugarNo) {
 		logger.debug("BloodSugarController 에서 deleteBloodSugar  리다이렉트 실행");
 		bloodSugarService.deleteBloodSugar(bloodSugarNo);
