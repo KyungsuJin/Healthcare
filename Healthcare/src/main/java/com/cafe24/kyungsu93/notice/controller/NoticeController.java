@@ -36,7 +36,7 @@ public class NoticeController {
 	@RequestMapping(value="/addNotice", method = RequestMethod.GET)
 	public String addNotice() {
 		System.out.println("addNotice 폼 요청");
-		return "/notice/addNotice";
+		return "notice/addNotice";
 	}
 	
 	@RequestMapping(value="/addNotice", method = RequestMethod.POST)
@@ -46,10 +46,10 @@ public class NoticeController {
 			System.out.println("--------------1번"+notice);
 			noticeService.addNotice(notice);
 			System.out.println("===========6번"+notice);
-			return "redirect:/NoticeList";
+			return "redirect:/noticeList";
 	}
 
-	@RequestMapping(value="/NoticeList", method=RequestMethod.GET)
+	@RequestMapping(value="/noticeList", method=RequestMethod.GET)
 	public String bloodsugarList(Model model
 								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
@@ -61,7 +61,7 @@ public class NoticeController {
 		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 		model.addAttribute("totalBlock", map.get("totalBlock"));
-		return "notice/NoticeList";
+		return "notice/noticeList";
 	}
 	@RequestMapping(value="/modifyNotice", method=RequestMethod.POST)
 	public String updateNotice(HttpSession session ,Notice notice) {				
@@ -69,20 +69,20 @@ public class NoticeController {
 		logger.debug("---------------------------------10번"+notice);
 		noticeService.updatenotice(notice);
 		logger.debug("==================13번"+notice);
-		return "redirect:/NoticeList";
+		return "redirect:/noticeList";
 	}
 	
 	@RequestMapping(value="/modifyNotice", method=RequestMethod.GET)
 	public String updateNoticeone(Model model
-											,@RequestParam(value="noticeno") String noticeno) {
-		logger.debug("-------------14번"+noticeno);
+											,@RequestParam(value="noticeNo") String noticeNo) {
+		logger.debug("-------------14번"+noticeNo);
 		logger.debug("NoticeController 에서 updateNotice 포워드 실행 ");
-		Notice notice = noticeService.selectNoticeOne(noticeno);
-		logger.debug("===============7번"+noticeno);
+		Notice notice = noticeService.selectNoticeOne(noticeNo);
+		logger.debug("===============7번"+noticeNo);
 		model.addAttribute("notice", notice);
 		logger.debug("noticeController - notice :"+ notice);
 		logger.debug("+++++++++++++++++988"+notice);
-		return "/notice/modifyNotice";
+		return "notice/modifyNotice";
 	}
 	
 	@RequestMapping(value="/deleteNotice", method= {RequestMethod.POST,RequestMethod.GET})

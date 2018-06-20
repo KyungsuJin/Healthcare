@@ -8,12 +8,12 @@
 	<select id="noticeList" parameterType="java.util.Map"
 		resultType="com.cafe24.kyungsu93.notice.service.Notice">
 		SELECT
-		notice_no AS noticeno
-		,member_no AS memberno
-		,notice_title AS noticetitle
-		,notice_content AS noticecontent
-		,notice_count AS noticecount
-		,notice_date AS noticedate
+		notice_no AS noticeNo
+		,member_no AS memberNo
+		,notice_title AS noticeTitle
+		,notice_content AS noticeContent
+		,notice_count AS noticeCount
+		,notice_date AS noticeDate
 		FROM notice
 
 	</select>
@@ -36,50 +36,48 @@
 		, notice_date
 		)
 		VALUES (
-		#{noticeno}
-		, #{memberno}
-		, #{noticetitle}
-		, #{noticecontent}
-		, #{noticecount}
+		#{noticeNo}
+		, #{memberNo}
+		, #{noticeTitle}
+		, #{noticeContent}
+		, #{noticeCount}
 		, now()
 		)
 
 	</insert>
 
-	<select id="NoticeOne" parameterType="String"
+	<select id="noticeOne" parameterType="String"
 		resultType="com.cafe24.kyungsu93.notice.service.Notice">
 		SELECT
-		notice_no as noticeno
-		,n.member_no as memberno
-		,notice_title as noticetitle
-		,notice_content as noticecontent
-		,notice_count as noticecount
-		,notice_date as noticedate
+		notice_no as noticeNo
+		,n.member_no as memberNo
+		,notice_title as noticeTitle
+		,notice_content as noticeContent
+		,notice_count as noticeCount
+		,notice_date as noticeDate
 		FROM notice AS n
 		INNER JOIN member AS m
 		ON n.member_no = m.member_no
-		WHERE notice_no = #{noticeno}
+		WHERE notice_no = #{noticeNo}
 
 	</select>
 	<update id="updateNotice"
 		parameterType="com.cafe24.kyungsu93.notice.service.Notice">
 		UPDATE notice
 		SET
-		notice_no = #{noticeno}
-		,member_no = #{memberno}
-		,notice_title =
-		#{noticetitle}
-		,notice_content = #{noticecontent}
-		,notice_count =
-		#{noticecount}
-		,notice_date = #{noticedate}
-		WHERE notice_no = #{noticeno}
+		notice_no = #{noticeNo}
+		,member_no = #{memberNo}
+		,notice_title = #{noticeTitle}
+		,notice_content = #{noticeContent}
+		,notice_count = #{noticeCount}
+		,notice_date = now()
+		WHERE notice_no = #{noticeNo}
 
 	</update>
 
 	<delete id="deletenotice"
 		parameterType="com.cafe24.kyungsu93.notice.service.Notice">
-		DELETE FROM notice WHERE notice_no = #{noticeno}
+		DELETE FROM notice WHERE notice_no = #{noticeNo}
 	</delete>
 
 <select id="noticeSearchCount" resultType="Integer">
@@ -90,12 +88,12 @@
 		</select>
  		<select id="noticeSearchAll" parameterType="map" resultType="com.cafe24.kyungsu93.notice.service.Notice">
       	 SELECT
-			notice_no as noticeno
-			,member_no as memberno
-			,notice_title as noticetitle
-			,notice_content as noticecontent
-			,notice_count as noticecount
-			,notice_date as noticedate
+			notice_no as noticeNo
+			,member_no as memberNo
+			,notice_title as noticeTitle
+			,notice_content as noticeContent
+			,notice_count as noticeCount
+			,notice_date as noticeDate
 			FROM notice  		
 			<include refid="search"></include>
 			ORDER BY notice_date DESC
@@ -103,12 +101,12 @@
 		</select>
 		<select id="noticeSearchDate" parameterType="map" resultType="com.cafe24.kyungsu93.notice.service.Notice">
       	  SELECT
-			notice_no as noticeno
-			,member_no as memberno
-			,notice_title as noticetitle
-			,notice_content as noticecontent
-			,notice_count as noticecount
-			,notice_date as noticedate
+			notice_no as noticeNo
+			,member_no as memberNo
+			,notice_title as noticeTitle
+			,notice_content as noticeContent
+			,notice_count as noticeCount
+			,notice_date as noticeDate
 			FROM notice  		
 			<![CDATA[
 			WHERE notice_date >= #{startDate} and notice_date <= #{endDate}
@@ -117,10 +115,10 @@
 		</select>
 		<sql id="search">
 			<choose>
-				<when test="keyField == 'noticetitle'"> 
+				<when test="keyField == 'noticeTitle'"> 
 					WHERE notice_title like CONCAT(#{keyWord}, '%') 
 				</when> 
-				<when test="keyField == 'noticecontent'"> 
+				<when test="keyField == 'noticeContent'"> 
 					WHERE notice_content like CONCAT(#{keyWord} , '%') 
 				</when> 
 			</choose> 

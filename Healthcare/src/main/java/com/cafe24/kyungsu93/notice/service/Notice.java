@@ -2,52 +2,52 @@ package com.cafe24.kyungsu93.notice.service;
 
 public class Notice {
 
-	private String noticeno;
-	private String memberno;
-	private String noticetitle;
-	private String noticecontent;
-	private int noticecount;
-	private String noticedate;
-	public String getNoticeno() {
-		return noticeno;
+	private String noticeNo;
+	private String memberNo;
+	private String noticeTitle;
+	private String noticeContent;
+	private int noticeCount;
+	private String noticeDate;
+	public String getNoticeNo() {
+		return noticeNo;
 	}
-	public void setNoticeno(String noticeno) {
-		this.noticeno = noticeno;
+	public void setNoticeNo(String noticeNo) {
+		this.noticeNo = noticeNo;
 	}
-	public String getMemberno() {
-		return memberno;
+	public String getMemberNo() {
+		return memberNo;
 	}
-	public void setMemberno(String memberno) {
-		this.memberno = memberno;
+	public void setMemberNo(String memberNo) {
+		this.memberNo = memberNo;
 	}
-	public String getNoticetitle() {
-		return noticetitle;
+	public String getNoticeTitle() {
+		return noticeTitle;
 	}
-	public void setNoticetitle(String noticetitle) {
-		this.noticetitle = noticetitle;
+	public void setNoticeTitle(String noticeTitle) {
+		this.noticeTitle = noticeTitle;
 	}
-	public String getNoticecontent() {
-		return noticecontent;
+	public String getNoticeContent() {
+		return noticeContent;
 	}
-	public void setNoticecontent(String noticecontent) {
-		this.noticecontent = noticecontent;
+	public void setNoticeContent(String noticeContent) {
+		this.noticeContent = noticeContent;
 	}
-	public int getNoticecount() {
-		return noticecount;
+	public int getNoticeCount() {
+		return noticeCount;
 	}
-	public void setNoticecount(int noticecount) {
-		this.noticecount = noticecount;
+	public void setNoticeCount(int noticeCount) {
+		this.noticeCount = noticeCount;
 	}
-	public String getNoticedate() {
-		return noticedate;
+	public String getNoticeDate() {
+		return noticeDate;
 	}
-	public void setNoticedate(String noticedate) {
-		this.noticedate = noticedate;
+	public void setNoticeDate(String noticeDate) {
+		this.noticeDate = noticeDate;
 	}
 	@Override
 	public String toString() {
-		return "Notice [noticeno=" + noticeno + ", memberno=" + memberno + ", noticetitle=" + noticetitle
-				+ ", noticecontent=" + noticecontent + ", noticecount=" + noticecount + ", noticedate=" + noticedate
+		return "Notice [noticeNo=" + noticeNo + ", memberNo=" + memberNo + ", noticeTitle=" + noticeTitle
+				+ ", noticeContent=" + noticeContent + ", noticeCount=" + noticeCount + ", noticeDate=" + noticeDate
 				+ "]";
-	}	
+	}
 }

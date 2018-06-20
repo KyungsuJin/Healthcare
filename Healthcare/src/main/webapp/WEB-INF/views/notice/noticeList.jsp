@@ -146,12 +146,12 @@ function changehtml(){
 				<tbody>
 				<c:forEach var = "notice" items = "${list}">
 					<tr>
-						<td><a href="${pageContext.request.contextPath}/noticeSearch?noticeno=${notice.noticeno}">${notice.noticecontent}</a></td>
-						<td>${notice.memberno}</td>
-						<td>${notice.noticetitle}</td>
-						<td>${notice.noticecontent }</td>
-						<td>${notice.noticecount }</td>
-						<td>${notice.noticedate }</td>
+						<td><a href="${pageContext.request.contextPath}/noticeSearch?noticeNo=${notice.noticeNo}">${notice.noticeContent}</a></td>
+						<td>${notice.memberNo}</td>
+						<td>${notice.noticeTitle}</td>
+						<td>${notice.noticeContent }</td>
+						<td>${notice.noticeCount }</td>
+						<td>${notice.noticeDate }</td>
 						<td></td>
 					</tr>
 				</c:forEach>
@@ -174,14 +174,14 @@ function changehtml(){
 		<tbody>
 			<c:forEach var="notice" items="${list}">
 				<tr>
-					<td>${notice.noticeno}</td>
-					<td>${notice.memberno}</td>
-					<td>${notice.noticetitle }</td>
-					<td>${notice.noticecontent }</td>
-					<td>${notice.noticecount }</td>
-					<td>${notice.noticedate }</td>
-					 <td><a type="button" href="${pageContext.request.contextPath}/modifyNotice?noticeno=${notice.noticeno}" id="buttonModify">수정</a></td> 
-					 <td><a type="button" href="${pageContext.request.contextPath}/deleteNotice?noticeno=${notice.noticeno}" id="buttonDelete">삭제</a></td> 
+					<td>${notice.noticeNo}</td>
+					<td>${notice.memberNo}</td>
+					<td>${notice.noticeTitle }</td>
+					<td>${notice.noticeContent }</td>
+					<td>${notice.noticeCount }</td>
+					<td>${notice.noticeDate }</td>
+					 <td><a type="button" href="${pageContext.request.contextPath}/modifyNotice?noticeNo=${notice.noticeNo}" id="buttonModify">수정</a></td> 
+					 <td><a type="button" href="${pageContext.request.contextPath}/deleteNotice?noticeNo=${notice.noticeNo}" id="buttonDelete">삭제</a></td> 
 				</tr>
 			</c:forEach>	
 		</tbody>
@@ -194,27 +194,27 @@ function changehtml(){
 			<ul class="pagination pagination-sm1">
 				<c:if test="${currentPage > 10}">
 					<li>
-						<a aria-label="first" href="${pageContext.request.contextPath }/notice/NoticeList?currentPage=1">&laquo;</a>
+						<a aria-label="first" href="${pageContext.request.contextPath }/notice/noticeList?currentPage=1">&laquo;</a>
 					</li>
 				</c:if>
 				<c:if test="${firstBlockPage > 2}">
 					<li>
-						<a aria-label="first" href="${pageContext.request.contextPath }/notice/NoticeList?currentPage=${firstBlockPage-1}">&lsaquo;</a>
+						<a aria-label="first" href="${pageContext.request.contextPath }/notice/noticeList?currentPage=${firstBlockPage-1}">&lsaquo;</a>
 					</li>
 				</c:if>
 					<li>
 					<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
-						<a href="${pageContext.request.contextPath}/Notice/noticeList?currentPage=${i}">${i}</a>				
+						<a href="${pageContext.request.contextPath}/notice/noticeList?currentPage=${i}">${i}</a>				
 					</c:forEach>		
 					</li>
 				<c:if test="${lastBlockPage < totalBlock}">
 					<li>
-						<a aria-label="last" href="${pageContext.request.contextPath}/Notice/noticeList?currentPage=${lastBlockPage+1}">&rsaquo;</a>
+						<a aria-label="last" href="${pageContext.request.contextPath}/notice/noticeList?currentPage=${lastBlockPage+1}">&rsaquo;</a>
 					</li>
 				</c:if>
 				<c:if test="${currentPage < lastPage}">
 					<li>
-						<a aria-label="last" href="${pageContext.request.contextPath}/Notice/noticeList?currentPage=${lastPage}">&raquo;</a>
+						<a aria-label="last" href="${pageContext.request.contextPath}/notice/noticeList?currentPage=${lastPage}">&raquo;</a>
 					</li>
 				</c:if>
 			</ul>

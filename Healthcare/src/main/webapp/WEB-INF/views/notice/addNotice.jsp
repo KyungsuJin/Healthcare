@@ -22,23 +22,23 @@
 		// 입력폼 
 		//공백 또는 "" 불가
 		$('#addbutton').click(function(){
-			if($('#noticeno').val()==""){
+			if($('#noticeNo').val()==""){
 				alert(" 공지사항코드입력하세요.")
-				$('#noticeno').focus();
-			}else if($('memberno').val()==""){
+				$('#noticeNo').focus();
+			}else if($('memberNo').val()==""){
 				alert("회원코드를 입력하세요.")
-				$('#memberno').focus();
-			}else if($('noticetitle').val()==""){
+				$('#memberNo').focus();
+			}else if($('noticeTitle').val()==""){
 				alert("제목을 입력하세요.")
-				$('#noticetitle').focus();
-			}else if($('noticecontent').val()==""){
+				$('#noticeTitle').focus();
+			}else if($('noticeContent').val()==""){
 				alert("내용을 입력하세요.")
-				$('#noticecount').focus();
-			}else if($('noticecount').val()==""){
+				$('#noticeCount').focus();
+			}else if($('noticeCount').val()==""){
 				alert("조회수를 입력하세요.")
-				$('#noticecount').focus();
+				$('#noticeCount').focus();
 			}else{
-				$('#noticedate').submit();
+				$('#noticeDate').submit();
 			}
 		});
 	});
@@ -52,33 +52,33 @@
 	<h1>addNotice</h1>
 	<form id="addForm" action="${pageContext.request.contextPath}/addNotice" method="POST">
 		<div class="form-group">
-			<label for="noticeno">addNotice : </label>
-			<input class="form-control" name = "noticeno"  id=noticeno type="text"/>	
+			<label for="noticeNo">addNotice : </label>
+			<input class="form-control" name = "noticeNo"  id=noticeNo type="text"/>	
 		</div>
 		<div class="form-group">
-			<label for="memberno">memberno : </label>
-			<input class="form-control" name = "memberno"  id="memberno" type="text"/>	
+			<label for="memberNo">memberno : </label>
+			<input class="form-control" name = "memberNo"  id="memberNo" type="text"/>	
 		</div>
 		<div class="form-group">
-			<label for="noticetitle">noticetitle : </label>
-			<input class="form-control" name = "noticetitle"  id="noticetitle" type="text"/>	
+			<label for="noticeTitle">noticetitle : </label>
+			<input class="form-control" name = "noticeTitle"  id="noticeTitle" type="text"/>	
 		</div>
 		<div class="form-group">
-			<label for="noticecontent">noticecontent : </label>
-			<input class="form-control" name = "noticecontent"  id="noticecontent" type="text"/>	
+			<label for="noticeContent">noticecontent : </label>
+			<input class="form-control" name = "noticeContent"  id="noticeContent" type="text"/>	
 		</div>
 		<div class="form-group">
-			<label for="noticecount">noticecount : </label>
-			<input class="form-control" name = "noticecount"  id="noticecount" type="text"/>	
+			<label for="noticeCount">noticecount : </label>
+			<input class="form-control" name = "noticeCount"  id="noticeCount" type="text"/>	
 		</div>
 		<div class="form-group">
-			<label for="noticedate">noticedate : </label>
-			<input class="form-control" name = "noticedate"  id="noticedate" type="text"/>	
+			<label for="noticeDate">noticedate : </label>
+			<input class="form-control" name = "noticeDate"  id="noticeDate" type="text"/>	
 		</div>
 		<div>
 			<input class="btn btn-default" id=addButton" type="submit" value="공지입력">
 			<input class="btn btn-default" type="reset" value="초기화"/>
-			<a class="btn btn-default" id="NoticeList" href="${pageContext.request.contextPath}/NoticeList">글목록</a>
+			<a class="btn btn-default" id="noticeList" href="${pageContext.request.contextPath}/noticeList">글목록</a>
 		</div>
 	</form>
 </div>

@@ -42,10 +42,10 @@ public class NoticeDao {
 		return sqlSession.update(NS+"updateNotice",notice);
     }
 	
-	public Notice selectNoticeOne(String noticeno) {
-		logger.debug("BloodsugarDao 에서 selectBloodsugarOne 실행"+noticeno);
-		logger.debug("------------3번"+noticeno);
-		return sqlSession.selectOne(NS+"NoticeOne",noticeno);
+	public Notice selectNoticeOne(String noticeNo) {
+		logger.debug("BloodsugarDao 에서 selectBloodsugarOne 실행"+noticeNo);
+		logger.debug("------------3번"+noticeNo);
+		return sqlSession.selectOne(NS+"noticeOne",noticeNo);
 	}
 	
 	public int deletenoticeCount(String noticeno) {

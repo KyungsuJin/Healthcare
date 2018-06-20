@@ -83,10 +83,10 @@ public class NoticeService {
 	}
 	
 	
-	public Notice selectNoticeOne(String noticeno) {
+	public Notice selectNoticeOne(String noticeNo) {
 		logger.debug("NoticeService 에서 selectNoticeOne 실행");
-		logger.debug("==========8번"+noticeno);
-		return noticeDao.selectNoticeOne(noticeno);
+		logger.debug("==========8번"+noticeNo);
+		return noticeDao.selectNoticeOne(noticeNo);
 	}
 	
 	public void updatenotice (Notice notice) {
