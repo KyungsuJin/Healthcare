@@ -4,8 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
@@ -52,7 +50,7 @@
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<h1> 운동매칭 </h1>
+				<h1> 운동매칭 참가 리스트 </h1>
 				<c:set var="now" value="<%=new java.util.Date()%>"/>
 				<input type="hidden" name="exercisePlaceView"id="exercisePlaceView">
 				<input type="hidden" id="currentDate" value="<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="currentDate"/>">

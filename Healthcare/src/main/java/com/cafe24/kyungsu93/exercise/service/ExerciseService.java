@@ -9,10 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cafe24.kyungsu93.exercise.controller.rest.ExerciseRestController;
 
 @Service
+@Transactional
 public class ExerciseService {
 	@Autowired ExerciseDao exerciseDao;
 	private static final Logger logger = LoggerFactory.getLogger(ExerciseService.class);

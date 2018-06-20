@@ -2,9 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
@@ -127,14 +125,25 @@
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<h1>체질량 차트</h1>
-				<a href="#" id="bmiChart">BMI 차트</a>
-				<a href="#"id="bodyWeightChart">몸무게 차트</a>
 				<input type="hidden" id="memberNo" value="${sessionScope.memberSessionNo}">
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+                    <div class="col-md-8">
+                    	<div class="card">
+                    		<div class="card-header" data-background-color="purple">
+							 	<h4 class="title">체질량 차트</h4>
+							 </div>
+							 <div class="card-content" style="text-align:center;">
+								<a href="#" id="bmiChart" class="btn btn-primary">BMI 차트</a>
+								<a href="#"id="bodyWeightChart" class="btn btn-primary">몸무게 차트</a>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div id="curve_chart" style="width: 900px; height: 500px" class="container"></div>
 			</div>
 		</div>
 	</div>
-	
 </body>
 </html>

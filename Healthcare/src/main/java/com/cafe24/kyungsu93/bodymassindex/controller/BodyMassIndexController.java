@@ -35,14 +35,16 @@ public class BodyMassIndexController {
 		model.addAttribute("memberNo",bodyMassIndex.getMemberNo());
 		return "redirect:/bodyMassIndexList";
 	}
-	//체질량 입력 페이지
+	//체질량 리스트 페이지
 	@RequestMapping(value = "/bodyMassIndexList", method = RequestMethod.GET)
 	public String bodyMassIndexList(Model model
 									,@RequestParam(value="memberNo")String memberNo
 									,@RequestParam(value="currentPage",defaultValue="1")int currentPage
-									,@RequestParam(value="pageRerRow",defaultValue="10")int pagePerRow) {
+									,@RequestParam(value="pageRerRow",defaultValue="10")int pagePerRow
+									,@RequestParam(value="bodyMassIndexDateStart",defaultValue="")String bodyMassIndexDateStart
+									,@RequestParam(value="bodyMassIndexDateEnd",defaultValue="")String bodyMassIndexDateEnd) {
 		logger.debug("BodyMassIndexController.bodyMassIndexList GET");
-		Map<String,Object> bodyMassIndexList =bodyMassIndexService.bodyMassIndexList(memberNo,currentPage,pagePerRow);
+		Map<String,Object> bodyMassIndexList =bodyMassIndexService.bodyMassIndexList(memberNo,currentPage,pagePerRow,bodyMassIndexDateStart,bodyMassIndexDateEnd);
 		model.addAttribute("bodyMassIndexList",bodyMassIndexList.get("list"));
 		model.addAttribute("startPage",bodyMassIndexList.get("startPage"));
 		model.addAttribute("endPage",bodyMassIndexList.get("endPage"));

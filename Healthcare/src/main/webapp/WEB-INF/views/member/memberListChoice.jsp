@@ -38,8 +38,8 @@
 							 </div>
 							 <div class="card-content" style="text-align:center;">
 								<button  class="btn btn-primary" type="button" id="memberList">회원 리스트</button>
-								<button  class="btn btn-primary type="button" id="memberDoctorList">의사회원 리스트</button>
-								<button  class="btn btn-primary type="button" id="memberPTList">PT회원 리스트</button>
+								<button  class="btn btn-primary" type="button" id="memberDoctorList">의사회원 리스트</button>
+								<button  class="btn btn-primary" type="button" id="memberPTList">PT회원 리스트</button>
 							</div>
 						</div>
 					</div>

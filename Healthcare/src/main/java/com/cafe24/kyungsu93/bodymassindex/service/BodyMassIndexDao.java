@@ -34,6 +34,16 @@ public class BodyMassIndexDao {
 		logger.debug("BodyMassIndexDao.bodyMassIndexListCount");
 		return sqlSession.selectOne(NS + "bodyMassIndexListCount", memberNo);
 	}
+	//체질량 날짜 검색  리스트
+	public List<BodyMassIndex> bodyMassIndexDateSearchList(Map<String, Object> map) {
+		logger.debug("BodyMassIndexDao.bodyMassIndexDateSearchList");
+		return sqlSession.selectList(NS + "bodyMassIndexDateSearchList", map);
+	}
+	//체질량 날짜별 검색 카운트
+	public int bodyMassIndexDateSearchListCount(Map<String, Object> map) {
+		logger.debug("BodyMassIndexDao.bodyMassIndexDateSearchListCount");
+		return sqlSession.selectOne(NS + "bodyMassIndexDateSearchListCount", map);
+	}
 	//체질량 차트리스트
 	public List<BodyMassIndex> bodyMassIndexChart(String memberNo) {
 		logger.debug("BodyMassIndexDao.bodyMassIndexChart");

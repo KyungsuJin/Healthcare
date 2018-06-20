@@ -4,8 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<link rel="stylesheet"	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
@@ -51,14 +49,23 @@
 					$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage='+(data.currentPage-1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">이전 </a></li>');
 				}
 				for(var i =data.startPage; i <=data.endPage ; i++){
-						$("#pageUl").append('<li id="pageBtn"><a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage='+i+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">'+i+'</a></li>');
+						$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage='+i+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">'+i+'</a></li>');
 				}
 				
 				if(data.currentPage<data.lastPage){
 					$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage='+(data.currentPage+1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">다음</a></li>');
 					$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage='+(data.lastPage)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"><span aria-hidden="true">&raquo;</span></a></li>');
 				}
+				
+				$('li').find('a').each(function(){//li의 자식 a인것을 다찾는다
+					if($(this).text() == data.currentPage){//만약 text 값이 현재페이지값과 같다면
+						$(this).closest('li').addClass('active');//closest 를이용해 가장 가까운 li 를 찾아 class =active 를 추가해준다.
+					}
+				});
 			}
+			$(document).on("click",".page",function(){
+				$(this).parent().addClass("active");
+			});
 			$(document).on("click",".matchingPlace",function(){
 				$("#exercisePlaceView").val($(this).text());
 				console.log($("#exercisePlaceView").val());
@@ -99,7 +106,7 @@
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<h1>운동매칭</h1>
+				<h1>운동매칭</h1><a href="${pageContext.request.contextPath}/addExerciseMatching" class="btn btn-primary pull-right">운동매칭 글등록</a>
 				<input type="hidden" name="exercisePlaceView" id="exercisePlaceView">
 				<input type="hidden" name="currnetPage" id="currentPage"
 					value="${currentPage}"> <input type="hidden"
@@ -124,17 +131,19 @@
 							
 					</ul>
 				</div>
-				<div class="navbar-form navbar-right">
-					<select class="form-control" id="searchSelect" name="searchSelect">
-						<option value="exercise_matching_place">장소</option>
-						<option <c:out value="${searchSelect eq 'member.member_no' ? 'selected=selected':''}"/> value="member.member_no">아이디</option>
-						<option <c:out value="${searchSelect eq 'exercise_no' ? 'selected=selected':''}"/> value="exercise_no">종목</option>
-					</select> 
-					<input class="form-control" type="text" id="searchTextTest" name="searchTextTest" value="${searchText}">
-					<button class="btn btn-white btn-round btn-just-icon" type="button" id="searchBtn"><i class="material-icons">search</i></button>
+				<div class="navbar-form navbar-left">
+					<div class="form-group" style="margin:0px">
+						<select class="form-control" id="searchSelect" name="searchSelect">
+							<option value="exercise_matching_place">장소</option>
+							<option <c:out value="${searchSelect eq 'member.member_no' ? 'selected=selected':''}"/> value="member.member_no">아이디</option>
+							<option <c:out value="${searchSelect eq 'exercise_no' ? 'selected=selected':''}"/> value="exercise_no">종목</option>
+						</select> 
+						<input class="form-control" type="text" id="searchTextTest" name="searchTextTest" value="${searchText}">
+						<button class="btn btn-white btn-round btn-just-icon" type="button" id="searchBtn"><i class="material-icons">search</i></button>
+					</div>
 				</div>
-				<div  class="navbar-form navbar-left" id="dateDiv">
-					<div class="form-group">
+				<div  class="navbar-form navbar-right" id="dateDiv">
+					<div class="form-group" style="margin:0px">
 						<label class="">기간</label>
 						<input class="form-control" type="date" id="exerciseDateStart" value="${exerciseDateStart}">
 						<label class="control-label">~</label>

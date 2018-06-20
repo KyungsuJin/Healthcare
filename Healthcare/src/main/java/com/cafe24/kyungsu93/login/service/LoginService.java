@@ -9,11 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cafe24.kyungsu93.member.controller.MemberController;
 import com.cafe24.kyungsu93.member.service.Member;
 
 @Service
+@Transactional
 public class LoginService {
 	@Autowired LoginDao loginDao;
 	private static final Logger logger = LoggerFactory.getLogger(LoginService.class);

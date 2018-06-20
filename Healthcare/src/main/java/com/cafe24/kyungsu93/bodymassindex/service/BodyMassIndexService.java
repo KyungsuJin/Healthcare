@@ -1,5 +1,6 @@
 package com.cafe24.kyungsu93.bodymassindex.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,15 +25,30 @@ public class BodyMassIndexService {
 		bodyMassIndexDao.addBodyMassIndex(bodyMassIndex);
 	}
 	//체질량을 등록한 리스트
-	public Map<String, Object> bodyMassIndexList(String memberNo,int currentPage,int pagePerRow) {
+	public Map<String, Object> bodyMassIndexList(String memberNo,int currentPage,int pagePerRow,String bodyMassIndexDateStart,String bodyMassIndexDateEnd) {
 		logger.debug("BodyMassIndexService.bodyMassIndexList");
+		List<BodyMassIndex> list = new ArrayList<BodyMassIndex>();
+		int bodyMassIndexListCount =0;
 		Map<String,Object> map = new HashMap<String,Object>();
 		int beginRow = (currentPage-1)*10;
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
 		map.put("memberNo", memberNo);
-		List<BodyMassIndex> list =bodyMassIndexDao.bodyMassIndexList(map);
-		int bodyMassIndexListCount =bodyMassIndexDao.bodyMassIndexListCount(memberNo);
+		Map<String,Object> searchMap = new HashMap<String,Object>();
+		searchMap.put("beginRow", beginRow);
+		searchMap.put("pagePerRow", pagePerRow);
+		searchMap.put("memberNo", memberNo);
+		searchMap.put("bodyMassIndexDateStart", bodyMassIndexDateStart);
+		searchMap.put("bodyMassIndexDateEnd", bodyMassIndexDateEnd);
+		if(!bodyMassIndexDateStart.equals("") && !bodyMassIndexDateEnd.equals("")) {
+			list=bodyMassIndexDao.bodyMassIndexDateSearchList(searchMap);
+			bodyMassIndexListCount=bodyMassIndexDao.bodyMassIndexDateSearchListCount(searchMap);
+		}
+		if(bodyMassIndexDateStart.equals("")) {
+			list=bodyMassIndexDao.bodyMassIndexList(map);
+			bodyMassIndexListCount =bodyMassIndexDao.bodyMassIndexListCount(memberNo);
+		}
+		
 		int lastPage = bodyMassIndexListCount/pagePerRow;
 		if(bodyMassIndexListCount%pagePerRow>0) {
 			lastPage++;

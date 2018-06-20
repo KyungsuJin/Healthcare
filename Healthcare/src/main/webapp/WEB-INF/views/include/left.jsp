@@ -3,7 +3,7 @@
 
   <script>
 		$(document).ready(function(){
-			$("#messageList").click(function(){
+			$(document).on("click","#messageList",function(){
 				window.open("${pageContext.request.contextPath}/messageList"
 						,"messageList","width=1100, height=700,resizable=no,scrollbars=yes");
 			});
@@ -33,7 +33,7 @@
 	<input type="hidden" id="memberNo" value="${sessionScope.memberSessionNo}">
 	<div class="sidebar" data-color="purple" data-image="${pageContext.request.contextPath}/templateimg1/sidebar-1.jpg">
             <div class="logo">
-                <a href="http://www.creative-tim.com" class="simple-text">
+                <a href="#" class="simple-text">
                 	메뉴
                 </a>
             </div>
@@ -109,6 +109,7 @@
 				            </li>
 				        </ul>	
 				         --%>
+				         
 					<ul class="nav" data-placement="right">
 	                    <li>
 	                       <a href="#exerciseMatching" data-toggle="collapse">
@@ -116,19 +117,15 @@
 	                            <p>운동 매칭</p>
 	                        </a>
 	                    </li>
-	                     <ul class="sidenav-second-level collapse" id="exerciseMatching" style="list-style:none;">
-	                    	<li>
-	                    		<a href="#" id="exercise">운동매칭 리스트</a>
-				            </li>
-				            <li>
-				            	<a href="${pageContext.request.contextPath}/addExerciseMatching">운동매칭 글등록</a>
-				            </li>
-				            <li>
-				            	<a href="${pageContext.request.contextPath}/attendExerciseMatching?memberNo=${sessionScope.memberSessionNo}">참가한 운동매칭 경기</a>
-				            </li>
-				        </ul>	
-				        
-				        
+		                    <ul class="sidenav-second-level collapse" id="exerciseMatching" style="list-style:none;">
+		                    	<li>
+		                    		<a href="#" id="exercise">운동매칭 리스트</a>
+					            </li>
+					            <li>
+					            	<a href="${pageContext.request.contextPath}/attendExerciseMatching?memberNo=${sessionScope.memberSessionNo}">참가한 운동매칭 경기</a>
+					            </li>
+					        </ul>	
+	        
 	                    <li>
 	                        <a href="#bodyMassIndex" data-toggle="collapse">
 	                            <i class="material-icons">dashboard</i>
@@ -341,25 +338,25 @@
 	                        </a>
 	                    </li>
 	                    <li>
-	                        <a href="./icons.html">
+	                        <a href="#">
 	                            <i class="material-icons">bubble_chart</i>
 	                            <p>로그인</p>
 	                        </a>
 	                    </li>
 	                    <li>
-	                        <a href="./maps.html">
+	                        <a href="#">
 	                            <i class="material-icons">location_on</i>
 	                            <p>하세요</p>
 	                        </a>
 	                    </li>
 	                    <li>
-	                        <a href="./notifications.html">
+	                        <a href="#">
 	                            <i class="material-icons text-gray">notifications</i>
 	                            <p>Notifications</p>
 	                        </a>
 	                    </li>
 	                    <li class="active-pro">
-	                        <a href="upgrade.html">
+	                        <a href="#">
 	                            <i class="material-icons">unarchive</i>
 	                            <p>Upgrade to PRO</p>
 	                        </a>

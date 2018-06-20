@@ -58,6 +58,7 @@
   			ORDER BY body_date desc
   			LIMIT #{beginRow},#{pagePerRow}
   	</select>
+  	<!--체질량 리스트 카운트  -->
   	<select id="bodyMassIndexListCount"
   			parameterType="String"
   			resultType="Integer">
@@ -65,6 +66,37 @@
   				count(*)
   			FROM body_mass_index
   			WHERE member_no =#{memberNo}
+  	</select>
+  	<!--체질량 날짜별 검색 리스트  -->
+  	<select id="bodyMassIndexDateSearchList"
+  			parameterType="java.util.Map"
+  			resultMap="bodyMassIndex">
+  			SELECT
+  				body_mass_index_no
+  				,body_height
+  				,body_weight
+  				,body_waist_size
+  				,body_mass_index
+  				,body_date
+  			FROM body_mass_index
+  			WHERE member_no =#{memberNo}
+  			<![CDATA[
+				AND body_date >= #{bodyMassIndexDateStart} AND body_date <= #{bodyMassIndexDateEnd}
+			]]>
+  			ORDER BY body_date desc
+  			LIMIT #{beginRow},#{pagePerRow}
+  	</select>
+  		<!--체질량 검색 카운트  -->
+  	<select id="bodyMassIndexDateSearchListCount"
+  			parameterType="java.util.Map"
+  			resultType="Integer">
+  			SELECT
+  				count(*)
+  			FROM body_mass_index
+  			WHERE member_no =#{memberNo}
+  			<![CDATA[
+				AND body_date >= #{bodyMassIndexDateStart} AND body_date <= #{bodyMassIndexDateEnd}
+			]]>
   	</select>
   	<!--체질량 차트리스트  -->
   	<select id="bodyMassIndexChart"

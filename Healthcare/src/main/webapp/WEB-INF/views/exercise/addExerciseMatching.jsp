@@ -7,10 +7,7 @@
 	
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<jsp:include page="../include/header.jsp"></jsp:include>
-	
 	<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 
 	<script>
@@ -147,6 +144,7 @@
 														<input class="form-control" type="text" id="exerciseMatchingTitle" name="exerciseMatchingTitle">
 													</div>
 													<div class="form-group">
+														<label class="control-label">내용</label>
 														<textarea class="form-control" rows="20" name="exerciseMatchingContent"></textarea>
 													</div>
 												</div>

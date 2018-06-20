@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
 			$("#RegistrationBtn").click(function(){
@@ -28,10 +28,24 @@
 
 </head>
 <body>
-	<h1>보증금 등록하기</h1>
-	보증금 가격 1000원
-		<input type="hidden" id="memberNo" value="${sessionScope.memberSessionNo}">
-		<button id="RegistrationBtn">등록하기</button>
-
+	 <div class="card">
+		 <div class="card-header" data-background-color="purple">
+		 	<h4 class="title">보증금 등록하기</h4>
+		 </div>
+		 <div class="card-content">
+		 	<input type="hidden" id="memberNo" value="${sessionScope.memberSessionNo}">
+		 	<div class="row">
+		 		<div class="col-xs-4">
+		 		</div>
+		 		<div class="col-xs-4">
+		 			<div class="form-group">
+		 				<label class="control-label">보증금 가격 1000원</label>
+					</div>
+				</div>
+			</div>
+			<button id="RegistrationBtn"  class="btn btn-primary pull-right">등록하기</button>
+			
+		</div>
+	</div>
 </body>
 </html>

@@ -3,8 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
 	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 	$(document).ready(function(){
@@ -57,6 +56,11 @@
 						$("#pageUl").append("<li><a class='receiveMessagePageNext' href='javascript:void(0);'>다음</a></li>");
 						$("#pageUl").append("<li><a class='receiveMessagePageEnd' href='javascript:void(0);'><span aria-hidden='true'>&raquo;</span></a></li>");
 					}
+					$('li').find('a').each(function(){//li의 자식 a인것을 다찾는다
+						if($(this).text() == data.currentPage){//만약 text 값이 현재페이지값과 같다면
+							$(this).closest('li').addClass('active');//closest 를이용해 가장 가까운 li 를 찾아 class =active 를 추가해준다.
+						}
+					});
 					
 				}
 			});
@@ -127,6 +131,11 @@
 						$("#pageUl").append("<li><a class='sendMessagePageNext' href='javascript:void(0);'>다음</a></li>");
 						$("#pageUl").append("<li><a class='sendMessagePageEnd' href='javascript:void(0);'><span aria-hidden='true'>&raquo;</span></a></li>");
 					}
+					$('li').find('a').each(function(){//li의 자식 a인것을 다찾는다
+						if($(this).text() == data.currentPage){//만약 text 값이 현재페이지값과 같다면
+							$(this).closest('li').addClass('active');//closest 를이용해 가장 가까운 li 를 찾아 class =active 를 추가해준다.
+						}
+					});
 				}
 			});
 			

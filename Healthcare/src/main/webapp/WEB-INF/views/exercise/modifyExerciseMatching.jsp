@@ -3,12 +3,21 @@
 <!DOCTYPE html>
 <html>
 <head>
+	
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+	<jsp:include page="../include/header.jsp"></jsp:include>
+	<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 	<script>
+	jQuery.browser = {};
+	(function () {
+	    jQuery.browser.msie = false;
+	    jQuery.browser.version = 0;
+	    if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
+	        jQuery.browser.msie = true;
+	        jQuery.browser.version = RegExp.$1;
+	    }
+	})();
 	$(document).ready(function(){
 	    $.datepicker.setDefaults({
 	        dateFormat: 'yy-mm-dd',
@@ -78,42 +87,74 @@
 	</script>
 </head>
 <body>
-	<h1> 운동매칭 </h1>
-	<a href="${pageContext.request.contextPath}/addExercise">운동매칭 등록</a>
-	<form id="addExerciseForm" name="addExerciseForm" action="${pageContext.request.contextPath}/modifyExerciseMatching" method="post">
-		<input type="hidden"  name="exerciseMatchingNo" id="exerciseMatchingNo" value="${modifyExerciseMatching.exerciseMatchingNo}">
-		<table border="1" class="table" id="tb">
-			<thead>
-				<tr>
-					<th>작성자</th>
-					<th>종목</th>
-					<th>장소</th>
-					<th>모집인원</th>
-					<th>운동예정날짜</th>
-					<th>운동예정시간</th>
-			
-				</tr>
-			</thead>
-				<tr>
-					<td>${modifyExerciseMatching.memberId}</td>
-					<td><input type="text" name="exerciseNo"id="exerciseNo" value="${modifyExerciseMatching.exerciseNo}"></td>
-					<td><input type="text" id="exercisePlace" name="exerciseMatchingPlace" placeholder="운동선택하기" value="${modifyExerciseMatching.exerciseMatchingPlace}"></td>
-					<td><input type="number" name="exerciseMatchingCount"id="exerciseCount" min="1" max="100" value="${modifyExerciseMatching.exerciseMatchingCount}"></td>
-					<td><input id="exerciseScheduleDate" name="exerciseMatchingScheduleDate" type="text"  value="${modifyExerciseMatching.exerciseMatchingScheduleDate}"readonly></td>
-					<td><input type="time" id="startTime" name="exerciseMatchingTime">~<input type="time" name="exerciseMatchingTime"id="endTime"></td>
-				</tr>
-				<tr>
-					<td colspan="6">제목:<input type="text" id="exerciseMatchingTitle" name="exerciseMatchingTitle" value="${modifyExerciseMatching.exerciseMatchingTitle}"></td>
-				</tr>
-				<tr>
-					<td colspan="6">
-						<textarea class="form-control" rows="20" name="exerciseMatchingContent">${modifyExerciseMatching.exerciseMatchingContent}</textarea>
-					</td>
-		</table>
-		<div>
-			<button type="button" id="addExerciseBtn">수정완료</button>
-			<button type="button" id="CancelBtn">취소</button>
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+					<div class="col-md-8">
+						<div class="card">
+							<div class="card-header" data-background-color="purple">
+                            	<h4 class="title">운동매칭 수정</h4>
+                            </div>
+                            <div class="card-content">
+								<form id="addExerciseForm" name="addExerciseForm" action="${pageContext.request.contextPath}/modifyExerciseMatching" method="post">
+									<input type="hidden"  name="exerciseMatchingNo" id="exerciseMatchingNo" value="${modifyExerciseMatching.exerciseMatchingNo}">
+									<div class="row">
+										<div class="col-md-2"></div>
+										<div class="col-md-8">
+											<div class="form-group">
+												<label class="control-label">작성자</label>
+												<input class="form-control" value="${modifyExerciseMatching.memberId}" readonly>
+											</div>
+											<div class="form-group">
+												<label class="control-label">종목</label>
+												<input class="form-control" type="text" name="exerciseNo"id="exerciseNo" value="${modifyExerciseMatching.exerciseNo}">
+											</div>
+											<div class="form-group">
+												<label class="control-label">장소</label>
+												<input class="form-control" type="text" id="exercisePlace" name="exerciseMatchingPlace"  value="${modifyExerciseMatching.exerciseMatchingPlace}">
+											</div>
+											<div class="form-group">
+												<label class="control-label">모집인원</label>
+												<input class="form-control" type="number" name="exerciseMatchingCount"id="exerciseCount" min="1" max="100" value="${modifyExerciseMatching.exerciseMatchingCount}">
+											</div>
+											<div class="form-group">
+												<label class="control-label">운동예정날짜</label>
+												<input class="form-control" id="exerciseScheduleDate" name="exerciseMatchingScheduleDate" type="text"  value="${modifyExerciseMatching.exerciseMatchingScheduleDate}"readonly>
+											</div>
+											<div class="form-group">
+												<label class="control-label">운동 시작 시간</label>
+												<input class="form-control" type="time" id="startTime" name="exerciseMatchingTime">
+											</div>
+											<div class="form-group">
+												<label class="control-label">운동 끝나는 시간</label>
+												<input class="form-control" type="time" name="exerciseMatchingTime"id="endTime">
+											</div>
+											<div class="form-group">
+												<label class="control-label">제목</label>
+												<input class="form-control" type="text" id="exerciseMatchingTitle" name="exerciseMatchingTitle" value="${modifyExerciseMatching.exerciseMatchingTitle}">
+											</div>
+											<div class="form-group">
+												<label class="control-label">내용</label>
+												<textarea class="form-control" rows="20" name="exerciseMatchingContent">${modifyExerciseMatching.exerciseMatchingContent}</textarea>
+											</div>
+											<div>
+												<button type="button" id="addExerciseBtn"class=" btn btn-primary pull-right">수정완료</button>
+												<button type="button" id="CancelBtn" class="btn btn-primary pull-right">취소</button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-	</form>
+	</div>
 </body>
 </html>

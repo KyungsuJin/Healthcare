@@ -3,8 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
@@ -71,7 +69,8 @@
 						 	<input class="form-control" type="text" id="messageTitle" name="messageTitle">
 						</div>
 						<div class="form-group">
-						 	<textarea  cols="70" rows="20" id="messageContent" name="messageContent"></textarea>
+							<label class="control-label">내용</label>
+						 	<textarea  class="form-control"  rows="20" id="messageContent" name="messageContent"></textarea>
 						</div>
 						<button type="button" id="messageSubmit" class="btn btn-primary pull-right">전송</button>
 					</div>

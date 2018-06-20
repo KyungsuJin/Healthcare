@@ -57,6 +57,11 @@
 							$("#pageUl").append("<li><a class='receiveMessagePageNext' href='javascript:void(0);'>다음</a></li>");
 							$("#pageUl").append("<li><a class='receiveMessagePageEnd' href='javascript:void(0);'><span aria-hidden='true'>&raquo;</span></a></li>");
 						}
+						$('li').find('a').each(function(){//li의 자식 a인것을 다찾는다
+							if($(this).text() == data.currentPage){//만약 text 값이 현재페이지값과 같다면
+								$(this).closest('li').addClass('active');//closest 를이용해 가장 가까운 li 를 찾아 class =active 를 추가해준다.
+							}
+						});
 						
 					}
 				});
@@ -127,6 +132,11 @@
 							$("#pageUl").append("<li><a class='sendMessagePageNext' href='javascript:void(0);'>다음</a></li>");
 							$("#pageUl").append("<li><a class='sendMessagePageEnd' href='javascript:void(0);'><span aria-hidden='true'>&raquo;</span></a></li>");
 						}
+						$('li').find('a').each(function(){//li의 자식 a인것을 다찾는다
+							if($(this).text() == data.currentPage){//만약 text 값이 현재페이지값과 같다면
+								$(this).closest('li').addClass('active');//closest 를이용해 가장 가까운 li 를 찾아 class =active 를 추가해준다.
+							}
+						});
 					}
 				});
 				

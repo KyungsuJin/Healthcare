@@ -26,11 +26,12 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="material-icons">notifications</i>
-                                    <span class="notification">5</span>
+                                    <span class="notification">9999</span>
                                     <p class="hidden-lg hidden-md">개의 알림</p>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
+                                    
                                         <a href="#">Mike John responded to your email</a>
                                     </li>
                                     <li>
