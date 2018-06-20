@@ -127,6 +127,7 @@ import com.cafe24.kyungsu93.bloodsugar.service.BloodSugarService;
 @Controller
 public class BloodsugarController {
 	
+	
 	@Autowired
 	private BloodSugarService bloodSugarService;
 	
