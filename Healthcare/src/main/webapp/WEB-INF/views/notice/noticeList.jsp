@@ -163,23 +163,13 @@ function changehtml(){
 	<table>
 		<thead>
 			<tr>
-				<th>공지사항코드</th>
-				<th>회원코드</th>
 				<th>제목</th>
-				<th>내용</th>
-				<th>조회수</th>
-				<th>등록시간</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach var="notice" items="${list}">
 				<tr>
-					<td>${notice.noticeNo}</td>
-					<td>${notice.memberNo}</td>
-					<td>${notice.noticeTitle }</td>
-					<td>${notice.noticeContent }</td>
-					<td>${notice.noticeCount }</td>
-					<td>${notice.noticeDate }</td>
+					 <td><a type="button" href="${pageContext.request.contextPath}/noticeListDetail" id="noticeListDetail">${notice.noticeTitle}</a>
 					 <td><a type="button" href="${pageContext.request.contextPath}/modifyNotice?noticeNo=${notice.noticeNo}" id="buttonModify">수정</a></td> 
 					 <td><a type="button" href="${pageContext.request.contextPath}/deleteNotice?noticeNo=${notice.noticeNo}" id="buttonDelete">삭제</a></td> 
 				</tr>

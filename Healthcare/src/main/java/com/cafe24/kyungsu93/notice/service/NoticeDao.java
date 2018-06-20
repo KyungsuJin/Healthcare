@@ -48,9 +48,9 @@ public class NoticeDao {
 		return sqlSession.selectOne(NS+"noticeOne",noticeNo);
 	}
 	
-	public int deletenoticeCount(String noticeno) {
+	public int deletenoticeCount(String noticeNo) {
 		logger.debug("NoticeDao 에서 deleteNoticeCount 실행");
-		return sqlSession.delete(NS+"deletenotice",noticeno);
+		return sqlSession.delete(NS+"deletenotice",noticeNo);
 	}
 	
 	public int noticeSearchCount(Map<String, Object> map) {
@@ -73,6 +73,22 @@ public class NoticeDao {
 		logger.debug("38번"+map);
 		List<Notice> list = sqlSession.selectList(NS+"noticeSearchAll",map);
 		return list;
+	}
+	
+	public int noticeCountView(int noticeNo) {
+		logger.debug("BloodsugarDao 에서 updateBloodsugar 실행------------------3번"+noticeNo);
+		logger.debug("-------------12번"+noticeNo);
+		return sqlSession.update(NS+"noticeCountView",noticeNo);
+    }
+	
+	public List<Notice> noticeListDetail(Map<String,Integer> map) {
+		logger.debug("NoticeDao 에서 NoticeList 실행");
+		return sqlSession.selectList(NS+"noticeListDetail",map);
+	}
+	
+	public int noticeDetailCount() {
+		logger.debug("NoticeDao 에서 noticeDetailCount 실행");
+		return sqlSession.selectOne(NS+"noticeDetailCount");
 	}
 	
 	/*public List<Notice> selectNoticeList(Map<String, Object> map) {

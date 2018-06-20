@@ -50,7 +50,7 @@ public class NoticeController {
 	}
 
 	@RequestMapping(value="/noticeList", method=RequestMethod.GET)
-	public String bloodsugarList(Model model
+	public String noticeList(Model model
 								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
 		logger.debug("NoticeController 에서 NoticeList 실행");
@@ -86,15 +86,35 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="/deleteNotice", method= {RequestMethod.POST,RequestMethod.GET})
-	public String deleteNotice(@RequestParam(value="noticeno") String noticeno) {
+	public String deleteNotice(@RequestParam(value="noticeno") String noticeNo) {
 		logger.debug("NoticeController 에서 deleteBloodsugar 리다이렉트 실행.");
-		noticeService.deleteNotice(noticeno);
-		logger.debug("ddddddddddddddddddddddd"+noticeno);
+		noticeService.deleteNotice(noticeNo);
+		logger.debug("ddddddddddddddddddddddd"+noticeNo);
 		return "redirect:/NoticeList";
 	}
+	@RequestMapping(value="/noticeCountView", method= {RequestMethod.POST,RequestMethod.GET})
+	public String noticeCountView(@RequestParam(value="noticeNo") int noticeNo) {
+		logger.debug("NoticeController 에서 updateNotice 포워딩 실행.");
+		noticeService.noticeCountView(noticeNo);
+		logger.debug("ddddddddddddddddddddddd"+noticeNo);
+		return "notice/NoticeList";
+	}
 	
-	
-	
+	@RequestMapping(value="/noticeListDetail", method=RequestMethod.GET)
+	public String noticeListDetailList(Model model
+								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
+		logger.debug("NoticeController 에서 noticeListDetail 실행");
+		Map<String,Object> map = noticeService.noticeListDetail(currentPage, pagePerRow);
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
+		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
+		model.addAttribute("totalBlock", map.get("totalBlock"));
+		return "notice/noticeListDetail";
+	}
+}
 	/*@RequestMapping(value ="/searchNoticeList", method = RequestMethod.GET)
 	public String searchNoticeList(Model model											
 									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
@@ -137,4 +157,5 @@ public class NoticeController {
 	model.addAttribute("list", map.get("list"));
 		return "/bloodsugar/bloodsugarList";
 	}*/
-}
+
+
