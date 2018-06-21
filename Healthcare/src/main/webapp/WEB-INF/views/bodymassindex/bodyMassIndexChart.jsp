@@ -141,7 +141,7 @@
 						</div>
 					</div>
 				</div>
-				<div id="curve_chart" style="width: 900px; height: 500px" class="container"></div>
+				<div id="curve_chart" style="width: auto; height: auto" class="container"></div>
 			</div>
 		</div>
 	</div>

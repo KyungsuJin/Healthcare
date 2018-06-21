@@ -96,6 +96,8 @@ public class ExerciseService {
 		for(ExerciseRegistration matchingList:exerciseMatchingList) {
 			logger.debug(matchingList.getExerciseMatchingNo());
 			matchingList.setExerciseMatchingAttendCount(exerciseDao.exerciseMatchingAttendCount(matchingList.getExerciseMatchingNo()));
+			logger.debug("참석 인원수 : "+matchingList.getExerciseMatchingAttendCount());
+			
 		}
 		
 		int lastPage=totalCountList/pagePerRow;

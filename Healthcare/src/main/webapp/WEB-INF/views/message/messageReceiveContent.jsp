@@ -31,7 +31,7 @@
 					$("#deletBtn").empty();
 					$("#pageUl").empty();
 					$("#pageUl").append("<input type='hidden' id='endPage' value='"+data.endPage+"'>");
-					$("#deletBtn").append('<button type="button" id="deleteMessageBtn" class="btn btn-primary">삭제</button>');
+					$("#deletBtn").append('<button type="button" id="deleteMessageBtn" class="btn btn-primary">메시지 삭제</button>');
 					$("#tb").append('<tr><td><input type="checkbox" id="allChk">보낸사람</td><td>제목</td><td>날짜</td></tr>');
 					$.each(data.list,function(key,val){
 						$("#tb").append(
@@ -104,7 +104,7 @@
 					$("#deletBtn").empty();
 					$("#pageUl").empty();
 					$("#pageUl").append("<input type='hidden' id='endPage' value='"+data.endPage+"'>");
-					$("#deletBtn").append('<button type="button" id="deleteSendMessageBtn" class="btn btn-primary">삭제</button>');
+					$("#deletBtn").append('<button type="button" id="deleteSendMessageBtn" class="btn btn-primary">메시지 삭제</button>');
 					$("#tb").append('<tr><td><label><input type="checkbox" id="allChk">내용</td><td>날짜</td><td>수신여부</td></tr></label>');
 					$.each(data.list,function(key,val){
 						var sendMessageChk;
@@ -252,7 +252,7 @@
 					<input type="hidden" id="sendCurrentPage">
 					<input type="hidden" id="sendMessageNo" name="sendMessageNo" value="${message.sendMessageNo}">
 					<div id="deletBtn" style="margin-right:5px;float:left;"></div>
-					<div style="float:left;">
+					<div>
 						<button type="button" id="messageWrite" class="btn btn-primary">메시지 작성</button>
 						<button type="button" id="sendMessage" class="btn btn-primary">보낸 메시지</button>
 						<button type="button" id="messageReceive" class="btn btn-primary">받은 메시지</button>
@@ -261,36 +261,38 @@
 			</div>
 		</div>
 	</div>
-	<table border="1" class="table" id="tb">
-		<thead>
+	<div class="container">
+		<table border="1" class="table" id="tb">
+			<thead>
+				<tr>
+					<th>보낸사람</th>
+					<th>${message.sendMessageId}</th>
+				</tr>
+				<tr>
+					<th>받는사람</th>
+					<th>${sessionScope.memberSessionId}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="2">제목 : ${message.messageTitle}</td>
+				</tr>
+				<tr>
+					<td colspan="2"> <textarea class="form-control" rows="20" readonly>${message.messageContent}</textarea></td>
+				
+				</tr>
+			</tbody>
 			<tr>
-				<th>보낸사람</th>
-				<th>${message.sendMessageId}</th>
-			</tr>
+				<td colspan="2">
+					<form id="deleteForm"action="${pageContext.request.contextPath}/receiveMessageDelete" method="post">
+						<input type="hidden" id="deleteMessageNo" name="deleteMessageNo" value="${message.sendMessageNo}">
+						<button type=button id="deleteMessage" class="btn btn-primary">삭제</button>
+						<button type="button" id="reportMessage" class="btn btn-primary">메시지 신고</button>
+					</form>
+				</td>
 			<tr>
-				<th>받는사람</th>
-				<th>${sessionScope.memberSessionId}</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td colspan="2">제목 : ${message.messageTitle}</td>
-			</tr>
-			<tr>
-				<td colspan="2"> <textarea class="form-control" rows="20" readonly>${message.messageContent}</textarea></td>
-			
-			</tr>
-		</tbody>
-		<tr>
-			<td colspan="2">
-				<form id="deleteForm"action="${pageContext.request.contextPath}/receiveMessageDelete" method="post">
-					<input type="hidden" id="deleteMessageNo" name="deleteMessageNo" value="${message.sendMessageNo}">
-					<button type=button id="deleteMessage" class="btn btn-primary">삭제</button>
-					<button type="button" id="reportMessage" class="btn btn-primary">메시지 신고</button>
-				</form>
-			</td>
-		<tr>
-	</table>
+		</table>
+	</div>
 	<div id="page"	style="text-align:center">
 		<ul class="pagination pagination-sm" id="pageUl">
 		</ul>

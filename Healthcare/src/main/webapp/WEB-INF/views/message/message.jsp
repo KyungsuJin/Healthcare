@@ -34,8 +34,19 @@
 					alert('수신인을 적지않았거나 전송이 가능하지않은 아이디입니다.');
 					
 				}else{
-					$("#messageForm").submit();
-					alert('메시지 전송완료!');
+					var messageForm = $("#messageForm").serialize();
+					$.ajax({
+						type :"POST"
+						,url :"${pageContext.request.contextPath}/sendMessage"
+						,data: messageForm
+						,success:function(data){
+							alert('메시지 전송완료!');
+							window.close();
+						}
+					});
+					
+					
+					
 				}
 				
 			});
@@ -49,7 +60,7 @@
 		 	<h4 class="title">메시지 쓰기</h4>
 		 </div>
 		 <div class="card-content">
-		 	<form action="${pageContext.request.contextPath}/sendMessage" method="post" id="messageForm">
+		 	<form method="post" id="messageForm">
 				<input type="hidden" name="memberSendNo" value="${sessionScope.memberSessionNo}">
 				<input type="hidden" name="memberReceiveNo">
 				<div class="row">

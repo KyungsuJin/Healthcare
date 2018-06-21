@@ -6,15 +6,22 @@
 	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
-			var number = /^[0-9]*$/;
+			var number = /^[0-9.]*$/;
 			$("#bodyWaistSizeCm").focusout(function(){
 				$("#bodyWaistSizeIn").val(($(this).val()/2.54).toFixed(0));
 			});
+			$("#bodyHeight").focusout(function(){
+				bmiCalculation();
+			})
 			$("#bodyWeight").focusout(function(){
+				bmiCalculation();
+			})
+			function bmiCalculation(){
 				var heightBmi=$("#bodyHeight").val()/100;
 				var bmi=$("#bodyWeight").val()/(heightBmi*heightBmi);
-				$("#bodyMassIndex").val(bmi.toFixed(1));
-			})
+				$("#bodyMassIndexAvg").val(bmi.toFixed(1));
+			}
+			
 			$("#addBodyMassIndexSubmit").click(function(){
 				if((!number.test($("#bodyHeight").val())) || $("#bodyHeight").val()==null){
 					alert('키는 필수값이며 숫자만 입력 가능합니다.');
@@ -59,7 +66,7 @@
 										<div class="col-md-8">
 											<div class="form-group">
 												<label class="control-label">키</label>
-												<input class="form-control" type="text" id="bodyHeight" name="bodyHeight" value=" ${bodyMassIndex.bodyHeight} "maxlength="5">
+												<input class="form-control" type="text" id="bodyHeight" name="bodyHeight" value="${bodyMassIndex.bodyHeight}" maxlength="5">
 											</div>
 											<div class="form-group">
 												<label class="control-label">체중</label>
@@ -73,7 +80,7 @@
 											</div>
 											<div class="form-group">
 												<label class="control-label">BMI</label>
-												<input class="form-control" type="text" id="bodyMassIndex" name="bodyMassIndex" value=" ${bodyMassIndex.bodyMassIndex}" readonly>
+												<input class="form-control" type="text" id="bodyMassIndexAvg" name="bodyMassIndex" value=" ${bodyMassIndex.bodyMassIndex}" readonly>
 											</div>
 											<button type="button" id="addBodyMassIndexSubmit" class="btn btn-primary pull-right">수정</button>
 										</div>
