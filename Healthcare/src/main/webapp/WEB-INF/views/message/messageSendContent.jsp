@@ -3,8 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 	$(document).ready(function(){
@@ -256,7 +254,7 @@
 		</div>
 	</div>
 	<div class="container">
-		<table border="1" class="table" id="tb">
+		<table  class="table" border="1" id="tb">
 			<thead>
 				<tr>
 					<th>보낸사람</th>

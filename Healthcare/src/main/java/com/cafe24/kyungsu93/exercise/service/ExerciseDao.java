@@ -145,5 +145,10 @@ public class ExerciseDao {
 		logger.debug("ExerciseDao.exerciseMatchingResult");
 		return sqlSession.selectOne(NS + "exerciseMatchingResult", exerciseRegistration);
 	}
+	//운동매칭 참여인원 전원이 운동매칭 완료를 눌렀을때 그값을 1 아니면 0
+	public int exerciseMatchingResultSuccess(String exerciseMatchingNo) {
+		logger.debug("ExerciseDao.exerciseMatchingResultSuccess");
+		return sqlSession.selectOne(NS + "exerciseMatchingResultSuccess", exerciseMatchingNo);
+	}
 
 }

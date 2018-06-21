@@ -89,7 +89,7 @@
 				<input type="hidden" name="exercisePlaceView"id="exercisePlaceView" value="${exercise.exerciseMatchingPlace}">
 				<input type="hidden" name="memberNo" id="memberNo" value="${sessionScope.memberSessionNo}">
 				<input type="hidden" name="exerciseMatchingNo"id="exerciseMatchingNo" value="${exercise.exerciseMatchingNo}">
-				<table border="1" class="table" id="tb">
+				<table class="table table-hover" id="tb">
 					<thead>
 						<tr>
 							<th>작성자</th>

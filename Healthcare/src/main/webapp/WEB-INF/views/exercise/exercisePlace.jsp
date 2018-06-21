@@ -24,8 +24,6 @@
 		    anchorColor: "#eee",
 		});
 		
-		
-
 		map.setCursor('pointer');
 
 		// search by tm128 coordinate
@@ -65,7 +63,6 @@
 		        infoWindow.open(map, latlng);
 		    });
 		}
-		
 		// result by latlng coordinate
 		function searchAddressToCoordinate(address) {//서버 API 호출시 전달하는 callback 함수의 첫 번째 매개변수로 Status 값이 전달
 		    naver.maps.Service.geocode({

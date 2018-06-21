@@ -248,7 +248,7 @@
 		</div>
 	</div>
 	<div class="container">
-		<table border="1" class="table" id="tb">
+		<table  class="table" border="1" id="tb">
 		</table>
 		</div>
 		<div id="page"	style="text-align:center">

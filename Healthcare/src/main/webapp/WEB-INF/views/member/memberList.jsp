@@ -3,11 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
+			/* 기본회원의 리스트출력 */
 				$.ajax({
 					type : "GET"
 					,url : "${pageContext.request.contextPath}/memberList"

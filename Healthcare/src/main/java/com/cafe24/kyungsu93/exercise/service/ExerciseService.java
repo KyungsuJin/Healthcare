@@ -92,11 +92,13 @@ public class ExerciseService {
 			totalCountList =exerciseDao.totalCountList();
 			logger.debug("totalCountList"+totalCountList);
 		}
-		
 		for(ExerciseRegistration matchingList:exerciseMatchingList) {
 			logger.debug(matchingList.getExerciseMatchingNo());
 			matchingList.setExerciseMatchingAttendCount(exerciseDao.exerciseMatchingAttendCount(matchingList.getExerciseMatchingNo()));
 			logger.debug("참석 인원수 : "+matchingList.getExerciseMatchingAttendCount());
+			if(exerciseDao.exerciseMatchingResultSuccess(matchingList.getExerciseMatchingNo())==matchingList.getExerciseMatchingCount()){
+				matchingList.setExerciseMatchingResult(1);
+			}
 			
 		}
 		

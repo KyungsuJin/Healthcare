@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 	$(document).ready(function(){
@@ -12,6 +11,12 @@
 		$("#messageWrite").click(function(){
 				window.open("${pageContext.request.contextPath}/message"
 						,"messageWrite","width=850, height=700,resizable=no,scrollbars=yes");
+		});
+		//메시지 쓰기 새창
+		$("#replyMessage").click(function(){
+				window.open("${pageContext.request.contextPath}/message"
+						,"messageWrite","width=850, height=700,resizable=no,scrollbars=yes");
+				
 		});
 		//메시지 받은 리스트
 		$("#messageReceive").click(function(){
@@ -233,7 +238,7 @@
 		//메시지 신고
 			$("#reportMessage").click(function(){
 				window.open("${pageContext.request.contextPath}/messageComplain"
-							,"messageComplain","width=400 ,height=130");
+							,"messageComplain","width=400 ,height=300");
 			})
 		});
 	</script>
@@ -251,6 +256,7 @@
 					<input type="hidden" id="receiveCurrentPage">
 					<input type="hidden" id="sendCurrentPage">
 					<input type="hidden" id="sendMessageNo" name="sendMessageNo" value="${message.sendMessageNo}">
+					<input type="hidden" id="memberReceiveId"  value="${message.sendMessageId}">
 					<div id="deletBtn" style="margin-right:5px;float:left;"></div>
 					<div>
 						<button type="button" id="messageWrite" class="btn btn-primary">메시지 작성</button>
@@ -262,7 +268,7 @@
 		</div>
 	</div>
 	<div class="container">
-		<table border="1" class="table" id="tb">
+		<table  class="table" border="1" id="tb">
 			<thead>
 				<tr>
 					<th>보낸사람</th>
@@ -288,6 +294,7 @@
 						<input type="hidden" id="deleteMessageNo" name="deleteMessageNo" value="${message.sendMessageNo}">
 						<button type=button id="deleteMessage" class="btn btn-primary">삭제</button>
 						<button type="button" id="reportMessage" class="btn btn-primary">메시지 신고</button>
+						<button type="button" id="replyMessage" class="btn btn-primary">답장하기</button>
 					</form>
 				</td>
 			<tr>

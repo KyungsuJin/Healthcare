@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<jsp:include page="../include/header.jsp"></jsp:include>
 </head>
 <body>
@@ -14,7 +13,7 @@
 			<div class="content">
 				<h1>승인전 회원 상세보기</h1>
 				<c:if test="${member.memberLevel==3}">
-					<table border="1" class="table">
+					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th>의사 면허 번호</th>
@@ -37,7 +36,7 @@
 					</table>
 				</c:if>
 				<c:if test="${member.memberLevel==4}">
-					<table border="1" class="table">
+					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th>PT 면허 번호</th>
