@@ -41,6 +41,27 @@ public class GroupInviteService {
 		logger.debug("groupInviteDao - outGroupMember 실행");
 		groupInviteDao.outGroupMember(memberNo);
 	}
+	/**
+	 * 그룹 캘린더 리스트
+	 * @param groupName
+	 * @return
+	 */
+	public Map<String, Object> groupCalendarList(String groupName) {
+		logger.debug("GroupInviteService - groupCalendarList 실행");
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		List<GroupCalendar> groupCalendarMedication = groupInviteDao.groupCalendarMedication(groupName);
+		List<GroupCalendar> groupCalendarTreatment = groupInviteDao.groupCalendartreatment(groupName);
+		List<GroupInvite> groupRelationMember = groupInviteDao.groupRelationMember(groupName);
+		GroupInvite creationMember = groupInviteDao.groupRelationGroupCreateMember(groupName);
+		logger.debug("groupCalendarMedication:"+groupCalendarMedication);
+		logger.debug("groupCalendartreatment:"+groupCalendarTreatment);
+		logger.debug("groupRelationMember:"+groupRelationMember);
+		returnMap.put("groupCalendarMedication", groupCalendarMedication);
+		returnMap.put("groupRelationMember", groupRelationMember);
+		returnMap.put("groupCalendarTreatment", groupCalendarTreatment);
+		returnMap.put("creationMember", creationMember);
+		return returnMap;
+	}
 	
 	/**
 	 * 그룹관계도리스트
@@ -48,7 +69,7 @@ public class GroupInviteService {
 	 * @return
 	 */
 	public Map<String, Object> groupRelationChart(String groupName) {
-		logger.debug("GroupService - groupRelationMember 실행");
+		logger.debug("GroupInviteService - groupRelationMember 실행");
 		Map<String,Object> returnMap = new HashMap<String,Object>();
 		GroupInvite createMember = groupInviteDao.groupRelationGroupCreateMember(groupName);
 		String createMemb = createMember.getMemberName();
@@ -65,7 +86,7 @@ public class GroupInviteService {
 	 * @param inviteGroupNo
 	 */
 	public void acceptGroupList(GroupInvite groupInvite) {
-		logger.debug("GroupService - acceptGroupList 실행");
+		logger.debug("GroupInviteService - acceptGroupList 실행");
 		logger.debug("groupInvite:"+groupInvite);
 		String groupName = groupInvite.getGroupName();
 		GroupInvite memberSearch = groupInviteDao.memberNameSearch(groupName);
@@ -94,7 +115,7 @@ public class GroupInviteService {
 	 * @return
 	 */
 	public Map<String, Object> groupMemberList(int currentPage, int pagePerRow, String groupName) {
-		logger.debug("GroupService - groupMemberList 실행");
+		logger.debug("GroupInviteService - groupMemberList 실행");
 		logger.debug("groupName:"+groupName);
 		//회원 수 조회
 		int total = 0;

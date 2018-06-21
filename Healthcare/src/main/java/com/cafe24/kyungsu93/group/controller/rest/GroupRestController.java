@@ -27,11 +27,33 @@ public class GroupRestController {
 	private GroupInviteService groupInviteService;
 	private static final Logger logger = LoggerFactory.getLogger(GroupRestController.class);
 
+	//그룹 캘린더
+	@RequestMapping(value="/groupCalendarList", method=RequestMethod.POST)
+	@ResponseBody
+	public void groupCalendar(HttpServletResponse response,@RequestParam(value="groupName") String groupName) {
+		logger.debug("GroupRestController - groupCalendarList ajax 실행");
+		logger.debug("groupName:"+groupName);
+		Map<String,Object> map = groupInviteService.groupCalendarList(groupName);
+		logger.debug("groupCalendarMedication:"+map.get("groupCalendarMedication"));
+		logger.debug("groupCalendartreatment:"+map.get("groupCalendartreatment"));
+		Gson gson = new Gson();
+		String json = "";
+		json = gson.toJson(map);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("utf-8");
+		try {
+			response.getWriter().print(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 	//그룹 관계도
 	@RequestMapping(value="/groupMemberRelationChart", method=RequestMethod.POST)
 	@ResponseBody
 	public void groupMemberRelationChart(HttpServletResponse response,@RequestParam(value="groupName") String groupName) {
-		logger.debug("GroupController - groupMemberRelationChart ajax 실행");
+		logger.debug("GroupRestController - groupMemberRelationChart ajax 실행");
 		logger.debug("groupName:"+groupName);
 		Map<String,Object> map = groupInviteService.groupRelationChart(groupName);
 		logger.debug("createMemb:"+map.get("createMemb"));
@@ -54,7 +76,7 @@ public class GroupRestController {
 	@RequestMapping(value="/deleteGroupSearch", method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> memberCountSearch(@RequestParam(value="groupName") String groupName) {
-		logger.debug("GroupController - deleteApproval ajax 실행.");
+		logger.debug("GroupRestController - deleteApproval ajax 실행.");
 		Map<String,Object> resultmap = groupService.memberCountSearch(groupName);
 		logger.debug("resultmap:"+resultmap);
 		return resultmap;
@@ -64,7 +86,7 @@ public class GroupRestController {
 	@RequestMapping(value="/invitefind", method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> searchMember(@RequestParam(value="memberId") String memberId) {
-		logger.debug("GroupController - SearchMemberForm ajax 실행");
+		logger.debug("GroupRestController - SearchMemberForm ajax 실행");
 		logger.debug("memberId:"+memberId);
 		Map<String,Object> map = groupInviteService.invitefind(memberId);
 		logger.debug("result:"+map.get("result"));
@@ -76,7 +98,7 @@ public class GroupRestController {
 	@RequestMapping(value="/checkGroupName", method=RequestMethod.GET)
 	@ResponseBody
     public Map<String, Object> checkGroupName(@RequestParam(value="groupName") String groupName) {
-		logger.debug("GroupController - checkGroupName ajax 실행");
+		logger.debug("GroupRestController - checkGroupName ajax 실행");
 		logger.debug("groupName:"+groupName);
 		Map<String,Object> map = groupService.checkGroupName(groupName);
 		logger.debug("result:"+map.get("result"));

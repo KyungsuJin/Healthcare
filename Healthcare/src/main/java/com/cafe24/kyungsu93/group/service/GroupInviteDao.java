@@ -16,6 +16,18 @@ public class GroupInviteDao {
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.group.service.GroupInviteMapper.";
 
+	//그룹 회원 복약일정 리스트
+	public List<GroupCalendar> groupCalendarMedication(String groupName) {
+		logger.debug("GroupInviteDao - groupCalendarMedication 실행");
+		return sqlSession.selectList(NS+"groupCalendarMedication",groupName);
+	}
+	
+	//그룹 회원 진료일정 리스트
+	public List<GroupCalendar> groupCalendartreatment(String groupName) {
+		logger.debug("GroupInviteDao - groupCalendartreatment 실행");
+		return sqlSession.selectList(NS+"groupCalendartreatment",groupName);
+	}
+	
 	//회원 그룹초대 취소
 	public int groupInviteMemberCancle(String groupInviteNo) {
 		logger.debug("GroupInviteDao - groupInviteMemberCancle 실행");
