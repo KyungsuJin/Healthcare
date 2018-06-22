@@ -4,6 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>addBloodPressure</title>
+<jsp:include page="../include/header.jsp"></jsp:include>
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
@@ -39,49 +40,28 @@ function check() {
 </script>
 </head>
 <body>
-<h1>혈압을 등록해 주세요.</h1>
-<div>
-	<table>
-		<tr>
-			<th>단계</th>
-			<td>수축기</td>
-			<td>이완기</td>
-		</tr>
-		<tr>
-			<th>정상 혈압</th>
-			<td>120mmHg 미만</td>
-			<td>80mmHg미만</td>
-		</tr>
-		<tr>
-			<th>고혈압 전(前)단계</th>
-			<td>120-139mmHg</td>
-			<td>80-89mmHg</td>
-		</tr>
-		<tr>
-			<th>1기 고혈압</th>	
-			<td>140-159mmHg</td>
-			<td>90-99mmHg</td>
-		</tr>
-		<tr>
-			<th>2기고혈압</th>	
-			<td>160mmHg 이상</td>
-			<td>100mmHg 이상</td>
-		<tr>
-	</table>
-	<p>혈압 설명 추가하기.</p>
-</div>
-	<form id="addBloodPRessureForm" action="${pageContext.request.contextPath}/addBloodPressure" method="post">
-<%-- <input type="hidden" name="memberNo" value="${sessionScope.memberNo}"> --%>
-		<input type="text" name="memberNo" placeholder="memberNo">
-		<div>
-		수축기 : <input type="text" name="systolicPressure" placeholder="systolicPressure">/mmHg
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<h2>안녕하세요. 혈압을 등록해 주세요.</h2>
+				<form id="addBloodPRessureForm" action="${pageContext.request.contextPath}/addBloodPressure" method="post">
+					<input type="hidden" name="memberNo" value="${sessionScope.memberNo}">
+					<div>
+					수축기 : <input type="text" name="systolicPressure" placeholder="systolicPressure">/mmHg
+					</div>
+					<div>
+					이완기 : <input type="text" name="diastolicPressure" placeholder="diastolicPressure">/mmHg
+					</div>
+					<div>
+					<input type="submit" value="등록하기">
+					</div>
+				</form>
+				<input type="button" value="다시입력하기">
+				<input type="button" value="돌아가기">
+			</div>
 		</div>
-		<div>
-		이완기 : <input type="text" name="diastolicPressure" placeholder="diastolicPressure">/mmHg
-		</div>
-		<div>
-		<input type="submit" value="등록하기">
-		</div>
-	</form>
+	</div>
 </body>
 </html>

@@ -18,6 +18,11 @@ public class GroupCalendar {
 	private String treatmentTitle;
 	private String doctorName;
 	private String treatmentDate;
+	private String healthScreenNo;
+	private String healthScreenDate;
+	private String healthSurveyResultDate;
+	private int healthSurveyEvaluationDo;
+	private String healthSurveyResultNo;
 	public String getMedicationStartDate() {
 		return medicationStartDate;
 	}
@@ -120,6 +125,36 @@ public class GroupCalendar {
 	public void setTreatmentDate(String treatmentDate) {
 		this.treatmentDate = treatmentDate;
 	}
+	public String getHealthScreenNo() {
+		return healthScreenNo;
+	}
+	public void setHealthScreenNo(String healthScreenNo) {
+		this.healthScreenNo = healthScreenNo;
+	}
+	public String getHealthScreenDate() {
+		return healthScreenDate;
+	}
+	public void setHealthScreenDate(String healthScreenDate) {
+		this.healthScreenDate = healthScreenDate;
+	}
+	public String getHealthSurveyResultDate() {
+		return healthSurveyResultDate;
+	}
+	public void setHealthSurveyResultDate(String healthSurveyResultDate) {
+		this.healthSurveyResultDate = healthSurveyResultDate;
+	}
+	public int getHealthSurveyEvaluationDo() {
+		return healthSurveyEvaluationDo;
+	}
+	public void setHealthSurveyEvaluationDo(int healthSurveyEvaluationDo) {
+		this.healthSurveyEvaluationDo = healthSurveyEvaluationDo;
+	}
+	public String getHealthSurveyResultNo() {
+		return healthSurveyResultNo;
+	}
+	public void setHealthSurveyResultNo(String healthSurveyResultNo) {
+		this.healthSurveyResultNo = healthSurveyResultNo;
+	}
 	@Override
 	public String toString() {
 		return "GroupCalendar [medicationStartDate=" + medicationStartDate + ", medicationEndDate=" + medicationEndDate
@@ -128,7 +163,9 @@ public class GroupCalendar {
 				+ medicationTitle + ", medicationContent=" + medicationContent + ", medicationDate=" + medicationDate
 				+ ", treatmentNo=" + treatmentNo + ", treatmentDepartment=" + treatmentDepartment + ", hospitalName="
 				+ hospitalName + ", treatmentTitle=" + treatmentTitle + ", doctorName=" + doctorName
-				+ ", treatmentDate=" + treatmentDate + "]";
+				+ ", treatmentDate=" + treatmentDate + ", healthScreenNo=" + healthScreenNo + ", healthScreenDate="
+				+ healthScreenDate + ", healthSurveyResultDate=" + healthSurveyResultDate
+				+ ", healthSurveyEvaluationDo=" + healthSurveyEvaluationDo + ", healthSurveyResultNo="
+				+ healthSurveyResultNo + "]";
 	}
-	
 }

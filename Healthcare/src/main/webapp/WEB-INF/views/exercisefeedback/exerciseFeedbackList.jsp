@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>exerciseFeedbackList</title>
+<jsp:include page="../include/header.jsp"></jsp:include>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
@@ -89,86 +90,94 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<h1>운동피드백요청리스트</h1>
-	<!-- 기간 검색 -->   		
-	<form id="formSearch" name="formSearch" onsubmit="return formSearchcheck()" action="${pageContext.request.contextPath}/exerciseFeedbackListSearch" method="POST"> 
-		<h4>기간별 검색</h4>
-		<div> 
-			시작일 :
-			<input type="text" id="startDate" name="startDate">
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+			<h1>운동피드백요청리스트</h1>
+				<!-- 기간 검색 -->   		
+				<form id="formSearch" name="formSearch" onsubmit="return formSearchcheck()" action="${pageContext.request.contextPath}/exerciseFeedbackListSearch" method="POST"> 
+				<h4>기간별 검색</h4>
+					<div> 
+						시작일 :
+						<input type="text" id="startDate" name="startDate">
+					</div>
+					<div>
+					 	 종료일 :
+						 <input type="text" id="endDate" name="endDate">
+					 </div>
+					 <div>
+						<input type="submit" value="검색">
+					</div>
+				</form>
+					<input type="button" onclick="SearchWeek()" value="1주일">
+				    <input type="button" onclick="SearchMonth()" value="1개월">
+				    <input type="button" onclick="SearchSixMonth()" value="6개월">
+				<c:choose>
+					<c:when test="${result > 0 }">
+						총 ${result }개의 게시물을 찾았습니다.
+						${startDate } ~ ${endDate }기간 동안의 리스트 검색 결과입니다.
+					</c:when>
+					<c:when test="${result eq 0 }">
+						${startDate } ~ ${endDate } 기간 동안의 해당하는 리스트 검색 결과가 없습니다.
+					</c:when>
+				</c:choose>
+				<table>
+					<thead>
+						<tr>
+							<th>피드백번호</th>
+							<th>강사명</th>
+							<th>제목</th>
+							<th>내용</th>
+							<th>요청날짜</th>
+							<th>승인결과</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="exerciseFeedback" items="${list}">
+						<tr>
+							<td>${exerciseFeedback.exerciseFeedbackRequestNo }</td>
+							<td>${exerciseFeedback.memberName }</td>
+							<td>${exerciseFeedback.exerciseFeedbackRequestTitle }</td>
+							<td>${exerciseFeedback.exerciseFeedbackRequestContent }</td>
+							<td>${exerciseFeedback.exerciseFeedbackRequestDate }</td>
+							<td>${exerciseFeedback.exerciseFeedbackResult }</td>
+						</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				<nav>
+					<ul class="pagination pagination-sm">
+						<c:if test="${currentPage > 10}">
+							<li>
+								<a aria-label="first" href="${pageContext.request.contextPath }/exerciseFeedbackList?currentPage=1">&laquo;</a>
+							</li>
+						</c:if>
+						<c:if test="${firstBlockPage > 2}">
+							<li>
+								<a aria-label="first" href="${pageContext.request.contextPath }/exerciseFeedbackList?currentPage=${firstBlockPage-1}">&lsaquo;</a>
+							</li>
+						</c:if>
+							<li>
+							<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
+								<a href="${pageContext.request.contextPath}/exerciseFeedbackList?currentPage=${i}">${i}</a>				
+							</c:forEach>		
+							</li>
+						<c:if test="${lastBlockPage < totalBlock}">
+							<li>
+								<a aria-label="last" href="${pageContext.request.contextPath}/exerciseFeedbackList?currentPage=${lastBlockPage+1}">&rsaquo;</a>
+							</li>
+						</c:if>
+						<c:if test="${currentPage < lastPage}">
+							<li>
+								<a aria-label="last" href="${pageContext.request.contextPath}/exerciseFeedbackList?currentPage=${lastPage}">&raquo;</a>
+							</li>
+						</c:if>
+					</ul>
+				</nav>
+	 		</div>
 		</div>
-		<div>
-		 	 종료일 :
-			 <input type="text" id="endDate" name="endDate">
-		 </div>
-		 <div>
-			<input type="submit" value="검색">
-		</div>
-	</form>
-		<input type="button" onclick="SearchWeek()" value="1주일">
-	    <input type="button" onclick="SearchMonth()" value="1개월">
-	    <input type="button" onclick="SearchSixMonth()" value="6개월">
-	<c:choose>
-		<c:when test="${result > 0 }">
-			총 ${result }개의 게시물을 찾았습니다.
-			${startDate } ~ ${endDate }기간 동안의 리스트 검색 결과입니다.
-		</c:when>
-		<c:when test="${result eq 0 }">
-			${startDate } ~ ${endDate } 기간 동안의 해당하는 리스트 검색 결과가 없습니다.
-		</c:when>
-	</c:choose>
-	<table>
-		<thead>
-			<tr>
-				<th>피드백번호</th>
-				<th>강사명</th>
-				<th>제목</th>
-				<th>내용</th>
-				<th>요청날짜</th>
-				<th>승인결과</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="exerciseFeedback" items="${list}">
-			<tr>
-				<td>${exerciseFeedback.exerciseFeedbackRequestNo }</td>
-				<td>${exerciseFeedback.memberName }</td>
-				<td>${exerciseFeedback.exerciseFeedbackRequestTitle }</td>
-				<td>${exerciseFeedback.exerciseFeedbackRequestContent }</td>
-				<td>${exerciseFeedback.exerciseFeedbackRequestDate }</td>
-				<td>${exerciseFeedback.exerciseFeedbackResult }</td>
-			</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-	<nav>
-		<ul class="pagination pagination-sm">
-			<c:if test="${currentPage > 10}">
-				<li>
-					<a aria-label="first" href="${pageContext.request.contextPath }/exerciseFeedbackList?currentPage=1">&laquo;</a>
-				</li>
-			</c:if>
-			<c:if test="${firstBlockPage > 2}">
-				<li>
-					<a aria-label="first" href="${pageContext.request.contextPath }/exerciseFeedbackList?currentPage=${firstBlockPage-1}">&lsaquo;</a>
-				</li>
-			</c:if>
-				<li>
-				<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
-					<a href="${pageContext.request.contextPath}/exerciseFeedbackList?currentPage=${i}">${i}</a>				
-				</c:forEach>		
-				</li>
-			<c:if test="${lastBlockPage < totalBlock}">
-				<li>
-					<a aria-label="last" href="${pageContext.request.contextPath}/exerciseFeedbackList?currentPage=${lastBlockPage+1}">&rsaquo;</a>
-				</li>
-			</c:if>
-			<c:if test="${currentPage < lastPage}">
-				<li>
-					<a aria-label="last" href="${pageContext.request.contextPath}/exerciseFeedbackList?currentPage=${lastPage}">&raquo;</a>
-				</li>
-			</c:if>
-		</ul>
-	</nav>
+	</div>
 </body>
 </html>

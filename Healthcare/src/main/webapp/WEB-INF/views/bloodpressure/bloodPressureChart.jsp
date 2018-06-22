@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>bloodPressureChart</title>
+<jsp:include page="../include/header.jsp"></jsp:include>
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery.min.js"></script>
 <!-- google charts -->
@@ -174,29 +175,66 @@
 </script>
 </head>
 <body>
-<h1>bloodPressureChart</h1>
-<%--<input type="hidden" id="memberNoSession" value="${sessionScope.memberNo}"> --%>
-	<span id="chartResult"></span>
-	<div id="addBtn">
-		<a href="${pageContext.request.contextPath}/addBloodPressure">혈압 등록하기</a>
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+			<h1>bloodPressureChart</h1>
+				<input type="hidden" id="memberNoSession" value="${sessionScope.memberNo}">
+				<span id="chartResult"></span>
+				<div id="addBtn">
+					<a href="${pageContext.request.contextPath}/addBloodPressure">혈압 등록하기</a>
+				</div>
+				<div>
+					<table>
+						<tr>
+							<th>단계</th>
+							<td>수축기</td>
+							<td>이완기</td>
+						</tr>
+						<tr>
+							<th>정상 혈압</th>
+							<td>120mmHg 미만</td>
+							<td>80mmHg미만</td>
+						</tr>
+						<tr>
+							<th>고혈압 전(前)단계</th>
+							<td>120-139mmHg</td>
+							<td>80-89mmHg</td>
+						</tr>
+						<tr>
+							<th>1기 고혈압</th>	
+							<td>140-159mmHg</td>
+							<td>90-99mmHg</td>
+						</tr>
+						<tr>
+							<th>2기고혈압</th>	
+							<td>160mmHg 이상</td>
+							<td>100mmHg 이상</td>
+						<tr>
+					</table>
+					<p>혈압 설명 추가하기.</p>
+				</div>
+				<!-- 차트가 그려지는 위치 -->
+				<div id="linechart_material"></div>
+				<!-- 혈압 결과값 계산 -->
+				<div id="bloodPressureResult">
+					<div>
+						수축기 혈압 : <span id="systolicPressure"></span>
+					</div>
+					<div>
+						이완기 혈압 : <span id="diastolicPressure"></span>
+					</div>
+					<div>
+						수축기 혈압은 <span id="systolicresult"></span>
+				 	</div>
+				 	<div>
+				 		이완기 혈압은 <span id="diastolicresult"></span>
+				 	</div>
+			 	</div>
+ 			</div>
+		</div>
 	</div>
-	
-	<!-- 차트가 그려지는 위치 -->
-	<div id="linechart_material"></div>
-	<!-- 혈압 결과값 계산 -->
-	<div id="bloodPressureResult">
-		<div>
-			수축기 혈압 : <span id="systolicPressure"></span>
-		</div>
-		<div>
-			이완기 혈압 : <span id="diastolicPressure"></span>
-		</div>
-		<div>
-			수축기 혈압은 <span id="systolicresult"></span>
-	 	</div>
-	 	<div>
-	 		이완기 혈압은 <span id="diastolicresult"></span>
-	 	</div>
- 	</div>
 </body>
 </html>

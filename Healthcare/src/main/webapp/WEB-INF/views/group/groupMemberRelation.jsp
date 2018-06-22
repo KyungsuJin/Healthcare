@@ -4,6 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>groupMemberRelation</title>
+<jsp:include page="../include/header.jsp"></jsp:include>
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -71,7 +72,6 @@
 	color: black;
 	width: 150px;
 	height: 80px;
-    border-bottom: 4px solid #002266;
 	text-align: center;
 	border-radius: 5px;
 	font-size: 2.5em;
@@ -92,12 +92,19 @@ p {
 .google-visualization-orgchart-lineright {
 	border-right: 1px solid #333!important;
 }
-
 </style>
 </head>
 <body>
-<h1>그룹 관계도</h1>
-	<!-- 관계도 위치 -->
-	<div id="chart_div"></div>
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<h1>그룹 관계도</h1>
+					<!-- 관계도 위치 -->
+					<div id="chart_div"></div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

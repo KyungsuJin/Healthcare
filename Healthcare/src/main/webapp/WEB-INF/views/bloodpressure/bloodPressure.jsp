@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>bloodPressure</title>
+<jsp:include page="../include/header.jsp"></jsp:include>
 <!-- jQuery -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery.min.js"></script>
@@ -135,94 +136,101 @@ $(document).ready(function(){
 			console.log("startDate:"+startDate);
 			location.href="${pageContext.request.contextPath}/bloodPressureSearch?startDate="+startDate+"&&endDate="+endDate; 
 	}
-	
 </script>
 </head>
 <body>
-<h1>bloodPressureList</h1>
-	<!-- 기간 검색 -->   		
-	<form id="formSearch" name="formSearch" onsubmit="return formSearchcheck()" action="${pageContext.request.contextPath}/bloodPressureSearch" method="POST"> 
-		<h4>기간별 혈압 검색</h4>
-		<div> 
-			시작일 :
-			<input type="text" id="startDate" name="startDate">
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+			<h2>bloodPressureList</h2>
+			<!-- 기간 검색 -->   		
+			<form id="formSearch" name="formSearch" onsubmit="return formSearchcheck()" action="${pageContext.request.contextPath}/bloodPressureSearch" method="POST"> 
+				<h4>기간별 혈압 검색</h4>
+				<div> 
+					시작일 :
+					<input type="text" id="startDate" name="startDate">
+				</div>
+				<div>
+				 	 종료일 :
+					 <input type="text" id="endDate"name="endDate">
+				 </div>
+				 <div>
+					<input type="submit" value="검색">
+				</div>
+			</form>
+				<input type="button" onclick="bloodPressureWeek()" value="1주일">
+			    <input type="button" onclick="bloodPressureMonth()" value="1개월">
+			    <input type="button" onclick="bloodPressureSixMonth()" value="6개월">
+			<c:choose>
+			    <c:when test="${result > 0 }">
+					총 ${result }개의 게시물을 찾았습니다.
+					${startDate } ~ ${endDate }기간 동안의 혈압 등록 리스트 검색 결과입니다.
+			    </c:when>
+			    <c:when test="${result eq 0 }">
+			 	   ${startDate } ~ ${endDate } 기간 동안의 해당하는 혈압 등록 리스트 검색 결과가 없습니다.
+			    </c:when>
+		    </c:choose>
+		    <!-- 혈압리스트 -->
+			<table>		
+				<thead>
+					<tr>
+						<th><input type="checkbox" name="selectAll" id="selectAll" onclick="checkAll();"></th>
+						<th>번호</th>
+						<th>수축기</th>
+						<th>이완기</th>
+						<th>날짜</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="bloodPressure" items="${list}">
+						<tr>
+							<td><input type="checkbox" name="bloodPressureCheck" value="${bloodPressure.bloodPressureNo }"/></td>
+							<td>${bloodPressure.bloodPressureNo}</td>
+							<td>${bloodPressure.diastolicPressure}</td>
+							<td>${bloodPressure.systolicPressure}</td>
+							<td>${bloodPressure.bloodPressureDate}</td>
+							<td><a type="button" href="${pageContext.request.contextPath}/modifyBloodPressure?bloodPressureNo=${bloodPressure.bloodPressureNo}">수정</a></td>
+						</tr>
+					</c:forEach>
+				</tbody>	
+			</table>
+				<input type="button" onclick="bloodPressureCheckDelete()" value="선택삭제하기">
+				<input type="button" onclick="addBloodPressure()" value="혈압등록하기">
+				<input type="button" onclick="bloodPressureChart()" value="혈압그래프보기">
+				<nav>
+					<ul class="pagination pagination-sm">
+						<c:if test="${currentPage > 10}">
+							<li>
+								<a aria-label="first" href="${pageContext.request.contextPath }/bloodPressure?currentPage=1">&laquo;</a>
+							</li>
+						</c:if>
+						<c:if test="${firstBlockPage > 2}">
+							<li>
+								<a aria-label="first" href="${pageContext.request.contextPath }/bloodPressure?currentPage=${firstBlockPage-1}">&lsaquo;</a>
+							</li>
+						</c:if>
+							<li>
+							<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
+								<a href="${pageContext.request.contextPath}/bloodPressure?currentPage=${i}">${i}</a>				
+							</c:forEach>		
+							</li>
+						<c:if test="${lastBlockPage < totalBlock}">
+							<li>
+								<a aria-label="last" href="${pageContext.request.contextPath}/bloodPressure?currentPage=${lastBlockPage+1}">&rsaquo;</a>
+							</li>
+						</c:if>
+						<c:if test="${currentPage < lastPage}">
+							<li>
+								<a aria-label="last" href="${pageContext.request.contextPath}/bloodPressure?currentPage=${lastPage}">&raquo;</a>
+							</li>
+						</c:if>
+					</ul>
+				</nav>
+			</div>
 		</div>
-		<div>
-		 	 종료일 :
-			 <input type="text" id="endDate"name="endDate">
-		 </div>
-		 <div>
-			<input type="submit" value="검색">
-		</div>
-	</form>
-		<input type="button" onclick="bloodPressureWeek()" value="1주일">
-	    <input type="button" onclick="bloodPressureMonth()" value="1개월">
-	    <input type="button" onclick="bloodPressureSixMonth()" value="6개월">
-	<c:choose>
-	    <c:when test="${result > 0 }">
-			총 ${result }개의 게시물을 찾았습니다.
-			${startDate } ~ ${endDate }기간 동안의 혈압 등록 리스트 검색 결과입니다.
-	    </c:when>
-	    <c:when test="${result eq 0 }">
-	 	   ${startDate } ~ ${endDate } 기간 동안의 해당하는 혈압 등록 리스트 검색 결과가 없습니다.
-	    </c:when>
-    </c:choose>
-    <!-- 혈압리스트 -->
-	<table>		
-		<thead>
-			<tr>
-				<th><input type="checkbox" name="selectAll" id="selectAll" onclick="checkAll();"></th>
-				<th>번호</th>
-				<th>수축기</th>
-				<th>이완기</th>
-				<th>날짜</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="bloodPressure" items="${list}">
-				<tr>
-					<td><input type="checkbox" name="bloodPressureCheck" value="${bloodPressure.bloodPressureNo }"/></td>
-					<td>${bloodPressure.bloodPressureNo}</td>
-					<td>${bloodPressure.diastolicPressure}</td>
-					<td>${bloodPressure.systolicPressure}</td>
-					<td>${bloodPressure.bloodPressureDate}</td>
-					<td><a type="button" href="${pageContext.request.contextPath}/modifyBloodPressure?bloodPressureNo=${bloodPressure.bloodPressureNo}">수정</a></td>
-				</tr>
-			</c:forEach>
-		</tbody>	
-	</table>
-		<input type="button" onclick="bloodPressureCheckDelete()" value="선택삭제하기">
-		<input type="button" onclick="addBloodPressure()" value="혈압등록하기">
-		<input type="button" onclick="bloodPressureChart()" value="혈압그래프보기">
-		<nav>
-			<ul class="pagination pagination-sm">
-				<c:if test="${currentPage > 10}">
-					<li>
-						<a aria-label="first" href="${pageContext.request.contextPath }/bloodPressure?currentPage=1">&laquo;</a>
-					</li>
-				</c:if>
-				<c:if test="${firstBlockPage > 2}">
-					<li>
-						<a aria-label="first" href="${pageContext.request.contextPath }/bloodPressure?currentPage=${firstBlockPage-1}">&lsaquo;</a>
-					</li>
-				</c:if>
-					<li>
-					<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
-						<a href="${pageContext.request.contextPath}/bloodPressure?currentPage=${i}">${i}</a>				
-					</c:forEach>		
-					</li>
-				<c:if test="${lastBlockPage < totalBlock}">
-					<li>
-						<a aria-label="last" href="${pageContext.request.contextPath}/bloodPressure?currentPage=${lastBlockPage+1}">&rsaquo;</a>
-					</li>
-				</c:if>
-				<c:if test="${currentPage < lastPage}">
-					<li>
-						<a aria-label="last" href="${pageContext.request.contextPath}/bloodPressure?currentPage=${lastPage}">&raquo;</a>
-					</li>
-				</c:if>
-			</ul>
-		</nav>
+	</div>
 </body>
 </html>

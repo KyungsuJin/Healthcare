@@ -5,14 +5,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>캘린더</title>
-
+<jsp:include page="../include/header.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.9.4/scheduler.css">
 <script type="text/javascript" src="https://fullcalendar.io/releases/fullcalendar-scheduler/1.9.4/scheduler.min.js"></script>
-
 <script type="text/javascript">
 var groupName = "groupName7";
 $(document).ready(function(){
@@ -27,49 +26,76 @@ function ajaxData() {
 	//ajax 실행 값 확인
 	request.done(function(msg) {
 		console.log(msg);
-		var medication = msg.groupCalendarMedication;
-		var treatment = msg.groupCalendarTreatment;
-		var memberlist = msg.groupRelationMember;
-		var creationMember = msg.creationMember;
+		var medication = msg.groupCalendarMedication; //복약일정
+		var treatment = msg.groupCalendarTreatment; //진료일정
+		var memberlist = msg.groupRelationMember; //회원리스트
+		var creationMember = msg.creationMember; //그룹장 정보
+		var healthScreen = msg.groupCalendarHealthScreen; //건강검진
+		var healthSurvey = msg.groupCalendarHealthSurvey; //건강설문
 		if(treatment!=undefined && Array.isArray(treatment)){
 			console.log('array 확인');
 			console.log("진료리스트:"+treatment+treatment.length);
 			console.log("복약스트:"+medication+medication.length);
 			console.log("회원리스트:"+memberlist+memberlist.length);
-			console.log('memberlist[1].memberId:'+memberlist[1].memberId);
+			console.log("건강검진:"+healthScreen+healthScreen.length);
+			console.log("건강설문:"+healthSurvey+healthSurvey.length);
 			console.log("그룹장:"+creationMember);
 			//회원리스트
 			var resource = [{ id: creationMember.memberNo, title: creationMember.memberName }];
 	 		for(var i = 0; i<memberlist.length; i++){
 				resource[i+1] = { id: memberlist[i].memberId, title: memberlist[i].memberName}
 			} 
-	 		//복약일정
+	 		//복약일정 
 	 		var test = [];
 	 		if(medication.length>0){
 	 	 		for(var i = 0; i<medication.length; i++){
-	 	 			test[i] = {
-	 	 					id : medication[i].memberId
-	 						,title: '[복약]'+medication[i].medicationTitle+' [하루'+medication[i].dosage+'번]'
-	 						,resourceIds: medication[i].memberId
-	 						,start: medication[i].medicationStartDate
-	 						,end: medication[i].medicationEndDate
-	 						,color: '#8041D9'
-	 	 			}
+	 	 			test.push({
+	 	 				id : medication[i].memberId
+	 					,title: '[복약]'+medication[i].medicationTitle+' [하루'+medication[i].dosage+'번]'
+	 					,resourceIds: medication[i].memberId
+	 					,start: medication[i].medicationStartDate
+	 					,end: medication[i].medicationEndDate
+	 					,color: '#997000'
+	 	 			})
 	 	 		}
 	 		}
 	 		console.log('test:'+test);
 			//진료일정
 	 		if(treatment.length>0){
-	 	 		for(var i = 0; i<treatment.length; i++){
-	 	 			test[i+medication.length] = {
-	 	 					id:treatment[i].memberId
-	 						,title: '[진료]'+treatment[i].treatmentTitle
-	 						,resourceIds: treatment[i].memberId
-	 						,start: treatment[i].tratmentDate
-	 						,color: '#F361A6'
-	 	 			}
+		 	 	for(var i = 0; i<treatment.length; i++){
+		 	 		test.push( {
+		 	 			id:treatment[i].memberId
+		 				,title: '[진료]'+treatment[i].treatmentTitle
+		 				,resourceIds: treatment[i].memberId
+		 				,start: treatment[i].tratmentDate
+		 				,color: '#BCE55C'
+		 	 		})
+				}
+		 	 }
+			//건강검진
+			if(healthScreen.length>0){
+	 	 		for(var i = 0; i<healthScreen.length; i++){
+	 	 			test.push( {
+	 	 				id: healthScreen[i].memberId
+	 					,title: '[건강검진]'+healthScreen[i].memberName
+	 					,resourceIds: healthScreen[i].memberId
+	 					,start: healthScreen[i].healthScreenDate
+	 					,color: '#E5D85C'
+	 	 			})
 	 			}
-	 		}
+			}
+			//건강설문
+			if(healthSurvey.length>0){
+	 	 		for(var i = 0; i<healthSurvey.length; i++){
+	 	 			test.push( {
+	 	 				id: healthSurvey[i].memberId
+	 					,title: '[건강설문]'+healthSurvey[i].memberName+'['+healthSurvey[i].healthSurveyEvaluationDo+']'
+	 					,resourceIds: healthSurvey[i].memberId
+	 					,start: healthSurvey[i].healthSurveyResultDate
+	 					,color: '#6B9900'
+	 	 			})
+	 			}
+			}
 	 		console.log('test:'+test);
 	 		console.log('test:'+test.length);
 	 		console.log('resource:'+resource.length);
@@ -99,6 +125,7 @@ function ajaxData() {
 			      
 		 	      eventClick: function(event) { //이벤트 클릭시 해당글의 상세보기
 			          // opens events in a popup window
+			           alert('selected ' + event.id + ' to ' + event.title);
 			          window.open('', 'calendarDetail', 'width=700,height=600');
 			          myWindow.document.write(calendarDetail);
 			          return false;
@@ -106,7 +133,7 @@ function ajaxData() {
 			    views: { 
 			    	month:{
 			    		buttonText: 'month',
-			    		eventLimit : 3
+			    		eventLimit : 7
 			    	},
 			    	timelineDay:{ 
 			    		buttonText: '오늘 일정 보기',
@@ -120,7 +147,7 @@ function ajaxData() {
 						slotLabelFormat : ['ddd D/M']
 					}
 				},	
-				events :  test,
+				events : test,
 				resourceLabelText: '그룹회원명', 
 				resources: resource
 			});
@@ -140,7 +167,7 @@ body {
 margin: 40px 10px; 
 padding: 0; 
 font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif; 
-font-size: 14px; 
+font-size: 15px; 
 } 
 #calendar {
  max-width: 500px; margin: 0 auto; 
@@ -148,7 +175,36 @@ font-size: 14px;
 </style>
 </head>
 <body>
-	<h1>그룹 캘린더</h1>
-	<div id="calendardaily"></div>
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<div class='col-sm-10'>
+					<div class="btn-group" role="group" aria-label="...">
+						<input type="button" onclick="groupDetail()" class="btn btn-default" value="그룹상세">
+						<button onclick="groupCalendar()" class="btn btn-default">그룹캘린더</button>
+						<button onclick="groupRelation()" class="btn btn-default">그룹관계도</button>
+						<button onclick="groupMemberList()" class="btn btn-default">회원리스트</button>
+						<c:if test="${result >0 }">
+							<button type="button" onclick="groupMemberInvite()" class="btn btn-default">회원초대하기</button>
+							<button type="button" onclick="inviteGroupMemberList()" class="btn btn-default">그룹에초대한멤버</button>
+						</c:if>
+						<button onclick="groupMemberOut()" class="btn btn-default">탈퇴하기</button>
+						<button onclick="groupMain()" class="btn btn-default">그룹메인으로</button>
+					</div>
+				</div>
+					<div class='col-sm-10'>
+						<div class="panel panel-default">
+							<div class="panel-body">
+							<div class="box-body">
+								</div><!-- /.box-body -->
+								<div id="calendardaily"></div>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

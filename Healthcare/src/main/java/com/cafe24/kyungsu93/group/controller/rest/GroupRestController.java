@@ -34,8 +34,6 @@ public class GroupRestController {
 		logger.debug("GroupRestController - groupCalendarList ajax 실행");
 		logger.debug("groupName:"+groupName);
 		Map<String,Object> map = groupInviteService.groupCalendarList(groupName);
-		logger.debug("groupCalendarMedication:"+map.get("groupCalendarMedication"));
-		logger.debug("groupCalendartreatment:"+map.get("groupCalendartreatment"));
 		Gson gson = new Gson();
 		String json = "";
 		json = gson.toJson(map);

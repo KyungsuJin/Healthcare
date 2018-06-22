@@ -63,7 +63,7 @@ public class ExerciseFeedbackResponseService {
 		logger.debug("ExerciseFeedbackResponseService - exerciseFeedResponse실행");	
 		ExerciseFeedbackRequest exerciseFeedbackRequest = exerciseFeedbackDao.exerciseFeedbackRequestDetail(exerciseFeedbackRequestNo);
 		Map<String,Object> returnMap = new HashMap<String,Object>();
-		String memberName = exerciseFeedbackRequest.getMemberName();
+		String memberName = "asdasd";
 		returnMap.put("memberName", memberName);
 		return returnMap;
 		

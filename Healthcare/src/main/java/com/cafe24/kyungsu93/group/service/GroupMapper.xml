@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cafe24.kyungsu93.group.service.GroupMapper">
-
+	<select id="memberGroupCreateCheckCount" parameterType="String" 
+			resultType="Integer">
+	SELECT
+		count(*)
+		FROM group_create
+	WHERE member_no = #{memberNo}
+	</select>
+	<select id="memberGroupCreateCheck" parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.Group">
+	SELECT
+		group_name as groupName
+		FROM group_create
+	WHERE member_no = #{memberNo}
+	</select>
+	<select id="groupNameSearch" parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.Group">
+		SELECT
+		 group_name as groupName
+		FROM group_create
+		WHERE group_no = #{groupNo}	
+	</select>
 	<select id="groupNoSearch" 
 			parameterType="String" 
 			resultType="com.cafe24.kyungsu93.group.service.Group">
@@ -103,7 +123,7 @@
 		FROM group_delete 
 		WHERE group_no = #{groupNo}
 	</delete>
-	 <delete id="deleteGroup"  parameterType="com.cafe24.kyungsu93.group.service.Group">
+	 <delete id="deleteGroup"  parameterType="String">
 		DELETE 
 		FROM group_create 
 		WHERE group_no = #{groupNo}

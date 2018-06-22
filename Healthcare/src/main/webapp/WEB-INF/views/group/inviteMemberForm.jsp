@@ -4,6 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>addGroup</title>
+<jsp:include page="../include/header.jsp"></jsp:include>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -69,20 +70,28 @@ function cancleBtn() {
 </script>
 </head>
 <body>
-<h1>InviteMemberForm</h1>
-	<form name="inviteForm" id="inviteForm" onsubmit="return check()" action="${pageContext.request.contextPath}/inviteMember" method="post">
-		<input type="hidden" name="groupNo" value="${groupTable.groupNo }">
-		그룹명 : ${groupTable.groupName } 그룹 종류 : ${groupTable.groupKindName}
-		<div>
-			초대하고자 하는  회원의 아이디를 검색해주세요.
-			<input type="text" id="memberId" name="memberId" >
-			<input type="button" value="아이디검색하기" onclick="checkmemberId()">
-			<span id="result"></span><br>
-			<span id="resultInfomation"></span><br>
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<h1>InviteMemberForm</h1>
+					<form name="inviteForm" id="inviteForm" onsubmit="return check()" action="${pageContext.request.contextPath}/inviteMember" method="post">
+						<input type="hidden" name="groupNo" value="${groupTable.groupNo }">
+						그룹명 : ${groupTable.groupName } 그룹 종류 : ${groupTable.groupKindName}
+						<div>
+							초대하고자 하는  회원의 아이디를 검색해주세요.
+							<input type="text" id="memberId" name="memberId" >
+							<input type="button" value="아이디검색하기" onclick="checkmemberId()">
+							<span id="result"></span><br>
+							<span id="resultInfomation"></span><br>
+						</div>
+						<input type="text" id="groupInviteMessage" name="groupInviteMessage" placeholder="초대메세지를 작성해주세요.">
+						<input type="submit" id="inviteBtn" value="초대하기">
+					</form>
+						<input type="button" onclick="cancleBtn()" value="돌아기기">
+			</div>
 		</div>
-		<input type="text" id="groupInviteMessage" name="groupInviteMessage" placeholder="초대메세지를 작성해주세요.">
-		<input type="submit" id="inviteBtn" value="초대하기">
-	</form>
-		<input type="button" onclick="cancleBtn()" value="돌아기기">
+	</div>
 </body>
 </html>

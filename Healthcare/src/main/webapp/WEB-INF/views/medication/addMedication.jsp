@@ -9,6 +9,7 @@
 	#medicationContent { height: 300px; }
 </style>
 <script>
+var memberNo = "member_1";
 	$(document).ready(function(){
 		$("#medicationBtn").click(function(){
 			$("p").hide();

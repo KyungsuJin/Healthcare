@@ -30,15 +30,15 @@ public class ExerciseFeedbackService {
 	 * @param pagePerRow
 	 * @return
 	 */
-	public Map<String,Object> exerciseFeedbackRequestListSearch(String keyOption, String keyword,int currentPage, int pagePerRow) {
+	public Map<String,Object> exerciseFeedbackRequestListSearch(String keyOption, String keyWord,int currentPage, int pagePerRow) {
 		logger.debug("ExerciseFeedbackService - exerciseFeedbackRequestListSearch 실행");
 		Map<String,Object> map = new HashMap<String,Object>();
 		int beginRow = (currentPage-1)*pagePerRow;
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
-		map.put("keyword", keyword);
+		map.put("keyWord", keyWord);
 		map.put("keyOption", keyOption);
-		logger.debug("가져온 데이터:"+keyword+","+keyOption);
+		logger.debug("가져온 데이터:"+keyWord+","+keyOption);
 		List<ExerciseFeedbackRequest> list = exerciseFeedbackDao.exerciseFeedbackRequestListSearch(map);
 		int total = list.size();
 		logger.debug("total:"+total);
@@ -82,7 +82,7 @@ public class ExerciseFeedbackService {
 		returnMap.put("firstBlockPage", firstBlockPage);
 		returnMap.put("lastBlockPage", lastBlockPage);
 		returnMap.put("totalBlock", totalBlock);
-		returnMap.put("keyword", keyword);
+		returnMap.put("keyword", keyWord);
 		returnMap.put("keyOption", keyOption);
 		returnMap.put("total", total);
 		return returnMap;
@@ -105,15 +105,15 @@ public class ExerciseFeedbackService {
 	 * @param pagePerRow
 	 * @return
 	 */
-	public Map<String,Object> exerciseFeedbackPtListSearch(String keyOption, String keyword,int currentPage, int pagePerRow) {
+	public Map<String,Object> exerciseFeedbackPtListSearch(String keyOption, String keyWord,int currentPage, int pagePerRow) {
 		logger.debug("ExerciseFeedbackService - exerciseFeedbackPtListSearch 실행");
 		Map<String,Object> map = new HashMap<String,Object>();
 		int beginRow = (currentPage-1)*pagePerRow;
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
-		map.put("keyword", keyword);
+		map.put("keyWord", keyWord);
 		map.put("keyOption", keyOption);
-		logger.debug("가져온 데이터:"+keyword+","+keyOption);
+		logger.debug("가져온 데이터:"+keyWord+","+keyOption);
 		List<ExerciseFeedbackRequest> list = exerciseFeedbackDao.exerciseFeedbackPtListSearch(map);
 		int total = list.size();
 		logger.debug("total:"+total);
@@ -157,7 +157,7 @@ public class ExerciseFeedbackService {
 		returnMap.put("firstBlockPage", firstBlockPage);
 		returnMap.put("lastBlockPage", lastBlockPage);
 		returnMap.put("totalBlock", totalBlock);
-		returnMap.put("keyword", keyword);
+		returnMap.put("keyWord", keyWord);
 		returnMap.put("keyOption", keyOption);
 		returnMap.put("total", total);
 		return returnMap;

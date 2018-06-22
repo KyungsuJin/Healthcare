@@ -4,6 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>modifyBloodPressure</title>
+<jsp:include page="../include/header.jsp"></jsp:include>
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
@@ -39,44 +40,22 @@ function check() {
 </script>
 </head>
 <body>
-	<h1>modifyBloodPressure</h1>
-	<div>
-		<table>
-			<tr>
-				<th>단계</th>
-				<td>수축기</td>
-				<td>이완기</td>
-			</tr>
-			<tr>
-				<th>정상 혈압</th>
-				<td>120mmHg 미만</td>
-				<td>80mmHg미만</td>
-			</tr>
-			<tr>
-				<th>고혈압 전(前)단계</th>
-				<td>120-139mmHg</td>
-				<td>80-89mmHg</td>
-			</tr>
-			<tr>
-				<th>1기 고혈압</th>	
-				<td>140-159mmHg</td>
-				<td>90-99mmHg</td>
-			</tr>
-			<tr>
-				<th>2기고혈압</th>	
-				<td>160mmHg 이상</td>
-				<td>100mmHg 이상</td>
-			<tr>
-		</table>
-		<p>혈압 설명 추가하기.</p>
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+			<h2>수정할 부분을 입력해주세요.</h2>
+				등록번호 : ${bloodPressure.bloodPressureNo }
+				등록일 : ${bloodPressure.bloodPressureDate }
+				<form id="bloodPressureForm" onsubmit="return check()" action="${pageContext.request.contextPath}/modifyBloodPressure" method="post">
+					<input type="hidden" name="bloodPressureNo" value="${bloodPressure.bloodPressureNo }">
+					수축기 : <input type="text" name="systolicPressure" placeholder="${bloodPressure.systolicPressure}">
+					이완기 : <input type="text" name="diastolicPressure" placeholder="${bloodPressure.diastolicPressure}">
+					<input type="submit" value="수정하기">
+				</form>
+ 			</div>
+		</div>
 	</div>
-		등록번호 : ${bloodPressure.bloodPressureNo }
-		등록일 : ${bloodPressure.bloodPressureDate }
-		<form id="bloodPressureForm" onsubmit="return check()" action="${pageContext.request.contextPath}/modifyBloodPressure" method="post">
-			<input type="hidden" name="bloodPressureNo" value="${bloodPressure.bloodPressureNo }">
-			수축기 : <input type="text" name="systolicPressure" placeholder="${bloodPressure.systolicPressure}">
-			이완기 : <input type="text" name="diastolicPressure" placeholder="${bloodPressure.diastolicPressure}">
-			<input type="submit" value="수정하기">
-		</form>
 </body>
 </html>

@@ -15,7 +15,66 @@ public class GroupInviteDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.group.service.GroupInviteMapper.";
-
+	
+	//그룹 회원 설문조사 리스트(그룹메인)
+	public List<GroupCalendar> addHistoryHealthSurvey(String groupName) {
+		logger.debug("GroupInviteDao - addHistoryHealthSurvey 실행");
+		return sqlSession.selectList(NS+"addHistoryHealthSurvey",groupName);
+	}
+	
+	//그룹 회원 건강검진 리스트(그룹메인)
+	public List<GroupCalendar> addHistoryHealthScreen(String groupName) {
+		logger.debug("GroupInviteDao - addHistoryHealthScreen 실행");
+		return sqlSession.selectList(NS+"addHistoryHealthScreen",groupName);
+	}
+	
+	//그룹 회원 복약일정 리스트(그룹메인)
+	public List<GroupCalendar> addHistoryMedication(String groupName) {
+		logger.debug("GroupInviteDao - addHistoryMedication 실행");
+		return sqlSession.selectList(NS+"addHistoryMedication",groupName);
+	}
+	
+	//그룹 회원 진료일정 리스트(그룹메인)
+	public List<GroupCalendar> addHistorytreatment(String groupName) {
+		logger.debug("GroupInviteDao - addHistorytreatment 실행");
+		return sqlSession.selectList(NS+"addHistorytreatment",groupName);
+	}
+	
+	//그룹디테일
+	public GroupInvite detailGroupMainNameNo(String groupName) {
+		logger.debug("GroupInviteDao - detailGroupMainNameNo 실행");
+		return sqlSession.selectOne(NS+"detailGroupMainNameNo",groupName);
+	}
+	
+	//가입된 그룹 체크 카운트
+	public int memberGroupJoinCheckCount(String memberNo) {
+		logger.debug("GroupInviteDao - memberGroupJoinCheckCount 실행");
+		return sqlSession.selectOne(NS+"memberGroupJoinCheckCount",memberNo);
+	}
+	
+	//가입된 그룹 체크
+	public List<GroupInvite> memberGroupJoinCheck(String memberNo) {
+		logger.debug("GroupInviteDao - memberGroupJoinCheck 실행");
+		return sqlSession.selectList(NS+"memberGroupJoinCheck",memberNo);
+	}
+	
+	//그룹 회원 삭제
+	public int deleteGroupMemberAll(String groupName) {
+		logger.debug("GroupInviteDao - deleteGroupMemberAll 실행");
+		return sqlSession.delete(NS+"deleteGroupMember", groupName);
+	}
+	//그룹 회원 설문조사 리스트
+	public List<GroupCalendar> groupCalendarHealthSurvey(String groupName) {
+		logger.debug("GroupInviteDao - groupCalendarHealthSurvey 실행");
+		return sqlSession.selectList(NS+"groupCalendarHealthSurvey",groupName);
+	}
+	
+	//그룹 회원 건강검진 리스트
+	public List<GroupCalendar> groupCalendarHealthScreen(String groupName) {
+		logger.debug("GroupInviteDao - groupCalendarHealthScreen 실행");
+		return sqlSession.selectList(NS+"groupCalendarHealthScreen",groupName);
+	}
+	
 	//그룹 회원 복약일정 리스트
 	public List<GroupCalendar> groupCalendarMedication(String groupName) {
 		logger.debug("GroupInviteDao - groupCalendarMedication 실행");

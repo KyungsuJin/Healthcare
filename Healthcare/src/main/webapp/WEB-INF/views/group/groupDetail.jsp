@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>groupDetail</title>
+<jsp:include page="../include/header.jsp"></jsp:include>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -44,52 +45,60 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<h1>그룹 상세보기</h1>
-<input type="hidden" id="groupNo" value="${map.groupDetail.groupNo}">
-<input type="hidden" id="groupName" value="${map.groupDetail.groupName}">
-	<table>
-		<tr>
-			<td>그룹명</td>
-			<td>${map.groupDetail.groupName }</td>
-		<tr>
-		<tr>
-			<td>그룹종류</td>
-			<td>${map.groupDetail.groupKindName }</td>
-		<tr>
-		<tr>
-			<td>그룹장</td>
-			<td>${map.groupDetail.memberName }</td>
-		<tr>
-		<tr>
-			<td>그룹설명</td>
-			<td>${map.groupDetail.groupInfo }</td>
-		<tr>
-		<tr>
-			<td>생성일</td>
-			<td>${map.groupDetail.groupCreateDate }</td>
-		</tr>
-	</table>
-	<div>
-		<input type="button" onclick="deleteBtn()" value="그룹삭제">
-		<input type="button" onclick="modifyBtn()" value="그룹수정하기">
-	</div>
-	<div>
-		<a href="${pageContext.request.contextPath}/groupMembersList?groupName=${map.groupDetail.groupName }">회원리스트</a>
-		<a href="${pageContext.request.contextPath}/groupMemberRelation?groupName=${map.groupDetail.groupName }">그룹관계도</a>
-	</div>
-	<div>
-		<c:if test="${map.countNext > 0 }">
-			<p>다음글 : <a type="button" href="${pageContext.request.contextPath}/groupDetail?groupNo=${map.nextGroup.groupNo}">${map.nextGroup.groupName }</a></p>
-		</c:if>
-		<c:if test="${map.countNext eq 0 }">
-			<p>다음글이 없습니다.</p>
-		</c:if>
-		<c:if test="${map.countPrev > 0 }">
-			<p>이전글 : <a type="button" href="${pageContext.request.contextPath}/groupDetail?groupNo=${map.prevGroup.groupNo}">${map.prevGroup.groupName }</a></p>
-		</c:if>
-		<c:if test="${map.countPrev eq 0 }">
-			<p>이전글이 없습니다.</p>
-		</c:if>
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<h1>그룹 상세보기</h1>
+				<input type="hidden" id="groupNo" value="${map.groupDetail.groupNo}">
+				<input type="hidden" id="groupName" value="${map.groupDetail.groupName}">
+					<table>
+						<tr>
+							<td>그룹명</td>
+							<td>${map.groupDetail.groupName }</td>
+						<tr>
+						<tr>
+							<td>그룹종류</td>
+							<td>${map.groupDetail.groupKindName }</td>
+						<tr>
+						<tr>
+							<td>그룹장</td>
+							<td>${map.groupDetail.memberName }</td>
+						<tr>
+						<tr>
+							<td>그룹설명</td>
+							<td>${map.groupDetail.groupInfo }</td>
+						<tr>
+						<tr>
+							<td>생성일</td>
+							<td>${map.groupDetail.groupCreateDate }</td>
+						</tr>
+					</table>
+					<div id="groupModify">
+						<input type="button" onclick="deleteBtn()" value="그룹삭제">
+						<input type="button" onclick="modifyBtn()" value="그룹수정하기">
+					</div>
+					<div>
+						<a href="${pageContext.request.contextPath}/groupMembersList?groupName=${map.groupDetail.groupName }">회원리스트</a>
+						<a href="${pageContext.request.contextPath}/groupMemberRelation?groupName=${map.groupDetail.groupName }">그룹관계도</a>
+					</div>
+					<div>
+						<c:if test="${map.countNext > 0 }">
+							<p>다음글 : <a type="button" href="${pageContext.request.contextPath}/groupDetail?groupNo=${map.nextGroup.groupNo}">${map.nextGroup.groupName }</a></p>
+						</c:if>
+						<c:if test="${map.countNext eq 0 }">
+							<p>다음글이 없습니다.</p>
+						</c:if>
+						<c:if test="${map.countPrev > 0 }">
+							<p>이전글 : <a type="button" href="${pageContext.request.contextPath}/groupDetail?groupNo=${map.prevGroup.groupNo}">${map.prevGroup.groupName }</a></p>
+						</c:if>
+						<c:if test="${map.countPrev eq 0 }">
+							<p>이전글이 없습니다.</p>
+						</c:if>
+					</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
