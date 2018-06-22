@@ -4,5 +4,181 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.cafe24.kyungsu93.doctorfeedback.service.DoctorFeedbackMapper">
-
+	<select id="selectForInsertFeedbackApproval"
+			parameterType="String"
+			resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			doctor_feedback_approval
+		WHERE
+			doctor_feedback_request_no = #{doctorFeedbackRequestNo}
+	</select>
+	<select id="selectDoctorFeedbackResultNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(cast(SUBSTRING(doctor_feedback_result_no,24) as decimal)), 0)
+		FROM
+			doctor_feedback_result
+	</select>
+	<insert id="insertDoctorFeedbackResult"
+			parameterType="com.cafe24.kyungsu93.doctorfeedback.service.DoctorFeedbackResult">
+		INSERT doctor_feedback_result(
+			doctor_feedback_result_no
+			,doctor_feedback_result_title
+			,doctor_feedback_result_content
+			,doctor_feedback_result_date
+		)VALUES(
+			#{doctorFeedbackResultNo}
+			,#{doctorFeedbackResultTitle}
+			,#{doctorFeedbackResultContent}
+			,now()
+		)	
+	</insert>
+	<insert id="insertDoctorFeedbackApproval"
+			parameterType="com.cafe24.kyungsu93.doctorfeedback.service.DoctorFeedbackApproval">
+		INSERT doctor_feedback_approval(
+			doctor_feedback_request_no
+			,doctor_feedback_approval
+			,doctor_feedback_approval_date
+		)VALUES(
+			#{doctorFeedbackRequestNo}
+			,#{doctorFeedbackApproval}
+			,now()
+		)
+		
+	</insert>
+	<select id="selectGetMemberDiseaseListForFeedback"
+			parameterType="String"
+			resultType="com.cafe24.kyungsu93.disease.service.MyDiseaseDetail">
+		SELECT
+			a.my_disease_detail_no as myDiseaseDetailNo
+			,a.disease_sub_category_no as diseaseSubCategory
+			,d.disease_no as diseaseNo
+			,c.family_history as familyHistory
+			,c.disease_sub_category_name as diseaseSubCategoryName
+			,d.disease_name as diseaseName
+		FROM
+			my_disease_detail a, my_disease b, disease_sub_category c, disease d
+		WHERE
+			a.my_disease_no=b.my_disease_no 
+			and a.disease_sub_category_no=c.disease_sub_category_no 
+			and c.disease_no = d.disease_no
+			and b.member_no = #{memberNo}
+	</select>
+	<select id="selectGetDoctorFeedbackRequestedDetail"
+			parameterType="String"
+			resultType="com.cafe24.kyungsu93.doctorfeedback.service.DoctorFeedbackRequest">
+		SELECT
+			a.doctor_feedback_request_no as doctorFeedbackRequestNo
+			,a.member_no as memberNo
+			,a.doctor_no as doctorNo
+			,a.disease_no as diseaseNo
+			,b.disease_name as diseaseName
+			,a.doctor_feedback_request_title as doctorFeedbackRequestTitle
+			,a.doctor_feedback_request_content as doctorFeedbackRequestContent
+			,a.doctor_feedback_request_date as doctorFeedbackRequestDate
+		FROM
+			doctor_feedback_request a, disease b
+		WHERE
+			doctor_feedback_request_no = #{doctorFeedbackRequestNo}
+			AND a.disease_no = b.disease_no
+	</select>
+		
+	<select id="selectGetDoctorFeedbackRequestedList"
+			parameterType="String"
+			resultType="com.cafe24.kyungsu93.doctorfeedback.service.DoctorFeedbackRequest">
+		SELECT
+			doctor_feedback_request_no as doctorFeedbackRequestNo
+			,member_no as memberNo
+			,doctor_no as doctorNo
+			,disease_no as diseaseNo
+			,doctor_feedback_request_title as doctorFeedbackRequestTitle
+			,doctor_feedback_request_content as doctorFeedbackRequestContent
+			,doctor_feedback_request_date as doctorFeedbackRequestDate
+		FROM
+			doctor_feedback_request
+		WHERE
+			doctor_no = #{dotorNo}
+	</select>
+	<delete id="deleteDoctorFeedbackRequest"
+			parameterType="String">
+		DELETE
+		FROM
+			doctor_feedback_request
+		WHERE
+			doctor_feedback_request_no = #{doctorFeedbackRequestNo}
+	
+	</delete>
+	<select id="selectGetDiseaseList"
+			resultType="com.cafe24.kyungsu93.disease.service.Disease">
+		SELECT
+			disease_no as diseaseNo
+			,disease_name as diseaseName
+		FROM
+			disease
+	</select>
+	<select id="selectGetDoctorFeedbackRequestList"
+			parameterType="String"
+			resultType="com.cafe24.kyungsu93.doctorfeedback.service.DoctorFeedbackRequest">
+		SELECT
+			doctor_feedback_request_no as doctorFeedbackRequestNo
+			,member_no as memberNo
+			,doctor_no as doctorNo
+			,disease_no as diseaseNo
+			,doctor_feedback_request_title as doctorFeedbackRequestTitle
+			,doctor_feedback_request_content as doctorFeedbackRequestContent
+			,doctor_feedback_request_date as doctorFeedbackRequestDate
+		FROM
+			doctor_feedback_request
+		WHERE
+			member_no = #{memberNo}
+	
+	</select>
+	<insert id="insertDoctorFeedbackRequest"
+			parameterType="com.cafe24.kyungsu93.doctorfeedback.service.DoctorFeedbackRequest">
+		INSERT INTO doctor_feedback_request(
+			doctor_feedback_request_no
+			,member_no
+			,doctor_no
+			,disease_no
+			,doctor_feedback_request_title
+			,doctor_feedback_request_content
+			,doctor_feedback_request_date
+		)
+		VALUES(
+			#{doctorFeedBackRequestNo}
+			,#{memberNo}
+			,#{doctorNo}
+			,#{diseaseNo}
+			,#{doctorFeedbackRequestTitle}
+			,#{doctorFeedbackRequestContent}
+			,now()
+		)	
+	</insert>
+	<select id="selectDoctorFeedbackRequestNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(cast(SUBSTRING(doctor_feedback_request_no,25) as decimal)), 0)
+		FROM
+			doctor_feedback_request
+	</select>
+	<select id="selectGetDoctorList" 
+			resultType="com.cafe24.kyungsu93.doctorfeedback.service.DoctorMember">
+		SELECT
+			a.member_no as memberNo
+			,b.member_name as memberName
+			,a.member_hospital_name as memberHospitalName
+			,a.treatment_department as treatment_department
+			,a.member_total_feedback as memberTotalFeedback
+			,a.member_agree_feedback as memberAgreeFeedback
+			,a.member_join_approval as memberJoinApproval
+			,a.evaluation_average_grade as evaluationAverageGrade
+			,a.feedback_availablilty as feedbackAvailablilty
+			,a.member_approval_date as memberApprovalDate
+		FROM
+			member_doctor a, member b
+		WHERE
+			a.member_no = b.member_no
+			AND member_join_approval = 'T' 
+			AND feedback_availablilty = 'T'
+	</select>
 </mapper>

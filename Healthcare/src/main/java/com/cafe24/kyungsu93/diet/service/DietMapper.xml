@@ -4,6 +4,89 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cafe24.kyungsu93.diet.service.DietMapper">
+	<update id="updateCalorieBattle" 
+			parameterType="com.cafe24.kyungsu93.diet.service.CalorieBattle">
+		UPDATE calorie_battle 
+		SET
+			consume_calorie = #{consumeCalorie}
+			,ingest_calorie = #{ingestCalorie}
+			,oneday_calorie = #{oneDayCalorie}
+			,carbohydrate = #{carbohydrate}
+			,protein = #{protein}
+			,fat = #{fat}
+			,sugar = #{sugar}
+			,natrium = #{natrium}
+			,cholesterol = #{cholesterol}
+			,sfa = #{sfa}
+			,calorie_battle_date = now()
+		
+		WHERE
+			member_no = #{memberNo}
+	
+	</update>
+	<select id="selectCalorieBattleNoCount" 
+			resultType="Integer">
+		SELECT
+			count(*) as cnt
+		FROM
+			calorie_battle
+		WHERE
+			member_no = #{memberNo}
+			and calorie_battle_no LIKE CONCAT('%',#{today},'%')
+	</select>
+	<select id="selectCalorieBattleNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(cast(SUBSTRING(calorie_battle_no,27) as decimal)), 0)
+		FROM
+			calorie_battle
+	</select>	
+	<insert id="insertCalorieBattle" 
+			parameterType="com.cafe24.kyungsu93.diet.service.CalorieBattle">
+		INSERT INTO calorie_battle(
+			calorie_battle_no
+			,member_no
+			,consume_calorie
+			,ingest_calorie
+			,oneday_calorie
+			,carbohydrate
+			,protein
+			,fat
+			,sugar
+			,natrium
+			,cholesterol
+			,sfa
+			,calorie_battle_date
+		)
+		VALUES(
+			#{calorieBattleNo}
+			,#{memberNo}
+			,#{consumeCalorie}
+			,#{ingestCalorie}
+			,#{oneDayCalorie}
+			,#{carbohydrate}
+			,#{protein}
+			,#{fat}
+			,#{sugar}
+			,#{natrium}
+			,#{cholesterol}
+			,#{sfa}			
+			,now()
+		)	
+	</insert>
+	<select id="selectIngestForBattle"
+			parameterType="string"
+			resultType="com.cafe24.kyungsu93.diet.service.TotalConsumeResponse">				
+		SELECT
+			ingest_calorie_no as ingestCalorieNo
+			,member_no as memberNo
+			,food_no as foodNo
+			,ingest_weight as IngestWeight
+			,ingest_calorie_date as ingestCalorieDate
+		FROM
+			ingest_calorie
+		WHERE
+			member_no = #{memberNo}
+	</select>
 	<delete id="deleteConsumeCalorie"
 			parameterType="String">
 		DELETE

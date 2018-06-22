@@ -1,5 +1,7 @@
 package com.cafe24.kyungsu93.diet.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +26,92 @@ public class DietService {
 	@Autowired
 	HttpSession session;
 	
+
+	
 	private static final Logger logger = LoggerFactory.getLogger(DietService.class);
 	
+	public int addCalorieBattle(String memberNo) {
+		Date date = new Date();
+
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy");
+		String year = transFormat.format(date);
+		transFormat = new SimpleDateFormat("MM");
+		String month = transFormat.format(date);
+		transFormat = new SimpleDateFormat("dd");
+		String day = transFormat.format(date);
+		String today = year+"_" + month + "_" + day;
+		System.out.println("today : " + today);
+
+		Map<String, String> map = new HashMap<String, String>();
+		dietDao.getIngestCalorieForBattle(memberNo);
+		System.out.println(year);
+		System.out.println(month);
+		System.out.println(date);
+		map.put("memberNo", memberNo);
+		map.put("pickMonth", month);
+		map.put("pickDay", day);
+		map.put("pickYear", year);
+		map.put("today", today);
+		
+		CalorieBattle calorieBattle = new CalorieBattle();
+
+		//토탈 칼로리를 구한다.
+		List<TotalCalorieResponse> listIngest = dietDao.totalCalorie(map);
+		//토탈 소모칼로리를 구한다.
+		List<TotalConsumeResponse> listConsume = dietDao.totalConsume(map);
+		calorieBattle.setMemberNo(memberNo);
+		double kcal = 0;
+		double carbohydrate = 0;
+		double protein = 0;
+		double fat = 0;
+		double sugar = 0;
+		double natrium = 0;
+		double Cholesterol = 0;
+		double sfa = 0;
+		int ingestWeight = 0;
+		int consumeCalorie = 0;
+		int consumeTime = 0;
+		for(int i=0; i<listConsume.size(); i++) {
+			consumeTime = listConsume.get(i).getConsumeTime();
+			consumeCalorie += listConsume.get(i).getTotalExerciseCalorie()*consumeTime;
+		}
+		for(int i=0; i<listIngest.size(); i++) {
+			ingestWeight = listIngest.get(i).getIngestWeight();
+			kcal += (listIngest.get(i).getTotalKcal()*ingestWeight);
+			carbohydrate += (listIngest.get(i).getTotalCarbohydrate()*ingestWeight);
+			protein += (listIngest.get(i).getTotalProtein()*ingestWeight);
+			fat += (listIngest.get(i).getTotalFat()*ingestWeight);
+			sugar +=(listIngest.get(i).getTotalSugar()*ingestWeight);
+			natrium += (listIngest.get(i).getTotalNatrium()*ingestWeight);
+			Cholesterol += (listIngest.get(i).getTotalCholesterol()*ingestWeight);
+			sfa += (listIngest.get(i).getTotalSfa()*ingestWeight);
+		}
+		calorieBattle.setIngestCalorie(Math.round((kcal)*100)/100.0);
+		calorieBattle.setOneDayCalorie(Math.round((kcal - consumeCalorie)*100)/100.0);
+		calorieBattle.setCarbohydrate(Math.round((carbohydrate)*100)/100.0);
+		calorieBattle.setProtein(Math.round((protein)*100)/100.0);
+		calorieBattle.setFat(Math.round((fat)*100)/100.0);
+		calorieBattle.setSugar(Math.round((sugar)*100)/100.0);
+		calorieBattle.setNatrium(Math.round((natrium)*100)/100.0);
+		calorieBattle.setCholesterol(Math.round((Cholesterol)*100)/100.0);
+		calorieBattle.setSfa(Math.round((sfa)*100)/100.0);
+		calorieBattle.setConsumeCalorie((Math.round((consumeCalorie)*100)/100.0));
+		
+		System.out.println("시발 왜안되"+calorieBattle.toString());
+		
+		int cnt= dietDao.selectCalorieBattleNoCount(map);
+		System.out.println("cnt : " + cnt);
+		if(cnt == 0) {
+			int result = dietDao.selectCalorieBattleNo()+1;
+			String temp = "2018_06_19_calorie_battle_";
+			String calorieBattleNo = temp+result;
+			calorieBattle.setCalorieBattleNo(calorieBattleNo);
+			dietDao.addCalorieBattle(calorieBattle);
+		}
+		dietDao.updateCalorieBattle(calorieBattle);
+		
+		return 1;
+	}
 	public int removeConsumeCalorie(String consumeCalorieNo, String memberNo) {
 		logger.debug("DietService_removeConsumeCalorie");
 		return dietDao.removeConsumeCalorie(consumeCalorieNo);
@@ -71,8 +157,10 @@ public class DietService {
 	}
 	public int addConsumeCalorie(ConsumeCalorieRequest consumecalorieRequest) {
 		logger.debug("DietService_addConsumeCalorie");
+		String memberNo = consumecalorieRequest.getMemberNo();
 		ConsumeCalorie consumeCalorie = new ConsumeCalorie();
 		consumeCalorie.setMemberNo(consumecalorieRequest.getMemberNo());
+		
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!"+ consumecalorieRequest.getExerciseNo().size());
 		int addConsumeCalroie=0;
 		for(int i=0; i<consumecalorieRequest.getExerciseNo().size(); i++) {
@@ -88,6 +176,8 @@ public class DietService {
 			
 			addConsumeCalroie = dietDao.addConsumeCalorie(consumeCalorie);
 		}
+		addCalorieBattle(memberNo);
+		
 		return addConsumeCalroie;
 	}
 	public TotalCalorieResponse totalCalorie(String memberNo, String datePicker) {
@@ -156,6 +246,7 @@ public class DietService {
 	}
 	public int addIngestCalorie(IngestCalorieRequest ingestCalorieRequest) {
 		logger.debug("DietService_ingestCalorie");
+		String memberNo = ingestCalorieRequest.getMemberNo();
 		IngestCalorie ingestCalorie = new IngestCalorie();
 		ingestCalorie.setIngestCalorieNo(ingestCalorieRequest.getIngestCalorieNo());
 		ingestCalorie.setMemberNo(ingestCalorieRequest.getMemberNo());
@@ -172,6 +263,8 @@ public class DietService {
 			
 			addIngestCalorie = dietDao.addIngestCalorie(ingestCalorie);
 		}
+		addCalorieBattle(memberNo);
+		
 		return addIngestCalorie;
 	}
 	public List<Food> selectFoodSearch(String sv) {
