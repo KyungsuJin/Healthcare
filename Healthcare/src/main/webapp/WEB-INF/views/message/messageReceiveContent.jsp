@@ -9,16 +9,19 @@
 		$("#searchDiv").hide();
 		//메시지 쓰기 새창
 		$("#messageWrite").click(function(){
+			$("#memberReceiveIdChange").val("");
 				window.open("${pageContext.request.contextPath}/message"
 						,"messageWrite","width=850, height=700,resizable=no,scrollbars=yes");
 		});
-		//메시지 쓰기 새창
+		//메시지 답장
 		$("#replyMessage").click(function(){
-				window.open("${pageContext.request.contextPath}/message"
-						,"messageWrite","width=850, height=700,resizable=no,scrollbars=yes");
-				
+			$("#memberReceiveIdChange").val($("#memberReceiveId").val());
+			window.open("${pageContext.request.contextPath}/message"
+						,"replyMessageWrite","width=850, height=700,resizable=no,scrollbars=yes");
+			
 		});
 		//메시지 받은 리스트
+		
 		$("#messageReceive").click(function(){
 			$("#searchDiv").show();
 			console.log($("#memberReceiveNo").val());
@@ -256,7 +259,8 @@
 					<input type="hidden" id="receiveCurrentPage">
 					<input type="hidden" id="sendCurrentPage">
 					<input type="hidden" id="sendMessageNo" name="sendMessageNo" value="${message.sendMessageNo}">
-					<input type="hidden" id="memberReceiveId"  value="${message.sendMessageId}">
+					<input type="hidden" id="memberReceiveId" name="memberReceiveId" value="${message.sendMessageId}" >
+					<input type="hidden" id="memberReceiveIdChange" name="memberReceiveIdChange">
 					<div id="deletBtn" style="margin-right:5px;float:left;"></div>
 					<div>
 						<button type="button" id="messageWrite" class="btn btn-primary">메시지 작성</button>

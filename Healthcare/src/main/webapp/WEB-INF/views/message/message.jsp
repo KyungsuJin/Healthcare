@@ -6,6 +6,7 @@
 	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
+			$("#memberReceiveId").val(window.opener.document.all.memberReceiveIdChange.value);
 			$("#memberReceiveId").focus();
 			
 			/*메시지 전송시 아이디존재유무 파악  */
@@ -60,7 +61,7 @@
 		 	<h4 class="title">메시지 쓰기</h4>
 		 </div>
 		 <div class="card-content">
-		 	<form method="post" id="messageForm">
+		 	<form method="post" id="messageForm" name="messageForm">
 				<input type="hidden" name="memberSendNo" value="${sessionScope.memberSessionNo}">
 				<input type="hidden" name="memberReceiveNo">
 				<div class="row">
@@ -73,7 +74,8 @@
 						</div>
 						<div class="form-group" id="idChk">
 						 	<label class="control-label">수신인</label>
-						 	<input class="form-control" type="text" id="memberReceiveId" >
+						 	<input class="form-control" type="text" id="memberReceiveId" name="memberReceiveId">
+						 	
 						</div>
 						<div class="form-group">
 						 	<label class="control-label">제목 </label>

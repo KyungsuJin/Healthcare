@@ -30,7 +30,10 @@
 								<td>${member.memberFile.memberFileRealName}</td>
 							</tr>
 							<tr>
-								<td colspan="4"><img src="${path}${member.memberFile.memberFileName }.${member.memberFile.memberFileExt}"/></td>
+								<td colspan="4"><div style="text-align:center;">첨부파일</div></td>
+							</tr>
+							<tr>
+								<td colspan="4"><div style="text-align:center;"><img src="img/${member.memberFile.memberFileName }.${member.memberFile.memberFileExt}"/></div></td>
 							<tr>
 						</tbody>
 					</table>
@@ -51,7 +54,10 @@
 								<td>${member.memberFile.memberFileRealName}</td>
 							</tr>
 							<tr>
-								<td colspan="4"><img src="${path}${member.memberFile.memberFileName }.${member.memberFile.memberFileExt}"></td>
+								<td colspan="4"><div style="text-align:center;">첨부파일</div></td>
+							</tr>
+							<tr>
+								<td colspan="4"><div style="text-align:center;"><img  class="col-xs-12" src="${path}${member.memberFile.memberFileName }.${member.memberFile.memberFileExt}"></div></td>
 							<tr>
 						</tbody>
 					</table>
