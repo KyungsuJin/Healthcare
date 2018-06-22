@@ -12,7 +12,7 @@ import com.cafe24.kyungsu93.helper.service.ComplainRequest;
 public class HelperController {
 	private static final Logger logger = LoggerFactory.getLogger(HelperController.class);
 	
-	@RequestMapping(value="/addComplain", method=RequestMethod.POST)
+/*	@RequestMapping(value="/addComplain", method=RequestMethod.POST)
 	public String addComplain(ComplainRequest complainRequest) {
 		logger.debug("HelperController_addComplain_POST");
 		return "";		
@@ -21,5 +21,5 @@ public class HelperController {
 	public String addComplain() {
 		logger.debug("HelperController_addComplain_GET");
 		return "helper/addComplain";		
-	}
+	}*/
 }

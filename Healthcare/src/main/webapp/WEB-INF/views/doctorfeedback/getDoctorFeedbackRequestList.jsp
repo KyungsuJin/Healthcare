@@ -12,7 +12,6 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-
 	<title>Insert title here</title>
 </head>
 <body>
@@ -30,7 +29,7 @@
 		</thead>
 		<tbody>
 			<c:forEach var="doctorFeedbackRequest" items="${list}" varStatus="status">
-				<tr onclick="location.href='${pageContext.request.contextPath}/getDoctorFeedbackRequestDetail'" style="cursor:pointer;">
+				<tr style="cursor:pointer;" onclick="location.href='${pageContext.request.contextPath}/getDoctorFeedbackRequestDetail?doctorFeedbackRequestNo=${doctorFeedbackRequest.doctorFeedbackRequestNo}'">
 					<td>${status.count}</td>
 					<td>${doctorFeedbackRequest.doctorFeedbackRequestTitle}</td>
 					<td>${doctorFeedbackRequest.memberNo}</td>

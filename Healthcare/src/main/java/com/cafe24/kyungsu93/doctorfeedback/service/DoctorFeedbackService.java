@@ -21,6 +21,14 @@ public class DoctorFeedbackService {
 	@Autowired
 	HttpSession session;
 
+	public DoctorFeedbackRequest getDoctorFeedbackRequestDetail(String doctorFeedbackRequestNo) {
+		logger.debug("DoctorFeedbackService_getDoctorFeedbackRequestDetail");
+		return doctorFeedbackDao.getDoctorFeedbackRequestDetail(doctorFeedbackRequestNo);
+	}
+	public List<DoctorFeedbackResult> getDoctorFeedbackResultList() {
+		logger.debug("DoctorFeedbackService_getDoctorFeedbackResultList");
+		return doctorFeedbackDao.getDoctorFeedbackResultList();
+	}
 	public String selectForInsertFeedbackApproval(String doctorFeedbackRequestNo) {
 		logger.debug("DoctorFeedbackService_doctorFeedbackRequestNo");
 		//F는 등록 안되게 T는 등록할수잇는
@@ -35,7 +43,6 @@ public class DoctorFeedbackService {
 		DoctorFeedbackApproval doctorFeedbackApproval = new DoctorFeedbackApproval();
 		doctorFeedbackApproval.setDoctorFeedbackRequestNo(doctorFeedbackRequestNo);
 		doctorFeedbackApproval.setDoctorFeedbackApproval(approval);
-		System.out.println("시발!!!!!!!"+doctorFeedbackApproval.getDoctorFeedbackApproval());
 		return doctorFeedbackDao.addDoctorFeedbackApproval(doctorFeedbackApproval);
 	}
 	public List<MyDiseaseDetail> getMemberDiseaseListForFeedback(String memberNo) {
@@ -44,15 +51,14 @@ public class DoctorFeedbackService {
 	}
 	public int addDoctorFeedbackResult(DoctorFeedbackResult doctorFeedbackResult) {
 		logger.debug("DoctorFeedbackService_addDoctorFeedbackResult");
-		
-		int result =(doctorFeedbackDao.selectDoctorFeedbackResultNo())+1;
-		logger.debug("DoctorFeedbackService_selectDoctorFeedbackResultNo", result);
-		String temp = "doctor_feedback_result_";
-		String doctorFeedbackResultNo = temp+result;
-		doctorFeedbackResult.setDoctorFeedbackResultNo(doctorFeedbackResultNo);
-		
+		//의사피드백결과를 db에 저장후
 		doctorFeedbackDao.addDoctorFeedbackResult(doctorFeedbackResult);
-		return 1;
+		//의사가 피드백을 완료햇으면 doctorFeedbackApproval테이블의 doctorFeedbackResult를 T로 바꾼다.
+		DoctorFeedbackApproval doctorFeedbackApproval = new DoctorFeedbackApproval();
+		doctorFeedbackApproval.setDoctorFeedbackResult("T");
+		doctorFeedbackApproval.setDoctorFeedbackRequestNo(doctorFeedbackResult.getDoctorFeedbackRequestNo());
+		
+		return doctorFeedbackDao.updateDoctorFeedbackApproval(doctorFeedbackApproval);
 	}
 	public DoctorFeedbackRequest getDoctorFeedbackRequestedDetail(String doctorFeedbackRequestNo) {
 		logger.debug("DoctorFeedbackService_getDoctorFeedbackRequestedDetail");

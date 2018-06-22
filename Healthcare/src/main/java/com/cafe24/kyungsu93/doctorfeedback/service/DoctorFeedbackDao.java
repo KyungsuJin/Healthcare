@@ -17,15 +17,24 @@ public class DoctorFeedbackDao {
 	@Autowired SqlSessionTemplate sqlSession;
 	String NS = "com.cafe24.kyungsu93.doctorfeedback.service.DoctorFeedbackMapper.";
 	
+	public DoctorFeedbackRequest getDoctorFeedbackRequestDetail(String doctorFeedbackRequestNo) {
+		logger.debug("DoctorFeedbackDao_getDoctorFeedbackRequestDetail");
+		return sqlSession.selectOne(NS+"selectDoctorFeedbackRequestDetail",doctorFeedbackRequestNo);
+	}
+	//의사피드백완료후 doctor_feedback_approval테이블의 승인완료여부를 T로 수정
+	public int updateDoctorFeedbackApproval(DoctorFeedbackApproval doctorFeedbackApproval) {
+		logger.debug("DoctorFeedbackDao_updateDoctorFeedbackApproval");
+		return sqlSession.update(NS+"updateDoctorFeedbackApproval",doctorFeedbackApproval);
+	}
+	//의사피드백결과 리스트
+	public List<DoctorFeedbackResult> getDoctorFeedbackResultList() {
+		logger.debug("DoctorFeedbackDao_getDoctorFeedbackResultList");
+		return sqlSession.selectList(NS+"selectGetDoctorFeedbackResultList");
+	}
 	//d
 	public int selectForInsertFeedbackApproval(String doctorFeedbackRequestNo) {
 		logger.debug("DoctorFeedbackDao_selectForInsertFeedbackApproval");
 		return sqlSession.selectOne(NS+"selectForInsertFeedbackApproval", doctorFeedbackRequestNo);
-	}
-	//의사피드백결과 pk를 구하기위한 select
-	public int selectDoctorFeedbackResultNo() {
-		logger.debug("DoctorFeedbackDao_selectDoctorFeedbackResultNo");
-		return sqlSession.selectOne(NS+"selectDoctorFeedbackResultNo");
 	}
 	//의사피드백결과를 추가해 준다.
 	public int addDoctorFeedbackResult(DoctorFeedbackResult doctorFeedbackResult) {

@@ -1,15 +1,15 @@
 package com.cafe24.kyungsu93.doctorfeedback.service;
 
 public class DoctorFeedbackResult {
-	private String doctorFeedbackResultNo;
+	private String doctorFeedbackRequestNo;
 	private String doctorFeedbackResultTitle;
 	private String doctorFeedbackResultContent;
 	private String doctorFeedbackResultDate;
-	public String getDoctorFeedbackResultNo() {
-		return doctorFeedbackResultNo;
+	public String getDoctorFeedbackRequestNo() {
+		return doctorFeedbackRequestNo;
 	}
-	public void setDoctorFeedbackResultNo(String doctorFeedbackResultNo) {
-		this.doctorFeedbackResultNo = doctorFeedbackResultNo;
+	public void setDoctorFeedbackRequestNo(String doctorFeedbackRequestNo) {
+		this.doctorFeedbackRequestNo = doctorFeedbackRequestNo;
 	}
 	public String getDoctorFeedbackResultTitle() {
 		return doctorFeedbackResultTitle;
@@ -31,9 +31,10 @@ public class DoctorFeedbackResult {
 	}
 	@Override
 	public String toString() {
-		return "DoctorFeedbackResult [doctorFeedbackResultNo=" + doctorFeedbackResultNo + ", doctorFeedbackResultTitle="
-				+ doctorFeedbackResultTitle + ", doctorFeedbackResultContent=" + doctorFeedbackResultContent
-				+ ", doctorFeedbackResultDate=" + doctorFeedbackResultDate + "]";
+		return "DoctorFeedbackResult [doctorFeedbackRequestNo=" + doctorFeedbackRequestNo
+				+ ", doctorFeedbackResultTitle=" + doctorFeedbackResultTitle + ", doctorFeedbackResultContent="
+				+ doctorFeedbackResultContent + ", doctorFeedbackResultDate=" + doctorFeedbackResultDate + "]";
 	}
+
 	
 }

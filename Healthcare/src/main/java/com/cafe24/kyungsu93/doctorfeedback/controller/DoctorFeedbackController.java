@@ -21,6 +21,19 @@ public class DoctorFeedbackController {
 	private static final Logger logger = LoggerFactory.getLogger(DoctorFeedbackController.class);
 	@Autowired
 	DoctorFeedbackService doctorFeedbackService;
+	
+	@RequestMapping(value="/getDoctorFeedbackResultDetail", method=RequestMethod.GET)
+	public String getDoctorFeedbackResultDetail() {
+		logger.debug("DoctorFeedbackController_getDoctorFeedbackResultDetail");
+		return "";
+	}
+	@RequestMapping(value="/getDoctorFeedbackResultList", method=RequestMethod.GET)
+	public String getDoctorFeedbackResultList(Model model) {
+		logger.debug("DoctorFeedbackController_getDoctorFeedbackResultList");
+		List<DoctorFeedbackResult> list = doctorFeedbackService.getDoctorFeedbackResultList();
+		model.addAttribute("list", list);
+		return "doctorfeedback/getDoctorFeedbackResultList";
+	}	
 	@RequestMapping(value="/addDoctorFeedbackResult", method=RequestMethod.GET)
 	public String addDoctorFeedbackResult(Model model
 											,@RequestParam(value="doctorFeedbackRequestNo") String doctorFeedbackRequestNo
@@ -35,7 +48,7 @@ public class DoctorFeedbackController {
 	public String addDoctorFeedbackResult(DoctorFeedbackResult doctorFeedbackResult) {
 		logger.debug("DoctorFeedbackController_addDoctorFeedbackResult_POST");
 		doctorFeedbackService.addDoctorFeedbackResult(doctorFeedbackResult);
-		return "";
+		return "doctorfeedback/getDoctorFeedbackRequestedList";
 	}
 	@RequestMapping(value="/addDoctorFeedbackApprovalAcceptance", method=RequestMethod.GET)
 	public String addDoctorFeedbackApprovalAcceptance(@RequestParam(value="doctorFeedbackRequestNo") String doctorFeedbackRequestNo
@@ -66,8 +79,13 @@ public class DoctorFeedbackController {
 		return "doctorfeedback/getDoctorFeedbackRequestList";
 	}
 	@RequestMapping(value="/getDoctorFeedbackRequestDetail", method=RequestMethod.GET)
-	public String getDoctorFeedbackRequestDetail() {
+	public String getDoctorFeedbackRequestDetail(Model model
+													,@RequestParam("doctorFeedbackRequestNo") String doctorFeedbackRequestNo) {
 		logger.debug("DoctorFeedbackController_getDoctorFeedbackRequestDetail");
+		////////////////////////////////////////////////////////////////////////////////////
+		System.out.println("doctorFeedbackRequestNo : " +doctorFeedbackRequestNo);
+		DoctorFeedbackRequest doctorFeedbackRequest = doctorFeedbackService.getDoctorFeedbackRequestDetail(doctorFeedbackRequestNo);
+		model.addAttribute("doctorFeedbackRequest", doctorFeedbackRequest);
 		return "doctorfeedback/getDoctorFeedbackRequestDetail";
 	}
 	@RequestMapping(value="/getDoctorFeedbackRequestList")

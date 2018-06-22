@@ -9,7 +9,21 @@ public class DoctorFeedbackRequest {
 	private String doctorFeedbackRequestTitle;
 	private String doctorFeedbackRequestContent;
 	private String doctorFeedbackRequestDate;
+	private String doctorFeedbackApproval;
+	private String doctorFeedbackresult;
 	
+	public String getDoctorFeedbackApproval() {
+		return doctorFeedbackApproval;
+	}
+	public void setDoctorFeedbackApproval(String doctorFeedbackApproval) {
+		this.doctorFeedbackApproval = doctorFeedbackApproval;
+	}
+	public String getDoctorFeedbackresult() {
+		return doctorFeedbackresult;
+	}
+	public void setDoctorFeedbackresult(String doctorFeedbackresult) {
+		this.doctorFeedbackresult = doctorFeedbackresult;
+	}
 	public String getDiseaseName() {
 		return diseaseName;
 	}
@@ -63,7 +77,9 @@ public class DoctorFeedbackRequest {
 		return "DoctorFeedbackRequest [doctorFeedbackRequestNo=" + doctorFeedbackRequestNo + ", memberNo=" + memberNo
 				+ ", doctorNo=" + doctorNo + ", diseaseNo=" + diseaseNo + ", diseaseName=" + diseaseName
 				+ ", doctorFeedbackRequestTitle=" + doctorFeedbackRequestTitle + ", doctorFeedbackRequestContent="
-				+ doctorFeedbackRequestContent + ", doctorFeedbackRequestDate=" + doctorFeedbackRequestDate + "]";
+				+ doctorFeedbackRequestContent + ", doctorFeedbackRequestDate=" + doctorFeedbackRequestDate
+				+ ", doctorFeedbackApproval=" + doctorFeedbackApproval + ", doctorFeedbackresult="
+				+ doctorFeedbackresult + "]";
 	}
 
 	
