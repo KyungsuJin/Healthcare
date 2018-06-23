@@ -20,7 +20,7 @@ public class DoctorFeedbackService {
 	DoctorFeedbackDao doctorFeedbackDao;
 	@Autowired
 	HttpSession session;
-
+	
 	public DoctorFeedbackRequest getDoctorFeedbackRequestDetail(String doctorFeedbackRequestNo) {
 		logger.debug("DoctorFeedbackService_getDoctorFeedbackRequestDetail");
 		return doctorFeedbackDao.getDoctorFeedbackRequestDetail(doctorFeedbackRequestNo);

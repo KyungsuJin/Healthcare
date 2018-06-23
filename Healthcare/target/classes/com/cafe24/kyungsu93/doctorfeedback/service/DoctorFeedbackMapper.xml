@@ -35,7 +35,7 @@
 	<select id="selectGetDoctorFeedbackResultList"
 			resultType="com.cafe24.kyungsu93.doctorfeedback.service.DoctorFeedbackResult">
 		SELECT
-			doctor_feedback_result_no as doctorFeedbackResultNo
+			doctor_feedback_request_no as doctorFeedbackRequestNo
 			,doctor_feedback_result_title as doctorFeedbackResultTitle
 			,doctor_feedback_result_content as doctorFeedbackResultContent
 			,doctor_feedback_result_date as doctorFeedbackResultDate

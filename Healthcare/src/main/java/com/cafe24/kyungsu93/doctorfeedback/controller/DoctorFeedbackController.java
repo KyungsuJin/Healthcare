@@ -31,6 +31,9 @@ public class DoctorFeedbackController {
 	public String getDoctorFeedbackResultList(Model model) {
 		logger.debug("DoctorFeedbackController_getDoctorFeedbackResultList");
 		List<DoctorFeedbackResult> list = doctorFeedbackService.getDoctorFeedbackResultList();
+		System.out.println("getDoctorFeedbackResultTitle : "+list.get(0).getDoctorFeedbackResultTitle());
+		System.out.println("list : "+list.size());
+		
 		model.addAttribute("list", list);
 		return "doctorfeedback/getDoctorFeedbackResultList";
 	}	

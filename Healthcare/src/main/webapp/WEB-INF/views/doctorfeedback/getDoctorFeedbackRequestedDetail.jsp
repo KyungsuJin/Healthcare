@@ -23,7 +23,6 @@
 				,success : function(result) {
 					console.log(result);
 					if(result == "F") {
-						console.log("야이개시발")
 						$('.btnRequest').remove();
 						$('.btnCancel').remove();
 						$('.btnFeedback').show();

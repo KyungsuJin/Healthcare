@@ -14,12 +14,24 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
+	<h1>getDoctorFeedbackResultList</h1>
 	<table class="table">
 		<thead>
 			<tr>
-				<th></th>
+				<th>No</th>
+				<th>피드백제목</th>
+				<th>피드백내용</th>
+				<th>피드백날짜</th>
+				<th>${list.doctorFeedbackResultTitle}</th>
 			</tr>	
 		</thead>
+		<tbody>
+			<c:forEach var="doctorFeedbackResultList" items="list" varStatus="status">
+				<tr>
+					<td>${status.count}</td>
+				</tr>
+			</c:forEach>
+		</tbody>
 	</table>
 </body>
 </html>
