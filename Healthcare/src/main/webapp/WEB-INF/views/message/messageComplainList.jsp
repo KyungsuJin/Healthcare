@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<jsp:include page="../include/header.jsp"></jsp:include>
 </head>
 <body>
@@ -13,7 +12,7 @@
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
 				<h1>신고된 메시지 리스트</h1>
-				<table class="table" border="1">
+				<table class="table table-hover">
 					<thead>
 						<tr>
 							<th>처리상태</th>

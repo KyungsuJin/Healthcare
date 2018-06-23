@@ -24,6 +24,77 @@ public class GroupInviteService {
 	private GroupDao groupDao;
 	private static final Logger logger = LoggerFactory.getLogger(GroupInviteService.class);
 	
+	public Map<String, Object> detailGroupMain(String groupName) {
+		logger.debug("GroupInviteService - detailGroupMain 실행");
+		GroupInvite detailGroup = groupInviteDao.detailGroupMainNameNo(groupName);
+		List<GroupCalendar> addHistoryMedicine = groupInviteDao.addHistoryMedication(groupName); //복약
+		List<GroupCalendar> addHistoryTreatmemt = groupInviteDao.addHistorytreatment(groupName); //진료
+		List<GroupCalendar> addHistoryHealthScreen = groupInviteDao.addHistoryHealthScreen(groupName); //건강검진
+		List<GroupCalendar> addHistoryHealthSurvey = groupInviteDao.addHistoryHealthSurvey(groupName); //건강설문
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		int historyMedicineCount = 0;
+		historyMedicineCount = addHistoryMedicine.size();
+		if(historyMedicineCount > 0) {
+			returnMap.put("historyMedicineCount", historyMedicineCount);
+		}
+		int historyTreatmemtCount = 0;
+		historyTreatmemtCount = addHistoryTreatmemt.size();
+		if(historyTreatmemtCount> 0) {
+			returnMap.put("historyTreatmemtCount", historyTreatmemtCount);
+		}
+		int historyHealthScreenCount = 0;
+		historyHealthScreenCount = addHistoryHealthScreen.size();
+		if(historyHealthScreenCount>0) {
+			returnMap.put("historyHealthScreenCount", historyHealthScreenCount);
+		}
+		int historyHealthSurveyCount = 0;
+		historyHealthSurveyCount = addHistoryHealthSurvey.size();
+		if(historyHealthSurveyCount>0) {
+			returnMap.put("historyHealthSurveyCount", historyHealthSurveyCount);
+		}
+		returnMap.put("historyMedicineCount", historyMedicineCount);
+		returnMap.put("historyTreatmemtCount", historyTreatmemtCount);
+		returnMap.put("historyHealthScreenCount", historyHealthScreenCount);
+		returnMap.put("historyHealthSurveyCount", historyHealthSurveyCount);
+		returnMap.put("detailGroup", detailGroup);
+		returnMap.put("addHistoryMedicine", addHistoryMedicine);
+		returnMap.put("addHistoryTreatmemt", addHistoryTreatmemt);
+		returnMap.put("addHistoryHealthScreen", addHistoryHealthScreen);
+		returnMap.put("addHistoryHealthSurvey", addHistoryHealthSurvey);
+		return returnMap;
+	}
+	/**
+	 * 그룹가입생성체크
+	 * @param memberNo
+	 * @return
+	 */
+	public Map<String, Object> groupJoinCreateCheck(String memberNo) {
+		logger.debug("GroupInviteService - groupCalendarList 실행");
+		memberNo = "member_1";
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		//가입햇는지
+		int result = 0;
+				result = groupInviteDao.memberGroupJoinCheckCount(memberNo);
+		if(result>0) {
+			List<GroupInvite> groupJoinList = groupInviteDao.memberGroupJoinCheck(memberNo);
+			returnMap.put("groupJoinList", groupJoinList);
+			returnMap.put("result", result);
+		}else {
+			returnMap.put("result", result);
+		}
+		//생성했는지
+		int creationResult = 0;
+		creationResult = groupDao.memberGroupCreateCheckCount(memberNo);
+		if(creationResult>0) {
+			List<Group> groupCreateList = groupDao.memberGroupCreateCheck(memberNo);
+			returnMap.put("groupCreateList", groupCreateList);
+			returnMap.put("creationResult", creationResult);
+		}else {
+			returnMap.put("creationResult", creationResult);
+		}
+		return returnMap;	
+	}
+	
 	/**
 	 * 회원 초대 취소
 	 * @param groupInviteNo
@@ -41,6 +112,33 @@ public class GroupInviteService {
 		logger.debug("groupInviteDao - outGroupMember 실행");
 		groupInviteDao.outGroupMember(memberNo);
 	}
+	/**
+	 * 그룹 캘린더 리스트
+	 * @param groupName
+	 * @return
+	 */
+	public Map<String, Object> groupCalendarList(String groupName) {
+		logger.debug("GroupInviteService - groupCalendarList 실행");
+		List<GroupCalendar> groupCalendarMedication = groupInviteDao.groupCalendarMedication(groupName); //복약
+		List<GroupCalendar> groupCalendarTreatment = groupInviteDao.groupCalendartreatment(groupName); //진료
+		List<GroupCalendar> groupCalendarHealthScreen = groupInviteDao.groupCalendarHealthScreen(groupName); //건강검진
+		List<GroupCalendar> groupCalendarHealthSurvey = groupInviteDao.groupCalendarHealthSurvey(groupName); //건강설문
+		List<GroupInvite> groupRelationMember = groupInviteDao.groupRelationMember(groupName); //회원리스트
+		GroupInvite creationMember = groupInviteDao.groupRelationGroupCreateMember(groupName); //그룹장정보
+		logger.debug("groupCalendarMedication:"+groupCalendarMedication);
+		logger.debug("groupCalendartreatment:"+groupCalendarTreatment);
+		logger.debug("groupRelationMember:"+groupRelationMember);
+		logger.debug("groupCalendarHealthSurvey:"+groupCalendarHealthSurvey);
+		logger.debug("groupCalendarHealthScreen:"+groupCalendarHealthScreen);
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("groupCalendarMedication", groupCalendarMedication);
+		returnMap.put("groupCalendarHealthScreen", groupCalendarHealthScreen);
+		returnMap.put("groupRelationMember", groupRelationMember);
+		returnMap.put("groupCalendarHealthSurvey", groupCalendarHealthSurvey);
+		returnMap.put("groupCalendarTreatment", groupCalendarTreatment);
+		returnMap.put("creationMember", creationMember);
+		return returnMap;
+	}
 	
 	/**
 	 * 그룹관계도리스트
@@ -48,7 +146,7 @@ public class GroupInviteService {
 	 * @return
 	 */
 	public Map<String, Object> groupRelationChart(String groupName) {
-		logger.debug("GroupService - groupRelationMember 실행");
+		logger.debug("GroupInviteService - groupRelationMember 실행");
 		Map<String,Object> returnMap = new HashMap<String,Object>();
 		GroupInvite createMember = groupInviteDao.groupRelationGroupCreateMember(groupName);
 		String createMemb = createMember.getMemberName();
@@ -65,7 +163,7 @@ public class GroupInviteService {
 	 * @param inviteGroupNo
 	 */
 	public void acceptGroupList(GroupInvite groupInvite) {
-		logger.debug("GroupService - acceptGroupList 실행");
+		logger.debug("GroupInviteService - acceptGroupList 실행");
 		logger.debug("groupInvite:"+groupInvite);
 		String groupName = groupInvite.getGroupName();
 		GroupInvite memberSearch = groupInviteDao.memberNameSearch(groupName);
@@ -94,7 +192,7 @@ public class GroupInviteService {
 	 * @return
 	 */
 	public Map<String, Object> groupMemberList(int currentPage, int pagePerRow, String groupName) {
-		logger.debug("GroupService - groupMemberList 실행");
+		logger.debug("GroupInviteService - groupMemberList 실행");
 		logger.debug("groupName:"+groupName);
 		//회원 수 조회
 		int total = 0;

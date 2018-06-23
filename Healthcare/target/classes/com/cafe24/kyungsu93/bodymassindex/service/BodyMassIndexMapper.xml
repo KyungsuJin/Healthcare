@@ -112,6 +112,7 @@
   			WHERE member_no =#{memberNo}
   			ORDER BY body_date
   	</select>
+  	<!-- 건강검진표에 체질량정보 확인 -->
   	<select id="healthScreenCount"
   			parameterType="String"
   			resultType="Integer">
@@ -120,12 +121,14 @@
   			FROM health_screen
   			WHERE body_mass_index_no =#{bodyMassIndexNo}
   	</select>
+  	<!-- bmi 정보 삭제 -->
   	<delete id="deleteBmi"
   			parameterType="String"
   			>
   			DELETE FROM body_mass_index
   			WHERE body_mass_index_no=#{bodyMassIndexNo}
   	</delete>
+  	<!-- bmi 수정하기 클릭후 수정정보 출력 -->
   	<select id="modifyBmiInfo"
   			parameterType="String"
   			resultMap="bodyMassIndex">
@@ -138,6 +141,7 @@
   			FROM body_mass_index
   			WHERE body_mass_index_no =#{bodyMassIndexNo}
   	</select>
+  	<!-- bmi 정보 수정 -->
   	<update id="modifyBmi"
   			parameterType="com.cafe24.kyungsu93.bodymassindex.service.BodyMassIndex"
   			>

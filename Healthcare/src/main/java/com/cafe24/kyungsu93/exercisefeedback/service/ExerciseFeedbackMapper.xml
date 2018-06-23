@@ -13,7 +13,7 @@
 		FROM exercise_feedback_request a
 		INNER JOIN member b
 		ON a.member_no = b.member_no
-			<where>
+		<where>
 			<if test="keyOption == 'exerciseFeedbackRequestNo'"> 
 				 member_name like CONCAT(#{keyWord}, '%') 
 			</if> 

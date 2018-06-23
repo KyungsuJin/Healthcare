@@ -141,8 +141,9 @@
 						</div>
 					</div>
 				</div>
-				<div id="curve_chart" style="width: 900px; height: 500px" class="container"></div>
+				
 			</div>
+			<div id="curve_chart" style="width: 100%; height: 500px;"></div>
 		</div>
 	</div>
 </body>

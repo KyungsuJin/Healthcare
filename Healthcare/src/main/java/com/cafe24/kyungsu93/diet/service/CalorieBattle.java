@@ -13,7 +13,7 @@ public class CalorieBattle {
 	private double natrium;
 	private double cholesterol;
 	private double sfa;
-	private String calorieDate;
+	private String calorieBattleDate;
 	public String getCalorieBattleNo() {
 		return calorieBattleNo;
 	}
@@ -86,19 +86,20 @@ public class CalorieBattle {
 	public void setSfa(double sfa) {
 		this.sfa = sfa;
 	}
-	public String getCalorieDate() {
-		return calorieDate;
+	
+	public String getCalorieBattleDate() {
+		return calorieBattleDate;
 	}
-	public void setCalorieDate(String calorieDate) {
-		this.calorieDate = calorieDate;
+	public void setCalorieBattleDate(String calorieBattleDate) {
+		this.calorieBattleDate = calorieBattleDate;
 	}
 	@Override
 	public String toString() {
 		return "CalorieBattle [calorieBattleNo=" + calorieBattleNo + ", memberNo=" + memberNo + ", consumeCalorie="
 				+ consumeCalorie + ", ingestCalorie=" + ingestCalorie + ", oneDayCalorie=" + oneDayCalorie
 				+ ", carbohydrate=" + carbohydrate + ", protein=" + protein + ", fat=" + fat + ", sugar=" + sugar
-				+ ", natrium=" + natrium + ", cholesterol=" + cholesterol + ", sfa=" + sfa + ", calorieDate="
-				+ calorieDate + "]";
+				+ ", natrium=" + natrium + ", cholesterol=" + cholesterol + ", sfa=" + sfa + ", calorieBattleDate="
+				+ calorieBattleDate + "]";
 	}
 	
 }

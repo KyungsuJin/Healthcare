@@ -31,12 +31,12 @@ IE를  이전 버전의 브라우저에서 보는 것처럼 내용을 표시하�
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/templatecss1/demo.css">
     <!--     Fonts and icons     -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons" rel='stylesheet'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     
     
-    <!--   Core JS Files   -->
+ <!--   Core JS Files   -->
 <script src="<c:url value="/templatejs1/jquery-3.2.1.min.js" />"></script>
 
 <script src="<c:url value="/templatejs1/bootstrap.min.js" />"></script>
@@ -52,6 +52,6 @@ IE를  이전 버전의 브라우저에서 보는 것처럼 내용을 표시하�
 <!--  Google Maps Plugin    -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
 <!-- Material Dashboard javascript methods -->
-<script src="<c:url value="/templatejs1/material-dashboard.js?v=1.2.1" />"></script>
+<script src="<c:url value="/templatejs1/material-dashboard.js?v=1.2.0" />"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
-<script src="<c:url value="/templatejs1/demo.js" />"></script>
+<script src="<c:url value="/templatejs1/demo.js" />"></script> 

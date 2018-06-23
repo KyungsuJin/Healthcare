@@ -1,26 +1,228 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cafe24.kyungsu93.group.service.GroupInviteMapper">
-	
-	<delete id="groupInviteMemberCancle"  parameterType="com.cafe24.kyungsu93.group.service.GroupInvite">
+	<select id="addHistoryHealthSurvey" parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.GroupCalendar">
+		SELECT
+			a.group_name as groupName,
+			a.member_no as memberNo,
+			b.health_survey_result_no as healthSurveyResultNo,
+			b.health_survey_evaluation_do as healthSurveyEvaluationDo,
+			b.health_survey_result_date as healthSurveyResultDate,
+			c.member_name as memberName,
+			c.member_id as memeberId
+		FROM group_invite_approval_result a
+		INNER JOIN health_survey_result b
+		ON a.member_no = b.member_no
+		INNER JOIN member c
+		ON a.member_no = c.member_no
+		WHERE a.group_name = #{groupName} 
+		AND a.personal_information_approval = 'T'
+		ORDER BY health_survey_result_date DESC
+		LIMIT 0, 3
+	</select>
+	<select id="addHistoryHealthScreen" parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.GroupCalendar">
+			SELECT
+			a.group_name as groupName,
+			a.member_no as memberNo,
+			b.health_screen_no as healthScreenNo,
+			b.health_screen_date as healthScreenDate,
+			c.member_name as memberName,
+			c.member_id as memeberId
+		FROM group_invite_approval_result a
+		INNER JOIN health_screen b
+		ON a.member_no = b.member_no
+		INNER JOIN member c
+		ON a.member_no = c.member_no
+		WHERE a.group_name = #{groupName} 
+		AND a.personal_information_approval = 'T'	
+		ORDER BY health_screen_date DESC
+		LIMIT 0, 3
+	</select>
+	<select id="addHistoryMedication" parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.GroupCalendar">
+		SELECT
+	 <![CDATA[
+			a.group_name as groupName,
+			b.medication_no as medicationNo,
+			b.medication_start_date as medicationStartDate,
+			b.medication_end_date as medicationEndDate,
+			b.dosage as dosage,
+			b.medication_title as medicationTitle,
+			a.member_no as memberNo,
+			c.member_name as memberName,
+			c.member_id as memeberId		
+		FROM group_invite_approval_result a
+		INNER JOIN medication b
+		ON a.member_no = b.member_no
+		INNER JOIN member c
+		ON a.member_no = c.member_no
+		WHERE a.group_name = #{groupName}
+		AND a.personal_information_approval = 'T'
+		ORDER BY medication_date DESC
+		LIMIT 0, 3
+		]]>
+	</select>
+	<select id="addHistorytreatment" parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.GroupCalendar">
+		SELECT
+			a.group_name as groupName,
+			a.member_no as memberNo,
+			b.treatment_no as treatmentNo,
+			b.treatment_department as treatmentDepartment,
+			b.hospital_name as hospitalName,
+			b.treatment_title as treatmentTitle,
+			b.treatment_content as treatmentContent,
+			b.doctor_name as doctorName,
+			b.hospital_address as hospitalAddress,
+			b.treatment_date as tratmentDate,
+			c.member_name as memberName,
+			c.member_id as memeberId
+		FROM group_invite_approval_result a
+		INNER JOIN treatment b
+		ON a.member_no = b.member_no
+		INNER JOIN member c
+		ON a.member_no = c.member_no
+		WHERE a.group_name = #{groupName}
+		AND a.personal_information_approval = 'T'
+		ORDER BY treatment_date DESC
+		LIMIT 0, 3
+	</select>
+	<select id="detailGroupMainNameNo" parameterType="String" 
+				resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
+		SELECT
+		 a.group_no as groupNo,
+		 a.group_info as groupInfo
+		FROM group_create a
+		INNER JOIN group_invite_approval_result b
+		ON a.group_name = b.group_name
+		WHERE a.group_name = #{groupName}
+		LIMIT 0,1
+	</select>
+	<select id="memberGroupJoinCheckCount" parameterType="String" 
+				resultType="Integer">
+		SELECT
+		 count(*)
+		FROM group_invite_approval_result
+		WHERE member_no = #{memberNo}
+	</select>
+	<select id="memberGroupJoinCheck" parameterType="String" 
+				resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
+		SELECT
+		 group_name as groupName
+		FROM group_invite_approval_result
+		WHERE member_no = #{memberNo}
+	</select>
+	<delete id="deleteGroupMemberAll"  parameterType="String">
+	DELETE 
+		FROM group_invite_approval_result 
+		WHERE group_name = #{groupName}
+	</delete>
+	<select id="groupCalendarHealthSurvey" parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.GroupCalendar">
+		SELECT
+			a.group_name as groupName,
+			a.member_no as memberNo,
+			b.health_survey_result_no as healthSurveyResultNo,
+			b.health_survey_evaluation_do as healthSurveyEvaluationDo,
+			b.health_survey_result_date as healthSurveyResultDate,
+			c.member_name as memberName,
+			c.member_id as memeberId
+		FROM group_invite_approval_result a
+		INNER JOIN health_survey_result b
+		ON a.member_no = b.member_no
+		INNER JOIN member c
+		ON a.member_no = c.member_no
+		WHERE a.group_name = #{groupName} 
+		AND a.personal_information_approval = 'T'
+	</select>
+	<select id="groupCalendarHealthScreen" parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.GroupCalendar">
+		SELECT
+			a.group_name as groupName,
+			a.member_no as memberNo,
+			b.health_screen_no as healthScreenNo,
+			b.health_screen_date as healthScreenDate,
+			c.member_name as memberName,
+			c.member_id as memeberId
+		FROM group_invite_approval_result a
+		INNER JOIN health_screen b
+		ON a.member_no = b.member_no
+		INNER JOIN member c
+		ON a.member_no = c.member_no
+		WHERE a.group_name = #{groupName} 
+		AND a.personal_information_approval = 'T'
+	</select>
+	<select id="groupCalendartreatment" parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.GroupCalendar">
+	SELECT
+		a.group_name as groupName,
+		a.member_no as memberNo,
+		b.treatment_no as treatmentNo,
+		b.treatment_department as treatmentDepartment,
+		b.hospital_name as hospitalName,
+		b.treatment_title as treatmentTitle,
+		b.treatment_content as treatmentContent,
+		b.doctor_name as doctorName,
+		b.hospital_address as hospitalAddress,
+		b.treatment_date as tratmentDate,
+		c.member_name as memberName,
+		c.member_id as memeberId
+	FROM group_invite_approval_result a
+	INNER JOIN treatment b
+	ON a.member_no = b.member_no
+	INNER JOIN member c
+	ON a.member_no = c.member_no
+	WHERE a.group_name = #{groupName} 
+	AND a.personal_information_approval = 'T'
+	</select>
+	<select id="groupCalendarMedication" parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.GroupCalendar">
+	SELECT
+	 <![CDATA[
+			a.group_name as groupName,
+			b.medication_no as medicationNo,
+			b.medication_start_date as medicationStartDate,
+			b.medication_end_date as medicationEndDate,
+			b.dosage as dosage,
+			b.medication_title as medicationTitle,
+			a.member_no as memberNo,
+			c.member_name as memberName,
+			c.member_id as memeberId		
+		FROM group_invite_approval_result a
+		INNER JOIN medication b
+		ON a.member_no = b.member_no
+		INNER JOIN member c
+		ON a.member_no = c.member_no
+		WHERE a.group_name = #{groupName}
+		AND a.personal_information_approval = 'T'
+		]]>
+	</select>
+	<delete id="groupInviteMemberCancle" 
+			parameterType="com.cafe24.kyungsu93.group.service.GroupInvite">
 		DELETE 
 		FROM group_invite
 		WHERE group_invite_no = #{groupInviteNo}
 	</delete>
-	<delete id="outMember"  parameterType="com.cafe24.kyungsu93.group.service.GroupInvite">
+	<delete id="outMember" 
+			parameterType="com.cafe24.kyungsu93.group.service.GroupInvite">
 		DELETE 
 		FROM group_invite_approval_result 
 		WHERE member_no = #{memberNo}
 	</delete>
-	<select id="groupRelationGroupCreateMember" parameterType="String" resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
+	<select id="groupRelationGroupCreateMember" parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
 		SELECT
-		b.member_name as memberName
+		b.member_name as memberName,
+		b.member_no as memberNo
 		FROM group_create a
 		INNER JOIN member b
 		ON a.member_no = b.member_no
 		WHERE group_name = #{groupName}
 	</select>
-	<select id="groupRelationMember" parameterType="String" resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
+	<select id="groupRelationMember" parameterType="String" 
+			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
 		SELECT
 		b.member_no as memberNo,
 		b.member_name as memberName,

@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class GroupService {
 	@Autowired
 	private GroupDao groupDao;
+	@Autowired
+	private GroupInviteDao groupInviteDao;
 	private static final Logger logger = LoggerFactory.getLogger(GroupService.class);
 		
 	/**
@@ -127,6 +129,10 @@ public class GroupService {
 					count = groupDao.deleteGroup(groupNo);
 						if(count > 0) {
 							groupDao.deleteGroupDelete(groupNo);
+							//그룹에 속한 회원 삭제
+							Group groupNameSearch = groupDao.groupNameSearch(groupNo);
+							String groupName = groupNameSearch.getGroupName();
+							groupInviteDao.deleteGroupMemberAll(groupName);
 							logger.debug("그룹삭제완료.");
 						}
 					}

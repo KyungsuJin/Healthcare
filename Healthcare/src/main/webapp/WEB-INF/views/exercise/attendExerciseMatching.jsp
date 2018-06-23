@@ -12,36 +12,7 @@
 		    	window.open("${pageContext.request.contextPath}/exercisePlaceView"
 		    			,"Registration","width=800, height=500,resizable=no,scrollbars=yes");
 			});
-			/* $(".exerciseCancel").click(function(){
-				$.ajax({
-					type :"POST"
-					,url : "${pageContext.request.contextPath}/exerciseCancel"
-					,data : {"memberNo":$("#memberNo").val()
-							,"exerciseMatchingNo":$(".exerciseMatchingNo").val()
-							}
-					,dataType : "text"
-					,success:function(data){
-						alert('신청취소가 되었습니다.');
-						location.reload();
-					}
-				});		
-			});
-			$(".exerciseComplete").click(function(){
-				$.ajax({
-					type :"POST"
-					,url : "${pageContext.request.contextPath}/exerciseComplete"
-					,data : {"memberNo":$("#memberNo").val()
-							,"exerciseMatchingNo":$(".exerciseMatchingNo").val()
-							}
-					,dataType : "text"
-					,success:function(data){
-						alert('신청취소가 되었습니다.');
-						location.reload();
-					}
-				});		
-			}); */
-		})
-		
+		});
 	</script>
 </head>
 <body>
@@ -57,7 +28,7 @@
 				<input type="hidden" id="currentTime" value="<fmt:formatDate value="${now}" pattern="k:mm"/>">
 				<input type="hidden" name="memberNo" id="memberNo" value="${sessionScope.memberSessionNo}">
 				
-				<table border="1" class="table">
+				<table class="table table-hover">
 					<thead>
 						<tr>
 							<th>참가신청 날짜</th>

@@ -3,8 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
@@ -32,7 +30,7 @@
 						$("#deletBtn").empty();
 						$("#pageUl").empty();
 						$("#pageUl").append("<input type='hidden' id='endPage' value='"+data.endPage+"'>");
-						$("#deletBtn").append('<button type="button" id="deleteMessageBtn" class="btn btn-primary">삭제</button>');
+						$("#deletBtn").append('<button type="button" id="deleteMessageBtn" class="btn btn-primary">메시지 삭제</button>');
 						$("#tb").append('<tr><td><input type="checkbox" id="allChk">보낸사람</td><td>제목</td><td>날짜</td></tr>');
 						$.each(data.list,function(key,val){
 							$("#tb").append(
@@ -105,7 +103,7 @@
 						$("#deletBtn").empty();
 						$("#pageUl").empty();
 						$("#pageUl").append("<input type='hidden' id='endPage' value='"+data.endPage+"'>");
-						$("#deletBtn").append('<button type="button" id="deleteSendMessageBtn" class="btn btn-primary">삭제</button>');
+						$("#deletBtn").append('<button type="button" id="deleteSendMessageBtn" class="btn btn-primary">메시지 삭제</button>');
 						$("#tb").append('<tr><td><label><input type="checkbox" id="allChk">내용</td><td>날짜</td><td>수신여부</td></tr></label>');
 						$.each(data.list,function(key,val){
 							var sendMessageChk;
@@ -239,34 +237,35 @@
 					<input type="hidden" id="receiveCurrentPage">
 					<input type="hidden" id="sendCurrentPage">
 					<div id="deletBtn" style="margin-right:5px;float:left;"></div>
-					<div style="float:left;">
+					<div>
 						<button type="button" id="messageWrite" class="btn btn-primary">메시지 작성</button>
 						<button type="button" id="sendMessage" class="btn btn-primary" >보낸 메시지</button>
 						<button type="button" id="messageReceive" class="btn btn-primary">받은 메시지</button>
 					</div>
+					
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	<table border="1" class="table" id="tb">
-	</table>
-	
-	<div id="page"	style="text-align:center">
-		<ul class="pagination pagination-sm" id="pageUl">
-		</ul>
-	</div>
-	<div class="navbar-form navbar-left">
-	<div class="form-group">
-		<div id="searchDiv">
-			<select class="form-control" id ="searchMessageSelect">
-				<option value="rs.send_member_id">보낸사람</option>
-				<option value="rs.message_title">제목</option>
-			</select>
-			<input class="form-control" type="text" id="searchMessageText" >
-			<button class="btn btn-white btn-round btn-just-icon" type="button"  id="messageSearch"><i class="material-icons">search</i></button>
+	<div class="container">
+		<table  class="table" border="1" id="tb">
+		</table>
 		</div>
-	</div>
+		<div id="page"	style="text-align:center">
+			<ul class="pagination pagination-sm" id="pageUl">
+			</ul>
+		</div>
+		<div class="navbar-form navbar-left">
+		<div class="form-group">
+			<div id="searchDiv">
+				<select class="form-control" id ="searchMessageSelect">
+					<option value="rs.send_member_id">보낸사람</option>
+					<option value="rs.message_title">제목</option>
+				</select>
+				<input class="form-control" type="text" id="searchMessageText" >
+				<button class="btn btn-white btn-round btn-just-icon" type="button"  id="messageSearch"><i class="material-icons">search</i></button>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

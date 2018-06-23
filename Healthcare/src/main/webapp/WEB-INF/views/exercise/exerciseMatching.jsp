@@ -4,9 +4,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
+			/* 운동매칭 리스트 출력 및 페이징 */
 			$.ajax({
 				type: "POST"
 				,data :{"currentPage" :$("#currentPage").val()
@@ -24,26 +26,41 @@
 			});
 			function exerciseMatchingList(data){
 				console.log(data);
+				var currentDate =new Date();
 				$.each(data.exerciseMatchingList,function(key,val){
-					console.log("현재날짜:"+$("#currentDate").val());
-					console.log("게임날짜:"+val.exerciseMatchingScheduleDate);
-					console.log("현재시간 :"+$("#currentTime").val());
-					console.log("게임시간 :"+val.exerciseMatchingTime.substring("0","5"));
-					
-					$("#tbody").append('<tr><td class="asd'+key+'"></td>'+
-										'<td><a href="${pageContext.request.contextPath}/exerciseMatchingContent?exerciseMatchingNo='+val.exerciseMatchingNo+'">'+val.exerciseMatchingTitle+'</a></td>'+
+					console.log("현재날짜:"+currentDate);
+					console.log("게임날짜:"+new Date(val.exerciseMatchingScheduleDate));
+					$("#tbody").append('<tr><td class="exerciseMatchingCondition'+key+'"></td>'+
+										'<td><a class="exerciseMatchingTitle'+key+'" href="${pageContext.request.contextPath}/exerciseMatchingContent?exerciseMatchingNo='+val.exerciseMatchingNo+'">'+val.exerciseMatchingTitle+'</a></td>'+
 										'<td>'+val.exerciseNo+'</td>'+
 										'<td><a href="#" class="matchingPlace">'+val.exerciseMatchingPlace+'</a></td>'+
 										'<td>'+val.exerciseMatchingAttendCount+'/'+val.exerciseMatchingCount+'</td>'+
 										'<td>'+val.exerciseMatchingScheduleDate+'/'+val.exerciseMatchingTime.replace(",","~")+'</td>'+
 										'<td>'+val.memberId+'</td><input type="hidden" value="'+val.exerciseMatchingNo+'"></tr>'
 										);
+					/*운동매칭의 상태정보를 나태냄  */
 					if(val.exerciseMatchingAttendCount < val.exerciseMatchingCount){
-						$(".asd"+key).text('모집중');
-					}else if(val.exerciseMatchingAttendCount=== val.exerciseMatchingCount){
-						$(".asd"+key).text('모집마감');
+						$(".exerciseMatchingCondition"+key).text('모집중');
+					}
+					if(val.exerciseMatchingAttendCount=== val.exerciseMatchingCount){
+						$(".exerciseMatchingCondition"+key).text('모집마감');
+						console.log(currentDate);
+					}
+					if (new Date(val.exerciseMatchingScheduleDate) <= currentDate ){
+						$(".exerciseMatchingCondition"+key).text('진행중');
+					}
+					if(new Date(val.exerciseMatchingScheduleDate) <= currentDate && val.exerciseMatchingAttendCount < val.exerciseMatchingCount){
+						$(".exerciseMatchingCondition"+key).text('모집탈락');
+						$(".exerciseMatchingTitle"+key).attr("href","#");
+						$(".exerciseMatchingTitle"+key).css('color','black');
+					}
+					if(val.exerciseMatchingResult==1){
+						$(".exerciseMatchingCondition"+key).text('완료');
+						$(".exerciseMatchingTitle"+key).attr("href","#");
+						$(".exerciseMatchingTitle"+key).css('color','black');
 					}
 				});
+				/* 페이징 */
 				if(data.currentPage>1){
 					$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage=1&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'" ><span aria-hidden="true">&laquo;</span></a></li>');
 					$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/exerciseSearchList?currentPage='+(data.currentPage-1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'">이전 </a></li>');
@@ -72,20 +89,6 @@
 				    	window.open("${pageContext.request.contextPath}/exercisePlaceView"
 				    			,"Registration","width=800, height=500,resizable=no,scrollbars=yes");
 			});
-			
-			/* $("#dateDiv").hide();
-			$("#searchSelect").change(function(){
-				console.log($(this).val());
-				if($(this).val()=="exercise_matching_schedule_date"){
-					$("#searchTextTest").hide();
-					$("#searchBtn").hide();
-					$("#dateDiv").show();
-				}else{
-					$("#searchTextTest").show();
-					$("#searchBtn").show();
-					$("#dateDiv").hide();
-				} 
-			});*/
 			$("#searchBtn").click(function(){
 				window.location.href='${pageContext.request.contextPath}/exerciseSearchList?searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchTextTest").val();
 			})
@@ -111,7 +114,7 @@
 				<input type="hidden" name="currnetPage" id="currentPage"
 					value="${currentPage}"> <input type="hidden"
 					name="searchText" id="searchText" value="${searchText}">
-				<table border="1" class="table" id="tb">
+				<table  class="table table-hover" id="tb">
 					<thead>
 						<tr>
 							<th>현재상태</th>

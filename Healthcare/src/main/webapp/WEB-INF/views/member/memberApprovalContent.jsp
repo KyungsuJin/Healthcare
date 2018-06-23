@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<jsp:include page="../include/header.jsp"></jsp:include>
 </head>
 <body>
@@ -14,7 +13,7 @@
 			<div class="content">
 				<h1>승인전 회원 상세보기</h1>
 				<c:if test="${member.memberLevel==3}">
-					<table border="1" class="table">
+					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th>의사 면허 번호</th>
@@ -31,13 +30,16 @@
 								<td>${member.memberFile.memberFileRealName}</td>
 							</tr>
 							<tr>
-								<td colspan="4"><img src="${path}${member.memberFile.memberFileName }.${member.memberFile.memberFileExt}"/></td>
+								<td colspan="4"><div style="text-align:center;">첨부파일</div></td>
+							</tr>
+							<tr>
+								<td colspan="4"><div style="text-align:center;"><img src="img/${member.memberFile.memberFileName }.${member.memberFile.memberFileExt}"/></div></td>
 							<tr>
 						</tbody>
 					</table>
 				</c:if>
 				<c:if test="${member.memberLevel==4}">
-					<table border="1" class="table">
+					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th>PT 면허 번호</th>
@@ -52,7 +54,10 @@
 								<td>${member.memberFile.memberFileRealName}</td>
 							</tr>
 							<tr>
-								<td colspan="4"><img src="${path}${member.memberFile.memberFileName }.${member.memberFile.memberFileExt}"></td>
+								<td colspan="4"><div style="text-align:center;">첨부파일</div></td>
+							</tr>
+							<tr>
+								<td colspan="4"><div style="text-align:center;"><img  class="col-xs-12" src="${path}${member.memberFile.memberFileName }.${member.memberFile.memberFileExt}"></div></td>
 							<tr>
 						</tbody>
 					</table>

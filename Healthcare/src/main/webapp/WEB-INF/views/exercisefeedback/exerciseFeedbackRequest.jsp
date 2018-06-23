@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>exerciseFeedbackReqeust</title>
-<head>
+<jsp:include page="../include/header.jsp"></jsp:include>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 	var checkPoint = 1000;
@@ -25,7 +25,8 @@
 					alert('현재 고객님께서는 포인트 잔액이 부족하여 운동 피드백 신청이 불가능합니다.');
 					return location.href="${pageContext.request.contextPath}/exerciseFeedbackPtList";
 				}
-			});
+			}
+		});
 			check.fail(function(jqXHR, textStatus){
 				alert( "Request failed: " + textStatus );
 			}); 
@@ -54,24 +55,31 @@ function cancleBtn() {
 </script>
 </head>
 <body>
-<h1>운동 피드백 요청 스텝2</h1>
-	<form id="exercisefeedbackForm" onsubmit="return checkForm()" action="${pageContext.request.contextPath}/exerciseFeedbackRequest" method="POST">
-		<div>
-		선택한 강사 : ${map.ptMemberName }
-			<input type="hidden" name="teacherNo" value="${map.ptMemberNo}">
-			회원 번호:<input type="text" name="memberNo">
-	<%-- <input type="hidden" name="memberNo" value="${sessionScope.memberNo}"> --%>
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+			<h1>운동 피드백 요청 스텝2</h1>
+				<form id="exercisefeedbackForm" onsubmit="return checkForm()" action="${pageContext.request.contextPath}/exerciseFeedbackRequest" method="POST">
+					<div>
+						선택한 강사 : ${map.ptMemberName }
+						<input type="hidden" name="teacherNo" value="${map.ptMemberNo}">
+						<input type="text" name="memberNo" value="${sessionScope.memberNo}"> 
+					</div>
+					<div>
+						제목 :
+						<input type="text" name="exerciseFeedbackRequestTitle" id="exerciseFeedbackTitle">
+					</div>
+					<div>
+						내용:
+						<textarea name="exerciseFeedbackRequestContent" id="exerciseFeedbackContent" style="resize: none;" cols="40" rows="8" placeholder="내용을 입력해주세요"></textarea>
+					</div>
+					<input type="submit" value="등록하기">
+				</form>
+					<input type="button" onclick="cancleBtn()" value="강사다시선택하기">
+			</div>
 		</div>
-		<div>
-			제목 :
-			<input type="text" name="exerciseFeedbackRequestTitle" id="exerciseFeedbackTitle">
-		</div>
-		<div>
-			내용:
-			<textarea name="exerciseFeedbackRequestContent" id="exerciseFeedbackContent" style="resize: none;" cols="40" rows="8" placeholder="내용을 입력해주세요"></textarea>
-		</div>
-		<input type="submit" value="등록하기">
-	</form>
-		<input type="button" onclick="cancleBtn()" value="강사다시선택하기">
+	</div>
 </body>
 </html>

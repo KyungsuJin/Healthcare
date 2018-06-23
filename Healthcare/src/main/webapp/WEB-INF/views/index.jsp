@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
-<html lang="en">
+<html lang="en" >
 
 <head>
 
-   <%--  <meta charset="utf-8" />
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
+  <%--  <meta charset="utf-8" />
+   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>Material Dashboard by Creative Tim</title>
@@ -22,11 +22,11 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons" rel='stylesheet'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> --%>
-    <jsp:include page="include/header.jsp"></jsp:include>
+  	<jsp:include page="include/header.jsp"></jsp:include>
 </head>
 
 <body>
-	<div class="wrapper">
+	<div class="wrapper" style="overflow:auto; overflow-y:hidden; width:auto; height:auto; padding:0 0 17px 0;">
 			<input type="hidden" id="memberNo" value="${sessionScope.memberSessionNo}">
 			<jsp:include page="include/left.jsp"></jsp:include>
         <div class="main-panel">
@@ -476,6 +476,7 @@
 <script src="<c:url value="/templatejs1/material-dashboard.js?v=1.2.0" />"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="<c:url value="/templatejs1/demo.js" />"></script> --%>
+
 <script type="text/javascript">
     $(document).ready(function() {
 

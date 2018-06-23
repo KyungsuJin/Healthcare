@@ -26,17 +26,17 @@ public class ExerciseFeedbackController {
 
 	//운동피드백요청한 회원리스트 검색
 	@RequestMapping(value="/exerciseFeedbackRequestListSearch", method= {RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView exerciseFeedbackRequestListSearch(@RequestParam(value="keyword") String keyword
+	public ModelAndView exerciseFeedbackRequestListSearch(@RequestParam(value="keyWord") String keyWord
 									,@RequestParam(value="keyOption")String keyOption
 									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
 		logger.debug("ExerciseFeedbackController - exerciseFeedbackRequestList exerciseFeedbackRequestListSearch ModelAndView 실행");
-		Map<String,Object> map = exerciseFeedbackService.exerciseFeedbackRequestListSearch(keyOption, keyword, currentPage, pagePerRow);
+		Map<String,Object> map = exerciseFeedbackService.exerciseFeedbackRequestListSearch(keyOption, keyWord, currentPage, pagePerRow);
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("exercisefeedback/exerciseFeedbackPtList");
 		modelAndView.addObject("list", map.get("list"));
-		modelAndView.addObject("keyword", map.get("keyword"));
-		modelAndView.addObject("endDate", map.get("endDate"));
+		modelAndView.addObject("keyWord", map.get("keyWord"));
+		modelAndView.addObject("keyOption", map.get("keyOption"));
 		modelAndView.addObject("result", map.get("total"));
 		modelAndView.addObject("totalBlock", map.get("totalBlock"));
 		modelAndView.addObject("firstBlockPage", map.get("firstBlockPage"));
@@ -47,17 +47,17 @@ public class ExerciseFeedbackController {
 	}
 	//운동피드백피티회원선택리스트 검색
 	@RequestMapping(value="/exerciseFeedbackPtListSearch", method= {RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView exerciseFeedbackPtListSearch(@RequestParam(value="keyword") String keyword
+	public ModelAndView exerciseFeedbackPtListSearch(@RequestParam(value="keyWord") String keyWord
 									,@RequestParam(value="keyOption")String keyOption
 									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
 		logger.debug("ExerciseFeedbackController - exerciseFeedbackPtList exerciseFeedbackPtListSearch ModelAndView 실행");
-		Map<String,Object> map = exerciseFeedbackService.exerciseFeedbackPtListSearch(keyOption, keyword, currentPage, pagePerRow);
+		Map<String,Object> map = exerciseFeedbackService.exerciseFeedbackPtListSearch(keyOption, keyWord, currentPage, pagePerRow);
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("exercisefeedback/exerciseFeedbackPtList");
 		modelAndView.addObject("list", map.get("list"));
-		modelAndView.addObject("keyword", map.get("keyword"));
-		modelAndView.addObject("endDate", map.get("endDate"));
+		modelAndView.addObject("keyWord", map.get("keyWord"));
+		modelAndView.addObject("keyOption", map.get("keyOption"));
 		modelAndView.addObject("result", map.get("total"));
 		modelAndView.addObject("totalBlock", map.get("totalBlock"));
 		modelAndView.addObject("firstBlockPage", map.get("firstBlockPage"));

@@ -6,6 +6,7 @@
 	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
+			/* bmi 정보 삭제시 건강검진표에 등록되어있나 확인 */
 			$(document).on("click",".deleteBmi",function(){
 				var bodyMassIndexNo=$(this).val();
 				$.ajax({
@@ -23,6 +24,7 @@
 					}
 				});
 			});
+			/* bmi 정보 수정시 건강검진표에 등록되어있나 확인 */
 			$(document).on("click",".modifyBmi",function(){
 				var bodyMassIndexNo=$(this).val();
 				$.ajax({
@@ -39,8 +41,8 @@
 					}
 				});
 			});
+			/* bmi 검색시 검색 정보 */
 			$("#bodyMassIndexDateSearchBtn").click(function(){
-				console.log('adsfas');
 				console.log($("#bodyMassIndexDateStart").val());
 				console.log($("#bodyMassIndexDateEnd").val());
 				$.ajax({
@@ -121,7 +123,7 @@
 			<div class="content">
 				<input type="hidden" id="receiveCurrentPage">
 				<h1>체질량 관리</h1>
-				<table border="1" class="table">
+				<table  class="table table-hover">
 					<thead>
 						<tr>
 							<th>키</th>

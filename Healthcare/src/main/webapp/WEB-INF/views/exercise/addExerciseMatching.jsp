@@ -49,8 +49,8 @@
 		    		alert('운동예정날짜를 선택해주세요');
 		    		$("#exerciseScheduleDate").focus();
 		    		return false;
-		    	}else if($("#exerciseScheduleDate").val()<$("#currentDate").val()){
-		    		alert('운동예정 날짜는 오늘날짜보다 작을수없습니다.');
+		    	}else if($("#exerciseScheduleDate").val()<=$("#currentDate").val()){
+		    		alert('운동 계획 날짜는 오늘날짜와 같거나  작을수없습니다.');
 		    		$("#exerciseScheduleDate").focus();
 		    		return false;
 		    	}else if(($("#exerciseScheduleDate").val() <= $("#currentDate").val())

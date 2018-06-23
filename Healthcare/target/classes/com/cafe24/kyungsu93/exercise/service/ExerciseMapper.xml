@@ -302,4 +302,12 @@
   			WHERE exercise_matching_no=#{exerciseMatchingNo} AND member_no=#{memberNo}
   			
   	</select>
+  	<!--운동매칭 참여인원 전원이 운동매칭 완료를 눌렀을때 그값을 1 아니면 0 -->
+  	<select id="exerciseMatchingResultSuccess"
+  			parameterType="String"
+  			resultType="Integer">
+  			SELECT COUNT(*)
+			FROM exercise_matching_result
+			WHERE exercise_matching_no=#{exerciseMatchingNo}
+  	</select>
   </mapper>

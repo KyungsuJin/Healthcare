@@ -23,6 +23,11 @@ public class DietController {
 	DietService dietService;
 	private static final Logger logger = LoggerFactory.getLogger(DietController.class);
 	
+	@RequestMapping(value="/addCalorieBattle", method=RequestMethod.GET)
+	public String addCalorieBattle() {
+		logger.debug("DietController_addCalorieBattle_GET");
+		return "diet/addCalorieBattle";
+	}
 	@RequestMapping(value="/removeConsumeCalorie", method=RequestMethod.GET)
 	public String removeConsumeCalorie(@RequestParam(value="consumeCalorieNo") String consumeCalorieNo
 										,@RequestParam(value="memberNo") String memberNo) {

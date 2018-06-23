@@ -26,6 +26,35 @@ public class GroupController {
 	private GroupInviteService groupInviteService;
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 	
+	//그룹 메인
+	@RequestMapping(value="/detailGroupMain", method=RequestMethod.GET)
+	public String detailGroupMain(Model model,@RequestParam(value="groupName") String groupName) {
+		logger.debug("GroupController - detailGroupMain 포워드 실행");
+		Map<String,Object> map = groupInviteService.detailGroupMain(groupName);
+		model.addAttribute("historyMedicineCount", map.get("historyMedicineCount"));
+		model.addAttribute("historyTreatmemtCount", map.get("historyTreatmemtCount"));
+		model.addAttribute("historyHealthScreenCount", map.get("historyHealthScreenCount"));
+		model.addAttribute("historyHealthSurveyCount", map.get("historyHealthSurveyCount"));
+		model.addAttribute("detailGroup", map.get("detailGroup"));
+		model.addAttribute("addHistoryMedicine", map.get("addHistoryMedicine"));
+		model.addAttribute("addHistoryTreatmemt", map.get("addHistoryTreatmemt"));
+		model.addAttribute("addHistoryHealthScreen", map.get("addHistoryHealthScreen"));
+		model.addAttribute("addHistoryHealthSurvey", map.get("addHistoryHealthSurvey"));
+		model.addAttribute("groupName", groupName);
+		logger.debug("map:"+map);
+		return "group/detailGroupMain";
+	}
+	
+	//그룹 메인
+	@RequestMapping(value="/groupMain", method=RequestMethod.GET)
+	public String groupMain(Model model) {
+		logger.debug("GroupController - groupMain 포워드 실행");
+		String memberNo = "member_1";
+		Map<String,Object> map = groupInviteService.groupJoinCreateCheck(memberNo);
+		model.addAttribute("map", map);
+		logger.debug("map:"+map);
+		return "group/groupMain";
+	}
 	//회원초대취소
 	@RequestMapping(value="/groupInviteMemberCancle", method=RequestMethod.POST)
 	public String groupInviteMemberCancle(@RequestParam(value="groupInviteNo") String groupInviteNo) {

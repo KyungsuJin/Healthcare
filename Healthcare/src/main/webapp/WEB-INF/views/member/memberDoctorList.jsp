@@ -3,8 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
@@ -51,6 +49,11 @@
 							$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/doctorMemberList?currentPage='+(data.currentPage+1)+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"> 다음 </a></li>');
 							$("#pageUl").append('<li><a href="${pageContext.request.contextPath}/doctorMemberList?currentPage='+data.lastPage+'&searchSelect='+$("#searchSelect").val()+'&searchTextTest='+$("#searchText").val()+'"><span aria-hidden="true">&laquo;</span></a></li>');
 						}
+						$('li').find('a').each(function(){//li의 자식 a인것을 다찾는다
+							if($(this).text() == data.currentPage){//만약 text 값이 현재페이지값과 같다면
+								$(this).closest('li').addClass('active');//closest 를이용해 가장 가까운 li 를 찾아 class =active 를 추가해준다.
+							}
+						});
 					
 					
 				}
@@ -69,29 +72,31 @@
 			<h4 class="title">의사회원 리스트</h4>
 		</div>
 	</div>
-	<table border="1" class="table">
-		<thead>
-			<tr>
-				<th>회원 번호</th>
-				<th>아이디</th>
-				<th>이름</th>
-				<th>의사 면허 번호</th>
-				<th>소속 병원</th>
-				<th>진료 과목</th>
-				<th>성별</th>
-				<th>주소</th>
-				<th>전화번호</th>
-				<th>이메일</th>
-				<th>생년월일</th>
-				<th>포인트</th>
-				<th>가입날짜</th>
-				<th>개인정보동의여부</th>
-				<th>강퇴</th>
-			</tr>
-		</thead>
-		<tbody id="tbody">
-		</tbody>
-	</table>
+	<div class="container" style="overflow:scroll;">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>회원 번호</th>
+					<th>아이디</th>
+					<th>이름</th>
+					<th>의사 면허 번호</th>
+					<th>소속 병원</th>
+					<th>진료 과목</th>
+					<th>성별</th>
+					<th>주소</th>
+					<th>전화번호</th>
+					<th>이메일</th>
+					<th>생년월일</th>
+					<th>포인트</th>
+					<th>가입날짜</th>
+					<th>개인정보동의여부</th>
+					<th>강퇴</th>
+				</tr>
+			</thead>
+			<tbody id="tbody">
+			</tbody>
+		</table>
+	</div>
 	<div id="page"	style="text-align:center">
 		<ul class="pagination pagination-sm" id="pageUl">
 		</ul>
