@@ -1,4 +1,4 @@
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -13,6 +13,7 @@
 	<table>		
 		<thead>
 			<tr>
+				<th>제목</th>
 				<th>공지번호</th>
 				<th>멤버코드</th>
 				<th>제목</th>
@@ -32,6 +33,9 @@
 				<td>${notice.noticeCount }</td>
 				<td>${notice.noticeDate }</td>
 				<td></td>
+				<td><a type="button" href="${pageContext.request.contextPath}/modifyNotice?noticeNo=${notice.noticeNo}" id="modifyNotice">수정</a></td>
+			<%-- 	<td><a href="${pageContext.request.contextPath}/deleteNotice?noticeNo=${notice.noticeNo}"id="deleteNotice">삭제</a></td> --%>
+				<%-- <td><a type="button" href="${pageContext.request.contextPath}/deleteNotice?noticeNo=${notice.noticeNo}" id="deleteNotice">삭제</a></td> --%> 
 			</tr>
 		</c:forEach>
 		</tbody>
@@ -68,4 +72,4 @@
 		</ul>
 	</nav>
 </body>
-</html> --%>
+</html> 

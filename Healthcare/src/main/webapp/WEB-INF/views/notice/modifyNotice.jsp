@@ -1,4 +1,4 @@
-<%--  <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,7 +19,7 @@
 	<td>조회수</td>
 	<td>입력날짜</td>
 </tr>
-				 ${notice.memberno} 
+				<%--  ${notice.memberno}  --%>
 	<tr>
 	<form action="${pageContext.request.contextPath}/modifyNotice" method="POST">
 		<td><input type="hidden" name="noticeNo" value="${notice.noticeNo}"></td>
@@ -34,4 +34,4 @@
 	</thead>
 </table>
 </body>
-</html>   --%>
+</html> 

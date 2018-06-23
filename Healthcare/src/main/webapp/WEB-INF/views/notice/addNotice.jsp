@@ -1,4 +1,4 @@
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -51,10 +51,10 @@
 <div class="container">
 	<h1>addNotice</h1>
 	<form id="addForm" action="${pageContext.request.contextPath}/addNotice" method="POST">
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<label for="noticeNo">addNotice : </label>
 			<input class="form-control" name = "noticeNo"  id=noticeNo type="text"/>	
-		</div>
+		</div> -->
 		<div class="form-group">
 			<label for="memberNo">memberno : </label>
 			<input class="form-control" name = "memberNo"  id="memberNo" type="text"/>	
@@ -84,4 +84,4 @@
 </div>
 
 </body>
-</html> --%>
+</html>

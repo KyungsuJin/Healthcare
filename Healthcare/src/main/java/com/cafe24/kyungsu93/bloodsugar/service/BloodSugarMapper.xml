@@ -51,8 +51,7 @@
 	, #{fastingBloodSugar}
 	, #{fastingState}
 	, now()
-	)
-  
+	)  
   </insert>
   
   <select id="bloodSugarOne"
@@ -84,6 +83,12 @@
 	<delete id="deleteBloodSugar"  parameterType="com.cafe24.kyungsu93.bloodsugar.service.BloodSugar">
 		DELETE FROM blood_sugar WHERE blood_sugar_no = #{bloodSugarNo}
 	</delete>
+	
+	<select id="bloodSugarNo" resultType="Integer">
+		SELECT
+		IFNULL(MAX(CAST(SUBSTRING(blood_sugar_no,13)as decimal)),0) 
+		FROM blood_sugar
+	</select>
 	
   
   </mapper>

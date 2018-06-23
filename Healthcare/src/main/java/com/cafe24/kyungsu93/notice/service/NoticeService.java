@@ -1,4 +1,4 @@
-/*package com.cafe24.kyungsu93.notice.service;
+package com.cafe24.kyungsu93.notice.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,13 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import com.cafe24.kyungsu93.bloodpressure.service.BloodPressure;
-import com.cafe24.kyungsu93.bloodsugar.controller.BloodsugarController;
 import com.cafe24.kyungsu93.bloodsugar.service.BloodSugar;
 
 @Service
 public class NoticeService {
-	private static final Logger logger = LoggerFactory.getLogger(BloodsugarController.class);
+	private static final Logger logger = LoggerFactory.getLogger(NoticeService.class);
 	
 	@Autowired
 	private NoticeDao noticeDao;
@@ -78,11 +76,10 @@ public class NoticeService {
 	public void addNotice (Notice notice) {
 		logger.debug("addNotice NoticeService");
 		logger.debug("=============2번"+notice);
+		notice.setNoticeNo("notice_"+(noticeDao.selectNoticNo()+1));
 		noticeDao.addNotice(notice);
 		logger.debug("----------5번"+notice);
 	}
-	
-	
 	public Notice selectNoticeOne(String noticeNo) {
 		logger.debug("NoticeService 에서 selectNoticeOne 실행");
 		logger.debug("==========8번"+noticeNo);
@@ -90,17 +87,18 @@ public class NoticeService {
 	}
 	
 	public void updatenotice (Notice notice) {
+		logger.debug("15번"+notice);
 		logger.debug("updateNotice NoticeService");
-		logger.debug("-----------11번"+notice);
 		noticeDao.updateNotice(notice);
 	}
 
 	
-	public int deleteNotice(String noticeNo) {
+	/*public int deleteNotice(String noticeNo) {
 		logger.debug("NoticeService 에서 deleteNotice 실행");
+		logger.debug("99번"+noticeNo);
 		return noticeDao.deletenoticeCount(noticeNo);
 	}
-	
+	*/
 	public Map<String, Object> noticeSearchDate(String startDate, String endDate) {
 		logger.debug("NoticeService - noticeSearchDate 실행");
 		logger.debug("22번"+startDate);
@@ -191,18 +189,20 @@ public class NoticeService {
 		return returnMap;
 		}
 	
-		public int noticeCountView (int noticeNo) {
+		/*public int noticeCountView (int noticeNo) {
 			logger.debug("updateNotice noticeCountView");
 			logger.debug("-----------15번"+noticeNo);
 			noticeDao.noticeCountView(noticeNo);
-			return noticeNo;
-		}
-		public  Map<String, Object> noticeListDetail(int currentPage, int pagePerRow) {
+			return noticeNo;*/
+		
+		public  Map<String, Object> noticeListDetail(int currentPage, int pagePerRow,String noticeNo) {
 			logger.debug("Noticeservice NoticeList 실행 부분");
-			Map<String,Integer> map = new HashMap<String,Integer>();
+			Map<String,Object> map = new HashMap<String,Object>();
 			int beginRow = (currentPage-1)*pagePerRow;
 			map.put("beginRow", beginRow);
 			map.put("pagePerRow", pagePerRow);
+			map.put("noticeNo", noticeNo);
+			logger.debug("3번"+map);
 			List<Notice> list = noticeDao.noticeListDetail(map);
 			int total = noticeDao.noticeDetailCount();
 			int lastPage = total/pagePerRow;
@@ -241,12 +241,16 @@ public class NoticeService {
 			logger.debug("======================page block=========================");
 			Map<String,Object> returnMap = new HashMap<String,Object>();
 			returnMap.put("list", list);
+			logger.debug("8번"+returnMap);
 			returnMap.put("lastPage", lastPage);
 			returnMap.put("firstBlockPage", firstBlockPage);
 			returnMap.put("lastBlockPage", lastBlockPage);
 			returnMap.put("totalBlock", totalBlock);
 			return returnMap;
 		}
+		/*public void noticeDetail (String notice) {
+			logger.debug("updateNotice NoticeService");
+			logger.debug("-----------11번"+notice);
+			List<Notice>list = noticeDao.noticeDetail(notice);
+}*/
 }
-	
-*/

@@ -115,4 +115,9 @@ public class BloodSugarDao {
 		logger.debug("BloodPressureDao 에서 deletePressureCount실행");
 		return sqlSession.delete(NS+"deleteBloodSugar",bloodSugarNo);
 	}
+	public int selectBloodSugarNo() {
+		logger.debug("BloodSugarDao - selectBloodSugarNo 실행");
+		int row = sqlSession.selectOne(NS+"bloodSugarNo");
+		return row;
+	}
 }

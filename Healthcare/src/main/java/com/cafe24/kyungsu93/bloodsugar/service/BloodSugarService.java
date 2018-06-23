@@ -174,6 +174,7 @@ public class BloodSugarService {
 	}
 
 	public void addBloodSugar (BloodSugar bloodSugar) {
+		bloodSugar.setBloodSugarNo("blood_sugar_"+(bloodSugarDao.selectBloodSugarNo()+1));
 		logger.debug("addBloodSugar BloodSugarService");
 		bloodSugarDao.addBloodSugar(bloodSugar);	
 	}

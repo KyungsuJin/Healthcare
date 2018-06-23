@@ -5,7 +5,7 @@
 
 <mapper namespace="com.cafe24.kyungsu93.notice.service.NoticeMapper">
 
-	<!-- <select id="noticeList" parameterType="java.util.Map"
+	 <select id="noticeList" parameterType="java.util.Map"
 		resultType="com.cafe24.kyungsu93.notice.service.Notice">
 		SELECT
 		notice_no AS noticeNo
@@ -61,8 +61,7 @@
 		WHERE notice_no = #{noticeNo}
 
 	</select>
-	<update id="updateNotice"
-		parameterType="com.cafe24.kyungsu93.notice.service.Notice">
+	<update id="updateNotice" parameterType="com.cafe24.kyungsu93.notice.service.Notice">
 		UPDATE notice
 		SET
 		notice_no = #{noticeNo}
@@ -87,7 +86,7 @@
 		<include refid="search"></include>
 		</select>
 	<select id="noticeSearchAll" parameterType="map" resultType="com.cafe24.kyungsu93.notice.service.Notice">
-      	 SELECT
+      	 SELECT`
 			notice_no as noticeNo
 			,member_no as memberNo
 			,notice_title as noticeTitle
@@ -148,5 +147,11 @@
 			SELECT
 			count(*)
 			FROM notice
-	</select> -->
+	</select>
+	
+	<select id="selectNoticNo" resultType="Integer">
+		SELECT
+		IFNULL(MAX(CAST(SUBSTRING(notice_no,8)as decimal)),0) 
+		FROM notice
+	</select>
 </mapper>

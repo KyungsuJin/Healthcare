@@ -52,10 +52,10 @@ $(document).ready(function(){
 <div class="container">
 	<h1>addBloodSugar</h1>
 	<form id="addBloodSugar" action="${pageContext.request.contextPath}/addBloodSugar" method="POST">
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<label for="bloodSugarNo">bloodSugarNo : </label>
 			<input class="form-control" name = "bloodSugarNo"  id="bloodSugarNo" type="text"/>	
-		</div>
+		</div> -->
 		<div class="form-group">
 			<label for="memberNo">memberNo : </label>
 			<input class="form-control" name = "memberNo"  id="memberNo" type="text"/>	

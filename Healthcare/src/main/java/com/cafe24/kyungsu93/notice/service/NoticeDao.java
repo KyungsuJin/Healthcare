@@ -1,4 +1,4 @@
-/*package com.cafe24.kyungsu93.notice.service;
+package com.cafe24.kyungsu93.notice.service;
 
 import java.util.List;
 import java.util.Map;
@@ -9,12 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cafe24.kyungsu93.bloodpressure.service.BloodPressure;
-import com.cafe24.kyungsu93.bloodsugar.controller.BloodsugarController;
-
 @Repository
 public class NoticeDao {
-	private static final Logger logger = LoggerFactory.getLogger(BloodsugarController.class);
+	private static final Logger logger = LoggerFactory.getLogger(NoticeDao.class);
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.notice.service.NoticeMapper.";
@@ -37,6 +34,7 @@ public class NoticeDao {
 	}
 
 	public int updateNotice(Notice notice) {
+		logger.debug("16번"+notice);
 		logger.debug("BloodsugarDao 에서 updateBloodsugar 실행------------------3번"+notice);
 		logger.debug("-------------12번"+notice);
 		return sqlSession.update(NS+"updateNotice",notice);
@@ -48,10 +46,11 @@ public class NoticeDao {
 		return sqlSession.selectOne(NS+"noticeOne",noticeNo);
 	}
 	
-	public int deletenoticeCount(String noticeNo) {
+	/*public int deletenoticeCount(String noticeNo) {
 		logger.debug("NoticeDao 에서 deleteNoticeCount 실행");
+		logger.debug("876번"+noticeNo);
 		return sqlSession.delete(NS+"deletenotice",noticeNo);
-	}
+	}*/
 	
 	public int noticeSearchCount(Map<String, Object> map) {
 		logger.debug("35번"+map);
@@ -75,20 +74,31 @@ public class NoticeDao {
 		return list;
 	}
 	
-	public int noticeCountView(int noticeNo) {
+	/*public int noticeCountView(int noticeNo) {
 		logger.debug("BloodsugarDao 에서 updateBloodsugar 실행------------------3번"+noticeNo);
 		logger.debug("-------------12번"+noticeNo);
 		return sqlSession.update(NS+"noticeCountView",noticeNo);
-    }
+    }*/
 	
-	public List<Notice> noticeListDetail(Map<String,Integer> map) {
+	public List<Notice> noticeListDetail(Map<String,Object> map) {
 		logger.debug("NoticeDao 에서 NoticeList 실행");
-		return sqlSession.selectList(NS+"noticeListDetail",map);
+		logger.debug("4번"+map);
+		List<Notice> list = sqlSession.selectList(NS+"noticeListDetail",map);
+		return list;
 	}
 	
 	public int noticeDetailCount() {
 		logger.debug("NoticeDao 에서 noticeDetailCount 실행");
 		return sqlSession.selectOne(NS+"noticeDetailCount");
 	}
+	
+	/*public List<Notice> noticeDetail(Map<String,Integer> map) {
+		logger.debug("NoticeDao 에서 noticeDetailCount 실행");
+		List<Notice> list = sqlSession.selectOne(NS+"noticeDetailCount",map);
+		return list;*/
+	public int selectNoticNo() {
+	logger.debug("NoticeDao - selectNoticeNo 실행");
+	int row = sqlSession.selectOne(NS+"selectNoticNo");
+	return row;
+	}
 }
-*/
