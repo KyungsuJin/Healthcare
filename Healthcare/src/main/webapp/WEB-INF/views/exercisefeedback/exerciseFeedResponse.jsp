@@ -128,7 +128,7 @@
 			return false;
 		}else{
 		console.log("exerciseId현재개수:"+exerciseId);
-		document.getElementById('exerciseSelect').append(exerciseNameSelect+'가 선택되었습니다.');	
+		document.getElementById('exerciseResulting').Html(exerciseNameSelect+'가 선택되었습니다.');	
 		
 		var input1 = document.createElement("input");
 		input1.setAttribute("type","text");
@@ -225,7 +225,7 @@
 						</div>
 						<!-- 운동 피드백 시작 -->
 						<div id="exerciseInfoPanel">
-							<span id="exerciseResult"></span>
+							<span id="exerciseResulting"></span>
 							<div id="exerciseSelect"></div>
 						</div>
 					</div>
