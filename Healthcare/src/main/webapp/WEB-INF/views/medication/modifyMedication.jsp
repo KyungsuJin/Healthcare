@@ -10,7 +10,9 @@
 </style>
 <script>
 	$(document).ready(function(){
-		
+		var medicineArray = $("#medicineNo").val().split("_");
+		$("#medicineSeq").val(medicineArray[1]);
+		console.log($("#medicineSeq").val());
 		$("#medicationBtn").click(function(){
 			if($('#medicationTitle').val().length < 1) {
                 alert('title을 입력하세요');
@@ -20,9 +22,14 @@
 	            $("#medicationForm").submit();
             }
 		});
-		
 		$("#cancelBtn").click(function(){
 			$(location).attr('href', "${pageContext.request.contextPath}/getMedicationContent?medicationNo=${medicationResponse.medicationNo}&currentPage=${currentPage}&pagePerRow=${pagePerRow}");
+		});
+		$(document).on("click", "#medicineInfo", function(){
+			if($("#medicineSeq").val() > 1){
+				var openNewWindow = window.open("about:blank");
+				openNewWindow.location.href = "http://drug.mfds.go.kr/html/bxsSearchDrugProduct.jsp?item_Seq="+$("#medicineSeq").val();
+			}
 		});
 	});
 </script>
@@ -34,20 +41,33 @@
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
 				<div id="containerMedication" align="center">
-					<h1>addMedication</h1>
 					<form id="medicationForm" action="${pageContext.request.contextPath}/modifyMedication" method="post" enctype="multipart/form-data">
-						<input type="hidden" name="medicationNo" value="${medicationResponse.medicationNo}">
-						<input type="hidden" name="currentPage" value="${currentPage}">
-						<input type="hidden" name="pagePerRow" value="${pagePerRow}">			
-						<div>medicineNo : <input id="medicineNo" class="form-control" name="medicineNo" value="${medicationResponse.medicineNo}"></input></div>
-						<div>medicationStartDate : <input id="medicationStartDate" class="form-control" type="date" name="medicationStartDate" value="${medicationResponse.medicationStartDate}" readonly></div>
-						<div>medicationEndDate : <input id="medicationEndDate" class="form-control" type="date" name="medicationEndDate" value="${medicationResponse.medicationEndDate}"></div>
-						<div>dosage : <input id="dosage" class="form-control" type="number" name="dosage" value="${medicationResponse.dosage}"></div>
-						<div>totalDosage : <input id="totalDosage" class="form-control" type="text" name="totalDosage" value="${medicationResponse.totalDosage}"></div>
-						<div>medicationTitle : <input id="medicationTitle" class="form-control" name="medicationTitle" value="${medicationResponse.medicationTitle}"></input></div>
-						<div>medicationContent : <textarea id="medicationContent" class="form-control" name="medicationContent">${medicationResponse.medicationContent}</textarea></div>
-						<button id="medicationBtn" class="btn btn-default" type="button">저장</button>
-						<input id="cancelBtn" class="btn btn-default" type="button" value="취소">
+						<div class="row">
+							<div class="col-md-8 col-md-offset-2">
+								<input type="hidden" name="medicationNo" value="${medicationResponse.medicationNo}">
+								<input type="hidden" name="currentPage" value="${currentPage}">
+								<input type="hidden" name="pagePerRow" value="${pagePerRow}">
+								<input type="hidden" id="medicineSeq" class="form-control" name="medicineSeq" readonly>
+								<input type="hidden" id="medicineNo" class="form-control" name="medicineNo" value="${medicationResponse.medicineNo}" readonly>
+								<div class="col-md-10">약 이름  <input id="medicineName" class="form-control" name="medicineName" value="${medicationResponse.medicineName}" readonly></input></div>
+								<div class="col-md-2" style="margin-top: 30px;"><input type="button" id="medicineInfo" class="btn btn-default" value="자세히"></div>
+							</div>
+							<div class="col-md-8 col-md-offset-2">
+								<div class="col-md-5">시작  <input id="medicationStartDate" class="form-control" type="date" name="medicationStartDate" value="${medicationResponse.medicationStartDate}"></div>
+								<div class="col-md-2" style="margin-top : 55px">~</div>
+								<div class="col-md-5">끝  <input id="medicationEndDate" class="form-control" type="date" name="medicationEndDate" value="${medicationResponse.medicationEndDate}"></div>
+							</div>
+							<div class="col-md-8 col-md-offset-2">
+								<div class="col-md-5">일일 복용량  <input id="dosage" class="form-control" type="number" name="dosage" value="${medicationResponse.dosage}"></div>
+								<div class="col-md-5 col-md-offset-2">총 복용량  <input id="totalDosage" class="form-control" type="text" name="totalDosage" value="${medicationResponse.totalDosage}"></div>
+							</div>
+							<div class="col-md-8 col-md-offset-2">
+								<div>복용 제목  <input id="medicationTitle" class="form-control" name="medicationTitle" value="${medicationResponse.medicationTitle}"></input></div>
+								<div>복용 내용  <textarea id="medicationContent" class="form-control" name="medicationContent">${medicationResponse.medicationContent}</textarea></div>
+								<button id="medicationBtn" class="btn btn-default" type="button">저장</button>
+								<input id="cancelBtn" class="btn btn-default" type="button" value="취소">
+							</div>
+						</div>
 					</form>
 				</div>
 			</div>

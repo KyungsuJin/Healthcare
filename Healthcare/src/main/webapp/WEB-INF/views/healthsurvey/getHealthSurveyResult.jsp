@@ -7,7 +7,7 @@
 	<jsp:include page="../include/header.jsp"></jsp:include>
 	<style>
 		addHealthSurveyBtn{ float: right; }
-		healthSurveyContentContainer{ width: 800px; margin: auto; }
+		#healthSurveyContent { height: 300px; }
 	</style>
 	<script>
 		$(document).ready(function(){
@@ -33,11 +33,9 @@
 			$("#getDoctorFeedbackList").click(function(){
 				location.href="${pageContext.request.contextPath}/";
 			});
-			
 			$("#getHealthSurveyListBtn").click(function(){
 				location.href="${pageContext.request.contextPath}/getHealthSurveyResultList";
 			});
-			
 			$("#evaluationBtn").click(function(){
 				var param = "";
 				param = "healthSurveyResultNo="+$("#healthSurveyResultNo").val();
@@ -54,8 +52,30 @@
 			        },
 			        error : function() { console.log('error');}
 				});
-				
 			});
+			var healthSurveyRegisterNormal = $("#healthSurveyRegisterNormal").val();
+			var healthSurveyRegisterWarning = $("#healthSurveyRegisterWarning").val();
+			var healthSurveyRegisterDanger = $("#healthSurveyRegisterDanger").val();
+			var healthSurveyRegisterTotal = $("#healthSurveyRegisterTotal").val();
+			var healthSurveyTotalGrade = $("#healthSurveyTotalGrade").val();
+			var percentage = (healthSurveyTotalGrade/healthSurveyRegisterTotal)*100;
+			if(healthSurveyTotalGrade >= healthSurveyRegisterDanger){
+				$(".progress div").width(percentage+"%");
+				$(".progress div").addClass("progress-bar-danger");
+				$("#healthSurveyResultScore").val("[${sessionScope.memberSessionName}]님의 설문 결과 ${healthSurveyResultResponse.healthSurveyTotalGrade}으로 위험단계 입니다.");
+			} else if(healthSurveyTotalGrade >= healthSurveyRegisterWarning){
+				$(".progress div").width(percentage+"%");
+				$(".progress div").addClass("progress-bar-warning");
+				$("#healthSurveyResultScore").val("[${sessionScope.memberSessionName}]님의 설문 결과 ${healthSurveyResultResponse.healthSurveyTotalGrade}으로 경고단계 입니다.");
+			} else if(healthSurveyTotalGrade >= healthSurveyRegisterNormal){
+				$(".progress div").width(percentage+"%");
+				$(".progress div").addClass("progress-bar-success");
+				$("#healthSurveyResultScore").val("[${sessionScope.memberSessionName}]님의 설문 결과 ${healthSurveyResultResponse.healthSurveyTotalGrade}으로 주의단계 입니다.");
+			} else{
+				$(".progress div").width(percentage+"%");
+				$(".progress div").addClass("progress-bar-success");
+				$("#healthSurveyResultScore").val("[${sessionScope.memberSessionName}]님의 설문 결과 ${healthSurveyResultResponse.healthSurveyTotalGrade}으로 정상단계 입니다.");
+			}
 			
 			
 		});	
@@ -68,48 +88,60 @@
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
 				<div class="healthSurveyResultContainer" align="center">
-					<h1>getHealthSurveyResult</h1>
-					<input type="hidden" id="healthSurveyRegisterNo" value="${question[0].healthSurveyRegisterNo}">
-					<input type="hidden" id="questionSize" value="${questionSize}">
-					<c:forEach var="i" begin="0" end="${questionSize}" step="1">
-						${question[i].questionNo}
-						${question[i].healthSurveyQuestion}<br>
-						<c:set var="tempName">selection${i}</c:set>
-						<c:forEach var = "healthSelection" items = "${question[i].healthSurveySelection}">
-							<div>
-								<input type="radio" class="healthSurveyRecordNo" name="${tempName}" value="${healthSelection.healthSurveySelectionNo}" readonly>
-								<input type="hidden" value="${healthSelection.healthSurveySelectionScore}">
-								${healthSelection.selectionNo}.
-								${healthSelection.healthSurveySelection}<br>
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2">
+							<input type="hidden" id="healthSurveyRegisterNo" value="${question[0].healthSurveyRegisterNo}">
+							<input type="hidden" id="questionSize" value="${questionSize}">
+							<input type="hidden" id="healthSurveyResultNo" value="${healthSurveyResultResponse.healthSurveyResultNo}">
+							<input type="hidden" id="healthSurveyRegisterNo" value="${healthSurveyResultResponse.healthSurveyRegisterNo}">
+							<input type="hidden" id="healthSurveyRegisterNormal" value="${healthSurveyResultResponse.healthSurveyRegisterNormal}">
+							<input type="hidden" id="healthSurveyRegisterWarning" value="${healthSurveyResultResponse.healthSurveyRegisterWarning}">
+							<input type="hidden" id="healthSurveyRegisterDanger" value="${healthSurveyResultResponse.healthSurveyRegisterDanger}">
+							<input type="hidden" id="healthSurveyRegisterTotal" value="${healthSurveyResultResponse.healthSurveyRegisterTotal}">
+							<input type="hidden" id="healthSurveyTotalGrade" value="${healthSurveyResultResponse.healthSurveyTotalGrade}">
+							설문 명
+							<input class="form-control" type="text" value="[${healthSurveyResultResponse.diseaseName}] ${healthSurveyResultResponse.healthSurveyRegisterTitle}" readonly>
+						</div>
+						<div class="col-md-8 col-md-offset-2">
+							<textarea id="healthSurveyContent" class="form-control" readonly>${healthSurveyResultResponse.healthSurveyRegisterContent}</textarea>
+						</div>
+						<div class="col-md-8 col-md-offset-2">
+							<c:forEach var="i" begin="0" end="${questionSize}" step="1">
+								${question[i].questionNo}
+								${question[i].healthSurveyQuestion}<br>
+								<c:set var="tempName">selection${i}</c:set>
+								<c:forEach var = "healthSelection" items = "${question[i].healthSurveySelection}">
+									<div>
+										<input type="radio" class="healthSurveyRecordNo" name="${tempName}" value="${healthSelection.healthSurveySelectionNo}" readonly>
+										<input type="hidden" value="${healthSelection.healthSurveySelectionScore}">
+										${healthSelection.selectionNo}.
+										${healthSelection.healthSurveySelection}<br>
+									</div>
+								</c:forEach>
+								<br>
+							</c:forEach>
+						</div>
+						<div class="col-md-8 col-md-offset-2">
+							<input id="healthSurveyResultScore" class="form-control" type="text" readonly>
+						</div>
+						
+						<div class="col-md-8 col-md-offset-2">
+							<div class="progress">
+								<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
-						</c:forEach>
-						<br>
-					</c:forEach>
-					
-					<input type="hidden" id="healthSurveyResultNo" value="${healthSurveyResultResponse.healthSurveyResultNo}">
-					<input type="hidden" id="healthSurveyRegisterNo" value="${healthSurveyResultResponse.healthSurveyRegisterNo}">
-					${healthSurveyResultResponse.healthSurveyResultNo}<br>
-					${healthSurveyResultResponse.healthSurveyRegisterNo}<br>
-					${healthSurveyResultResponse.healthSurveyResultDate}<br>
-					${healthSurveyResultResponse.healthSurveyTotalGrade}<br>
-					${healthSurveyResultResponse.memberName}<br>
-					${healthSurveyResultResponse.diseaseName}<br>
-					${healthSurveyResultResponse.healthSurveyRegisterTitle}<br>
-					${healthSurveyResultResponse.healthSurveyRegisterContent}<br>
-					${healthSurveyResultResponse.healthSurveyRegisterNormal}<br>
-					${healthSurveyResultResponse.healthSurveyRegisterWarning}<br>
-					${healthSurveyResultResponse.healthSurveyRegisterDanger}<br>
-					${healthSurveyResultResponse.healthSurveyRegisterTotal}<br>
-					${healthSurveyResultResponse.healthSurveyRegisterDate}<br>
-					<div id="evaluationContainer">
-						<c:if test="${healthSurveyResultResponse.healthSurveyEvaluationDo eq 0}">
-							당신의 평가 점수는?<br>
-							<input type="text" id="evaluationValue"><br>
-							<input type="button" id="evaluationBtn" value="평가하기"><br>
-						</c:if>
+						</div>
+						<div class="col-md-8 col-md-offset-2">
+							<div id="evaluationContainer">
+								<c:if test="${healthSurveyResultResponse.healthSurveyEvaluationDo eq 0}">
+									당신의 평가 점수는?<br>
+									<input type="text" id="evaluationValue"><br>
+									<input type="button" id="evaluationBtn" value="평가하기"><br>
+								</c:if>
+							</div>
+							<input id="getDoctorFeedbackList" class="btn btn-default" type="button" value="의사에게 피드백 요청하기">
+							<input id="getHealthSurveyListBtn" class="btn btn-default" type="button" value="나의 설문 리스트">
+						</div>
 					</div>
-					<input id="getDoctorFeedbackList" class="btn btn-default" type="button" value="의사에게 피드백 요청하기">
-					<input id="getHealthSurveyListBtn" class="btn btn-default" type="button" value="나의 설문 리스트">
 				</div>
 			</div>
 		</div>

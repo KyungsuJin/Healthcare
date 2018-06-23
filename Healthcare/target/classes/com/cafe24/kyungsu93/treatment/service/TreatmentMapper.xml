@@ -75,6 +75,7 @@
 	<select id="getTreatmentContent" parameterType="com.cafe24.kyungsu93.treatment.service.TreatmentRequest" resultMap="treatmentContentResult">
 		SELECT 
 			treatment_no AS treatmentNo
+			,member_no AS memberNo
         	,treatment_department AS treatmentDepartment
         	,hospital_name AS hospitalName
         	,treatment_title AS treatmentTitle
@@ -116,18 +117,20 @@
 		WHERE treatment_no = #{treatmentNo}
 	</update>
 	
-	<select id="getTreatmentClosest" parameterType="com.cafe24.kyungsu93.treatment.service.TreatmentRequest" resultType="com.cafe24.kyungsu93.treatment.service.TreatmentResponse">
+	<select id="getTreatmentClosest" parameterType="com.cafe24.kyungsu93.treatment.service.TreatmentResponse" resultType="com.cafe24.kyungsu93.treatment.service.TreatmentResponse">
 		(SELECT 
 			treatment_no AS TreatmentNo 
 		FROM treatment 
-		WHERE (CAST(SUBSTRING(treatment_no,11)as decimal) &gt; (CAST(SUBSTRING(#{treatmentNo},11)as decimal) 
+		WHERE treatment_date &gt; #{treatmentDate}
+			  AND member_no = #{memberNo} 
 		LIMIT 1)
 		UNION ALL
 		(SELECT 
 			treatment_no AS TreatmentNo 
 		FROM treatment 
-		WHERE (CAST(SUBSTRING(treatment_no,11)as decimal) &lt; (CAST(SUBSTRING(#{treatmentNo},11)as decimal)
-		ORDER BY treatment_no DESC 
+		WHERE treatment_date &lt; #{treatmentDate}
+			  AND member_no = #{memberNo}
+		ORDER BY treatment_date DESC 
 		LIMIT 1)
 	</select>
 

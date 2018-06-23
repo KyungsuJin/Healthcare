@@ -133,6 +133,7 @@ public class HealthSurveyService {
 	}
 	
 	public String addHealthSurveyResult(String memberNo, List<String> healthSurveySelectionNo, String healthSurveyRegisterNo, int totalGrade) {
+		healthSurveyDao.addHealthSurveyRegisterCount(healthSurveyRegisterNo);
 		HealthSurveyResultRequest healthSurveyResultRequest = new HealthSurveyResultRequest();
 		healthSurveyResultRequest.setHealthSurveyResultNo("health_survey_result_"+(healthSurveyDao.getHealthSurveyResultNo()+1));
 		healthSurveyResultRequest.setHealthSurveyRegisterNo(healthSurveyRegisterNo);

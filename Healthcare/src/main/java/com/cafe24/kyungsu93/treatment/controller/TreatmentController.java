@@ -46,10 +46,7 @@ public class TreatmentController {
 	public String addTreatment(TreatmentRequest treatmentRequest, HttpSession session, Model model) {
 		logger.debug("TreatmentController.addTreatment POST 방식 호출");
 		if(session.getAttribute("memberSessionLevel").toString().equals("2")) {
-			if(treatmentRequest.getMemberNo() == null) {
-				treatmentRequest.setMemberNo(session.getAttribute("memberSessionNo").toString());
-			}
-			System.out.println(session.getAttribute("memberSessionNo").toString());
+			treatmentRequest.setMemberNo(session.getAttribute("memberSessionNo").toString());
 			List<MultipartFile> multipartFileList = treatmentRequest.getMultipartFile();
 			if(multipartFileList != null) {
 				for(MultipartFile multipartFile : multipartFileList) {
@@ -78,6 +75,7 @@ public class TreatmentController {
 									,HttpSession session) {		
 		logger.debug("TreatmentController.getTreatmentList GET 방식 호출");
 		if(session.getAttribute("memberSessionLevel") != null && session.getAttribute("memberSessionLevel").toString().equals("2")) {
+			treatmentRequest.setMemberNo(session.getAttribute("memberSessionNo").toString());
 			Map map = treatmentService.getTreatmentList(currentPage, pagePerRow, treatmentRequest);
 			model.addAttribute("list", map.get("list"));
 			model.addAttribute("firstPage", map.get("firstPage"));
@@ -101,16 +99,19 @@ public class TreatmentController {
 										,@RequestParam(value="pagePerRow", defaultValue="10" ) int pagePerRow) {
 		logger.debug("TreatmentController.getTreatmentContent GET 방식 호출");
 		Map map = treatmentService.getTreatmentContent(treatmentRequest);
-		if(((TreatmentResponse) map.get("treatmentResponse")).getMemberNo().equals(session.getAttribute("memberSessionNo").toString())) {
+		TreatmentResponse treatmentResponse = (TreatmentResponse) map.get("treatmentResponse");
+		System.out.println("1 : " + treatmentResponse);
+		System.out.println("2 : " + session.getAttribute("memberSessionNo").toString());
+		if(treatmentResponse.getMemberNo().equals(session.getAttribute("memberSessionNo").toString())) {
 			model.addAttribute("treatmentResponse", map.get("treatmentResponse"));
 			model.addAttribute("downloadPath", session.getServletContext().getRealPath("/upload")+"/");
 			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("pagePerRow", pagePerRow);
 			if(map.get("upTreatment") != null) {
-				model.addAttribute("upTreatmentId", ((TreatmentRequest) map.get("upTreatment")).getTreatmentNo());
+				model.addAttribute("upTreatmentNo", ((TreatmentResponse) map.get("upTreatment")).getTreatmentNo());
 			}
 			if(map.get("downTreatment") != null) {
-				model.addAttribute("downTreatmentId", ((TreatmentRequest) map.get("downTreatment")).getTreatmentNo());
+				model.addAttribute("downTreatmentNo", ((TreatmentResponse) map.get("downTreatment")).getTreatmentNo());
 			}
 			return "treatment/getTreatmentContent";
 		} else {
@@ -143,7 +144,7 @@ public class TreatmentController {
 									,HttpSession session) {
 		logger.debug("TreatmentController.modifyTreatment GET 방식 호출");
 		if(((TreatmentResponse) (treatmentService.getTreatmentContent(treatmentRequest)).get("treatmentResponse")).getMemberNo().equals(session.getAttribute("memberSessionNo").toString())) {
-			model.addAttribute("treatment",treatmentService.getTreatmentContent(treatmentRequest).get("treatment"));
+			model.addAttribute("treatmentResponse",treatmentService.getTreatmentContent(treatmentRequest).get("treatmentResponse"));
 			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("pagePerRow", pagePerRow);
 			return "treatment/modifyTreatment";

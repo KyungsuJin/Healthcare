@@ -14,10 +14,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.cafe24.kyungsu93.address.service.Address;
+import com.cafe24.kyungsu93.address.service.AddressDao;
+
 
 @Service
 public class MedicalService {
 	@Autowired MedicalDao medicalDao;
+	@Autowired AddressDao addressDao;
 	
 	public void addMedical() {
 		for(int number = 1 ; number < 2193 ; number++) {
@@ -98,5 +102,9 @@ public class MedicalService {
 		medical.setMedicalAddress(medical.getMedicalAddress()+"%");
 		medical.setMedicalName("%"+medical.getMedicalName()+"%");
 		return medicalDao.getMedicalAddressList(medical);
+	}
+
+	public List<Address> getCityList() {
+		return addressDao.getCityList();
 	}
 }

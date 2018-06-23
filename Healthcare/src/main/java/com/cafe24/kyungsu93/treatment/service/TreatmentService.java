@@ -88,8 +88,9 @@ public class TreatmentService {
 	
 	public Map<String, TreatmentResponse> getTreatmentContent(TreatmentRequest treatmentRequest) {
 		Map map = new HashMap<String, Object>();
-		map.put("treatmentResponse", treatmentDao.getTreatmentContent(treatmentRequest));
-		List<TreatmentResponse> list = treatmentDao.getTreatmentClosest(treatmentRequest);
+		TreatmentResponse treatmentResponse = treatmentDao.getTreatmentContent(treatmentRequest);
+		map.put("treatmentResponse", treatmentResponse);
+		List<TreatmentResponse> list = treatmentDao.getTreatmentClosest(treatmentResponse);
 		if(list.size() == 0) {
 			
 		} else if(list.size() < 2) {

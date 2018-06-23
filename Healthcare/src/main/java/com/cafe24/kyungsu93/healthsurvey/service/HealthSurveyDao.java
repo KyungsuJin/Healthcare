@@ -117,6 +117,10 @@ public class HealthSurveyDao {
 		sqlSession.insert(NS+"addHealthSurveyResult", healthSurveyResultRequest);
 	}
 	
+	public void addHealthSurveyRegisterCount(String healthSurveyRegisterNo) {
+		sqlSession.update(NS+"addHealthSurveyRegisterCount", healthSurveyRegisterNo);
+	}
+	
 	public void addHealthSurveyTotalGrade(HealthSurveyTotalGrade healthSurveyTotalGrade) {
 		sqlSession.insert(NS+"addHealthSurveyTotalGrade", healthSurveyTotalGrade);
 	}

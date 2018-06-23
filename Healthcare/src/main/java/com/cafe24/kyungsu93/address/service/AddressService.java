@@ -68,10 +68,6 @@ public class AddressService {
 		}
 	}
 	
-	public List<Address> getCityList() {
-		return addressDao.getCityList();
-	}
-	
 	public List<Address> getDistrictList(Address address) {
 		address.setAddressNo(addressDao.getAddressNo(address));
 		System.out.println("service : " + address.toString());

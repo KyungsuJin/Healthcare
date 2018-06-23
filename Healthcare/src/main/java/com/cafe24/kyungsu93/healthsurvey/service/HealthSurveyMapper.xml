@@ -258,6 +258,14 @@
 		)
 	</insert>
 	
+	<update id="addHealthSurveyRegisterCount" parameterType="String">
+		UPDATE
+			health_survey_register
+		SET
+			health_survey_register_count = health_survey_register_count + 1 
+		WHERE health_survey_register_no = #{healthSurveyRegisterNo}
+	</update>
+	
 	<insert id="addHealthSurveyTotalGrade" parameterType="com.cafe24.kyungsu93.healthsurvey.service.HealthSurveyTotalGrade">
 		INSERT INTO health_survey_total_grade(
 			health_survey_result_no

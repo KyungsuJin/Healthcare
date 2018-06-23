@@ -14,6 +14,13 @@
 <script>
 	$(document).ready(function(){
 		getDistrictList();
+		function removeWindow(){
+			if(opener != null){
+				opener.medicalForm = null
+				self.close();
+			}
+		}
+		
 		//naver 지도 api
 		var map = new naver.maps.Map("map", {
 		    center: new naver.maps.LatLng(35.853386500000,127.122277500000),
@@ -100,51 +107,49 @@
 													+"<td>" + val.medicalType + "</td>"
 													+"<td id='medicalAddress'>" + val.medicalAddress + "</td>"
 													+"<td>" + val.medicalTel + "</td>"
-													+"<td><input type='button' id='showGeo' value='위치보기'></td></tr>");
+													+"<td><input type='button' id='showGeo' value='위치보기'></td>"
+													+"<td><input type='button' class='medicalReturn' value='선택'></td></tr>");
 		        	});
 		        	
 		        },
 		        error : function() { console.log('error');}
 			});
 		});		
-
+		$(document).on("click",".medicalReturn",function(){
+			console.log($(this).closest("td").siblings("#medicalAddress"));
+			console.log($(this).closest("td").siblings("#medicalAddress").text());
+			opener.document.treatmentForm.hospitalAddress.value = $(this).closest("td").siblings("#medicalAddress").text();
+			removeWindow();
+		});
 	});
 </script>
 </head>
 <body>
-	<div class="sidebar-wrapper">
-		<jsp:include page="../include/left.jsp"></jsp:include>
-		<div class="main-panel">
-			<jsp:include page="../include/top.jsp"></jsp:include>
-			<div class="content">
-				<div id="containerMedical" align="center">
-					<div class="row">
-						<div class="col-md-8 col-md-offset-2">
-							<table>
-								<tr>
-									<td>
-										시
-										<select id="cityName" name="cityName">
-											<c:forEach var = "city" items = "${cityList}">
-												<option value="${city.cityName}">
-													${city.cityName}
-												</option>	
-											</c:forEach>
-										</select>
-									</td>
-									<td>	
-										<select id="districtName" name="districtName"></select>
-										
-										병원 명 : <input type="text" id="medicalName" name="medicalName">
-										<input type="button" id="medicalBtn" name="medicalBtn" value="검색">
-									</td>
-								</tr>
-							</table>
-							<div id="map" style="width:100%;height:400px;"></div>
-							<div id="medicalList"></div>
-						</div>
-					</div>
-				</div>
+	<div id="containerMedical" align="center">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<table>
+					<tr>
+						<td>
+							시
+							<select id="cityName" name="cityName">
+								<c:forEach var = "city" items = "${cityList}">
+									<option value="${city.cityName}">
+										${city.cityName}
+									</option>	
+								</c:forEach>
+							</select>
+						</td>
+						<td>	
+							<select id="districtName" name="districtName"></select>
+							
+							병원 명 : <input type="text" id="medicalName" name="medicalName">
+							<input type="button" id="medicalBtn" name="medicalBtn" value="검색">
+						</td>
+					</tr>
+				</table>
+				<div id="map" style="width:100%;height:400px;"></div>
+				<div id="medicalList"></div>
 			</div>
 		</div>
 	</div>

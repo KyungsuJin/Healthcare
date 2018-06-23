@@ -17,12 +17,4 @@ public class AddressController {
 	public void addAddress() {
 		addressService.addAddress();
 	}
-	
-	@RequestMapping(value="/getMedicalList", method=RequestMethod.GET)
-	public String getCityList(Model model) {
-		model.addAttribute("cityList", addressService.getCityList());
-		
-		return "medical/getMedicalList";
-	}
-	
 }

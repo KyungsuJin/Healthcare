@@ -31,63 +31,65 @@
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
 				<div id="healthScreenResultContainer" align="center">
-					<h1>HealthScreenResult</h1>
-					
-					<input id="removeHealthScreenBtn" class="btn btn-default" type="button" value="삭제">
-					<input id="modifyHealthScreenBtn" class="btn btn-default" type="button" value="수정">
-					<table border="1" class="table">
-						<thead>
-							<tr>
-								<th>번호</th>
-								<th>건강검진 날짜</th>
-							</tr>
-						</thead>
-						<tbody>
-								<tr>
-									<td>${healthScreen.healthScreenNo}</td>
-								</tr>
-								<tr>
-									<td>${healthScreen.memberNo}</td>
-								</tr>
-								<tr>
-									<td>${healthScreen.bloodSugarNo}</td>
-								</tr>
-								<tr>
-									<td>${healthScreen.bloodPressureNo}</td>
-								</tr>
-								<tr>
-									<td>${healthScreen.bodyMassIndexNo}</td>
-								</tr>
-								<tr>
-									<td>${healthScreen.totalCholesterol}</td>
-								</tr>
-								<tr>
-									<td>${healthScreen.ldlCholesterol}</td>
-								</tr>
-								<tr>
-									<td>${healthScreen.neutralFat}</td>
-								</tr>
-								<tr>
-									<td>${healthScreen.hdlCholesterol}</td>
-								</tr>
-								<tr>
-									<td>${healthScreen.proteinuria}</td>
-								</tr>
-								<tr>
-									<td>${healthScreen.hemoglobin}</td>
-								</tr>
-								<tr>
-									<td>${healthScreen.serumCreatinine}</td>
-								</tr>
-								<tr>
-									<td>${healthScreen.gfr}</td>
-								</tr>
-								<tr>
-									<td>${healthScreen.healthScreenDate}</td>
-								</tr>
-						</tbody>
-					</table>
-					<input id="getHealthScreenListBtn" class="btn btn-default" type="button" value="목록">
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2">
+							<input id="removeHealthScreenBtn" class="btn btn-default" type="button" value="삭제">
+							<input id="modifyHealthScreenBtn" class="btn btn-default" type="button" value="수정">
+							<table border="1" class="table">
+								<thead>
+									<tr>
+										<th>번호</th>
+										<th>건강검진 날짜</th>
+									</tr>
+								</thead>
+								<tbody>
+										<tr>
+											<td>${healthScreen.healthScreenNo}</td>
+										</tr>
+										<tr>
+											<td>${healthScreen.memberNo}</td>
+										</tr>
+										<tr>
+											<td>${healthScreen.bloodSugarNo}</td>
+										</tr>
+										<tr>
+											<td>${healthScreen.bloodPressureNo}</td>
+										</tr>
+										<tr>
+											<td>${healthScreen.bodyMassIndexNo}</td>
+										</tr>
+										<tr>
+											<td>${healthScreen.totalCholesterol}</td>
+										</tr>
+										<tr>
+											<td>${healthScreen.ldlCholesterol}</td>
+										</tr>
+										<tr>
+											<td>${healthScreen.neutralFat}</td>
+										</tr>
+										<tr>
+											<td>${healthScreen.hdlCholesterol}</td>
+										</tr>
+										<tr>
+											<td>${healthScreen.proteinuria}</td>
+										</tr>
+										<tr>
+											<td>${healthScreen.hemoglobin}</td>
+										</tr>
+										<tr>
+											<td>${healthScreen.serumCreatinine}</td>
+										</tr>
+										<tr>
+											<td>${healthScreen.gfr}</td>
+										</tr>
+										<tr>
+											<td>${healthScreen.healthScreenDate}</td>
+										</tr>
+								</tbody>
+							</table>
+							<input id="getHealthScreenListBtn" class="btn btn-default" type="button" value="목록">
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

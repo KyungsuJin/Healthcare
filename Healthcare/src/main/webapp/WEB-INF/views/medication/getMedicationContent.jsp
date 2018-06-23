@@ -7,12 +7,11 @@
 <style>
 	#removeMedicationBtn{ float: right; }
 	#modifyMedicationBtn{ float: right; }
-	#containerMedication{ width: 1000px; margin: auto; }
-	#containerMedication div{border: 1px solid #bcbcbc; text-align: left;}
-	#medicationContent{ height: 500px; }
+	#medicationContent{ height: 300px; }
 </style>
 <script>
 	$(document).ready(function(){
+		var medicineSeq = $("#medicineNo").val().split("_")[1];
 		$("#medicationListBtn").click(function(){
 			$(location).attr('href', "${pageContext.request.contextPath}/getMedicationList?currentPage=${currentPage}&pagePerRow=${pagePerRow}");
 		});
@@ -26,6 +25,10 @@
 		});
 		$('#calendar').fullCalendar({
 			editable: false
+		});
+		$(document).on("click", "#medicineInfo", function(){
+			var openNewWindow = window.open("about:blank");
+			openNewWindow.location.href = "http://drug.mfds.go.kr/html/bxsSearchDrugProduct.jsp?item_Seq="+medicineSeq;
 		});
 	});
 </script>
@@ -44,23 +47,31 @@
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
 				<div id="containerMedication" align="center">
-					<h1>MedicationContent</h1>
-					<input id="removeMedicationBtn" class="btn btn-default" type="button" value="삭제">
-					<input id="modifyMedicationBtn" class="btn btn-default" type="button" value="수정">
-					<br><br>
-					<div>${medicationResponse.medicationNo}</div>
-					<div>${medicationResponse.medicineNo}</div>
-					<div>${medicationResponse.medicineName}</div>
-					<div>${medicationResponse.memberName}</div>
-					<div>${medicationResponse.medicationStartDate}</div>
-					<div>${medicationResponse.medicationEndDate}</div>
-					<div>${medicationResponse.dosage}</div>
-					<div>${medicationResponse.totalDosage}</div>
-					<div>${medicationResponse.medicationTitle}</div>
-					<div>${medicationResponse.medicationContent}</div>
-					<div>${medicationResponse.medicationDate}</div>
-					<div id='calendar'></div>
-					<input id="medicationListBtn" class="btn btn-default" type="button" value="목록">
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2">
+							<input id="removeMedicationBtn" class="btn btn-default" type="button" value="삭제">
+							<input id="modifyMedicationBtn" class="btn btn-default" type="button" value="수정">
+							<input type="hidden" id="medicineSeq" class="form-control" name="medicineSeq" readonly>
+							<input type="hidden" id="medicineNo" class="form-control" name="medicineNo" value="${medicationResponse.medicineNo}" readonly>
+							<div class="col-md-10">약 이름  <input id="medicineName" class="form-control" name="medicineName" value="${medicationResponse.medicineName}" readonly></input></div>
+							<div class="col-md-2"><input type="button" id="medicineInfo" class="btn btn-default" value="자세히"></div>
+						</div>
+						<div class="col-md-8 col-md-offset-2">
+							<div class="col-md-5">시작  <input id="medicationStartDate" class="form-control" type="date" name="medicationStartDate" value="${medicationResponse.medicationStartDate}" readonly></div>
+							<div class="col-md-2" style="margin-top : 30px">~</div>
+							<div class="col-md-5">끝  <input id="medicationEndDate" class="form-control" type="date" name="medicationEndDate" value="${medicationResponse.medicationEndDate}" readonly></div>
+						</div>
+						<div class="col-md-8 col-md-offset-2">
+							<div class="col-md-5">일일 복용량  <input id="dosage" class="form-control" type="number" name="dosage" value="${medicationResponse.dosage}" readonly></div>
+							<div class="col-md-5 col-md-offset-2">총 복용량  <input id="totalDosage" class="form-control" type="text" name="totalDosage" value="${medicationResponse.totalDosage}" readonly></div>
+						</div>
+						<div id='calendar' class="col-md-8 col-md-offset-2"></div>
+						<div class="col-md-8 col-md-offset-2">
+							<div>복용 제목  <input id="medicationTitle" class="form-control" name="medicationTitle" value="${medicationResponse.medicationTitle}" readonly></input></div>
+							<div>복용 내용  <textarea id="medicationContent" class="form-control" name="medicationContent" readonly>${medicationResponse.medicationContent}</textarea></div>
+							<input id="medicationListBtn" class="btn btn-default" type="button" value="목록">
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

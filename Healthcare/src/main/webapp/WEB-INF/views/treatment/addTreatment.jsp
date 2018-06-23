@@ -5,7 +5,6 @@
 <head>
 <jsp:include page="../include/header.jsp"></jsp:include>
 <style>
-	#containerTreatment{ width: 1000px; margin: auto; }
 	.fileChooseList { display: inline-block !important; }
 	#treatmentContent { height: 300px; }
 </style>
@@ -55,6 +54,14 @@
 		$("#cancelBtn").click(function(){
 			$(location).attr('href', "${pageContext.request.contextPath}/getTreatmentList?currentPage=${currentPage}&pagePerRow=${pagePerRow}");
 		});
+		$("#hospitalAddress").click(function(){
+			window.name = "parentForm";
+			window.open("${pageContext.request.contextPath}/getPopMedicalList"
+					,"medicalForm", "width=600, height=430, resizable=no, scrollbars=no");
+		});
+		
+		
+		
 	});
 		
 </script>
@@ -66,23 +73,25 @@
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
 				<div id="containerTreatment" align="center">
-					<h1>addTreatment</h1>
-					<form id="treatmentForm" action="${pageContext.request.contextPath}/addTreatment" method="post" enctype="multipart/form-data">
-						<input type="hidden" name="memberNo" value="${memberNo}">
-						
-						<div>treatmentDepartment : <input id="treatmentDepartment" class="form-control" type="text" name="treatmentDepartment" value="${treatment.treatmentDepartment}"></div>
-						<div>hospitalName : <input id="hospitalName" class="form-control" type="text" name="hospitalName" value="${treatment.hospitalName}"></div>
-						<div>doctorName : <input id="doctorName" class="form-control" type="text" name="doctorName" value="${treatment.doctorName}"></div>
-						<div>hospitalAddress : <input id="hospitalAddress" class="form-control" type="text" name="hospitalAddress" value="${treatment.hospitalAddress}"></div>
-						
-						<div>treatmentTitle : <input id="treatmentTitle" class="form-control" type="text" name="treatmentTitle" value="${treatment.treatmentTitle}"></div>
-						<div>treatmentContent : <textarea id="treatmentContent" class="form-control" name="treatmentContent" value="${treatment.treatmentContent}"></textarea></div>
-						
-						<div><input id="fileChoose" class="fileChooseList" type="file" name="multipartFile"></div>
-						<input type="hidden" id="fileLine">
-						<div id="submitFile">
-							<button id="treatmentBtn" class="btn btn-default" type="button">저장</button>
-							<input id="cancelBtn" class="btn btn-default" type="button" value="취소">
+					<form id="treatmentForm" name="treatmentForm" action="${pageContext.request.contextPath}/addTreatment" method="post" enctype="multipart/form-data">
+						<div class="row">
+							<div class="col-md-8 col-md-offset-2">
+								<input type="hidden" name="memberNo" value="${memberNo}">
+								<div class="col-md-4">병원 명 : <input id="hospitalName" class="form-control" type="text" name="hospitalName" value="${treatment.hospitalName}"></div>
+								<div class="col-md-4">진료 과 : <input id="treatmentDepartment" class="form-control" type="text" name="treatmentDepartment" value="${treatment.treatmentDepartment}"></div>
+								<div class="col-md-4">의사 명 : <input id="doctorName" class="form-control" type="text" name="doctorName" value="${treatment.doctorName}"></div>
+								<div>병원 주소 : <input id="hospitalAddress" class="form-control" type="text" name="hospitalAddress" value="${treatment.hospitalAddress}"></div>
+								
+								<div>진료 제목 : <input id="treatmentTitle" class="form-control" type="text" name="treatmentTitle" value="${treatment.treatmentTitle}"></div>
+								<div>진료 내용 : <textarea id="treatmentContent" class="form-control" name="treatmentContent">${treatment.treatmentContent}</textarea></div>
+								
+								<div><input id="fileChoose" class="fileChooseList" type="file" name="multipartFile"></div>
+								<input type="hidden" id="fileLine">
+								<div id="submitFile">
+									<button id="treatmentBtn" class="btn btn-default" type="button">저장</button>
+									<input id="cancelBtn" class="btn btn-default" type="button" value="취소">
+								</div>
+							</div>
 						</div>
 					</form>
 				</div>

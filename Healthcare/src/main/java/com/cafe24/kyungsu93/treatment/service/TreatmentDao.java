@@ -47,7 +47,7 @@ public class TreatmentDao {
 		sqlSession.update(NS+"modifyTreatment",treatmentRequest);
 	}
 	
-	public List<TreatmentResponse> getTreatmentClosest(TreatmentRequest treatmentRequest) {
-		return sqlSession.selectList(NS+"getTreatmentClosest", treatmentRequest);
+	public List<TreatmentResponse> getTreatmentClosest(TreatmentResponse treatmentResponse) {
+		return sqlSession.selectList(NS+"getTreatmentClosest", treatmentResponse);
 	}
 }
