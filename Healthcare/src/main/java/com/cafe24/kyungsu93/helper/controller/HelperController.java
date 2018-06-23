@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.cafe24.kyungsu93.helper.service.ComplainRequest;
+//import com.cafe24.kyungsu93.helper.service.ComplainRequest;
 
 @Controller
 public class HelperController {
