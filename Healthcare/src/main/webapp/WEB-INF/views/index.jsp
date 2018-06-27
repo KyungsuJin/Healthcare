@@ -4,25 +4,205 @@
 <html lang="en" >
 
 <head>
-
-  <%--  <meta charset="utf-8" />
-   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png" />
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Material Dashboard by Creative Tim</title>
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-    <meta name="viewport" content="width=device-width" />
-    <!-- Bootstrap core CSS     -->
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/templatecss1/bootstrap.min.css">
-    <!--  Material Dashboard CSS    -->
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/templatecss1/material-dashboard.css?v=1.2.0">
-    <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/templatecss1/demo.css">
-    <!--     Fonts and icons     -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons" rel='stylesheet'>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> --%>
+  	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   	<jsp:include page="include/header.jsp"></jsp:include>
+  	<script>
+	  	$(document).ready(function(){
+	  		ajaxBodyMassIndexChart();
+	  		ajaxData();
+	  		$(document).on("click","#miniBodyMassIndexChart",function(){
+	  			ajaxBodyMassIndexChart();
+	  		});
+	  		/* BMI 미리보기 차트 */
+	  		function ajaxBodyMassIndexChart(){
+		  		$.ajax({
+					type: "POST"
+					,url : "${pageContext.request.contextPath}/bodyMassIndexChart"
+					,data: {"memberNo" : $("#memberNo").val()}
+					,dataType: "json"
+					,success:function(result){
+						$("#miniBodyMassIndexChart").remove();
+						$("#miniChartChange").append('<a href="#" id="miniBodyWeightChart">몸무게 차트보기</a>');
+						console.log(result);
+						if(result.length>=2){
+							//구글 차트
+							google.charts.load('current', {'packages':['corechart']});
+							google.charts.setOnLoadCallback(drawChart);
+							var chartDateformat = 'yy년MM월dd일';
+							var chartLineCount = 15;
+						      function drawChart() {
+						        var data = new google.visualization.DataTable();
+						        
+						        data.addColumn('datetime', '등록일[day]');
+						        data.addColumn('number','BMI');
+						        data.addColumn('number','정상');
+						        data.addColumn('number','저체중');
+						        data.addColumn('number','과체중');
+						        data.addColumn('number','비만');
+						       var nomal=21;
+						       var underWeight =18.5;
+						       var overWeight =23;
+						       var obese =25;
+						       for(var i =0;i<result.length;i++){
+						    	   data.addRow([new Date(result[i].bodyDate),(result[i].bodyMassIndex),nomal,underWeight,overWeight,obese]);
+						       }
+						        var options = {
+						        		title : 'BMI 차트',
+										hAxis: {
+											format: chartDateformat, 
+											gridlines:{
+												count:chartLineCount,
+												units: {                      
+													years : {format: ['yyyy년']},
+													months: {format: ['MM월']},
+													days  : {format: ['dd일']},
+													hours : {format: ['HH시']}
+													}
+												}
+											}
+						        };
+						        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+						        window.addEventListener('resize', function() { chart.draw(data, options); }, false);
+						        chart.draw(data, options);
+						      }
+						}else{
+					    	  $("#curve_chart").append('<a href="${pageContext.request.contextPath}/addBodyMassIndex">체질량 등록하기</a>');
+					    }
+					}
+				});
+	  		}
+		  		/* 몸무게 미리보기  차트 */
+		  		$(document).on("click","#miniBodyWeightChart",function(){
+					$.ajax({
+						type: "POST"
+						,url : "${pageContext.request.contextPath}/bodyMassIndexChart"
+						,data: {"memberNo" : $("#memberNo").val()}
+						,dataType: "json"
+						,success:function(result){
+							$("#miniBodyWeightChart").remove();
+							$("#miniChartChange").append('<a href="#" id="miniBodyMassIndexChart">BMI차트 보기</a>');
+							console.log(result);
+							if(result.length>=2){
+								//구글 차트
+								google.charts.load('current', {'packages':['corechart']});
+								google.charts.setOnLoadCallback(drawChart);
+								var chartDateformat = 'yy년MM월dd일';
+								var chartLineCount = 10;
+				        		var controlLineCount    = 10;
+							      function drawChart() {
+							        var data = new google.visualization.DataTable();
+							        
+							        data.addColumn('datetime', '등록일[day]');
+							        data.addColumn('number','체중');
+							       for(var i =0;i<result.length;i++){
+							    	   data.addRow([new Date(result[i].bodyDate),(result[i].bodyWeight)]);
+							       }
+							        var options = {
+							        		title : '몸무게 차트',
+											hAxis: {
+												format: chartDateformat, 
+												gridlines:{
+													count:chartLineCount,
+													units: {                      
+														years : {format: ['yyyy년']},
+														months: {format: ['MM월']},
+														days  : {format: ['dd일']},
+														hours : {format: ['HH시']}
+														}
+													}
+												}
+			
+							        };
+							        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+							        window.addEventListener('resize', function() { dashboard.draw(data); }, false);
+							        chart.draw(data, options);
+							      }
+								}else{
+							    	  $("#curve_chart").append('<a href="${pageContext.request.contextPath}/addBodyMassIndex">체질량 등록하기</a>');
+							    }
+							}
+						});
+		  		});
+		  		function ajaxData() {
+		  			var request = $.ajax({
+		  			type : "POST",
+		  			url : "${pageContext.request.contextPath}/bloodPressureChart"
+		  			,data: {"memberNo" : $("#memberNo").val()}
+		  	        });   
+		  		//ajax 실행 값 확인
+		  		request.done(function( msg ) {
+		  			//받아온 데이터 값 확인. 
+		  			console.log(msg);
+		  			
+		  			//구글 차트
+		  			google.charts.load('current', {'packages':['line']}); //차트 스타일
+		  			google.charts.setOnLoadCallback(drawChart);
+		  			var chartDateformat = 'yy년MM월dd일';
+		  			var chartLineCount = 10;
+		  				function drawChart() {
+		  					//배열값 확인.
+		  					if(msg!=undefined && Array.isArray(msg)){
+		  						console.log('array 확인');
+		  						console.log(msg);
+		  						console.log(msg.length);
+
+		  						for(var i=0; i < msg.length; i++){
+		  						console.log("1:"+msg[i].systolicPressure);
+		  						console.log("2:"+msg[i].diastolicPressure);
+		  						}
+		  					}else{
+		  						console.log('데이터 없음');
+		  						console.log(msg);
+		  					}
+		  					var data = new google.visualization.DataTable();
+		  					//하단의 등록일을 표시해 줄 컬럼
+		  					data.addColumn('datetime', '등록일[day]');
+		  					//데이터값(그래프 수치)
+		  					data.addColumn('number', '수축기혈압');  
+		  					data.addColumn('number', '이완기혈압');
+
+		  					//열 추가 (컬럼 등록순으로 추가 등록일,수축기혈압,이완기혈압)
+		  					for(var i=0; i < msg.length; i++){
+		  						data.addRow([new Date(msg[i].bloodPressureDate),parseInt(msg[i].systolicPressure),parseInt(msg[i].diastolicPressure)]);
+		  					}
+		  					//그래프 옵션 설정
+		  					var options = {
+		  						//차트 상단의 제목 설정
+		  						title : '혈압 차트',
+		  	                      series: {
+		  	                    	  0: {axis: 'diastolicPressure'},
+		  	                    	  1: {axis: 'systolicPressure'}
+		  							},
+		  						axes: {
+		  							y: {
+		  								diastolicPressure: {label: '이완기혈압'},
+		  								systolicPressure: {label: '수축기혈압'}
+		  							}
+		  						},
+		  	                      hAxis: {
+		  							format: chartDateformat, 
+		  							gridlines:{
+		  								count:chartLineCount,
+		  								units: {                      
+		  									years : {format: ['yyyy년']},
+		  									months: {format: ['MM월']},
+		  									days  : {format: ['dd일']},
+		  									hours : {format: ['HH시']}
+		  									}
+		  								}
+		  							}
+		  						};
+		  					  //입력값을 화면에 뿌려주는 역할.
+		  				      var chart = new google.charts.Line(document.getElementById('linechart_material'));
+		  				    window.addEventListener('resize', function() { chart.draw(data, options); }, false);
+		  				      chart.draw(data, google.charts.Line.convertOptions(options));
+		  	            	}
+		  			});
+		  		}
+		  		
+	  	});
+	  	
+	</script>
 </head>
 
 <body>
@@ -103,53 +283,50 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="card">
-                                <div class="card-header card-chart" data-background-color="green">
-                                    <div class="ct-chart" id="dailySalesChart"></div>
-                                </div>
-                                <div class="card-content">
-                                    <h4 class="title">Daily Sales</h4>
-                                    <p class="category">
-                                        <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">access_time</i> updated 4 minutes ago
-                                    </div>
-                                </div>
+                                
+                                <c:if test="${sessionScope.memberSessionLevel eq null}">
+                                    	<div class="ct-chart" id="dailySalesChart"></div>
+	                                <div class="card-content">
+	                                    <h4 class="title">자신의 체질량 차트</h4>
+	                                    <p class="category">
+	                                        <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
+	                                </div>
+	                                <div class="card-footer">
+	                                    <div class="stats">
+	                                        <i class="material-icons">access_time</i> updated 4 minutes ago
+	                                    </div>
+	                                </div>
+	                            </c:if>
+	                            <c:if test="${sessionScope.memberSessionLevel eq 2}">
+                                    	<div class="ct-chart" id="curve_chart">
+                                    	</div>
+	                                <div class="card-content">
+	                                    <h4 class="title" style="text-align:center;">자신의 차트</h4>
+	                                </div>
+	                                <div class="card-footer">
+	                                    <div class="stats" id="miniChartChange">
+	                                    </div>
+	                                </div>
+	                            </c:if>
+                                
                             </div>
                         </div>
-                        <div class="col-md-4">
+                       
+                        <div class="col-md-6">
                             <div class="card">
-                                <div class="card-header card-chart" data-background-color="orange">
-                                    <div class="ct-chart" id="emailsSubscriptionChart"></div>
-                                </div>
-                                <div class="card-content">
-                                    <h4 class="title">Email Subscriptions</h4>
-                                    <p class="category">Last Campaign Performance</p>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">access_time</i> campaign sent 2 days ago
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-header card-chart" data-background-color="red">
-                                    <div class="ct-chart" id="completedTasksChart"></div>
-                                </div>
-                                <div class="card-content">
-                                    <h4 class="title">Completed Tasks</h4>
-                                    <p class="category">Last Campaign Performance</p>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">access_time</i> campaign sent 2 days ago
-                                    </div>
-                                </div>
+                            	<c:if test="${sessionScope.memberSessionLevel eq 2}">
+                                    <div class="ct-chart" id="linechart_material"></div>
+	                                <div class="card-content">
+	                                    <h4 class="title"  style="text-align:center;">혈압 차트</h4>
+	                                </div>
+	                                <div class="card-footer">
+	                                    <div class="stats" >
+	                                        <a href="#">혈당 차트보기</a>
+	                                    </div>
+	                                </div>
+                                </c:if>
                             </div>
                         </div>
                     </div>
@@ -423,24 +600,32 @@
                 <div class="container-fluid">
                     <nav class="pull-left">
                         <ul>
+                        	<li>
+                                 	팀원 소개
+                            </li>
                             <li>
                                 <a href="#">
-                                    Home
+                                 	진경수
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    Company
+                                   	김문기
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    Portfolio
+                                   	 도정만
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                    Blog
+                                   	 나윤주
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                   	 박지하
                                 </a>
                             </li>
                         </ul>
@@ -450,39 +635,16 @@
                         <script>
                             document.write(new Date().getFullYear())
                         </script>
-                        <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
+                        <a href="https://github.com/KyungsuJin/Healthcare">건강매니지먼트</a>, github 바로가기
                     </p>
                 </div>
             </footer>
         </div>
     </div>
 </body>
-<%-- <!--   Core JS Files   -->
-<script src="<c:url value="/templatejs1/jquery-3.2.1.min.js" />"></script>
-
-<script src="<c:url value="/templatejs1/bootstrap.min.js" />"></script>
-<script src="<c:url value="/templatejs1/material.min.js" />"></script>
-
-<script src="<c:url value="/templatejs1/chartist.min.js" />"></script>
-<!--  Dynamic Elements plugin -->
-<script src="<c:url value="/templatejs1/arrive.min.js" />"></script>
-<!--  PerfectScrollbar Library -->
-<script src="<c:url value="/templatejs1/perfect-scrollbar.jquery.min.js" />"></script>
-<!--  Notifications Plugin    -->
-<script src="<c:url value="/templatejs1/bootstrap-notify.js" />"></script>
-<!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-<!-- Material Dashboard javascript methods -->
-<script src="<c:url value="/templatejs1/material-dashboard.js?v=1.2.0" />"></script>
-<!-- Material Dashboard DEMO methods, don't include it in your project! -->
-<script src="<c:url value="/templatejs1/demo.js" />"></script> --%>
-
 <script type="text/javascript">
     $(document).ready(function() {
-
-        // Javascript method's body can be found in assets/js/demos.js
         demo.initDashboardPageCharts();
-
     });
 </script>
 

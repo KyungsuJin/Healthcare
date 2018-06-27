@@ -78,13 +78,13 @@
 							google.charts.load('current', {'packages':['corechart']});
 							google.charts.setOnLoadCallback(drawChart);
 							var chartDateformat = 'yy년MM월dd일';
-							var chartLineCount = 30;
+							var chartLineCount = 10;
+			        		var controlLineCount    = 10;
 						      function drawChart() {
 						        var data = new google.visualization.DataTable();
 						        
 						        data.addColumn('datetime', '등록일[day]');
 						        data.addColumn('number','체중');
-
 						       for(var i =0;i<result.length;i++){
 						    	   data.addRow([new Date(result[i].bodyDate),(result[i].bodyWeight)]);
 						       }
@@ -104,6 +104,7 @@
 											}
 		
 						        };
+					           
 						        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 						        chart.draw(data, options);
 						      }
@@ -144,6 +145,7 @@
 				
 			</div>
 			<div id="curve_chart" style="width: 100%; height: 500px;"></div>
+			<div id="controlsArea" style="padding:0px 20px 0px 0px;"></div>
 		</div>
 	</div>
 </body>

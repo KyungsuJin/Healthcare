@@ -83,33 +83,11 @@
 	                            <p>Notifications</p>
 	                        </a>
 	                    </li>
-	                    <li class="active-pro">
-	                        <a href="upgrade.html">
-	                            <i class="material-icons">unarchive</i>
-	                            <p>Upgrade to PRO</p>
-	                        </a>
-	                    </li>
 	                </ul>
                 </c:if>
+                
                <!--일반회원 ,그룹장 레벨 2 메뉴  -->
 				 <c:if test="${!empty sessionScope.memberSessionId && sessionScope.memberSessionLevel==2}">
-				<%--  <ul class="nav"  data-placement="right">
-	                    <li>
-	                       <a href="#searchMedical" data-toggle="collapse">
-	                            <i class="material-icons">person</i>
-	                            <p>검색</p>
-	                        </a>
-	                    </li>
-	                    <ul class="sidenav-second-level collapse" id="searchMedical" style="list-style:none;">
-	                    	<li>
-	                    		<a href="${pageContext.request.contextPath}/getMedicineList">약품검색</a>
-				            </li>
-				            <li>
-				            	<a href="${pageContext.request.contextPath}/getMedicalList">병원,약국 검색</a>
-				            </li>
-				        </ul>	
-				         --%>
-				         
 					<ul class="nav" data-placement="right">
 	                    <li>
 	                       <a href="#exerciseMatching" data-toggle="collapse">
@@ -174,12 +152,6 @@
 	                            <p>진료기록</p>
 	                        </a>
 	                    </li>
-	                    <li class="active-pro">
-	                        <a href="${pageContext.request.contextPath}/">
-	                            <i class="material-icons">unarchive</i>
-	                            <p>Upgrade to PRO</p>
-	                        </a>
-	                    </li>
 	                </ul>
 				</c:if>
 				<!-- 의사회원 레벨 3메뉴 -->
@@ -225,12 +197,6 @@
 	                        <a href="#">
 	                            <i class="material-icons text-gray">notifications</i>
 	                            <p>**</p>
-	                        </a>
-	                    </li>
-	                    <li class="active-pro">
-	                        <a href="${pageContext.request.contextPath}/">
-	                            <i class="material-icons">unarchive</i>
-	                            <p>Upgrade to PRO</p>
 	                        </a>
 	                    </li>
 	                </ul>
@@ -298,12 +264,6 @@
 	                            <p>**</p>
 	                        </a>
 	                    </li>
-	                    <li class="active-pro">
-	                        <a href="${pageContext.request.contextPath}/">
-	                            <i class="material-icons">unarchive</i>
-	                            <p>Upgrade to PRO</p>
-	                        </a>
-	                    </li>
 	                </ul>
 				</c:if>
 				<!-- 비회원 메뉴 -->
@@ -353,12 +313,6 @@
 	                        <a href="#">
 	                            <i class="material-icons text-gray">notifications</i>
 	                            <p>Notifications</p>
-	                        </a>
-	                    </li>
-	                    <li class="active-pro">
-	                        <a href="#">
-	                            <i class="material-icons">unarchive</i>
-	                            <p>Upgrade to PRO</p>
 	                        </a>
 	                    </li>
 	                </ul>
