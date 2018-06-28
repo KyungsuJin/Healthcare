@@ -88,32 +88,39 @@ $(document).ready(function(){
 						<td>내용</td>
 						<td>${map.exerciseFeedbackDetail.exerciseFeedbackRequestContent }</td>
 				</table>
+				<c:if test="${sessionScope.memberSessionNo == map.exerciseFeedbackDetail.teacherNo }">
 				<div>
 					<c:if test="${map.approvalResult eq 0}"> 
-						<button class="btn btn-sm btn-default" onclick="acceptBtn()">수락하기</button>
-						<button class="btn btn-sm btn-default" onclick="deniedBtn()">거절하기</button>
+						<div>
+							<button class="btn btn-sm btn-default" onclick="acceptBtn()">수락하기</button>
+							<button class="btn btn-sm btn-default" onclick="deniedBtn()">거절하기</button>
+						</div>
 					</c:if>
 					<c:if test="${map.approvalResult>0 }">
-						${map.exerciseFeedbackDetail.memberName }님의 요청을 ${map.exerciseFeedbackResultDetail.exerciseFeedbackApprovalDate }에 ${map.exerciseFeedbackResultDetail.exerciseFeedbackApproval}하였습니다. 
+							<div class="form-group">
+								<label>${map.exerciseFeedbackDetail.memberName }님의 요청을 ${map.exerciseFeedbackResultDetail.exerciseFeedbackApprovalDate }에 ${map.exerciseFeedbackResultDetail.exerciseFeedbackApproval}하였습니다.</label> 
+							</div>
 						<c:if test="${map.exerciseFeedbackResultDetail.exerciseFeedbackResult eq '대기'}">
-							<br>아직 ${map.exerciseFeedbackDetail.memberName }님의 운동 피드백 요청에 대한 답변을 하지 않았습니다. 
-							<br>
-							<a type="button" class="btn btn-sm btn-default" href="${pageContext.request.contextPath}/exerciseFeedResponse?exerciseFeedbackRequestNo=${map.nextExerciseFeedback.exerciseFeedbackRequestNo}">운동 피드백 답변하기</a>
+							<div class="form-group">
+								<label>아직 ${map.exerciseFeedbackDetail.memberName }님의 운동 피드백 요청에 대한 답변을 하지 않았습니다.</label> 
+								<a type="button" class="btn btn-sm btn-default" href="${pageContext.request.contextPath}/exerciseFeedResponse?exerciseFeedbackRequestNo=${map.nextExerciseFeedback.exerciseFeedbackRequestNo}">운동 피드백 답변하기</a>
+							</div>
 						</c:if>
 					</c:if>
 				</div>
+				</c:if>
 				<div>
 					<c:if test="${map.countNext > 0 }">
 						<p>다음글 : <a type="button" href="${pageContext.request.contextPath}/exerciseFeedbackRequestDetail?exerciseFeedbackRequestNo=${map.nextExerciseFeedback.exerciseFeedbackRequestNo}">${map.nextExerciseFeedback.exerciseFeedbackRequestTitle }</a></p>
 					</c:if>
 					<c:if test="${map.countNext eq 0 }">
-						<p>다음글이 없습니다.</p>
+						<p>다음글 : 다음글이 없습니다.</p>
 					</c:if>
 					<c:if test="${map.countPrev >0 }">
 						<p>이전글 : <a type="button" href="${pageContext.request.contextPath}/exerciseFeedbackRequestDetail?exerciseFeedbackRequestNo=${map.prevExerciseFeedback.exerciseFeedbackRequestNo}">${map.prevExerciseFeedback.exerciseFeedbackRequestTitle }</a></p>
 					</c:if>
 					<c:if test="${map.countPrev eq 0 }">
-						<p>이전글이 없습니다.</p>
+						<p>이전글 : 이전글이 없습니다.</p>
 					</c:if>
 				</div>
 				<div>

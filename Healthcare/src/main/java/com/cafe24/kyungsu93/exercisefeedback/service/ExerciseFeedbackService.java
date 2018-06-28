@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cafe24.kyungsu93.payment.service.PointCharging;
 import com.cafe24.kyungsu93.payment.service.PointChargingDao;
@@ -30,9 +33,15 @@ public class ExerciseFeedbackService {
 	 * @param pagePerRow
 	 * @return
 	 */
-	public Map<String,Object> exerciseFeedbackRequestListSearch(String keyOption, String keyWord,int currentPage, int pagePerRow) {
+	public Map<String,Object> exerciseFeedbackRequestListSearch(HttpSession session, String keyOption, String keyWord,int currentPage, int pagePerRow) {
 		logger.debug("ExerciseFeedbackService - exerciseFeedbackRequestListSearch 실행");
 		Map<String,Object> map = new HashMap<String,Object>();
+		String memberNo = (String) session.getAttribute("memberSessionNo");
+		int sessionLevel = (Integer) session.getAttribute("memberSessionLevel");
+		logger.debug("memberNo:"+memberNo);
+		logger.debug("sessionLevel:"+sessionLevel);
+		map.put("sessionLevel", sessionLevel);
+		map.put("memberNo", memberNo);
 		int beginRow = (currentPage-1)*pagePerRow;
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
@@ -171,9 +180,15 @@ public class ExerciseFeedbackService {
 	 * @param pagePerRow
 	 * @return
 	 */
-	public Map<String,Object> exerciseFeedbackListSearchDate(String startDate, String endDate,int currentPage, int pagePerRow) {
+	public Map<String,Object> exerciseFeedbackListSearchDate(HttpSession session,String startDate, String endDate,int currentPage, int pagePerRow) {
 		logger.debug("ExerciseFeedbackService - exerciseFeedbackListSearchDate 실행");
 		Map<String,Object> map = new HashMap<String,Object>();
+		String memberNo = (String) session.getAttribute("memberSessionNo");
+		int sessionLevel = (Integer) session.getAttribute("memberSessionLevel");
+		logger.debug("memberNo:"+memberNo);
+		logger.debug("sessionLevel:"+sessionLevel);
+		map.put("sessionLevel", sessionLevel);
+		map.put("memberNo", memberNo);
 		int beginRow = (currentPage-1)*pagePerRow;
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
@@ -252,9 +267,16 @@ public class ExerciseFeedbackService {
 	 * @param exerciseFeedbackRequestNo
 	 * @return returnMap
 	 */
-	public Map<String, Object> exerciseFeedbackRequestDetail(String exerciseFeedbackRequestNo) {
+	public Map<String, Object> exerciseFeedbackRequestDetail(HttpSession session,String exerciseFeedbackRequestNo) {
 		logger.debug("ExerciseFeedbackService - exerciseFeedbackRequestDetail실행");	
 		Map<String,Object> returnMap = new HashMap<String,Object>();
+		Map<String,Object> map = new HashMap<String,Object>();
+		String memberNo = (String) session.getAttribute("memberSessionNo");
+		int sessionLevel = (Integer) session.getAttribute("memberSessionLevel");
+		logger.debug("memberNo:"+memberNo);
+		logger.debug("sessionLevel:"+sessionLevel);
+		map.put("sessionLevel", sessionLevel);
+		map.put("memberNo", memberNo);
 		//운동 피드백 요청글 상세 보기
 		ExerciseFeedbackRequest exerciseFeedbackDetail = exerciseFeedbackDao.exerciseFeedbackRequestDetail(exerciseFeedbackRequestNo);
 		returnMap.put("exerciseFeedbackDetail", exerciseFeedbackDetail);
@@ -272,25 +294,25 @@ public class ExerciseFeedbackService {
 		int countPrev = 0;
 		int countNext = 0;
 		//이전글 다음글 카운트 
-		countPrev = exerciseFeedbackDao.prevExerciseFeedbackDetailCount(exerciseFeedbackRequestNo);
-		countNext = exerciseFeedbackDao.nextExerciseFeedbackDetailCount(exerciseFeedbackRequestNo);
+		countPrev = exerciseFeedbackDao.prevExerciseFeedbackDetailCount(map);
+		countNext = exerciseFeedbackDao.nextExerciseFeedbackDetailCount(map);
 		if(countPrev !=0) {
 			if(countNext == 0) {
 				//다음글이 없을 경우
 				logger.debug("다음글이 없습니다.");
-				ExerciseFeedbackRequest prevExerciseFeedback = exerciseFeedbackDao.prevExerciseFeedbackDetail(exerciseFeedbackRequestNo);
+				ExerciseFeedbackRequest prevExerciseFeedback = exerciseFeedbackDao.prevExerciseFeedbackDetail(map);
 				returnMap.put("prevExerciseFeedback", prevExerciseFeedback);
 				returnMap.put("countNext", countNext);
 				returnMap.put("countPrev", countPrev);
 			}			
 		}if(countNext != 0){
-			ExerciseFeedbackRequest nextExerciseFeedback = exerciseFeedbackDao.nextExerciseFeedbackDetail(exerciseFeedbackRequestNo);
+			ExerciseFeedbackRequest nextExerciseFeedback = exerciseFeedbackDao.nextExerciseFeedbackDetail(map);
 			returnMap.put("nextExerciseFeedback", nextExerciseFeedback);
 			returnMap.put("countNext", countNext);
 			if(countPrev != 0){
 				//둘다있을경우
 				logger.debug("이전글,다음글이 있습니다.");
-				ExerciseFeedbackRequest prevExerciseFeedback = exerciseFeedbackDao.prevExerciseFeedbackDetail(exerciseFeedbackRequestNo);
+				ExerciseFeedbackRequest prevExerciseFeedback = exerciseFeedbackDao.prevExerciseFeedbackDetail(map);
 				returnMap.put("prevExerciseFeedback", prevExerciseFeedback);
 				returnMap.put("countPrev", countPrev);
 			}else {
@@ -308,36 +330,7 @@ public class ExerciseFeedbackService {
 	 */
 	public void exerciseFeedbackRequest(ExerciseFeedbackRequest exerciseFeedbackRequest) {
 		logger.debug("ExerciseFeedbackService - exerciseFeedbackRequest실행");		
-		String exerciseFeedbackRequestNo = exerciseFeedbackRequest.getExerciseFeedbackRequestNo();
-		String exerciseFeedbackRequestTitle = exerciseFeedbackRequest.getExerciseFeedbackRequestTitle();
-		String exerciseFeedbackRequestContent = exerciseFeedbackRequest.getExerciseFeedbackRequestContent();
-		exerciseFeedbackRequest.setExerciseFeedbackRequestTitle(exerciseFeedbackRequestTitle);
-		exerciseFeedbackRequest.setExerciseFeedbackRequestContent(exerciseFeedbackRequestContent);
-		try {
-			if(exerciseFeedbackRequestNo == null) {
-				//그룹전체검색
-				int count = 0;
-				count = exerciseFeedbackDao.exerciseFeedbackRequestTotalCount();
-				if(count > 0) {
-					int result = 0;
-					String exerciseFeedbackNo_temp = "exercise_feedback_request_";
-					//그룹 번호 최대값 검색
-					result = exerciseFeedbackDao.exerciseFeedbackRequestNo();
-					if(result > 0) {
-						if(1 <= result) {
-							result++;
-						}
-						exerciseFeedbackRequestNo = exerciseFeedbackNo_temp + result; 
-					}
-				}else {
-					exerciseFeedbackRequestNo = "exercise_feedback_request_1";
-				}
-			}
-			exerciseFeedbackRequest.setExerciseFeedbackRequestNo(exerciseFeedbackRequestNo);
-			
-		}catch(NullPointerException e) {
-			e.printStackTrace();
-		}
+		exerciseFeedbackRequest.setExerciseFeedbackRequestNo("exercise_feedback_request_"+(exerciseFeedbackDao.exerciseFeedbackRequestNo()+1));
 		exerciseFeedbackDao.exerciseFeedbackRequest(exerciseFeedbackRequest);
 	}
 	
@@ -347,16 +340,22 @@ public class ExerciseFeedbackService {
 	 * @param pagePerRow
 	 * @return
 	 */
-	public Map<String, Object> exerciseFeedbackList(int currentPage, int pagePerRow){
+	public Map<String, Object> exerciseFeedbackList(HttpSession session,int currentPage, int pagePerRow){
 		logger.debug("ExerciseFeedbackService - exerciseFeedbackList 실행");
-		Map<String,Integer> map = new HashMap<String,Integer>();
+		Map<String,Object> map = new HashMap<String,Object>();
 		int beginRow = (currentPage-1)*pagePerRow;
+		String memberNo = (String) session.getAttribute("memberSessionNo");
+		int sessionLevel = (Integer) session.getAttribute("memberSessionLevel");
+		logger.debug("memberNo:"+memberNo);
+		logger.debug("sessionLevel:"+sessionLevel);
+		map.put("sessionLevel", sessionLevel);
+		map.put("memberNo", memberNo);
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
 		//운동피드백 리스트
 		List<ExerciseFeedbackRequest> list = exerciseFeedbackDao.exerciseFeedbackList(map);
 		//게시판 전체 게시물 수
-		int total = exerciseFeedbackDao.exerciseFeedbackRequestTotalCount();
+		int total = exerciseFeedbackDao.exerciseFeedbackListTotalCount(map);
 		int lastPage = total/pagePerRow;
         if(total % pagePerRow != 0) {
             lastPage++;
@@ -428,6 +427,7 @@ public class ExerciseFeedbackService {
 	public Map<String, Object> exerciseFeedbackPtList(int currentPage, int pagePerRow){
 		logger.debug("ExerciseFeedbackService - exerciseFeedbackPtList 실행");
 		Map<String,Integer> map = new HashMap<String,Integer>();
+
 		int beginRow = (currentPage-1)*pagePerRow;
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
@@ -484,16 +484,22 @@ public class ExerciseFeedbackService {
 	 * @param pagePerRow
 	 * @return
 	 */
-	public Map<String, Object> exerciseFeedbackRequestList(int currentPage, int pagePerRow){
+	public Map<String, Object> exerciseFeedbackRequestList(HttpSession session, int currentPage, int pagePerRow){
 		logger.debug("ExerciseFeedbackService - exerciseFeedbackRequestList 실행");
-		Map<String,Integer> map = new HashMap<String,Integer>();
+		Map<String,Object> map = new HashMap<String,Object>();
+		String memberNo = (String) session.getAttribute("memberSessionNo");
+		int sessionLevel = (Integer) session.getAttribute("memberSessionLevel");
+		logger.debug("memberNo:"+memberNo);
+		logger.debug("sessionLevel:"+sessionLevel);
+		map.put("sessionLevel", sessionLevel);
+		map.put("memberNo", memberNo);
 		int beginRow = (currentPage-1)*pagePerRow;
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
 		//운동피드백 요청 리스트
 		List<ExerciseFeedbackRequest> exercisefeedbacklist = exerciseFeedbackDao.exerciseFeedbackRequestList(map);
 		//게시판 전체 게시물 수
-		int total = exerciseFeedbackDao.exerciseFeedbackRequestTotalCount();
+		int total = exerciseFeedbackDao.exerciseFeedbackRequestTotalCount(map);
 		int lastPage = total/pagePerRow;
         if(total % pagePerRow != 0) {
             lastPage++;

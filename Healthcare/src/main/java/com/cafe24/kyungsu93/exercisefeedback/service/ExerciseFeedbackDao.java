@@ -67,27 +67,27 @@ public class ExerciseFeedbackDao {
 	}	
 	
 	//운동 피드백 이전글
-	public int prevExerciseFeedbackDetailCount(String exerciseFeedbackRequestNo) {
+	public int prevExerciseFeedbackDetailCount(Map<String,Object> map) {
 		logger.debug("ExerciseFeedbackDao - prevExerciseFeedbackDetailCount 실행");
-		return sqlSession.selectOne(NS+"prevExerciseFeedbackDetailCount",exerciseFeedbackRequestNo);
+		return sqlSession.selectOne(NS+"prevExerciseFeedbackDetailCount",map);
 	}		
 	
 	//운동 피드백 다음글 
-	public int nextExerciseFeedbackDetailCount(String exerciseFeedbackRequestNo) {
+	public int nextExerciseFeedbackDetailCount(Map<String,Object> map) {
 		logger.debug("ExerciseFeedbackDao - nextExerciseFeedbackDetailCount 실행");
-		return sqlSession.selectOne(NS+"nextExerciseFeedbackDetailCount",exerciseFeedbackRequestNo);
+		return sqlSession.selectOne(NS+"nextExerciseFeedbackDetailCount",map);
 	}		
 	
 	//운동 피드백 다음글 
-	public ExerciseFeedbackRequest nextExerciseFeedbackDetail(String exerciseFeedbackRequestNo) {
+	public ExerciseFeedbackRequest nextExerciseFeedbackDetail(Map<String,Object> map) {
 		logger.debug("ExerciseFeedbackDao - nextExerciseFeedbackDetail 실행");
-		return sqlSession.selectOne(NS+"nextExerciseFeedbackDetail",exerciseFeedbackRequestNo);
+		return sqlSession.selectOne(NS+"nextExerciseFeedbackDetail",map);
 	}
 	
 	//운동 피드백 이전글
-	public ExerciseFeedbackRequest prevExerciseFeedbackDetail(String exerciseFeedbackRequestNo) {
+	public ExerciseFeedbackRequest prevExerciseFeedbackDetail(Map<String,Object> map) {
 		logger.debug("ExerciseFeedbackDao - prevExerciseFeedbackDetail 실행");
-		return sqlSession.selectOne(NS+"prevExerciseFeedbackDetail",exerciseFeedbackRequestNo);
+		return sqlSession.selectOne(NS+"prevExerciseFeedbackDetail",map);
 	}
 	
 	//운동 피드백 요청 상세보기
@@ -109,8 +109,14 @@ public class ExerciseFeedbackDao {
 		return row;
 	}
 	
-	//운동피드백 요청 리스트
-	public List<ExerciseFeedbackRequest> exerciseFeedbackList(Map<String,Integer> map) {
+	//운동피드백 요청리스트 전체 검색(pt회원)
+	public int exerciseFeedbackListTotalCount(Map<String,Object> map) {
+		logger.debug("ExerciseFeedbackDao - exerciseFeedbackListTotalCount 실행");
+		return sqlSession.selectOne(NS+"exerciseFeedbackListTotalCount",map);
+	}
+	
+	//운동피드백 요청 리스트(pt회원)
+	public List<ExerciseFeedbackRequest> exerciseFeedbackList(Map<String,Object> map) {
 		logger.debug("ExerciseFeedbackDao - exerciseFeedbackList 실행");
 		 List<ExerciseFeedbackRequest> list = sqlSession.selectList(NS+"exerciseFeedbackList",map);
 		return list;
@@ -136,13 +142,19 @@ public class ExerciseFeedbackDao {
 	}
 	
 	//운동피드백 요청리스트 전체 검색
-	public int exerciseFeedbackRequestTotalCount() {
+	public int exerciseFeedbackRequestTotalCountadd() {
+		logger.debug("ExerciseFeedbackDao - exerciseFeedbackRequestTotalCountadd 실행");
+		return sqlSession.selectOne(NS+"exerciseFeedbackRequestTotalCountadd");
+	}
+	
+	//운동피드백 요청리스트 전체 검색
+	public int exerciseFeedbackRequestTotalCount(Map<String,Object> map) {
 		logger.debug("ExerciseFeedbackDao - exerciseFeedbackRequestTotalCount 실행");
-		return sqlSession.selectOne(NS+"exerciseFeedbackRequestTotalCount");
+		return sqlSession.selectOne(NS+"exerciseFeedbackRequestTotalCount",map);
 	}
 		
 	//운동피드백 요청 리스트
-	public List<ExerciseFeedbackRequest> exerciseFeedbackRequestList(Map<String,Integer> map) {
+	public List<ExerciseFeedbackRequest> exerciseFeedbackRequestList(Map<String,Object> map) {
 		logger.debug("ExerciseFeedbackDao - exerciseFeedbackRequestList 실행");
 		 List<ExerciseFeedbackRequest> list = sqlSession.selectList(NS+"exerciseFeedbackRequestList",map);
 		return list;

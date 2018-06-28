@@ -154,27 +154,36 @@ text-align : center;
 			<h4>혈압리스트</h4>
 			<!-- 기간 검색 -->   		
 			<form class="form-inline" id="formSearch" name="formSearch" onsubmit="return formSearchcheck()" action="${pageContext.request.contextPath}/bloodPressureSearch" method="POST"> 
-					시작일 :
+				<div class="form-group"> 
+					<label for="startDate">시작일</label>
 					<input type="text" class="form-control" id="startDate" name="startDate">
-				 	 종료일 :
-					 <input type="text" class="form-control" id="endDate"name="endDate">
-					<input type="submit" class="btn btn-sm btn-default" value="검색">
-					<input type="button" class="btn btn-sm btn-default" id="bloodPressureWeek" value="1주일">
-				    <input type="button" class="btn btn-sm btn-default" id="bloodPressureMonth" value="1개월">
-				    <input type="button" class="btn btn-sm btn-default" id="bloodPressureSixMonth" value="6개월">
+				</div>
+				<div class="form-group">
+				 	<label for="endDate">종료일</label>
+					<input type="text" class="form-control" id="endDate" name="endDate">
+				</div>
+				<div class="form-group">
+					<input class="btn btn-sm btn-default" type="submit" value="검색">
+				</div>
+				<div class="form-group">
+					<input type="button" class="btn btn-sm btn-default" onclick="SearchWeek()" value="1주일">
+				</div>
+				<div class="form-group">
+					<input type="button" class="btn btn-sm btn-default" onclick="SearchMonth()" value="1개월">
+				</div>
+				<div class="form-group">
+					<input type="button" class="btn btn-sm btn-default" onclick="SearchSixMonth()" value="6개월">	
+				</div>
 			</form>
-			 <div id="searchResult">
-				<c:choose>
-				    <c:when test="${searchresult > 0 }">
-						<span>총 ${result }개의 게시물을 찾았습니다.</span>
-						<span>${startDate } ~ ${endDate }기간 동안의 혈압 등록 리스트 검색 결과입니다.</span>
-				    </c:when>
-				    <c:when test="${searchresult eq 0 }">
-				 	   <span>${startDate } ~ ${endDate } 기간 동안의 해당하는 혈압 등록 리스트 검색 결과가 없습니다.</span>
-				    </c:when>
-			    </c:choose>
-		    </div>
-		    
+			<c:choose>
+			    <c:when test="${searchresult > 0 }">
+					<span>총 ${searchresult }개의 게시물을 찾았습니다.</span>
+					<span>${startDate } ~ ${endDate }기간 동안의 혈압 등록 리스트 검색 결과입니다.</span>
+			    </c:when>
+			    <c:when test="${searchresult eq 0 }">
+			 	   <span>${startDate } ~ ${endDate } 기간 동안의 해당하는 혈압 등록 리스트 검색 결과가 없습니다.</span>
+			    </c:when>
+			</c:choose>		    
 		    <!-- 혈압리스트 -->
 			<table class="table table-hover">		
 				<thead>
@@ -206,15 +215,12 @@ text-align : center;
 					</c:forEach>
 				</tbody>	
 			</table>
-				<input type="button" class="btn btn-sm btn-default" onclick="bloodPressureCheckDelete()" value="선택삭제하기">
+			<input type="button" class="btn btn-sm btn-default" onclick="bloodPressureCheckDelete()" value="선택삭제하기">
 				<div align="right">
-				<c:if test="${sessionScope.memberSessionLevel != 1 }">
-					<input type="button" class="btn btn-sm btn-default" onclick="bloodPressureChart()" value="혈압그래프보기">
-				</c:if>
-				<c:if test="${sessionScope.memberSessionLevel == 1 }">
-					<input type="button" class="btn btn-sm btn-default" onclick="bloodPressureChart()" value="혈압그래프보기">
-				</c:if>
-					<input type="button" class="btn btn-sm btn-default" onclick="addBloodPressure()" value="혈압등록하기">			
+					<c:if test="${sessionScope.memberSessionLevel != 1 }">
+						<input type="button" class="btn btn-sm btn-default" onclick="bloodPressureChart()" value="혈압그래프보기">
+					</c:if>
+						<input type="button" class="btn btn-sm btn-default" onclick="addBloodPressure()" value="혈압등록">			
 				</div>
 				<div align="center">
 					<nav>

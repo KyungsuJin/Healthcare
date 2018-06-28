@@ -126,11 +126,6 @@
 		count(*)
 		FROM exercise_feedback_request_result
 		WHERE exercise_feedback_request_no > #{exerciseFeedbackRequestNo}
-		<choose>
-			<when test="sessionLevel != 1">
-				AND member_no = #{memberNo}
-			</when>
-		</choose>
 		 ORDER BY exercise_feedback_request_no DESC LIMIT 1
 	</select>
 	<select id="prevExerciseFeedbackDetail" 
@@ -141,11 +136,6 @@
 			exercise_feedback_title as exerciseFeedbackTitle
 		FROM exercise_feedback_request_result
 		 WHERE #{exerciseFeedbackRequestNo} > exercise_feedback_request_no
-		 <choose>
-			<when test="sessionLevel != 1">
-				AND member_no = #{memberNo}
-			</when>
-		</choose>
 		 ORDER BY exercise_feedback_request_no DESC LIMIT 1
 	</select>
 	<select id="prevExerciseFeedbackDetailCount" parameterType="String" resultType="Integer">
@@ -168,11 +158,6 @@
 			exercise_feedback_title as exerciseFeedbackTitle
 		FROM exercise_feedback_request_result
 		WHERE exercise_feedback_request_no > #{exerciseFeedbackRequestNo}
-		<choose>
-			<when test="sessionLevel != 1">
-				AND member_no = #{memberNo}
-			</when>
-		</choose>
 		 ORDER BY exercise_feedback_request_no DESC LIMIT 1
 	</select>
  	<select id="exerciseFeedbackResult" parameterType="map" 
@@ -189,11 +174,6 @@
 		ON a.exercise_feedback_request_no = b.exercise_feedback_request_no
 		INNER JOIN member c
 		ON b.teacher_no = c.member_no
-		<choose>
-			<when test="sessionLevel != 1">
-				WHERE member_no = #{memberNo}
-			</when>
-		</choose>
 		ORDER BY exerciser_feedback_result_date DESC
 		LIMIT #{beginRow},#{pagePerRow}
  	</select>
@@ -268,9 +248,6 @@
 		<choose>
 			<when test="foodName != null"> 
 				AND food_name = #{foodName}
-			</when>
-			<when test="sessionLevel != 1">
-				WHERE member_no = #{memberNo}
 			</when>
 		</choose>
 	</select> 

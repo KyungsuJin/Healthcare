@@ -49,7 +49,7 @@ public class ExerciseFeedbackController {
 	//운동 피드백 완료 리스트
 	@RequestMapping(value="/exerciseFeedResponseResultList", method=RequestMethod.GET)
 	public String exerciseFeedbackResultList(Model model
-			,HttpSession session
+								,HttpSession session
 								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
 		logger.debug("ExerciseFeedbackController - exercuseFeedResponseResultList 포워드 실행");
@@ -77,17 +77,18 @@ public class ExerciseFeedbackController {
 	//운동피드백요청한 회원리스트 검색
 	@RequestMapping(value="/exerciseFeedbackRequestListSearch", method= {RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView exerciseFeedbackRequestListSearch(@RequestParam(value="keyWord") String keyWord
+									,HttpSession session
 									,@RequestParam(value="keyOption")String keyOption
 									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
 		logger.debug("ExerciseFeedbackController - exerciseFeedbackRequestList exerciseFeedbackRequestListSearch ModelAndView 실행");
-		Map<String,Object> map = exerciseFeedbackService.exerciseFeedbackRequestListSearch(keyOption, keyWord, currentPage, pagePerRow);
+		Map<String,Object> map = exerciseFeedbackService.exerciseFeedbackRequestListSearch(session, keyOption, keyWord, currentPage, pagePerRow);
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("exercisefeedback/exerciseFeedbackPtList");
 		modelAndView.addObject("list", map.get("list"));
 		modelAndView.addObject("keyWord", map.get("keyWord"));
 		modelAndView.addObject("keyOption", map.get("keyOption"));
-		modelAndView.addObject("result", map.get("total"));
+		modelAndView.addObject("searchresult", map.get("total"));
 		modelAndView.addObject("totalBlock", map.get("totalBlock"));
 		modelAndView.addObject("firstBlockPage", map.get("firstBlockPage"));
 		modelAndView.addObject("lastBlockPage", map.get("lastBlockPage"));
@@ -108,7 +109,7 @@ public class ExerciseFeedbackController {
 		modelAndView.addObject("list", map.get("list"));
 		modelAndView.addObject("keyWord", map.get("keyWord"));
 		modelAndView.addObject("keyOption", map.get("keyOption"));
-		modelAndView.addObject("result", map.get("total"));
+		modelAndView.addObject("searchresult", map.get("total"));
 		modelAndView.addObject("totalBlock", map.get("totalBlock"));
 		modelAndView.addObject("firstBlockPage", map.get("firstBlockPage"));
 		modelAndView.addObject("lastBlockPage", map.get("lastBlockPage"));
@@ -119,17 +120,18 @@ public class ExerciseFeedbackController {
 	//운동피드백 기간별 검색
 	@RequestMapping(value="/exerciseFeedbackListSearch", method= {RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView exerciseFeedbackListSearch(@RequestParam(value="startDate") String startDate
+									,HttpSession session
 									,@RequestParam(value="endDate")String endDate
 									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
 		logger.debug("ExerciseFeedbackController - exerciseFeedbackList exerciseFeedbackListSearch ModelAndView 실행");
-		Map<String,Object> map = exerciseFeedbackService.exerciseFeedbackListSearchDate(startDate, endDate, currentPage, pagePerRow);
+		Map<String,Object> map = exerciseFeedbackService.exerciseFeedbackListSearchDate(session, startDate, endDate, currentPage, pagePerRow);
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("exercisefeedback/exerciseFeedbackList");
 		modelAndView.addObject("list", map.get("list"));
 		modelAndView.addObject("startDate", map.get("startDate"));
 		modelAndView.addObject("endDate", map.get("endDate"));
-		modelAndView.addObject("result", map.get("total"));
+		modelAndView.addObject("searchresult", map.get("total"));
 		modelAndView.addObject("totalBlock", map.get("totalBlock"));
 		modelAndView.addObject("firstBlockPage", map.get("firstBlockPage"));
 		modelAndView.addObject("lastBlockPage", map.get("lastBlockPage"));
@@ -149,9 +151,11 @@ public class ExerciseFeedbackController {
 	
 	//운동 피드백 요청 상세 보기
 	@RequestMapping(value="/exerciseFeedbackRequestDetail",method=RequestMethod.GET)
-	public String exerciseFeedbackRequestDetail(Model model, @RequestParam(value="exerciseFeedbackRequestNo") String exerciseFeedbackRequestNo) {
+	public String exerciseFeedbackRequestDetail(Model model
+										,HttpSession session
+										, @RequestParam(value="exerciseFeedbackRequestNo") String exerciseFeedbackRequestNo) {
 		logger.debug("ExerciseFeedbackController - exerciseFeedbackRequestDetail 포워드 실행.");
-		Map<String,Object> map = exerciseFeedbackService.exerciseFeedbackRequestDetail(exerciseFeedbackRequestNo);
+		Map<String,Object> map = exerciseFeedbackService.exerciseFeedbackRequestDetail(session, exerciseFeedbackRequestNo);
 		model.addAttribute("map", map);
 		logger.debug("map : "+map);
 		logger.debug("ExerciseFeedbackController - exerciseFeedbackRequestDetail 포워드 완료");
@@ -179,10 +183,11 @@ public class ExerciseFeedbackController {
 	//운동피드백 리스트
 	@RequestMapping(value="/exerciseFeedbackList", method=RequestMethod.GET)
 	public String exerciseFeedbackList(Model model
+								,HttpSession session
 								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
 		logger.debug("ExerciseFeedbackController - exerciseFeedbackList 포워드 실행");
-		Map<String,Object> map = exerciseFeedbackService.exerciseFeedbackList(currentPage, pagePerRow);
+		Map<String,Object> map = exerciseFeedbackService.exerciseFeedbackList(session, currentPage, pagePerRow);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("list", map.get("list"));
@@ -196,10 +201,11 @@ public class ExerciseFeedbackController {
 	//운동피드백 요청 리스트
 	@RequestMapping(value="/exerciseFeedbackRequestList", method=RequestMethod.GET)
 	public String exerciseFeedbackSelect(Model model
+								,HttpSession session
 								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
 		logger.debug("ExerciseFeedbackController - exerciseFeedbackRequestList 포워드 실행");
-		Map<String,Object> map = exerciseFeedbackService.exerciseFeedbackRequestList(currentPage, pagePerRow);
+		Map<String,Object> map = exerciseFeedbackService.exerciseFeedbackRequestList(session, currentPage, pagePerRow);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("exercisefeedbacklist", map.get("exercisefeedbacklist"));

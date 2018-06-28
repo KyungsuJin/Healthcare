@@ -30,6 +30,11 @@
 				exercise_feedback_request_no = #{keyWord}
 			</if>
 		</where> 
+		<choose>
+			<when test="sessionLevel != 1">
+				AND teacher_no = #{memberNo}
+			</when>
+		</choose>
 		ORDER BY exercise_feedback_request_date DESC
 		LIMIT #{beginRow},#{pagePerRow}
 	</select>
@@ -76,6 +81,11 @@
 		INNER JOIN exercise_feedback_approval_result c
 		ON a.exercise_feedback_request_no = c.exercise_feedback_request_no
 		WHERE exercise_feedback_request_date >= #{startDate} AND #{endDate} > exercise_feedback_request_date
+		 <choose>
+			<when test="sessionLevel != 1">
+				AND teacher_no = #{memberNo}
+			</when>
+		</choose>
 		ORDER BY exercise_feedback_request_date DESC
 		LIMIT #{beginRow},#{pagePerRow}
 	</select>
@@ -111,38 +121,90 @@
 		#{exerciseFeedbackRequestNo}, '수락', '대기', NOW()
 		)
 	</insert>
-	<select id="nextExerciseFeedbackDetailCount" resultType="Integer">
+	<select id="nextExerciseFeedbackDetailCount" parameterType="map"  resultType="Integer">
 		SELECT
 		count(*)
 		FROM exercise_feedback_request
 		WHERE exercise_feedback_request_no > #{exerciseFeedbackRequestNo}
+		<choose>
+			<when test="sessionLevel != 1">
+				<if test="sessionLevel == 2">
+				AND member_no = #{memberNo}
+				</if>
+				<if test="sessionLevel == 4">
+				AND teacher_no = #{memberNo}
+				</if>
+				<if test="sessionLevel == 3">
+				AND member_no = #{memberNo}
+				</if>
+			</when>
+		</choose>
 		 ORDER BY exercise_feedback_request_no DESC LIMIT 1
 	</select>
 	<select id="prevExerciseFeedbackDetail" 
-			parameterType="String" 
+			parameterType="map" 
 			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
 		SELECT 
 			exercise_feedback_request_no as exerciseFeedbackRequestNo, 
 			exercise_feedback_request_title as exerciseFeedbackRequestTitle
 		FROM exercise_feedback_request
 		 WHERE #{exerciseFeedbackRequestNo} > exercise_feedback_request_no
+		<choose>
+			<when test="sessionLevel != 1">
+				<if test="sessionLevel == 2">
+				AND member_no = #{memberNo}
+				</if>
+				<if test="sessionLevel == 4">
+				AND teacher_no = #{memberNo}
+				</if>
+				<if test="sessionLevel == 3">
+				AND member_no = #{memberNo}
+				</if>
+			</when>
+		</choose>
 		 ORDER BY exercise_feedback_request_no DESC LIMIT 1
 	</select>
-	<select id="prevExerciseFeedbackDetailCount" resultType="Integer">
+	<select id="prevExerciseFeedbackDetailCount" parameterType="map"  resultType="Integer">
 		SELECT
 		count(*)
 		FROM exercise_feedback_request
 		WHERE #{exerciseFeedbackRequestNo} > exercise_feedback_request_no
+		<choose>
+			<when test="sessionLevel != 1">
+				<if test="sessionLevel == 2">
+				AND member_no = #{memberNo}
+				</if>
+				<if test="sessionLevel == 4">
+				AND teacher_no = #{memberNo}
+				</if>
+				<if test="sessionLevel == 3">
+				AND member_no = #{memberNo}
+				</if>
+			</when>
+		</choose>
 		 ORDER BY exercise_feedback_request_no DESC LIMIT 1
 	</select>
 	<select id="nextExerciseFeedbackDetail" 
-			parameterType="String" 
+			parameterType="map" 
 			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
 		SELECT 
 			exercise_feedback_request_no as exerciseFeedbackRequestNo, 
 			exercise_feedback_request_title as exerciseFeedbackRequestTitle
 		FROM exercise_feedback_request
 		WHERE exercise_feedback_request_no > #{exerciseFeedbackRequestNo}
+		<choose>
+			<when test="sessionLevel != 1">
+				<if test="sessionLevel == 2">
+				AND member_no = #{memberNo}
+				</if>
+				<if test="sessionLevel == 4">
+				AND teacher_no = #{memberNo}
+				</if>
+				<if test="sessionLevel == 3">
+				AND member_no = #{memberNo}
+				</if>
+			</when>
+		</choose>
 		 ORDER BY exercise_feedback_request_no DESC LIMIT 1
 	</select>
 	<select id="exerciseFeedbackRequestDetail" 
@@ -165,7 +227,7 @@
 	</select>
 	<select id="exerciseFeedbackRequestNo" resultType="Integer">
 		SELECT
-		max(CAST(substring(exercise_feedback_request_no,27) AS DECIMAL))
+		IFNULL(MAX(CAST(SUBSTRING(exercise_feedback_request_no,27)as decimal)),0) 
 		FROM exercise_feedback_request
 	</select>
 	<insert id="exerciseFeedbackRequest" parameterType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
@@ -175,22 +237,23 @@
 	#{exerciseFeedbackRequestNo}, #{memberNo}, #{teacherNo}, #{exerciseFeedbackRequestTitle}, #{exerciseFeedbackRequestContent}, NOW()
 	)
 	</insert>
-	<select id="exerciseFeedbackList" parameterType="Integer" 
-			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
-		SELECT 
-			a.exercise_feedback_request_no as exerciseFeedbackRequestNo,  
-			a.exercise_feedback_request_title as exerciseFeedbackRequestTitle, 
-			a.exercise_feedback_request_content as exerciseFeedbackRequestContent, 
-			a.exercise_feedback_request_date as exerciseFeedbackRequestDate,
-			b.member_name as memberName,
-			c.exercise_feedback_result as exerciseFeedbackResult
-		FROM exercise_feedback_request a
-		INNER JOIN member b
-		ON a.teacher_no = b.member_no
-		INNER JOIN exercise_feedback_approval_result c
-		ON a.exercise_feedback_request_no = c.exercise_feedback_request_no
-		ORDER BY exercise_feedback_request_date DESC
-		LIMIT #{beginRow},#{pagePerRow}
+	<select id="exerciseFeedbackListTotalCount" parameterType="String"  resultType="Integer">
+		SELECT
+		count(*)
+		FROM exercise_feedback_request
+		<choose>
+			<when test="sessionLevel != 1">
+				<if test="sessionLevel == 2">
+				 WHERE member_no = #{memberNo}
+				</if>
+				<if test="sessionLevel == 4">
+				WHERE teacher_no = #{memberNo}
+				</if>
+				<if test="sessionLevel == 3">
+				WHERE member_no = #{memberNo}
+				</if>
+			</when>
+		</choose>
 	</select>
 	<select id="exerciseFeedbackPtSelect" parameterType="String" 
 			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
@@ -205,6 +268,7 @@
 		SELECT
 		count(*)
 		FROM member_teacher
+		WHERE feedback_availablilty = 'T'
 	</select>
 	<select id="exerciseFeedbackPtList" parameterType="Integer" 
 			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
@@ -223,23 +287,57 @@
 		ORDER BY member_approval_date DESC
 		LIMIT #{beginRow},#{pagePerRow}
 	</select>
-	<select id="exerciseFeedbackRequestTotalCount" resultType="Integer">
-		SELECT
-		count(*)
-		FROM exercise_feedback_request
-	</select>
-	<select id="exerciseFeedbackRequestList" parameterType="Integer" 
+	<select id="exerciseFeedbackList" parameterType="map" 
 			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
 		SELECT 
-			a.exercise_feedback_request_no as exerciseFeedbackRequestNo, 
-			b.member_id as memberId,
-			b.member_name as memberName, 
+			a.exercise_feedback_request_no as exerciseFeedbackRequestNo,  
 			a.exercise_feedback_request_title as exerciseFeedbackRequestTitle, 
-			a.exercise_feedback_request_content as exerciseFeedbackRequestContent, 
-			a.exercise_feedback_request_date as exerciseFeedbackRequestDate
-		FROM exercise_feedback_request a
-		INNER JOIN member b
-		ON a.member_no = b.member_no
+			a.exercise_feedback_request_date as exerciseFeedbackRequestDate,
+		<choose>
+			<when test="sessionLevel != 1">
+				<if test="sessionLevel == 2">
+					a.member_no as memberNo,
+					a.teacher_no as teacherNo,
+					b.member_id as memberId,
+					b.member_name as memberName,
+					c.exercise_feedback_result as exerciseFeedbackResult
+				FROM exercise_feedback_request a
+				INNER JOIN member b
+				ON a.teacher_no = b.member_no
+				INNER JOIN exercise_feedback_approval_result c
+				ON a.exercise_feedback_request_no = c.exercise_feedback_request_no
+				WHERE a.teacher_no = #{memberNo}
+				</if>
+				<if test="sessionLevel == 4">
+					b.member_id as memberId,
+					b.member_name as memberName
+				FROM exercise_feedback_request a
+				INNER JOIN member b
+				ON a.member_no = b.member_no
+				WHERE a.member_no = #{memberNo}
+				</if>
+				<if test="sessionLevel == 3">
+					a.member_no as memberNo,
+					a.teacher_no as teacherNo,
+					b.member_id as memberId,
+					b.member_name as memberName,
+					c.exercise_feedback_result as exerciseFeedbackResult
+				INNER JOIN member b
+				ON a.teacher_no = b.member_no
+				INNER JOIN exercise_feedback_approval_result c
+				ON a.exercise_feedback_request_no = c.exercise_feedback_request_no
+				WHERE a.teacher_no = #{memberNo}
+				</if>
+			</when>
+			<otherwise>
+					a.member_no as memberNo,
+					a.teacher_no as teacherNo,
+					b.member_name as memberName,
+					c.exercise_feedback_result as exerciseFeedbackResult
+				INNER JOIN exercise_feedback_approval_result c
+				ON a.exercise_feedback_request_no = c.exercise_feedback_request_no
+			</otherwise>
+		</choose>
 		ORDER BY exercise_feedback_request_date DESC
 		LIMIT #{beginRow},#{pagePerRow}
 	</select>

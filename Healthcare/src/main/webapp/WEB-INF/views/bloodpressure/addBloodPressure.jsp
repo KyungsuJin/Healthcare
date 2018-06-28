@@ -33,7 +33,7 @@ function check() {
 			bloodPressureForm.diastolicPressure.focus();
 			return false;
 		}if(bloodPressureForm.memberNo.value == ""){
-			alert("회원명을 입력해주세요.");
+			alert("회원번호을 입력해주세요.");
 			bloodPressureForm.memberNo.focus();
 			return false;
 		}else{
@@ -68,12 +68,12 @@ margin: 0 auto;
 					<form id="addBloodPRessureForm" action="${pageContext.request.contextPath}/addBloodPressure" method="post">
 						<c:if test="${sessionScope.memberSessionLevel == 1 }">
 						<div class="form-group">
-							<label>회원명</label>
+							<label>회원번호</label>
 							<input class="form-control" type="text" id="memberNo" name="memberNo">
 						</div>
 						</c:if>
 						<c:if test="${sessionScope.memberSessionLevel != 1 }">
-							<input class="form-control" type="hidden" id="memberNo" name="memberNo" value="${sessionScope.memberSessionNo}">
+							<input class="form-control" type="text" id="memberNo" name="memberNo" value="${sessionScope.memberSessionNo}">
 						</c:if>
 						<div class="form-group">
 							<label for="diastolicPressure">수축기혈압을 적어주세요</label> 
