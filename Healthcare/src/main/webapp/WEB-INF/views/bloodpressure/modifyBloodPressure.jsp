@@ -70,10 +70,10 @@ function check() {
 					<form id="bloodPressureForm" onsubmit="return check()" action="${pageContext.request.contextPath}/modifyBloodPressure" method="post">
 						<input type="hidden" name="bloodPressureNo" value="${bloodPressure.bloodPressureNo }">
 						<div class="form-group">
-							<label>등록번호 : ${bloodPressure.bloodPressureNo }</label>
+							<label  for="bloodPressureNo">등록번호 : ${bloodPressure.bloodPressureNo }</label>
 						</div>
 						<div class="form-group">
-							<label>등록일 : ${bloodPressure.bloodPressureDate }</label>
+							<label for="bloodPressureDate">등록일 : ${bloodPressure.bloodPressureDate }</label>
 						</div>
 						<div class="form-group">
 							<label for="diastolicPressure">수축기혈압을 적어주세요</label> 

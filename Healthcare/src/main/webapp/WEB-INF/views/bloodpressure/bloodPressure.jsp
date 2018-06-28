@@ -208,8 +208,13 @@ text-align : center;
 			</table>
 				<input type="button" class="btn btn-sm btn-default" onclick="bloodPressureCheckDelete()" value="선택삭제하기">
 				<div align="right">
+				<c:if test="${sessionScope.memberSessionLevel != 1 }">
 					<input type="button" class="btn btn-sm btn-default" onclick="bloodPressureChart()" value="혈압그래프보기">
-					<input type="button" class="btn btn-sm btn-default" onclick="addBloodPressure()" value="혈압등록하기">				
+				</c:if>
+				<c:if test="${sessionScope.memberSessionLevel == 1 }">
+					<input type="button" class="btn btn-sm btn-default" onclick="bloodPressureChart()" value="혈압그래프보기">
+				</c:if>
+					<input type="button" class="btn btn-sm btn-default" onclick="addBloodPressure()" value="혈압등록하기">			
 				</div>
 				<div align="center">
 					<nav>

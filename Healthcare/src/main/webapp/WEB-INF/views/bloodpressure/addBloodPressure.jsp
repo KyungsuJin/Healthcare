@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE>
 <html>
 <head>
@@ -28,8 +29,12 @@ function check() {
 			return false;
 		  }
 		if(bloodPressureForm.diastolicPressure.value == ""){
-			alert("수축기 혈압을 해주세요.");
+			alert("수축기 혈압을 입력해주세요.");
 			bloodPressureForm.diastolicPressure.focus();
+			return false;
+		}if(bloodPressureForm.memberNo.value == ""){
+			alert("회원명을 입력해주세요.");
+			bloodPressureForm.memberNo.focus();
 			return false;
 		}else{
 			alert("혈압 정보가 수정 완료 되었습니다.");
@@ -47,7 +52,7 @@ function check() {
 </script>
 <style>
 #center{
-width: 700;
+width: 600;
 margin: 0 auto;
 }
 </style>
@@ -61,20 +66,30 @@ margin: 0 auto;
 				<h2>혈압을 등록해 주세요.</h2>
 				<div id="center">
 					<form id="addBloodPRessureForm" action="${pageContext.request.contextPath}/addBloodPressure" method="post">
-						<input class="form-control" type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}">
-						<div>
-						수축기 : <input class="form-control" type="text" id="systolicPressure" name="systolicPressure" placeholder="systolicPressure/mmHg">
+						<c:if test="${sessionScope.memberSessionLevel == 1 }">
+						<div class="form-group">
+							<label>회원명</label>
+							<input class="form-control" type="text" id="memberNo" name="memberNo">
 						</div>
-						<div>
-						이완기 : <input class="form-control" type="text" id="diastolicPressure" name="diastolicPressure" placeholder="diastolicPressure/mmHg">
+						</c:if>
+						<c:if test="${sessionScope.memberSessionLevel != 1 }">
+							<input class="form-control" type="hidden" id="memberNo" name="memberNo" value="${sessionScope.memberSessionNo}">
+						</c:if>
+						<div class="form-group">
+							<label for="diastolicPressure">수축기혈압을 적어주세요</label> 
+							<input class="form-control" type="text" id="systolicPressure" name="systolicPressure" placeholder="systolicPressure/mmHg">
+						</div>
+						<div class="form-group">
+							<label for="diastolicPressure">이완기혈압을 적어주세요</label> 
+							<input class="form-control" type="text" id="diastolicPressure" name="diastolicPressure" placeholder="diastolicPressure/mmHg">
 						</div>
 						<div align="right">
-						<input type="submit" class="btn btn-sm btn-default" value="등록하기">
+						<input type="submit" class="btn btn-sm btn-default" value="등록">
 						</div>
 					</form>
 				</div>
 				<div align="right">
-					<input type="button" class="btn btn-sm btn-default" onclick="reset()" value="다시입력하기">
+					<input type="button" class="btn btn-sm btn-default" onclick="reset()" value="다시입력">
 					<input type="button" class="btn btn-sm btn-default" onclick="returnBtn()" value="등록취소">
 				</div>
 			</div>
