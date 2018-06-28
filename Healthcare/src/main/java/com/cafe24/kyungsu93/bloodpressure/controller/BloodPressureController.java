@@ -25,18 +25,19 @@ public class BloodPressureController {
 	private static final Logger logger = LoggerFactory.getLogger(BloodPressureController.class);
 	
 	@RequestMapping(value="/bloodPressureSearch", method= {RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView searchList(@RequestParam(value="startDate") String startDate
+	public ModelAndView searchList(@RequestParam(value="startDate") String startDate,
+									HttpSession session
 									,@RequestParam(value="endDate")String endDate
 									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
-									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
+									,@RequestParam(value="pagePerRow", defaultValue="5")int pagePerRow) {
 		logger.debug("BloodPressureRestController - searchList bloodPressureSearch ModelAndView 실행");
-		Map<String,Object> map = bloodPressureService.bloodPressureSearch(startDate, endDate, currentPage, pagePerRow);
+		Map<String,Object> map = bloodPressureService.bloodPressureSearch(session, startDate, endDate, currentPage, pagePerRow);
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("bloodpressure/bloodPressure");
 		modelAndView.addObject("list", map.get("list"));
 		modelAndView.addObject("startDate", map.get("startDate"));
 		modelAndView.addObject("endDate", map.get("endDate"));
-		modelAndView.addObject("result", map.get("total"));
+		modelAndView.addObject("searchresult", map.get("total"));
 		modelAndView.addObject("totalBlock", map.get("totalBlock"));
 		modelAndView.addObject("firstBlockPage", map.get("firstBlockPage"));
 		modelAndView.addObject("lastBlockPage", map.get("lastBlockPage"));
@@ -77,10 +78,11 @@ public class BloodPressureController {
 	
 	@RequestMapping(value="/bloodPressure", method=RequestMethod.GET)
 	public String bloodPressureList(Model model
+								,HttpSession session
 								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
-								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
+								,@RequestParam(value="pagePerRow", defaultValue="5")int pagePerRow) {
 		logger.debug("BloodPressureController - bloodPressureList 포워드 실행");
-		Map<String,Object> map = bloodPressureService.bloodPressureList(currentPage, pagePerRow);
+		Map<String,Object> map = bloodPressureService.bloodPressureList(session, currentPage, pagePerRow);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("list", map.get("list"));
@@ -91,7 +93,7 @@ public class BloodPressureController {
 	}
 		
 	@RequestMapping(value="/addBloodPressure", method=RequestMethod.POST)
-	public String addBloodPressure(HttpSession session,BloodPressure bloodPressure) {
+	public String addBloodPressure(BloodPressure bloodPressure) {
 		logger.debug("BloodpressureController - addBloodPressure 리다이렉트 실행");
 		bloodPressureService.addBloodPressure(bloodPressure);
 		return "redirect:/bloodPressure";

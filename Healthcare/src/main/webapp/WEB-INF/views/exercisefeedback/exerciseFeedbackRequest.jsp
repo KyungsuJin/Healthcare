@@ -65,19 +65,19 @@ function cancleBtn() {
 					<div>
 						선택한 강사 : ${map.ptMemberName }
 						<input type="hidden" name="teacherNo" value="${map.ptMemberNo}">
-						<input type="text" name="memberNo" value="${sessionScope.memberNo}"> 
+						<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}"> 
 					</div>
 					<div>
 						제목 :
-						<input type="text" name="exerciseFeedbackRequestTitle" id="exerciseFeedbackTitle">
+						<input class="form-control" type="text" name="exerciseFeedbackRequestTitle" id="exerciseFeedbackTitle">
 					</div>
 					<div>
 						내용:
-						<textarea name="exerciseFeedbackRequestContent" id="exerciseFeedbackContent" style="resize: none;" cols="40" rows="8" placeholder="내용을 입력해주세요"></textarea>
+						<textarea class="form-control" name="exerciseFeedbackRequestContent" id="exerciseFeedbackContent" style="resize: none;" cols="40" rows="8" placeholder="내용을 입력해주세요"></textarea>
 					</div>
-					<input type="submit" value="등록하기">
+					<input type="submit" class="btn btn-sm btn-default" value="등록하기">
 				</form>
-					<input type="button" onclick="cancleBtn()" value="강사다시선택하기">
+					<input type="button" class="btn btn-sm btn-default" onclick="cancleBtn()" value="강사다시선택하기">
 			</div>
 		</div>
 	</div>

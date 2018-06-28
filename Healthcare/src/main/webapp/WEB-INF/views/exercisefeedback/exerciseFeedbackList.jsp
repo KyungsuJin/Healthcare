@@ -108,12 +108,12 @@ $(document).ready(function(){
 						 <input type="text" id="endDate" name="endDate">
 					 </div>
 					 <div>
-						<input type="submit" value="검색">
+						<input class="btn btn-sm btn-default" type="submit" value="검색">
 					</div>
 				</form>
-					<input type="button" onclick="SearchWeek()" value="1주일">
-				    <input type="button" onclick="SearchMonth()" value="1개월">
-				    <input type="button" onclick="SearchSixMonth()" value="6개월">
+					<input type="button" class="btn btn-sm btn-default" onclick="SearchWeek()" value="1주일">
+				    <input type="button" class="btn btn-sm btn-default" onclick="SearchMonth()" value="1개월">
+				    <input type="button" class="btn btn-sm btn-default" onclick="SearchSixMonth()" value="6개월">
 				<c:choose>
 					<c:when test="${result > 0 }">
 						총 ${result }개의 게시물을 찾았습니다.
@@ -123,7 +123,7 @@ $(document).ready(function(){
 						${startDate } ~ ${endDate } 기간 동안의 해당하는 리스트 검색 결과가 없습니다.
 					</c:when>
 				</c:choose>
-				<table>
+				<table class="table table-hover">
 					<thead>
 						<tr>
 							<th>피드백번호</th>

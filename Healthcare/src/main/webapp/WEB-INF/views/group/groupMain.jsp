@@ -26,7 +26,7 @@
 								회원님은 현재 ${map.creationResult }개의 그룹을 생성하셨습니다. 
 								<div>
 									<c:forEach var="groupCreation" items="${map.groupCreateList}">
-										<a href="${pageContext.request.contextPath}/detailGroupMainForCreationMember?groupName=${ groupCreation.groupName}">${ groupCreation.groupName}</a>
+										<a class="btn btn-sm btn-default" href="${pageContext.request.contextPath}/detailGroupMainForCreationMember?groupName=${ groupCreation.groupName}">${ groupCreation.groupName}</a>
 									</c:forEach>	
 								</div>
 							</c:if>
@@ -38,7 +38,7 @@
 									회원님은 현재 ${map.result }개의 그룹에 가입되어 있습니다.
 									<div>
 										<c:forEach var="groupTable" items="${map.groupJoinList }">
-											<a type="button" href="${pageContext.request.contextPath}/detailGroupMain?groupName=${ groupTable.groupName}">${ groupTable.groupName}</a>
+											<a class="btn btn-sm btn-default" type="button" href="${pageContext.request.contextPath}/detailGroupMain?groupName=${ groupTable.groupName}">${ groupTable.groupName}</a>
 										</c:forEach>
 									</div>
 								</div>
@@ -47,9 +47,9 @@
 								현재 가입된 그룹이 업습니다.
 							</c:if>
 							<div>
-								<a type="button" href="${pageContext.request.contextPath}/groupList">그룹가입하기</a>
-								<a type="button" href="${pageContext.request.contextPath}/addGroup">그룹생성하기</a>
-								<a type="button" href="${pageContext.request.contextPath}/inviteGroupList">초대한그룹보기</a>
+								<a class="btn btn-sm btn-default" type="button" href="${pageContext.request.contextPath}/groupList">그룹가입하기</a>
+								<a class="btn btn-sm btn-default" type="button" href="${pageContext.request.contextPath}/addGroup">그룹생성하기</a>
+								<a class="btn btn-sm btn-default" type="button" href="${pageContext.request.contextPath}/inviteGroupList">초대한그룹보기</a>
 							</div>
 						</div>
 					</div>

@@ -81,13 +81,13 @@ function cancleBtn() {
 						그룹명 : ${groupTable.groupName } 그룹 종류 : ${groupTable.groupKindName}
 						<div>
 							초대하고자 하는  회원의 아이디를 검색해주세요.
-							<input type="text" id="memberId" name="memberId" >
-							<input type="button" value="아이디검색하기" onclick="checkmemberId()">
-							<span id="result"></span><br>
-							<span id="resultInfomation"></span><br>
+							<input class="form-control" type="text" id="memberId" name="memberId" >
+							<input class="form-control" type="button" value="아이디검색하기" onclick="checkmemberId()">
+							<span class="form-control" id="result"></span><br>
+							<span class="form-control" id="resultInfomation"></span><br>
 						</div>
-						<input type="text" id="groupInviteMessage" name="groupInviteMessage" placeholder="초대메세지를 작성해주세요.">
-						<input type="submit" id="inviteBtn" value="초대하기">
+						<input class="form-control" type="text" id="groupInviteMessage" name="groupInviteMessage" placeholder="초대메세지를 작성해주세요.">
+						<input class="form-control" type="submit" id="inviteBtn" value="초대하기">
 					</form>
 						<input type="button" onclick="cancleBtn()" value="돌아기기">
 			</div>

@@ -14,6 +14,11 @@
 			count(*)
 			FROM blood_pressure 
 			WHERE blood_pressure_date >= #{startDate} AND #{endDate} > blood_pressure_date
+			<choose>
+				<when test="sessionLevel != 1">
+					AND member_no = #{memberNo}
+				</when>
+			</choose>
 	</select>
 	<select id="bloodPressureSearchDate" 
 			parameterType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure" 
@@ -26,10 +31,14 @@
 			blood_pressure_date as bloodPressureDate
 			FROM blood_pressure  		
 			WHERE blood_pressure_date >= #{startDate} AND #{endDate} > blood_pressure_date
+			<choose>
+				<when test="sessionLevel != 1">
+					AND member_no = #{memberNo}
+				</when>
+			</choose>
 			ORDER BY blood_pressure_date DESC
 			LIMIT #{beginRow},#{pagePerRow}
 	</select> 
-
 	<select id="bloodPressurechart"
 		 parameterType="String"
 		resultType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
@@ -65,7 +74,7 @@
 		DELETE FROM blood_pressure WHERE blood_pressure_no = #{bloodPressureNo}
 	</delete>
 	<select id="bloodPressureList" 
-			parameterType="Integer" 
+			parameterType="map" 
 			resultType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
 		SELECT
 			blood_pressure_no as bloodPressureNo,
@@ -73,7 +82,12 @@
 			systolic_pressure as systolicPressure,
 			diastolic_pressure as diastolicPressure,
 			blood_pressure_date as bloodPressureDate
-			FROM blood_pressure 		
+			FROM blood_pressure 	
+			<choose>
+				<when test="sessionLevel != 1">
+					WHERE member_no = #{memberNo}
+				</when>
+			</choose>
 			ORDER BY blood_pressure_date DESC
 			LIMIT #{beginRow},#{pagePerRow}
 	</select>
@@ -82,10 +96,15 @@
 		IFNULL(MAX(CAST(SUBSTRING(blood_pressure_no,16)as decimal)),0) 
 		FROM blood_pressure
 	</select>
-	<select id="bloodPressureCount" resultType="Integer">
+	<select id="bloodPressureCount" parameterType="map" resultType="Integer">
 		SELECT
 		count(*)
 		FROM blood_pressure
+			<choose>
+				<when test="sessionLevel != 1">
+					WHERE member_no = #{memberNo}
+				</when>
+			</choose>
 	</select>
 	<insert id="addBloodPressure" 
 			parameterType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">

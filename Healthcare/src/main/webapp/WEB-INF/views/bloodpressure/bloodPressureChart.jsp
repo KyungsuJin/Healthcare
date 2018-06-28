@@ -11,16 +11,18 @@
 <!-- google charts -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
-/* 	var memberNo = $('#memberNoSession'); */
-	var memberNo = "member_1";
-	console.log(memberNo);
+	
+	
     $(document).ready(function(){
+    	
+    	
 	    ajaxData();
 	    $('#addBtn').hide();
 	});	
 	//ajax 실행
 	function ajaxData() {
-
+		var memberNo = $('#memberNoSession').val();
+		console.log(memberNo);
 		var request = $.ajax({
 		type : "POST",
 		url : "${pageContext.request.contextPath}/bloodPressureChart?memberNo="+memberNo
@@ -170,9 +172,16 @@
 		  alert( "Request failed: " + textStatus );
 		});
 	}
-	//6개월전  혈압 검색
-
+	function returnBtn(){
+		history.back();
+	}
 </script>
+<style type="text/css">
+th td {
+text-align: center;
+
+}
+</style>
 </head>
 <body>
 	<div class="sidebar-wrapper">
@@ -180,59 +189,68 @@
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-			<h1>bloodPressureChart</h1>
-				<input type="hidden" id="memberNoSession" value="${sessionScope.memberNo}">
+			<h4>최근 한달간의 혈압 그래프</h4>
+				<input type="hidden" id="memberNoSession" value="${sessionScope.memberSessionNo}">
 				<span id="chartResult"></span>
 				<div id="addBtn">
 					<a href="${pageContext.request.contextPath}/addBloodPressure">혈압 등록하기</a>
 				</div>
-				<div>
-					<table>
-						<tr>
-							<th>단계</th>
-							<td>수축기</td>
-							<td>이완기</td>
-						</tr>
-						<tr>
-							<th>정상 혈압</th>
-							<td>120mmHg 미만</td>
-							<td>80mmHg미만</td>
-						</tr>
-						<tr>
-							<th>고혈압 전(前)단계</th>
-							<td>120-139mmHg</td>
-							<td>80-89mmHg</td>
-						</tr>
-						<tr>
-							<th>1기 고혈압</th>	
-							<td>140-159mmHg</td>
-							<td>90-99mmHg</td>
-						</tr>
-						<tr>
-							<th>2기고혈압</th>	
-							<td>160mmHg 이상</td>
-							<td>100mmHg 이상</td>
-						<tr>
-					</table>
-					<p>혈압 설명 추가하기.</p>
+				<div class="col-sm-12" align="center">
+				<div class="row">
+					<div class='col-sm-8'>
+						<!-- 차트가 그려지는 위치 -->
+						<div id="linechart_material"></div>
+						</div>
+				 	<div class='col-sm-3' align="center">			 	
+						<table class="table table-hober">
+							<tr>
+								<th>단계</th>
+								<td>수축기</td>
+								<td>이완기</td>
+							</tr>
+							<tr>
+								<th>정상 혈압</th>
+								<td>120mmHg 미만</td>
+								<td>80mmHg미만</td>
+							</tr>
+							<tr>
+								<th>고혈압 전(前)단계</th>
+								<td>120-139mmHg</td>
+								<td>80-89mmHg</td>
+							</tr>
+							<tr>
+								<th>1기 고혈압</th>	
+								<td>140-159mmHg</td>
+								<td>90-99mmHg</td>
+							</tr>
+							<tr>
+								<th>2기고혈압</th>	
+								<td>160mmHg 이상</td>
+								<td>100mmHg 이상</td>
+							<tr>
+						</table>
+						<!-- 혈압 결과값 계산 -->
+						<div id="bloodPressureResult">
+						<h4>최근 한달간의 혈압 분석 결과</h4>
+							<div>
+								<label>수축기 혈압 :</label> <span id="systolicPressure"></span>
+								<div>
+								<span id="systolicresult"></span>
+								</div>
+							</div>
+							<div>
+								<label>이완기 혈압 :</label> <span id="diastolicPressure"></span>
+								<div>
+								<span id="diastolicresult"></span>
+								</div>
+							</div>
+					 	</div>
+						<div align="right">
+							<input type="button" class="btn btn-sm btn-default" onclick="returnBtn()" value="돌아가기">
+						</div>
+					</div>
 				</div>
-				<!-- 차트가 그려지는 위치 -->
-				<div id="linechart_material"></div>
-				<!-- 혈압 결과값 계산 -->
-				<div id="bloodPressureResult">
-					<div>
-						수축기 혈압 : <span id="systolicPressure"></span>
-					</div>
-					<div>
-						이완기 혈압 : <span id="diastolicPressure"></span>
-					</div>
-					<div>
-						수축기 혈압은 <span id="systolicresult"></span>
-				 	</div>
-				 	<div>
-				 		이완기 혈압은 <span id="diastolicresult"></span>
-				 	</div>
-			 	</div>
+ 			</div>
  			</div>
 		</div>
 	</div>

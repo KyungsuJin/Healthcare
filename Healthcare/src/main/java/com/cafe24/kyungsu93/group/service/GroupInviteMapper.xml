@@ -247,6 +247,12 @@
 		ON a.group_no = c.group_no
 		WHERE group_name = #{groupName}
 	</select>
+	<select id="groupMemberNo" resultType="Integer">
+		SELECT
+		member_no as memberNo
+		FROM group_invite_approval_result
+		WHERE group_name = #{groupName}	
+	</select>	
 	<select id="groupMembersListCount" resultType="Integer">
 		SELECT
 		count(*)
@@ -351,6 +357,7 @@
 	 	SELECT
 	 		a.group_invite_no as groupInviteNo,
 			a.group_no as groupNo,
+			a.member_no as memberNo,
 			a.group_invite_date as groupInviteDate,
 			a.group_invite_message as groupInviteMessage,
 			b.group_name as groupName,
@@ -361,6 +368,7 @@
 		ON a.group_no = b.group_no		
 		INNER JOIN group_kind c
 		ON b.group_kind_no = c.group_kind_no
+		<!-- WHERE member_no = #{memberNo} -->
 		ORDER BY group_invite_date DESC
 		LIMIT #{beginRow},#{pagePerRow}
 	</select>
@@ -369,6 +377,7 @@
 			resultType="com.cafe24.kyungsu93.group.service.GroupInvite">
 	 	SELECT
 			b.group_name as groupName,
+			c.member_no as memberNo,
 			a.group_invite_no as groupInviteNo,
 			a.group_no as groupNo,
 			a.group_invite_approval as groupInviteApproval,
@@ -379,7 +388,8 @@
 		INNER JOIN group_create b
 		ON a.group_no = b.group_no
 		INNER JOIN member c
-		ON a.member_no = c.member_no		
+		ON a.member_no = c.member_no	
+		<!-- WHERE group_no = #{groupNo}	 -->
 		ORDER BY group_invite_date DESC
 		LIMIT #{beginRow},#{pagePerRow}
 	</select>

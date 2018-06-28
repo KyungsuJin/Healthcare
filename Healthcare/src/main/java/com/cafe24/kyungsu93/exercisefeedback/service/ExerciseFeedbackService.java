@@ -21,7 +21,7 @@ public class ExerciseFeedbackService {
 	private ExerciseFeedbackDao exerciseFeedbackDao;
 	@Autowired
 	private PointChargingDao pointChargingDao;
-	private static final Logger logger = LoggerFactory.getLogger(ExerciseFeedbackService.class);
+	private static final Logger logger = LoggerFactory.getLogger(ExerciseFeedbackService.class);	
 	/**
 	 * 요청한 회원 리스트
 	 * @param keyOption

@@ -17,6 +17,9 @@ public class ExerciseFeedbackRequest {
 	private String exerciseFeedbackResult;
 	private String exerciseFeedbackApprovalDate;
 	private double evaluationAverageGrade;
+	private String exerciseFeedbackTitle;
+	private String exerciseFeedbackContent;
+	private String exerciseFeedbackResultDate;
 	public String getExerciseFeedbackRequestNo() {
 		return exerciseFeedbackRequestNo;
 	}
@@ -113,6 +116,24 @@ public class ExerciseFeedbackRequest {
 	public void setEvaluationAverageGrade(double evaluationAverageGrade) {
 		this.evaluationAverageGrade = evaluationAverageGrade;
 	}
+	public String getExerciseFeedbackTitle() {
+		return exerciseFeedbackTitle;
+	}
+	public void setExerciseFeedbackTitle(String exerciseFeedbackTitle) {
+		this.exerciseFeedbackTitle = exerciseFeedbackTitle;
+	}
+	public String getExerciseFeedbackContent() {
+		return exerciseFeedbackContent;
+	}
+	public void setExerciseFeedbackContent(String exerciseFeedbackContent) {
+		this.exerciseFeedbackContent = exerciseFeedbackContent;
+	}
+	public String getExerciseFeedbackResultDate() {
+		return exerciseFeedbackResultDate;
+	}
+	public void setExerciseFeedbackResultDate(String exerciseFeedbackResultDate) {
+		this.exerciseFeedbackResultDate = exerciseFeedbackResultDate;
+	}
 	@Override
 	public String toString() {
 		return "ExerciseFeedbackRequest [exerciseFeedbackRequestNo=" + exerciseFeedbackRequestNo + ", memberNo="
@@ -123,7 +144,8 @@ public class ExerciseFeedbackRequest {
 				+ exerciseFeedbackRequestContent + ", exerciseFeedbackRequestDate=" + exerciseFeedbackRequestDate
 				+ ", exerciseFeedbackApproval=" + exerciseFeedbackApproval + ", exerciseFeedbackResult="
 				+ exerciseFeedbackResult + ", exerciseFeedbackApprovalDate=" + exerciseFeedbackApprovalDate
-				+ ", evaluationAverageGrade=" + evaluationAverageGrade + "]";
+				+ ", evaluationAverageGrade=" + evaluationAverageGrade + ", exerciseFeedbackTitle="
+				+ exerciseFeedbackTitle + ", exerciseFeedbackContent=" + exerciseFeedbackContent
+				+ ", exerciseFeedbackResultDate=" + exerciseFeedbackResultDate + "]";
 	}
-
 }

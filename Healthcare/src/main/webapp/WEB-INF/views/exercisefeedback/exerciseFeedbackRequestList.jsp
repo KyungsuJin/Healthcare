@@ -37,10 +37,10 @@
 				            <option value="exerciseFeedbackRequestTitle" <c:out value="${keyOption == 'exerciseFeedbackRequestTitle'?'selected':''}"/>>제목</option>
 				            <option value="memberName" <c:out value="${keyOption == 'memberName'?'selected':''}"/>>요청한회원명</option>
 				        </select>
-						<input type="text" id="keyWord" name="keyWord" value="${keyword}"/>
+						<input type="text" id="keyWord" name="keyWord" value="${keyWord}"/>
 					</div>
 					 <div>
-						<input type="submit" value="조회">
+						<input class="btn btn-sm btn-default" type="submit" value="조회">
 					</div>
 				</form>
 				<c:choose>
@@ -52,7 +52,7 @@
 						${keyOption }로(으로) ${keyWord }로 해당하는 리스트 검색 결과가 없습니다.
 					</c:when>
 				</c:choose>
-				<table>
+				<table class="table table-hover">
 					<thead>
 						<tr>
 							<th>번호</th>
@@ -65,7 +65,7 @@
 						<c:forEach var="exerciseFeedback" items="${exercisefeedbacklist}">
 						<tr>
 							<td>${exerciseFeedback.exerciseFeedbackRequestNo }</td>
-							<td><a type="button" href="${pageContext.request.contextPath}/exerciseFeedbackRequestDetail?exerciseFeedbackRequestNo=${exerciseFeedback.exerciseFeedbackRequestNo }">${exerciseFeedback.exerciseFeedbackRequestTitle }</a></td>
+							<td><a type="button" class="btn btn-sm btn-default" href="${pageContext.request.contextPath}/exerciseFeedbackRequestDetail?exerciseFeedbackRequestNo=${exerciseFeedback.exerciseFeedbackRequestNo }">${exerciseFeedback.exerciseFeedbackRequestTitle }</a></td>
 							<td>${exerciseFeedback.memberId }</td>
 							<td>${exerciseFeedback.exerciseFeedbackRequestDate }</td>
 						</tr>

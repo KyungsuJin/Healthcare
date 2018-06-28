@@ -5,6 +5,7 @@ public class Group {
 	private String groupKindNo;
 	private String groupKindName;
 	private String memberNo;
+	private String memberId;
 	private String memberName;
 	private String groupName;
 	private String groupInfo;
@@ -33,6 +34,12 @@ public class Group {
 	}
 	public void setMemberNo(String memberNo) {
 		this.memberNo = memberNo;
+	}
+	public String getMemberId() {
+		return memberId;
+	}
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 	public String getMemberName() {
 		return memberName;
@@ -67,8 +74,8 @@ public class Group {
 	@Override
 	public String toString() {
 		return "Group [groupNo=" + groupNo + ", groupKindNo=" + groupKindNo + ", groupKindName=" + groupKindName
-				+ ", memberNo=" + memberNo + ", memberName=" + memberName + ", groupName=" + groupName + ", groupInfo="
-				+ groupInfo + ", groupCreateDate=" + groupCreateDate + ", groupExpiredDate=" + groupExpiredDate + "]";
+				+ ", memberNo=" + memberNo + ", memberId=" + memberId + ", memberName=" + memberName + ", groupName="
+				+ groupName + ", groupInfo=" + groupInfo + ", groupCreateDate=" + groupCreateDate
+				+ ", groupExpiredDate=" + groupExpiredDate + "]";
 	}
-
 }

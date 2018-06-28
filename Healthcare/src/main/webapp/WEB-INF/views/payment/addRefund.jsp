@@ -53,9 +53,8 @@
 			<div class="content">
 				<h1>포인트 결제 신청</h1>
 				<form id="refundForm" name="refundForm" onsubmit="return check()" action="${pageContext.request.contextPath}/addRefund" method="post">
-			<%-- <input type="hidden" name="memberNo" value="${sessionScope.memberNo}"> --%>
 				현재 고객님의 포인트 잔액은 ${map.memberPoint }입니다.
-					<input type=hidden name="memberNo" value="${map.memberNo}">
+					<input type=hidden name="memberNo" value="${sessionScope.memberSessionNo}">
 					<div>
 						환불 금액 : 
 						<input type="text" id="refundSum" name="refundSum" onchange="checkSum()">&nbsp;<span id="Name"></span>

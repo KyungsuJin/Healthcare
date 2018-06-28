@@ -80,8 +80,7 @@ $(document).ready(function(){
 						<input type="button" onclick="modifyBtn()" value="그룹수정하기">
 					</div>
 					<div>
-						<a href="${pageContext.request.contextPath}/groupMembersList?groupName=${map.groupDetail.groupName }">회원리스트</a>
-						<a href="${pageContext.request.contextPath}/groupMemberRelation?groupName=${map.groupDetail.groupName }">그룹관계도</a>
+						<a href="${pageContext.request.contextPath}/detailGroupMain?groupName=${map.groupDetail.groupName }">그룹메인으로</a>
 					</div>
 					<div>
 						<c:if test="${map.countNext > 0 }">

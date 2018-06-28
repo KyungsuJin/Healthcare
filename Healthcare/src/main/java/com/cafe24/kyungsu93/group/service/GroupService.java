@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cafe24.kyungsu93.message.service.Message;
+import com.cafe24.kyungsu93.message.service.MessageDao;
+
 @Service
 @Transactional
 public class GroupService {
@@ -19,6 +22,8 @@ public class GroupService {
 	private GroupDao groupDao;
 	@Autowired
 	private GroupInviteDao groupInviteDao;
+	@Autowired
+	private MessageDao messageDao;
 	private static final Logger logger = LoggerFactory.getLogger(GroupService.class);
 		
 	/**
@@ -227,6 +232,48 @@ public class GroupService {
 			if(memberCount>0) {
 				//회원이 있을경우 유예기간 등록
 				groupDao.deleteApproval(groupNo);
+				//회원에게 유예기간 알림
+				List<Group> memberList = groupDao.groupMemberList(groupNo);
+				logger.debug("memberList:"+memberList);
+				for(int i=0; i<memberCount; i++) {
+					for(Group group : memberList) {
+					logger.debug("GroupService -delete- sendMessage 시작");
+					Date today = new Date();
+				    SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd");
+				    String now = date.format(today);
+				    logger.debug("현재시간:"+now);
+				    //삭제유예기간에 들어가있는 그룹중 중 제일 오래된 날짜 검색
+					Group day = groupDao.groupDdaycheck();
+					String groupExpiredDate = day.getGroupExpiredDate();
+					logger.debug("유예 기간 groupExpiredDate:"+groupExpiredDate);
+					
+					Message message = new Message();
+					int result = (messageDao.messageNo())+1;//메시지의 no 를 구함
+					String messageNo = "message_";
+					//받는사람
+					String memberReceiveNo = group.getMemberNo();
+					group.setGroupNo(memberReceiveNo);
+					message.setMemberReceiveNo(memberReceiveNo);
+					//보내는사람
+					message.setSendMessageNo(messageNo+result);
+					String memberSendNo = "member_1";
+					message.setMemberSendNo(memberSendNo);
+					String sendMessageId = "rlaansrl";
+					message.setSendMessageId(sendMessageId);
+					logger.debug("messageNo : "+message.getSendMessageNo());
+					//메세지 내용
+					String messageTitle = groupName+"그룹이 삭제 유예기간으로 들어갔습니다!";
+					message.setMessageTitle(messageTitle);
+					String messageContent = groupName+"그룹이 삭제 유예기간으로 들어갔습니다."+groupExpiredDate+"일 안에 그룹 탈퇴를 하지않으면 자동 탈퇴 처리 됩니다.";
+					message.setMessageContent(messageContent);
+					
+					messageDao.sendMessage(message);//send_Message 테이블 에 데이트를 셋
+					messageDao.sendMessageContent(message);//발신자 테이블에 데이터 셋
+					messageDao.receiveMessageContent(message);//수신자 테이블에 데이터 셋
+					logger.debug("ExerciseFeedbackResponseService - sendMessage 완료");
+					}
+				}
+			    
 			}else {
 				//회원이 없을 경우 바로 삭제
 				groupDao.deleteGroup(groupNo);
@@ -321,7 +368,7 @@ public class GroupService {
 	 * @param group
 	 */
 	public void addGroup(Group group) {
-		logger.debug("GroupService - addGroup실행");		
+		logger.debug("GroupService - addGroup실행");	
 		String groupNo = group.getGroupNo();
 		try {
 			if(groupNo == null) {

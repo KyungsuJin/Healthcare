@@ -4,14 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
 @Service
 @Transactional
@@ -86,17 +85,24 @@ public class BloodPressureService {
 	 * @param pagePerRow
 	 * @return returnMap
 	 */
-	public Map<String,Object> bloodPressureSearch(String startDate, String endDate,int currentPage, int pagePerRow) {
+	public Map<String,Object> bloodPressureSearch(HttpSession session,String startDate, String endDate,int currentPage, int pagePerRow) {
 		logger.debug("BloodPressureService - bloodPressureSearch 실행");
 		Map<String,Object> map = new HashMap<String,Object>();
 		int beginRow = (currentPage-1)*pagePerRow;
+		String memberNo = (String) session.getAttribute("memberSessionNo");
+		int sessionLevel = (Integer) session.getAttribute("memberSessionLevel");
+		if(sessionLevel != 1) {
+			String Key = "memberNo";
+			map.put("Key", Key);
+			map.put("memberNo", memberNo);
+		}
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
 		map.put("startDate", startDate);
 		map.put("endDate", endDate);
 		logger.debug("가져온 데이터:"+startDate+","+endDate);
 		List<BloodPressure> list = bloodPressureDao.bloodPressureSearchDate(map);
-		int total = list.size();
+		int total = bloodPressureDao.bloodPressureSearchDateCount(map);
 		logger.debug("total:"+total);
 		int lastPage = total/pagePerRow;
         if(total % pagePerRow != 0) {
@@ -109,7 +115,7 @@ public class BloodPressureService {
         logger.debug("pagePerRow:"+pagePerRow);
         logger.debug("======================page block=========================");
        
-        int pagePerBlock = 10; //보여줄 블록 수 
+        int pagePerBlock = pagePerRow; //보여줄 블록 수 
         int block = currentPage/pagePerBlock;
         int totalBlock = total/pagePerBlock;//총 블록수
         
@@ -149,14 +155,20 @@ public class BloodPressureService {
 	 * @param pagePerRow
 	 * @return returnMap
 	 */
-	public Map<String, Object> bloodPressureList(int currentPage, int pagePerRow) {
+	public Map<String, Object> bloodPressureList(HttpSession session,int currentPage, int pagePerRow) {
 		logger.debug("BloodPressureService - bloodPressureList 실행");
-		Map<String,Integer> map = new HashMap<String,Integer>();
+		Map<String,Object> map = new HashMap<String,Object>();
+		String memberNo = (String) session.getAttribute("memberSessionNo");
+		int sessionLevel = (Integer) session.getAttribute("memberSessionLevel");
+		logger.debug("memberNo:"+memberNo);
+		logger.debug("sessionLevel:"+sessionLevel);
+		map.put("sessionLevel", sessionLevel);
+		map.put("memberNo", memberNo);
 		int beginRow = (currentPage-1)*pagePerRow;
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
 		List<BloodPressure> list = bloodPressureDao.bloodPressureList(map);
-		int total = bloodPressureDao.bloodPressureCount();
+		int total = bloodPressureDao.bloodPressureCount(map);
 		int lastPage = total/pagePerRow;
         if(total % pagePerRow != 0) {
             lastPage++;
@@ -168,7 +180,7 @@ public class BloodPressureService {
         logger.debug("pagePerRow:"+pagePerRow);
         logger.debug("======================page block=========================");
        
-        int pagePerBlock = 10; //보여줄 블록 수 
+        int pagePerBlock = pagePerRow; //보여줄 블록 수 
         int block = currentPage/pagePerBlock;
         int totalBlock = total/pagePerBlock;//총 블록수
         

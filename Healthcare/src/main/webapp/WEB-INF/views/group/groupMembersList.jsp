@@ -10,6 +10,61 @@
 <script type="text/javascript">
 var groupNo = $('#groupNo').val();
 console.log("groupNo:"+groupNo);
+$(document).ready(function(){
+    ajaxData();
+});	
+	function ajaxData() {
+	
+		var request = $.ajax({
+		type : "POST",
+		url : "${pageContext.request.contextPath}/groupMemberRelationChart?groupName="+groupName
+	    });   
+	//ajax 실행 값 확인
+	request.done(function( msg ) {
+		//받아온 데이터 값 확인. 
+		console.log(msg);
+	
+	google.charts.load('current', {packages:["orgchart"]});
+	google.charts.setOnLoadCallback(drawChart);
+	function drawChart() {
+		var createMemb = msg.createMemb;
+		var relationMember = msg.groupRelationMember;
+		if(relationMember!=undefined && Array.isArray(relationMember)){
+			console.log('array 확인');
+			console.log(relationMember);
+			console.log(relationMember.length);
+			for(var i=0; i < relationMember.length; i++){
+			console.log("memberId:"+relationMember[i].memberId);
+			}
+		}else{
+			console.log('데이터 없음');
+			console.log(msg);
+		}
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Name');//하위그룹
+	data.addColumn('string', 'Manager');//상위그룹
+	data.addColumn('string', 'ToolTip');
+	data.addRow([{v:createMemb , f: '<p>'+createMemb+'</p>'+'<div style=" color:#5D5D5D; font-style:bold">그룹장</div>'},'','그룹장']);
+	data.addRow([{v:relationMember[0].memberId , f: '<p>'+relationMember[0].memberName+'</p>'+'<div style=" color:#5D5D5D; font-style:bold">그룹원</div>'},createMemb,'']);
+	data.addRow([{v:relationMember[1].memberId , f: '<p>'+relationMember[1].memberName+'</p>'+'<div style=" color:#5D5D5D; font-style:bold">그룹원</div>'},createMemb,'']);
+	 for(var i=2; i < relationMember.length; i++){
+		 data.addRow([{v:relationMember[i].memberId, f: '<p>'+relationMember[i].memberName+'</p>'+'<div style=" color:#5D5D5D; font-style:bold">그룹원</div>'},relationMember[i-1].memberId,'']);
+		 data.addRow([{v:relationMember[1].memberId , f: '<p>'+relationMember[1].memberName+'</p>'+'<div style=" color:#5D5D5D; font-style:bold">그룹원</div>'},relationMember[i-2].memberId,'']);
+		} //v: 연결되는 아이디 값. f: 화면에 보여지는 부분, ['하위그룹','상위그룹Id','']
+		console.log(data);
+	
+	// Create the chart.
+	var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+	// Draw the chart, setting the allowHtml option to true for the tooltips.
+	chart.draw(data, {allowHtml:true,nodeClass:'maman'});
+	}
+	});
+	
+	request.fail(function( jqXHR, textStatus ) {
+		  alert( "Request failed: " + textStatus );
+		});
+	}
+
 	function inviteMemberBtn() {
 		location.href="${pageContext.request.contextPath}/inviteMemberForm?groupNo="+groupNo;
 	}   
@@ -42,7 +97,35 @@ console.log("groupNo:"+groupNo);
 		}	
 	  });
 	}
+
 </script>
+<style type="text/css">
+.maman {
+	background : linear-gradient( to bottom, lightgray, white );
+	color: black;
+	width: 150px;
+	height: 80px;
+	text-align: center;
+	border-radius: 5px;
+	font-size: 2.5em;
+/* 	border-width: 1px 20px 1px 20px; */
+}
+div {
+    font-size: 15px;
+}
+p {
+    font-size: 24px;
+}
+.google-visualization-orgchart-lineleft {
+	border-left: 1px solid #333!important;
+}
+.google-visualization-orgchart-linebottom {
+	border-bottom: 1px solid #333!important;
+}
+.google-visualization-orgchart-lineright {
+	border-right: 1px solid #333!important;
+}
+</style>
 </head>
 <body>
 	<div class="sidebar-wrapper">
@@ -50,20 +133,12 @@ console.log("groupNo:"+groupNo);
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
+				<div id="chart_div"></div>
 				<h1>그룹에 가입한 회원 리스트</h1>
 				<c:choose>
 					<c:when test="${memberCountResult>0 }">
 						총 ${memberCountResult }명의 회원이 있습니다.
-				<%-- 	<form id="formSearch" name="formSearch" onsubmit="return formSearchcheck()" action="${pageContext.request.contextPath}/deleteGroupListSearch" method="post">
-						<select name="keyOption" size="1">
-				            <option value="all" <c:if test="${'all'==keyOption }"> selected</c:if>>전체검색</option>
-				            <option value="groupName" <c:if test="${'systolicPressure'==keyOption }"> selected</c:if>>개인정보공개유무</option>
-				            <option value="groupKindName" <c:if test="${'diastolicPressure'==keyOption }"> selected</c:if>>회원명</option>
-				        </select>
-						<input type="text" id="keyWord" name="keyWord" value="${keyWord}"/>
-						<button type="submit">검색</button>  
-				    </form> --%>
-						<table>
+						<table class="table table-hober">
 							<thead>
 								<tr>
 									<th><input type="checkbox" name="selectAll" id="selectAll" onclick="checkAll();"></th>

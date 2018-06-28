@@ -41,7 +41,7 @@ function outGroupMember(){
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
 				<h1>초대한 회원 리스트</h1>
-					<table>
+					<table class="table table-hober">
 						<thead>
 							<tr>
 								<th><input type="checkbox" name="selectAll" id="selectAll" onclick="checkAll();"></th>

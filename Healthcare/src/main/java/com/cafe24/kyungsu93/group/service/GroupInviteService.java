@@ -23,7 +23,11 @@ public class GroupInviteService {
 	@Autowired
 	private GroupDao groupDao;
 	private static final Logger logger = LoggerFactory.getLogger(GroupInviteService.class);
-	
+	/**
+	 * 그룹메인
+	 * @param groupName
+	 * @return
+	 */
 	public Map<String, Object> detailGroupMain(String groupName) {
 		logger.debug("GroupInviteService - detailGroupMain 실행");
 		GroupInvite detailGroup = groupInviteDao.detailGroupMainNameNo(groupName);

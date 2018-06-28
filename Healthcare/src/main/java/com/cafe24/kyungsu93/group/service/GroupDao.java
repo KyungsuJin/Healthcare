@@ -15,7 +15,13 @@ public class GroupDao{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.group.service.GroupMapper.";
-
+	
+	//그룹에 가입된 회원 리스트
+	public List<Group> groupMemberList(String groupNo) {
+		logger.debug("GroupInviteDao - groupMemberList 실행");
+		return sqlSession.selectList(NS+"groupMemberList",groupNo);
+	}
+	
 	//가입된 그룹 체크 카운트
 	public int memberGroupCreateCheckCount(String memberNo) {
 		logger.debug("GroupInviteDao - memberGroupCreateCheckCount 실행");
@@ -33,6 +39,11 @@ public class GroupDao{
 		logger.debug("GroupInviteDao - groupNameSearch 실행");
 		return sqlSession.selectOne(NS+"groupNameSearch",groupNo);
 	}	
+	//회원 번호검색
+	public Group memberNoCreateCheck(String memberId) {
+		logger.debug("GroupDao - memberNoCreateCheck 실행");
+		return sqlSession.selectOne(NS+"memberNoCreateCheck",memberId);
+	}
 	
 	//그룹 번호 검색
 	public Group groupNoSearch(String groupName) {

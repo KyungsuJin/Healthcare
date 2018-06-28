@@ -3,6 +3,8 @@ package com.cafe24.kyungsu93.group.controller;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,9 +49,10 @@ public class GroupController {
 	
 	//그룹 메인
 	@RequestMapping(value="/groupMain", method=RequestMethod.GET)
-	public String groupMain(Model model) {
+	public String groupMain(Model model,HttpSession session) {
 		logger.debug("GroupController - groupMain 포워드 실행");
-		String memberNo = "member_1";
+		String memberNo = (String) session.getAttribute("memberSessionNo");
+		logger.debug("memberNo:"+memberNo);
 		Map<String,Object> map = groupInviteService.groupJoinCreateCheck(memberNo);
 		model.addAttribute("map", map);
 		logger.debug("map:"+map);
@@ -87,8 +90,9 @@ public class GroupController {
 	
 	//그룹 캘린더 
 	@RequestMapping(value="/groupCalendar", method=RequestMethod.GET)
-	public String groupCalendar() {
+	public String groupCalendar(Model model,@RequestParam(value="groupName") String groupName) {
 		logger.debug("GroupController - groupCalendar 포워드 실행");
+		model.addAttribute("groupName",groupName);
 		return "group/groupCalendar";
 	}
 	
@@ -242,7 +246,7 @@ public class GroupController {
 	
 	//그룹 생성
 	@RequestMapping(value="/addGroup", method=RequestMethod.POST)
-	public String addGroup(Group group,HttpServletRequest request) {
+	public String addGroup(Group group) {
 		logger.debug("GroupController - addGroup 리다이렉트 실행");
 		groupService.addGroup(group);
 		return "redirect:/groupList";

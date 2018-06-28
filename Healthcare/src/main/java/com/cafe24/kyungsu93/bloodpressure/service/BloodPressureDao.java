@@ -53,16 +53,16 @@ public class BloodPressureDao {
     }
 	
 	//혈압 리스트
-	public List<BloodPressure> bloodPressureList(Map<String,Integer> map) {
+	public List<BloodPressure> bloodPressureList(Map<String,Object> map) {
 		logger.debug("BloodPressureDao - bloodPressureList 실행");
 		 List<BloodPressure> list = sqlSession.selectList(NS+"bloodPressureList",map);
 		return list;
 	}
 	
 	//혈압 리스트 게시글 카운트
-	public int bloodPressureCount() {
+	public int bloodPressureCount(Map<String,Object> map) {
 		logger.debug("BloodPressureDao - bloodPressureCount 실행");
-		return sqlSession.selectOne(NS+"bloodPressureCount");
+		return sqlSession.selectOne(NS+"bloodPressureCount",map);
 	}
 	
 	//혈압 번호 선택

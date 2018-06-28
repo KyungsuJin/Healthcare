@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>addBloodPressure</title>
+<title>addBloodPressureForAll</title>
 <jsp:include page="../include/header.jsp"></jsp:include>
 <!-- jQuery -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
@@ -27,6 +27,11 @@ function check() {
 			bloodPressureForm.systolicPressure.focus();
 			return false;
 		  }
+		if(bloodPressureForm.memberNo.value == ""){
+			alert("회원번호를 입력 해주세요.");
+			bloodPressureForm.memberNo.focus();
+			return false;
+		}
 		if(bloodPressureForm.diastolicPressure.value == ""){
 			alert("수축기 혈압을 해주세요.");
 			bloodPressureForm.diastolicPressure.focus();
@@ -61,20 +66,25 @@ margin: 0 auto;
 				<h2>혈압을 등록해 주세요.</h2>
 				<div id="center">
 					<form id="addBloodPRessureForm" action="${pageContext.request.contextPath}/addBloodPressure" method="post">
-						<input class="form-control" type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}">
 						<div>
-						수축기 : <input class="form-control" type="text" id="systolicPressure" name="systolicPressure" placeholder="systolicPressure/mmHg">
+							<label>회원번호</label>
+							<input class="form-control" type="text" id="memberNo" name="memberNo">
 						</div>
-						<div>
-						이완기 : <input class="form-control" type="text" id="diastolicPressure" name="diastolicPressure" placeholder="diastolicPressure/mmHg">
+						<div class="form-group">
+							<label>수축기혈압</label>
+							<input class="form-control" type="text" id="systolicPressure" name="systolicPressure" placeholder="systolicPressure/mmHg">
+						</div>
+						<div class="form-group">
+							<label>이완기 혈압</label>
+							<input class="form-control" type="text" id="diastolicPressure" name="diastolicPressure" placeholder="diastolicPressure/mmHg">
 						</div>
 						<div align="right">
-						<input type="submit" class="btn btn-sm btn-default" value="등록하기">
+							<input type="submit" class="btn btn-sm btn-default" value="등록">
 						</div>
 					</form>
 				</div>
 				<div align="right">
-					<input type="button" class="btn btn-sm btn-default" onclick="reset()" value="다시입력하기">
+					<input type="button" class="btn btn-sm btn-default" onclick="reset()" value="다시입력">
 					<input type="button" class="btn btn-sm btn-default" onclick="returnBtn()" value="등록취소">
 				</div>
 			</div>

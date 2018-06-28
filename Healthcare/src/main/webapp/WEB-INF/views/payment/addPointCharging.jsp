@@ -27,8 +27,7 @@
 			<div class="content">
 				<h1>포인트 결제 신청</h1>
 					<form id="pointChargingForm" onsubmit="return check()" action="${pageContext.request.contextPath}/pointCharging" method="post">
-				<%-- <input type="hidden" name="memberNo" value="${sessionScope.memberNo}"> --%>
-						memberNo <input type="text" name="memberNo">
+						<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}">
 						<div>
 							<select name="pointChargingRoot">
 							  <option value="무통장입금" selected="selected">무통장입금</option>

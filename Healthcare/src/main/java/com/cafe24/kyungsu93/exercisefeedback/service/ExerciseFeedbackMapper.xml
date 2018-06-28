@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackMapper">
+	<select id="memberNoSearchCount" resultType="Integer">
+	SELECT 
+	count(*)
+	FROM member
+	WHERE member_no = #{memberNo}
+	</select>
 	<select id="exerciseFeedbackRequestListSearch" 
 			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
 		SELECT 
@@ -145,6 +151,8 @@
 		SELECT 
 			a.exercise_feedback_request_no as exerciseFeedbackRequestNo, 
 			b.member_id as memberId,
+			a.teacher_no as teacherNo,
+			a.member_no as memberNo,
 			b.member_name as memberName, 
 			a.exercise_feedback_request_title as exerciseFeedbackRequestTitle, 
 			a.exercise_feedback_request_content as exerciseFeedbackRequestContent, 
@@ -188,6 +196,7 @@
 			resultType="com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackRequest">
 		SELECT 
 			member_name as memberName,
+			member_id as memberId,
 			member_no as memberNo
 		FROM member
 		WHERE member_no = #{memberNo}

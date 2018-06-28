@@ -13,7 +13,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.9.4/scheduler.css">
 <script type="text/javascript" src="https://fullcalendar.io/releases/fullcalendar-scheduler/1.9.4/scheduler.min.js"></script>
 <script type="text/javascript">
-var groupName = "groupName7";
+var groupName = $('#groupName').val();
 $(document).ready(function(){
 	  ajaxData(); 
 });
@@ -114,22 +114,7 @@ function ajaxData() {
 			    defaultDate : new Date(),
 			    navLinks: true,
 			    eventLimit: true,
-			    
-			    dayClick: function(date) {//날짜 클릭했을 때
-			        alert('clicked ' + date.format());
-			      },
-			      
-			      select: function(startDate, endDate) {//날짜 드래그했을 때
-			        alert('selected ' + startDate.format() + ' to ' + endDate.format());
-			      },
-			      
-		 	      eventClick: function(event) { //이벤트 클릭시 해당글의 상세보기
-			          // opens events in a popup window
-			           alert('selected ' + event.id + ' to ' + event.title);
-			          window.open('', 'calendarDetail', 'width=700,height=600');
-			          myWindow.document.write(calendarDetail);
-			          return false;
-			        }, 
+			     
 			    views: { 
 			    	month:{
 			    		buttonText: 'month',
@@ -182,6 +167,7 @@ font-size: 15px;
 			<div class="content">
 				<div class='col-sm-10'>
 					<div class="btn-group" role="group" aria-label="...">
+						<input type="hidden" id="groupName" value="${groupName}">
 						<input type="button" onclick="groupDetail()" class="btn btn-default" value="그룹상세">
 						<button onclick="groupCalendar()" class="btn btn-default">그룹캘린더</button>
 						<button onclick="groupRelation()" class="btn btn-default">그룹관계도</button>

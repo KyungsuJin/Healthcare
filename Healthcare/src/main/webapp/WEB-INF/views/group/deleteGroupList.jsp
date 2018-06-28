@@ -43,15 +43,15 @@
 			<div class="content">
 			<h1>그룹삭제유예기간리스트</h1>
 			 	<form id="formSearch" name="formSearch" onsubmit="return formSearchcheck()" action="${pageContext.request.contextPath}/deleteGroupListSearch" method="post">
-					<select name="keyOption" size="1">
+					<select class="form-control" name="keyOption" size="1">
 			            <option value="all" <c:if test="${'all'==keyOption }"> selected</c:if>>전체검색</option>
 			            <option value="groupName" <c:if test="${'systolicPressure'==keyOption }"> selected</c:if>>그룹명</option>
 			            <option value="groupKindName" <c:if test="${'diastolicPressure'==keyOption }"> selected</c:if>>그룹종류</option>
 			        </select>
-					<input type="text" id="keyWord" name="keyWord" value="${keyWord}"/>
-					<button type="submit">검색</button>  
+					<input class="form-control" type="text" id="keyWord" name="keyWord" value="${keyWord}"/>
+					<button class="btn btn-sm btn-default" type="submit">검색</button>  
 			    </form> 
-				<table>
+				<table class="table table-hober">
 					<thead>
 						<tr>
 							<th><input type="checkbox" name="selectAll" id="selectAll" onclick="checkAll();"></th>
@@ -65,7 +65,7 @@
 					<tbody>
 						<c:forEach var="deleteGroup" items="${list}">
 						<tr>
-							<td><input type="checkbox" name="deleteGroupcheck" value="${deleteGroup.groupNo}"/></td>
+							<td><input type="checkbox" name="deleteGroupcheck" value="${deleteGroup.groupNo}"></td>
 							<td>${deleteGroup.groupName }</td>
 							<td>${deleteGroup.groupKindName }</td>
 							<td>${deleteGroup.groupInfo }</td>
@@ -75,7 +75,7 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				<input type="button" onclick="deleteGroupcheckCancle()" value="그룹삭제취소">
+				<input type="button" class="btn btn-sm btn-default" onclick="deleteGroupcheckCancle()" value="그룹삭제취소">
 				<a href="${pageContext.request.contextPath}/groupList">그룹리스트로 돌아가기</a>
 				<nav>
 					<ul class="pagination pagination-sm">

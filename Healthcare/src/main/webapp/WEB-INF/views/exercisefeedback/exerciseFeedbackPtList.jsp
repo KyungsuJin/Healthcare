@@ -40,10 +40,9 @@
 				            <option value="evaluationAverageGrade" <c:out value="${map.keyOption == 'evaluationAverageGrade'?'selected':''}"/>>평가점수</option>
 				        </select>
 						<input type="text" id="keyWord" name="keyWord" value="${keyWord}"/>
+						<input class="btn btn-sm btn-default" type="submit" value="조회">
 					</div>
-					 <div>
-						<input type="submit" value="조회">
-					</div>
+						
 				</form>
 				<c:choose>
 					<c:when test="${result > 0 }">
@@ -54,7 +53,7 @@
 						${keyOption }로(으로) ${keyWord }로 해당하는 리스트 검색 결과가 없습니다.
 					</c:when>
 				</c:choose>
-				<table>
+				<table class="table table-hover">
 					<thead>
 						<tr>
 							<th>강사아이디</th>
@@ -75,7 +74,7 @@
 								<td>${teacher.memberTotalFeedback }</td>
 								<td>${teacher.memberAgreeFeedback }</td>
 								<td>${teacher.evaluationAverageGrade }</td>
-								<td><a type="button" href="${pageContext.request.contextPath}/exerciseFeedbackRequest?memberNo=${teacher.memberNo}">선택하기</a></td>
+								<td><a type="button" class="btn btn-sm btn-default" href="${pageContext.request.contextPath}/exerciseFeedbackRequest?memberNo=${teacher.memberNo}">선택하기</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>

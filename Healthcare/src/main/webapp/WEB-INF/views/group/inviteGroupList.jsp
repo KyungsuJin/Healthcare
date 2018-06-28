@@ -17,7 +17,8 @@
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
 				<h1>나를 초대한 그룹 리스트</h1>
-					<table>
+					
+					<table class="table table-hober">
 						<thead>
 							<tr>
 								<th>그룹명</th>

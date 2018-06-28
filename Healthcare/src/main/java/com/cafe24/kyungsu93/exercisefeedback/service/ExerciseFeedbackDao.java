@@ -18,6 +18,11 @@ public class ExerciseFeedbackDao {
 	final String NS = "com.cafe24.kyungsu93.exercisefeedback.service.ExerciseFeedbackMapper.";
 	
 	//운동피드백 요청 리스트 검색
+	public int memberNoSearchCount(String memberNo) {
+		logger.debug("ExerciseFeedbackDao - memberNoSearchCount 실행");
+		return sqlSession.selectOne(NS+"memberNoSearchCount",memberNo);
+	}	
+	//운동피드백 요청 리스트 검색
 	public List<ExerciseFeedbackRequest> exerciseFeedbackRequestListSearch(Map<String, Object> map) {
 		logger.debug("ExerciseFeedbackDao - exerciseFeedbackRequestListSearch 실행");
 		return sqlSession.selectList(NS+"exerciseFeedbackRequestListSearch",map);

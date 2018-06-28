@@ -72,31 +72,28 @@ function cancleBtn() {
 					<div class='col-sm-10'>
 						<div class="panel panel-default">
 						<div class="panel-body">
-							<h1>addBloodPressure</h1>
+							<h5>addBloodPressure</h5>
 								<form name="groupForm" id="groupForm" onsubmit="return check()" action="${pageContext.request.contextPath}/addGroup" method="post">
+									<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}">
 									<div>
 										그룹 종류를 선택해주세요.
-										<select name="groupKindNo">
+										<select class="form-control" name="groupKindNo">
 										  <option value="group_kind_1" selected="selected">가족</option>
 										  <option value="group_kind_2">회사</option>
 										  <option value="group_kind_3">친구</option>
 										</select>
 									</div>
 									<div>
-										회원아이디 : 
-										<input type="text" name="memberNo">
-									</div>
-									<div>
 										그룹명 :
-											<input type="text" id="groupName" name="groupName" required class="groupName" maxlength="10" onchange="checkName()">&nbsp;<span id="Name"></span>
+											<input type="text" class="form-control"  id="groupName" name="groupName" required class="groupName" maxlength="10" onchange="checkName()">&nbsp;<span id="Name"></span>
 									</div>
 									<div>
 										그룹 소개:
-										<textarea name="groupInfo" style="resize: none;" cols="40" rows="8" placeholder="그룹 소개글을 입력해주세요"></textarea>
+										<textarea class="form-control" name="groupInfo" style="resize: none;" cols="40" rows="8" placeholder="그룹 소개글을 입력해주세요"></textarea>
 									</div>
-									<input type="submit" value="등록하기">
+									<input class="btn btn-sm btn-default" type="submit" value="등록하기">
 								</form>
-									<input type="button" onclick="cancleBtn()" value="등록취소">
+									<input type="button" class="btn btn-sm btn-default" onclick="cancleBtn()" value="등록취소">
 							</div>
 						</div>
 					</div>

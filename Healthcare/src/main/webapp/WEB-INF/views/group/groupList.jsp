@@ -18,7 +18,7 @@
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
 				<h1>생성된 그룹 리스트</h1>
-					<table>
+					<table class="table table-hober">
 						<thead>
 							<tr>
 								<th>번호</th>
@@ -35,12 +35,12 @@
 								<td>${groupTable.groupName }</td>
 								<td>${groupTable.groupKindName }</td>
 								<td>${groupTable.groupCreateDate }</td>
-								<td><a type="button" href="${pageContext.request.contextPath}/groupDetail?groupNo=${groupTable.groupNo}">그룹상세보기</a></td>				
+								<td><a class="btn btn-sm btn-default" type="button" href="${pageContext.request.contextPath}/groupDetail?groupNo=${groupTable.groupNo}">그룹상세보기</a></td>				
 							</tr>
 							</c:forEach>
 						</tbody>
 					</table>
-						<a href="${pageContext.request.contextPath}/addGroup">그룹생성하기</a>
+						<a class="btn btn-sm btn-default" href="${pageContext.request.contextPath}/addGroup">그룹생성하기</a>
 					<nav>
 						<ul class="pagination pagination-sm">
 							<c:if test="${currentPage > 10}">

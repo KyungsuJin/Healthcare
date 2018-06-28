@@ -39,7 +39,11 @@ public class GroupInviteDao {
 		logger.debug("GroupInviteDao - addHistorytreatment 실행");
 		return sqlSession.selectList(NS+"addHistorytreatment",groupName);
 	}
-	
+	//그룹멤버검색
+	public GroupInvite groupMemberNo(String groupName) {
+		logger.debug("GroupInviteDao - groupMemberNo 실행");
+		return sqlSession.selectOne(NS+"groupMemberNo",groupName);
+	}
 	//그룹디테일
 	public GroupInvite detailGroupMainNameNo(String groupName) {
 		logger.debug("GroupInviteDao - detailGroupMainNameNo 실행");

@@ -5,7 +5,12 @@ public class ExerciseFeedbackResult {
 	private String exerciseFeedbackTitle;
 	private String exerciseFeedbackContent;
 	private String exerciseFeedbackResultDate;
+	private String memberNo;
+	private String teacherNo;
+	private String memberName;
+	private String memberId;
 	private String foodNo;
+	private String foodInfoNo;
 	private int ingestionAmount;
 	private String foodFeedbackDate;
 	private String exerciseNo;
@@ -14,7 +19,7 @@ public class ExerciseFeedbackResult {
 	private String exerciseDate;
 	private int exerciseTime;
 	private String exerciseFeedbackDate;
-	private int exerciseFeedbackEvaluationGrade;
+	private double exerciseFeedbackEvaluationGrade;
 	private String exerciseFeedbackEvaluationDate;
 	private String foodGroup;
 	private String foodName;
@@ -51,11 +56,41 @@ public class ExerciseFeedbackResult {
 	public void setExerciseFeedbackResultDate(String exerciseFeedbackResultDate) {
 		this.exerciseFeedbackResultDate = exerciseFeedbackResultDate;
 	}
+	public String getMemberNo() {
+		return memberNo;
+	}
+	public void setMemberNo(String memberNo) {
+		this.memberNo = memberNo;
+	}
+	public String getTeacherNo() {
+		return teacherNo;
+	}
+	public void setTeacherNo(String teacherNo) {
+		this.teacherNo = teacherNo;
+	}
+	public String getMemberName() {
+		return memberName;
+	}
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+	public String getMemberId() {
+		return memberId;
+	}
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
 	public String getFoodNo() {
 		return foodNo;
 	}
 	public void setFoodNo(String foodNo) {
 		this.foodNo = foodNo;
+	}
+	public String getFoodInfoNo() {
+		return foodInfoNo;
+	}
+	public void setFoodInfoNo(String foodInfoNo) {
+		this.foodInfoNo = foodInfoNo;
 	}
 	public int getIngestionAmount() {
 		return ingestionAmount;
@@ -105,10 +140,10 @@ public class ExerciseFeedbackResult {
 	public void setExerciseFeedbackDate(String exerciseFeedbackDate) {
 		this.exerciseFeedbackDate = exerciseFeedbackDate;
 	}
-	public int getExerciseFeedbackEvaluationGrade() {
+	public double getExerciseFeedbackEvaluationGrade() {
 		return exerciseFeedbackEvaluationGrade;
 	}
-	public void setExerciseFeedbackEvaluationGrade(int exerciseFeedbackEvaluationGrade) {
+	public void setExerciseFeedbackEvaluationGrade(double exerciseFeedbackEvaluationGrade) {
 		this.exerciseFeedbackEvaluationGrade = exerciseFeedbackEvaluationGrade;
 	}
 	public String getExerciseFeedbackEvaluationDate() {
@@ -187,15 +222,17 @@ public class ExerciseFeedbackResult {
 	public String toString() {
 		return "ExerciseFeedbackResult [exerciseFeedbackRequestNo=" + exerciseFeedbackRequestNo
 				+ ", exerciseFeedbackTitle=" + exerciseFeedbackTitle + ", exerciseFeedbackContent="
-				+ exerciseFeedbackContent + ", exerciseFeedbackResultDate=" + exerciseFeedbackResultDate + ", foodNo="
-				+ foodNo + ", ingestionAmount=" + ingestionAmount + ", foodFeedbackDate=" + foodFeedbackDate
-				+ ", exerciseNo=" + exerciseNo + ", exerciseName=" + exerciseName + ", exerciseCalorie="
-				+ exerciseCalorie + ", exerciseDate=" + exerciseDate + ", exerciseTime=" + exerciseTime
-				+ ", exerciseFeedbackDate=" + exerciseFeedbackDate + ", exerciseFeedbackEvaluationGrade="
-				+ exerciseFeedbackEvaluationGrade + ", exerciseFeedbackEvaluationDate=" + exerciseFeedbackEvaluationDate
-				+ ", foodGroup=" + foodGroup + ", foodName=" + foodName + ", foodOnece=" + foodOnece + ", foodKcal="
-				+ foodKcal + ", foodCarbohydrate=" + foodCarbohydrate + ", foodProtein=" + foodProtein + ", foodFat="
-				+ foodFat + ", foodSugar=" + foodSugar + ", foodNatrium=" + foodNatrium + ", foodCholesterol="
-				+ foodCholesterol + ", foodTransfat=" + foodTransfat + "]";
+				+ exerciseFeedbackContent + ", exerciseFeedbackResultDate=" + exerciseFeedbackResultDate + ", memberNo="
+				+ memberNo + ", teacherNo=" + teacherNo + ", memberName=" + memberName + ", memberId=" + memberId
+				+ ", foodNo=" + foodNo + ", foodInfoNo=" + foodInfoNo + ", ingestionAmount=" + ingestionAmount
+				+ ", foodFeedbackDate=" + foodFeedbackDate + ", exerciseNo=" + exerciseNo + ", exerciseName="
+				+ exerciseName + ", exerciseCalorie=" + exerciseCalorie + ", exerciseDate=" + exerciseDate
+				+ ", exerciseTime=" + exerciseTime + ", exerciseFeedbackDate=" + exerciseFeedbackDate
+				+ ", exerciseFeedbackEvaluationGrade=" + exerciseFeedbackEvaluationGrade
+				+ ", exerciseFeedbackEvaluationDate=" + exerciseFeedbackEvaluationDate + ", foodGroup=" + foodGroup
+				+ ", foodName=" + foodName + ", foodOnece=" + foodOnece + ", foodKcal=" + foodKcal
+				+ ", foodCarbohydrate=" + foodCarbohydrate + ", foodProtein=" + foodProtein + ", foodFat=" + foodFat
+				+ ", foodSugar=" + foodSugar + ", foodNatrium=" + foodNatrium + ", foodCholesterol=" + foodCholesterol
+				+ ", foodTransfat=" + foodTransfat + "]";
 	}
 }
