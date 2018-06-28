@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BloodsugarList</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
    	function formSearchcheck(){
    		var keyWord = $('#keyWord').val();
    		var keyOption = $('#keyOption').val();
@@ -51,13 +51,13 @@
 	});
 }
 	
-</script>
+</script> -->
 
 </head>
 <body>
 	<h1>NoticeList</h1>
      
-	<form id="formSearch" name="formSearch"> 
+	<%-- <form id="formSearch" name="formSearch"> 
         날짜검색<br>
         <input type="text" id="startDate" name="startDate" placeholder="0000-00-00"> ~ <input type="text" name="endDate" id="endDate" placeholder="0000-00-00"><br>
       <button type="submit" onclick="formSearchcheck()">검색</button>
@@ -90,7 +90,7 @@
 			</tr>
 		</c:forEach>
 	</tbody>
-	</table>
+	</table> --%>
 	 
 	<table>
 		<thead>

@@ -27,7 +27,7 @@
 		<td><input type="text" name="noticeTitle" value="${notice.noticeTitle}"></td>
 		<td><input type="text" name="noticeContent" value="${notice.noticeContent}"></td>
 		<td><input type="hidden" name="noticeCount" value="${notice.noticeCount}"></td>
-		<td><input type="text" name="noticeDate" value="${notice.noticeDate}"></td>
+		<%-- <td><input type="text" name="noticeDate" value="${notice.noticeDate}"></td> --%>
 		<td><input type="submit" value="수정하기">
 	</form>
 	</tr>

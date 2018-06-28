@@ -52,7 +52,7 @@ public class NoticeDao {
 		return sqlSession.delete(NS+"deletenotice",noticeNo);
 	}
 	
-	public int noticeSearchCount(Map<String, Object> map) {
+	/*public int noticeSearchCount(Map<String, Object> map) {
 		logger.debug("35번"+map);
 		logger.debug("NoticeDao 에서 noticeCount 실행");
 		return sqlSession.selectOne(NS+"noticeSearchCount",map);
@@ -72,7 +72,7 @@ public class NoticeDao {
 		logger.debug("38번"+map);
 		List<Notice> list = sqlSession.selectList(NS+"noticeSearchAll",map);
 		return list;
-	}
+	}*/
 	
 	/*public int noticeCountView(int noticeNo) {
 		logger.debug("BloodsugarDao 에서 updateBloodsugar 실행------------------3번"+noticeNo);

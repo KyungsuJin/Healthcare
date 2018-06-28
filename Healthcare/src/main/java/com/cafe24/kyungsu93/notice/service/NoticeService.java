@@ -98,7 +98,7 @@ public class NoticeService {
 		logger.debug("99번"+noticeNo);
 		return noticeDao.deletenoticeCount(noticeNo);
 	}
-	public Map<String, Object> noticeSearchDate(String startDate, String endDate) {
+	/*public Map<String, Object> noticeSearchDate(String startDate, String endDate) {
 		logger.debug("NoticeService - noticeSearchDate 실행");
 		logger.debug("22번"+startDate);
 		logger.debug("23번"+endDate);
@@ -143,8 +143,8 @@ public class NoticeService {
 				result = 2;
 				returnMap.put("count", count);
 				returnMap.put("result", result);
-				}
-		//페이징
+				}*/
+		/*//페이징
 		int beginRow = (currentPage-1)*pagePerRow;
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
@@ -171,8 +171,8 @@ public class NoticeService {
 		if(lastPage > 0) {			
 			if(lastPage % pagePerBlock != 0) {
 				totalBlock++;
-			}
-		}
+			}*/
+		/*}
 		if(lastBlockPage >= totalBlock) {
 			lastBlockPage = totalBlock;
 		}
@@ -186,7 +186,7 @@ public class NoticeService {
 		returnMap.put("lastBlockPage", lastBlockPage);
 		returnMap.put("totalBlock", totalBlock);
 		return returnMap;
-		}
+		}*/
 	
 		/*public int noticeCountView (int noticeNo) {
 			logger.debug("updateNotice noticeCountView");

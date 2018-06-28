@@ -15,7 +15,7 @@
 		,notice_count AS noticeCount
 		,notice_date AS noticeDate
 		FROM notice
-
+		
 	</select>
 
 	<select id="noticeCount" resultType="Integer">
@@ -37,7 +37,7 @@
 		)
 		VALUES (
 		#{noticeNo}
-		, #{memberNo}
+		, '관리자'
 		, #{noticeTitle}
 		, #{noticeContent}
 		, #{noticeCount}
@@ -50,15 +50,14 @@
 		resultType="com.cafe24.kyungsu93.notice.service.Notice">
 		SELECT
 		notice_no as noticeNo
-		,n.member_no as memberNo
+		,member_no as memberNo
 		,notice_title as noticeTitle
 		,notice_content as noticeContent
 		,notice_count as noticeCount
 		,notice_date as noticeDate
-		FROM notice AS n
-		INNER JOIN member AS m
-		ON n.member_no = m.member_no
+		 FROM notice 
 		WHERE notice_no = #{noticeNo}
+		
 
 	</select>
 	<update id="updateNotice" parameterType="com.cafe24.kyungsu93.notice.service.Notice">
@@ -79,13 +78,13 @@
 		DELETE FROM notice WHERE notice_no = #{noticeNo}
 	</delete>
 
-	<select id="noticeSearchCount" resultType="Integer">
+	<!-- <select id="noticeSearchCount" resultType="Integer">
 			SELECT
 			count(*)
 			FROM notice
 		<include refid="search"></include>
-		</select>
-	<select id="noticeSearchAll" parameterType="map" resultType="com.cafe24.kyungsu93.notice.service.Notice">
+		</select> -->
+	<!-- <select id="noticeSearchAll" parameterType="map" resultType="com.cafe24.kyungsu93.notice.service.Notice">
       	 SELECT`
 			notice_no as noticeNo
 			,member_no as memberNo
@@ -122,7 +121,7 @@
 				</when> 
 			</choose> 
 		</sql>
-		
+ -->		
 		<update id="noticeCountView" parameterType="String">
         UPDATE notice
               SET noticeCount = noticeCount + 1 
@@ -140,7 +139,7 @@
 			,notice_date AS noticeDate
 			FROM notice
 			WHERE notice_no = #{noticeNo}
-
+			LIMIT #{beginRow},#{pagePerRow}
 	</select>
 
 	<select id="noticeDetailCount" resultType="Integer">

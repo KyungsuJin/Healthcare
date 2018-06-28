@@ -71,10 +71,10 @@
 			<label for="noticeCount">noticecount : </label>
 			<input class="form-control" name = "noticeCount"  id="noticeCount" type="text"/>	
 		</div>
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<label for="noticeDate">noticedate : </label>
 			<input class="form-control" name = "noticeDate"  id="noticeDate" type="text"/>	
-		</div>
+		</div> -->
 		<div>
 			<input class="btn btn-default" id=addButton" type="submit" value="공지입력">
 			<input class="btn btn-default" type="reset" value="초기화"/>
