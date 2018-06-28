@@ -24,10 +24,58 @@
 		FROM request_health_information
 	</select>
 	
-	<select id="memberNo" resultType="com.cafe24.kyungsu93.member.service.Member">
+	<select id="memberNo" resultType="com.cafe24.kyungsu93.doctorrequest.service.DoctorRequest">
 		SELECT 
-	 	member_no
+	 	member_no AS memberNo
 		FROM member
 	</select>
+	
+	  
+  <insert id="doctorRequest" parameterType="com.cafe24.kyungsu93.doctorrequest.service.DoctorRequest">
+    
+  INSERT INTO request_health_information(
+	request_health_information_no
+	, teacher_no
+	, member_no
+	, request_title
+	, request_content
+	, request_date
+	)
+	VALUES (
+	 #{requestHealthInformationNo}
+	, #{teacherNo} 
+	, #{memberNo}
+	, #{requestTitle}
+	, #{requestContent}
+	, now()
+	)  
+  </insert>
+  
+  <select id="requestNo" resultType="Integer">
+		SELECT
+		IFNULL(MAX(CAST(SUBSTRING(request_health_information_no,28)as decimal)),0) 
+		FROM request_health_information
+  </select>
+  
+  <select id="doctorRequestListcheck" 
+		  parameterType="java.util.Map" 
+		  resultType="com.cafe24.kyungsu93.doctorrequest.service.DoctorRequest">
+ 	 SELECT request_health_information_no AS requestHealthInformationNo
+  			,teacher_no AS teacherNo 
+  			,member_no AS memberNo
+  			,request_title AS requestTitle 
+  			,request_content AS requestContent
+  			,request_date AS requestDate
+	FROM request_health_information
+	WHERE teacher_no = #{teacherNo}
+	Limit #{beginRow},#{pagePerRow}
+  </select>
+  
+  <select id="doctorRequestCountForList" resultType="Integer">
+		SELECT
+		count(*)
+		FROM request_health_information
+  </select>
+	
 	
 </mapper>

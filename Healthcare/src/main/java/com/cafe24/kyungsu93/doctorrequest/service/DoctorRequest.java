@@ -8,6 +8,9 @@ public class DoctorRequest {
 	private String requestTitle;
 	private String requestContent;
 	private String requestDate;
+	private String requestExpire_Date;
+	private String requestApproval;
+	private String requestApprovalDate;
 	public String getRequestHealthInformationNo() {
 		return requestHealthInformationNo;
 	}
@@ -44,10 +47,30 @@ public class DoctorRequest {
 	public void setRequestDate(String requestDate) {
 		this.requestDate = requestDate;
 	}
+	public String getRequestExpire_Date() {
+		return requestExpire_Date;
+	}
+	public void setRequestExpire_Date(String requestExpire_Date) {
+		this.requestExpire_Date = requestExpire_Date;
+	}
+	public String getRequestApproval() {
+		return requestApproval;
+	}
+	public void setRequestApproval(String requestApproval) {
+		this.requestApproval = requestApproval;
+	}
+	public String getRequestApprovalDate() {
+		return requestApprovalDate;
+	}
+	public void setRequestApprovalDate(String requestApprovalDate) {
+		this.requestApprovalDate = requestApprovalDate;
+	}
 	@Override
 	public String toString() {
 		return "DoctorRequest [requestHealthInformationNo=" + requestHealthInformationNo + ", teacherNo=" + teacherNo
 				+ ", memberNo=" + memberNo + ", requestTitle=" + requestTitle + ", requestContent=" + requestContent
-				+ ", requestDate=" + requestDate + "]";
+				+ ", requestDate=" + requestDate + ", requestExpire_Date=" + requestExpire_Date + ", requestApproval="
+				+ requestApproval + ", requestApprovalDate=" + requestApprovalDate + "]";
 	}
+
 }

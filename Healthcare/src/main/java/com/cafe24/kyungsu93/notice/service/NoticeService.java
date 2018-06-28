@@ -93,12 +93,11 @@ public class NoticeService {
 	}
 
 	
-	/*public int deleteNotice(String noticeNo) {
+	public int deleteNotice(String noticeNo) {
 		logger.debug("NoticeService 에서 deleteNotice 실행");
 		logger.debug("99번"+noticeNo);
 		return noticeDao.deletenoticeCount(noticeNo);
 	}
-	*/
 	public Map<String, Object> noticeSearchDate(String startDate, String endDate) {
 		logger.debug("NoticeService - noticeSearchDate 실행");
 		logger.debug("22번"+startDate);

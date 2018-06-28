@@ -34,7 +34,7 @@
 				<td>${notice.noticeDate }</td>
 				<td></td>
 				<td><a type="button" href="${pageContext.request.contextPath}/modifyNotice?noticeNo=${notice.noticeNo}" id="modifyNotice">수정</a></td>
-			<%-- 	<td><a href="${pageContext.request.contextPath}/deleteNotice?noticeNo=${notice.noticeNo}"id="deleteNotice">삭제</a></td> --%>
+			 	<td><a type="button" href="${pageContext.request.contextPath}/deleteNotice?noticeNo=${notice.noticeNo}"id="deleteNotice">삭제</a></td>
 				<%-- <td><a type="button" href="${pageContext.request.contextPath}/deleteNotice?noticeNo=${notice.noticeNo}" id="deleteNotice">삭제</a></td> --%> 
 			</tr>
 		</c:forEach>

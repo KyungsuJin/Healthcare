@@ -85,15 +85,15 @@ public class NoticeController {
 		return "notice/modifyNotice";
 	}
 
-/*	@RequestMapping(value="/deleteNotice", method= RequestMethod.GET)
+	@RequestMapping(value="/deleteNotice", method= RequestMethod.GET)
 	public String deleteNotice(Model model,@RequestParam(value="noticeNo") String noticeNo) {
 		logger.debug("NoticeController 에서 deleteBloodsugar 리다이렉트 실행.");
 		logger.debug("999번"+noticeNo);
 		noticeService.deleteNotice(noticeNo);
 		model.addAttribute("noticeNo", noticeNo);
-		logger.debug("ddddddddddddddddddddddd"+noticeNo);
-		return "NoticeList";
-	}*/
+		logger.debug("ddddddddddddddddddddddd"+model);
+		return "redirect:/noticeList";
+	}
 	/*@RequestMapping(value="/noticeCountView", method= {RequestMethod.POST,RequestMethod.GET})
 	public String noticeCountView(@RequestParam(value="noticeNo") int noticeNo) {
 		logger.debug("NoticeController 에서 updateNotice 포워딩 실행.");

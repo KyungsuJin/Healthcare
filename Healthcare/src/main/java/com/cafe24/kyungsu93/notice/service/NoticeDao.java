@@ -46,11 +46,11 @@ public class NoticeDao {
 		return sqlSession.selectOne(NS+"noticeOne",noticeNo);
 	}
 	
-	/*public int deletenoticeCount(String noticeNo) {
+	public int deletenoticeCount(String noticeNo) {
 		logger.debug("NoticeDao 에서 deleteNoticeCount 실행");
 		logger.debug("876번"+noticeNo);
 		return sqlSession.delete(NS+"deletenotice",noticeNo);
-	}*/
+	}
 	
 	public int noticeSearchCount(Map<String, Object> map) {
 		logger.debug("35번"+map);
