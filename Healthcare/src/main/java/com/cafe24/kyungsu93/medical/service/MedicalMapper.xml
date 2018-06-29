@@ -26,13 +26,23 @@
 		)
 	</insert>
 	
-	<select id="getMedicalAddressList" parameterType="com.cafe24.kyungsu93.medical.service.Medical"
+	<select id="getMedicalAddressList" parameterType="java.util.Map"
 									   resultType="com.cafe24.kyungsu93.medical.service.Medical">
 		SELECT
 			medical_type AS medicalType
 			,medical_address AS medicalAddress
 			,medical_name AS medicalName
 			,medical_tel AS medicalTel
+		FROM medical
+		WHERE medical_address like #{medical.medicalAddress}
+			  and medical_name like #{medical.medicalName}
+		ORDER BY medical_address ASC
+		LIMIT #{beginRow}, #{pagePerRow}
+	</select>
+	
+	<select id="medicalTotalCount" parameterType="com.cafe24.kyungsu93.medical.service.Medical" resultType="Integer">
+		SELECT
+			COUNT(*)
 		FROM medical
 		WHERE medical_address like #{medicalAddress}
 			  and medical_name like #{medicalName}

@@ -1,6 +1,7 @@
 package com.cafe24.kyungsu93.medical.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,12 @@ public class MedicalDao {
 		sqlSession.insert(NS+"addMedical", medical);
 	}
 	
-	public List<Medical> getMedicalAddressList(Medical medical){
-		System.out.println("dao rest : " + medical.toString());
-		return sqlSession.selectList(NS+"getMedicalAddressList", medical);
+	public List<Medical> getMedicalAddressList(Map<String, Object> map){
+		System.out.println("dao rest : " + map);
+		return sqlSession.selectList(NS+"getMedicalAddressList", map);
+	}
+	
+	public int medicalTotalCount(Medical medical) {
+		return sqlSession.selectOne(NS+"medicalTotalCount", medical);
 	}
 }

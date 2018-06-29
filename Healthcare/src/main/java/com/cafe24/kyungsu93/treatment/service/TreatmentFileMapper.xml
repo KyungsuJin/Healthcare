@@ -11,7 +11,8 @@
 	</select>
 	<insert id="addTreatmentFile" parameterType="com.cafe24.kyungsu93.treatment.service.TreatmentFile">
         INSERT INTO treatment_file(
-        	treatment_no
+        	treatment_file_no
+        	,treatment_no
         	,treatment_file_name
         	,treatment_file_real_name
             ,treatment_file_ext
@@ -19,7 +20,8 @@
             ,treatment_file_size
         )
         VALUES(
-            #{treatmentId}
+        	#{treatmentFileNo}
+            ,#{treatmentNo}
             ,#{treatmentFileName}
             ,#{treatmentFileRealName}
             ,#{treatmentFileExt}

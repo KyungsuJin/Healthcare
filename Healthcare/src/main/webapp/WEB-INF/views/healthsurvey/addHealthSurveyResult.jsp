@@ -54,24 +54,27 @@
 				<div class="healthSurveyResultContainer" align="center">
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2">
-							<input type="hidden" id="healthSurveyRegisterNo" value="${question[0].healthSurveyRegisterNo}">
-							<input type="hidden" id="questionSize" value="${questionSize}">
-							<c:forEach var="i" begin="0" end="${questionSize}" step="1">
-								${question[i].questionNo}
-								${question[i].healthSurveyQuestion}<br>
-								<c:set var="tempName">selection${i}</c:set>
-								<c:forEach var = "healthSelection" items = "${question[i].healthSurveySelection}">
-									<div>
-										<input type="radio" id="healthSurveyRecordNo" name="${tempName}" value="${healthSelection.healthSurveySelectionNo}">
-										<input type="hidden" id="selectionScore" value="${healthSelection.healthSurveySelectionScore}">
-										${healthSelection.selectionNo}.
-										${healthSelection.healthSurveySelection}<br>
-									</div>
+							<div class="card">
+								<div class="card-header" data-background-color="purple"><h4 class="title">건강설문 작성</h4></div>
+								<input type="hidden" id="healthSurveyRegisterNo" value="${question[0].healthSurveyRegisterNo}">
+								<input type="hidden" id="questionSize" value="${questionSize}">
+								<c:forEach var="i" begin="0" end="${questionSize}" step="1">
+									${question[i].questionNo}
+									${question[i].healthSurveyQuestion}<br>
+									<c:set var="tempName">selection${i}</c:set>
+									<c:forEach var = "healthSelection" items = "${question[i].healthSurveySelection}">
+										<div>
+											<input type="radio" id="healthSurveyRecordNo" name="${tempName}" value="${healthSelection.healthSurveySelectionNo}">
+											<input type="hidden" id="selectionScore" value="${healthSelection.healthSurveySelectionScore}">
+											${healthSelection.selectionNo}.
+											${healthSelection.healthSurveySelection}<br>
+										</div>
+									</c:forEach>
+									<br>
 								</c:forEach>
-								<br>
-							</c:forEach>
-							<input id="addHealthSurveyResultBtn" class="btn btn-default" type="button" value="제출">
-							<input id="getHealthSurveyListBtn" class="btn btn-default" type="button" value="설문정보 다시보기">
+								<input id="addHealthSurveyResultBtn" class="btn btn-default" type="button" value="제출">
+								<input id="getHealthSurveyListBtn" class="btn btn-default" type="button" value="설문정보 다시보기">
+							</div>
 						</div>
 					</div>
 				</div>

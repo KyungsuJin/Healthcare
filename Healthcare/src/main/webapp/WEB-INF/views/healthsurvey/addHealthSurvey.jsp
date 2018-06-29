@@ -152,7 +152,7 @@
 						<div class="row">
 							<div class="col-md-8 col-md-offset-2">
 								<div class="card">
-	                            	<div class="card-header" data-background-color="purple"><h4 class="title">건강설문 작성</h4></div>
+	                            	<div class="card-header" data-background-color="purple"><h4 class="title">건강설문 등록</h4></div>
 				                    <div class="card-content">
 										<div class="col-md-8 col-md-offset-2">
 											<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}"><br>

@@ -1,7 +1,10 @@
 package com.cafe24.kyungsu93.medical.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,6 +19,7 @@ import org.xml.sax.SAXException;
 
 import com.cafe24.kyungsu93.address.service.Address;
 import com.cafe24.kyungsu93.address.service.AddressDao;
+import com.cafe24.kyungsu93.medication.service.MedicationResponse;
 
 
 @Service
@@ -98,10 +102,47 @@ public class MedicalService {
 		}
 	}
 	
-	public List<Medical> getMedicalAddressList(Medical medical){
-		medical.setMedicalAddress(medical.getMedicalAddress()+"%");
+	public Map<String, Object> getMedicalAddressList(Medical medical, int currentPage, int pagePerRow){
+		String medicalOldName = medical.getMedicalName();
+		medical.setMedicalAddress(medical.getCityName() + " " + medical.getDistrictName()+"%");
 		medical.setMedicalName("%"+medical.getMedicalName()+"%");
-		return medicalDao.getMedicalAddressList(medical);
+		int totalRow = medicalDao.medicalTotalCount(medical);
+		int firstPage = 1;
+		int lastPage = totalRow/pagePerRow;
+		if(totalRow%pagePerRow != 0) {
+			lastPage++;
+		}
+		int beforePage = ((currentPage-1)/10)*10;
+		int afterPage = ((currentPage-1)/10)*10 +11;
+		
+		Map pageMap = new HashMap<String, Object>();
+		pageMap.put("beginRow", (currentPage-1)*10);
+		pageMap.put("pagePerRow", pagePerRow);
+		pageMap.put("medical", medical);
+		
+		Map map = new HashMap<String, Object>();
+		List<Medical> medicalList = medicalDao.getMedicalAddressList(pageMap);
+		List<Integer> pageList = new ArrayList<Integer>();
+		if(afterPage > lastPage) {
+			for(int i = (beforePage+1) ; i <= lastPage ; i++ ) {
+				pageList.add(i);
+			}
+		} else {
+			for(int i = (beforePage+1) ; i < afterPage ; i++ ) {
+				pageList.add(i);
+			}
+		}
+		medical.setMedicalName(medicalOldName);
+		map.put("medical", medical);
+		map.put("medicalList", medicalList);
+		map.put("pageList", pageList);
+		map.put("firstPage", firstPage);
+		map.put("lastPage", lastPage);
+		map.put("beforePage", beforePage);
+		map.put("afterPage", afterPage);
+		map.put("currentPage", currentPage);
+		
+		return map;
 	}
 
 	public List<Address> getCityList() {

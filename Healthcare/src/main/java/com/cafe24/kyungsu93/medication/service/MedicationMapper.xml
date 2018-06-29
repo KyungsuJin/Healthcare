@@ -13,15 +13,17 @@
 	<select id="getMedicationList" parameterType="java.util.Map" resultType="com.cafe24.kyungsu93.medication.service.MedicationResponse">
 		SELECT 
 			medication_no AS medicationNo
-			,medicine_no AS medicineNo
+			,medicine.medicine_no AS medicineNo
+			,medicine.medicine_name AS medicineName
 			,medication_start_date AS medicationStartDate
 			,medication_end_date AS medicationEndDate
 			,dosage AS dosage
 			,total_dosage AS totalDosage
 			,medication_title AS medicationTitle
 			,medication_date AS medicationDate
-		FROM medication
-		WHERE member_no = #{memberNo}
+		FROM medication, medicine
+		WHERE medication.member_no = #{memberNo}
+			  and medicine.medicine_no = medication.medicine_no
 		ORDER BY medication_date DESC
 		LIMIT #{beginRow}, #{pagePerRow}
 	</select>
@@ -104,4 +106,36 @@
 			,medication_content = #{medicationContent}
 		WHERE medication_no = #{medicationNo}
 	</update>
+	
+	<select id="getMedicationRecordList" parameterType="com.cafe24.kyungsu93.medication.service.MedicationRequest"
+										 resultType="com.cafe24.kyungsu93.medication.service.MedicationRecord">
+		SELECT
+			medication_record_date AS medicationRecordDate
+		FROM medication_record
+		WHERE medication_no = #{medicationNo}
+	</select>
+	
+	<insert id="addMedicationRecord" parameterType="com.cafe24.kyungsu93.medication.service.MedicationRecord">
+		INSERT INTO medication_record(
+			medication_record_no
+			, medication_no
+			, medication_record_date
+		) VALUES(
+			#{medicationRecordNo}
+			, #{medicationNo}
+			, #{medicationRecordDate}
+		)
+	</insert>
+	
+	<delete id="removeMedicationRecordDate" parameterType="com.cafe24.kyungsu93.medication.service.MedicationRecord">
+		DELETE
+		FROM medication_record 
+		WHERE medication_record_no = (SELECT medication_record_no FROM (SELECT medication_record_no FROM medication_record WHERE medication_no = #{medicationNo} and medication_record_date like #{medicationRecordDate} limit 1) tmp)
+	</delete>
+	
+	<select id="getMedicationRecordNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(CAST(SUBSTRING(medication_record_no,19)as decimal)),0) 
+		FROM medication_record
+	</select>
 </mapper>

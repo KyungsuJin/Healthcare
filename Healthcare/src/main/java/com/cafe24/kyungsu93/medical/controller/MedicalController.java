@@ -29,4 +29,8 @@ public class MedicalController {
 		model.addAttribute("cityList", medicalService.getCityList());
 		return "medical/getPopMedicalList";
 	}
+	@RequestMapping(value="/getPopMedicalMap", method=RequestMethod.GET)
+	public String getPopMedicalMap(Model model) {
+		return "medical/getPopMedicalMap";
+	}
 }

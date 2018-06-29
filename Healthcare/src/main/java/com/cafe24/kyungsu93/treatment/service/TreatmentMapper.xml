@@ -108,7 +108,7 @@
 		UPDATE
 			treatment
 		SET
-			,treatment_department = #{treatmentDepartment}
+			treatment_department = #{treatmentDepartment}
         	,hospital_name = #{hospitalName}
         	,treatment_title = #{treatmentTitle}
             ,treatment_content = #{treatmentContent}

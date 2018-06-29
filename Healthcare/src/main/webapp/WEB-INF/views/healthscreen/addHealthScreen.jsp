@@ -83,25 +83,25 @@
 												<tr>
 													<td rowspan="4">고혈압, 이상지질혈증, 동맥경화</td>
 													<td>총 콜레스테롤</td>
-													<td><input type="text" id="totalCholesterol" class="form-control" name="totalCholesterol"></td>
+													<td><input type="number" id="totalCholesterol" class="form-control" name="totalCholesterol"></td>
 													<td>mmHg</td>
 													<td>200미만</td>
 												</tr>
 												<tr>
 													<td>ldl 콜레스테롤</td>
-													<td><input type="text" id="ldlCholesterol" class="form-control" name="ldlCholesterol"></td>
+													<td><input type="number" id="ldlCholesterol" class="form-control" name="ldlCholesterol"></td>
 													<td>mmHg</td>
 													<td>130미만</td>
 												</tr>
 												<tr>
 													<td>중성지방</td>
-													<td><input type="text" id="neutralFat" class="form-control" name="neutralFat"></td>
+													<td><input type="number" id="neutralFat" class="form-control" name="neutralFat"></td>
 													<td>mmHg</td>
 													<td>150미만</td>
 												</tr>
 												<tr>
 													<td>HDL-콜레스테롤</td>
-													<td><input type="text" id="hdlCholesterol" class="form-control" name="hdlCholesterol"></td>
+													<td><input type="number" id="hdlCholesterol" class="form-control" name="hdlCholesterol"></td>
 													<td>mmHg</td>
 													<td>60이상</td>
 												</tr>
@@ -114,26 +114,26 @@
 												<tr>
 													<td>빈혈 등</td>
 													<td>혈색소</td>
-													<td><input type="text" id="hemoglobin" class="form-control" name="hemoglobin"></td>
+													<td><input type="number" id="hemoglobin" class="form-control" name="hemoglobin"></td>
 													<td>g/dL</td>
 													<td>남 : 13~16.5, 여 : 12~15.5</td>
 												</tr>
 												<tr>
 													<td rowspan="2">만성신장질환</td>
 													<td>혈청크레아티닌</td>
-													<td><input type="text" id="serumCreatinine" class="form-control" name="serumCreatinine"></td>
+													<td><input type="number" id="serumCreatinine" class="form-control" name="serumCreatinine"></td>
 													<td>mg/dL</td>
 													<td>1.5 이하</td>
 												</tr>
 												<tr>
 													<td>신사구체여과율(GFR)</td>
-													<td><input type="text" id="gfr" class="form-control" name="gfr"></td>
+													<td><input type="number" id="gfr" class="form-control" name="gfr"></td>
 													<td>mL/min</td>
 													<td>60 이상</td>
 												</tr>
 											</tbody>
 										</table>
-										<input type="button" class="btn btn-default" id="healthScreenBtn" value="요청">
+										<input type="button" class="btn btn-default" id="healthScreenBtn" value="등록">
 									</div>
 								</div>
 							</div>

@@ -57,7 +57,7 @@ public class TreatmentController {
 					}
 				}
 			}
-			String path = session.getServletContext().getRealPath("/upload");
+			String path = session.getServletContext().getRealPath("/resources/upload");
 			logger.debug("TreatmentController.addTreatment.path : " + path);
 			treatmentService.addTreatment(treatmentRequest, path+"/");
 			return "redirect:/getTreatmentList";
@@ -167,12 +167,13 @@ public class TreatmentController {
 					if(multipartFile.getContentType().equals("application/x-msdownload")) {
 						model.addAttribute("treatment", treatmentRequest);
 						model.addAttribute("exeFileName", multipartFile.getOriginalFilename());
-						return "redirect:/modifyTreatment?treatmentId=" + treatmentRequest.getTreatmentNo() + "&currentPage=" + currentPage + "&pagePerRow=" + pagePerRow;
+						return "redirect:/modifyTreatment?treatmentNo=" + treatmentRequest.getTreatmentNo() + "&currentPage=" + currentPage + "&pagePerRow=" + pagePerRow;
 					}
 				}
 			}
-			treatmentService.modifyTreatment(treatmentRequest, session.getServletContext().getRealPath("/upload")+"/");
-			return "redirect:/getTreatmentContent?treatmentId=" + treatmentRequest.getTreatmentNo() + "&currentPage=" + currentPage + "&pagePerRow=" + pagePerRow;
+			System.out.println(treatmentRequest.toString());
+			treatmentService.modifyTreatment(treatmentRequest, session.getServletContext().getRealPath("/resources/upload")+"/");
+			return "redirect:/getTreatmentContent?treatmentNo=" + treatmentRequest.getTreatmentNo() + "&currentPage=" + currentPage + "&pagePerRow=" + pagePerRow;
 		} else {
 			return "redirect:/";
 		}

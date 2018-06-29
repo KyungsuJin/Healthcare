@@ -5,15 +5,13 @@
 <head>
 <jsp:include page="../include/header.jsp"></jsp:include>
 <style>
-	#cityName{ width : 100px; }
-	#districtName{ width : 100px; }
-	#medicalList{ overflow:scroll; width:800px; height:500px; }
+	div{ padding-left: 0px; padding-right: 0px; }
+	input[type=button]{ width: 50px; height: 30px; padding-left: 0px; padding-right: 0px; padding-top: 0px; padding-bottom: 0px; }
+	.form-group{ padding-bottom: 0px; margin: 0px 0 0 0; }
+	#medicalBtn{ margin-top:0px; padding-left:0px; width: 60px; height: 40px; }
 </style>
-<!-- <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=QISM4er6cEE21gYJHlUg&submodules=geocoder"></script> -->
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=n_ZxRkO2ivuJYTV3q96V&submodules=geocoder"></script>
 <script>
 	$(document).ready(function(){
-		getDistrictList();
 		function removeWindow(){
 			if(opener != null){
 				opener.medicalForm = null
@@ -21,58 +19,35 @@
 			}
 		}
 		
-		//naver 지도 api
-		var map = new naver.maps.Map("map", {
-		    center: new naver.maps.LatLng(35.853386500000,127.122277500000),
-		    zoom: 10,
-		    mapTypeControl: true
-		});
-		
-		var marker;
-		
-		map.setCursor('pointer');
-
-		// result by latlng coordinate
-		function searchAddressToCoordinate(address) {
-		    naver.maps.Service.geocode({
-		        address: address
-		    }, function(status, response) {
-		        if (status === naver.maps.Service.Status.ERROR) {
-		            return alert('Something Wrong!');
-		        }
-		        var item = response.result.items[0],
-		            addrType = item.isRoadAddress ? '[도로명 주소]' : '[지번 주소]',
-		            point = new naver.maps.Point(item.point.x, item.point.y);
-	            console.log("x : " + item.point.x);
-	            console.log("y : " + item.point.y);
-	            if(marker == null){
-	            	marker = new naver.maps.Marker({
-		                position: new naver.maps.LatLng(item.point.y, item.point.x),
-		                map: map
-		            });
-	            } else{
-	            	marker.setPosition(new naver.maps.LatLng(item.point.y, item.point.x));
-	            }
-	            
-	            marker.setMap(map);
-		        map.setCenter(point);
-		    });
-		}
-
-		function initGeocoder() { }
-		naver.maps.onJSContentLoaded = initGeocoder;
-		
 		$(document).on('click', '#showGeo', function() {
-	        console.log($(this).closest('td').siblings('#medicalAddress'));
-	        searchAddressToCoordinate($(this).closest('td').siblings('#medicalAddress').text());
+	        console.log($(this).closest('div').closest('div').siblings('#medicalAddress'));//getPopMedicalMap
+	        $("#medicalMapName").val($(this).closest('div').closest('div').siblings('#medicalAjaxName').text());
+	        $("#medicalMapType").val($(this).closest('div').closest('div').siblings('#medicalType').val());
+	        $("#medicalMapTel").val($(this).closest('div').closest('div').siblings('#medicalTel').val());
+	        $("#medicalMapAddress").val($(this).closest('div').closest('div').siblings('#medicalAddress').text());
+	        console.log($("#medicalMapName").val());
+	        console.log($("#medicalMapType").val());
+	        console.log($("#medicalMapTel").val());
+	        console.log($("#medicalMapAddress").val());
+	        window.name = "parentForm";
+			window.open("${pageContext.request.contextPath}/getPopMedicalMap"
+					,"medicalForm", "width=750, height=700, resizable=no, scrollbars=no");
+			
 	    });
 		
 		$("#cityName").change(function(){
-			getDistrictList();
+			if($("#cityName").val() == "시도선택"){
+				console.log("1");
+				$("#districtName").text("");
+				$("#districtName").append("<option>시/군/구 선택</option>");
+			} else{
+				getDistrictList();
+			}
+			
 		});
 		
 		function getDistrictList(){
-			$("#districtName").text("");
+			$("#districtName").text("<option>시/군/구 선택</option>");
 			console.log($("#cityName"));
 			var addressValue = $("#cityName")[0].value;
 			$.ajax({
@@ -91,34 +66,109 @@
 		
 		$("#medicalBtn").click(function(){ 
 			$("#medicalList").text("");
-			var addressValue = $("#cityName")[0].value + " " + $("#districtName")[0].value;
+			var addressCityName = $("#cityName")[0].value;
+			var addressDistrictName = $("#districtName")[0].value;
 			var medicalValue = $("#medicalName").val();
  			$.ajax({
 		    	url : '${pageContext.request.contextPath}/getMedicalAddressList',
 		        type : 'POST',
 		        data : 	{ 
-			        		medicalAddress : addressValue 
-			        		,medicalName : medicalValue
+		        			cityName : addressCityName
+		        			, districtName : addressDistrictName
+			        		, medicalName : medicalValue
 		        		},
 		        dataType : 'json',
 		        success : function(data) {
+		        	var content;
+		        	content = "<div class='col-xs-12'>";
 		        	$.each(data.medicalList, function(idx, val) {
-		        		$("#medicalList").append("<tr><td>" + val.medicalName + "</td>"
-													+"<td>" + val.medicalType + "</td>"
-													+"<td id='medicalAddress'>" + val.medicalAddress + "</td>"
-													+"<td>" + val.medicalTel + "</td>"
-													+"<td><input type='button' id='showGeo' value='위치보기'></td>"
-													+"<td><input type='button' class='medicalReturn' value='선택'></td></tr>");
+		        		content += "<div class='row' style='border-bottom:1px solid; border-bottom-color:#9c27b0;'><div class='col-xs-2' id='medicalAjaxName'>" + val.medicalName + "</div>"
+								 +"<div class='col-xs-6' id='medicalAddress'>" + val.medicalAddress + "</div>"
+								 +"<input type='hidden' id='medicalTel' value='" + val.medicalTel + "'>"
+								 +"<input type='hidden' id='medicalType' value='" + val.medicalType + "'>"
+								 +"<div class='col-xs-2'><input type='button' id='showGeo' class='btn btn-primary' value='위치보기'></div>"
+								 +"<div class='col-xs-2'><input type='button' class='medicalReturn btn btn-primary' value='선택'></div></div>";
 		        	});
-		        	
+ 					content += "</div>";
+ 					content += "<div class='col-xs-2'></div>";
+		        	if( data.currentPage > 10){
+		        		console.log("currentPage"+data.currentPage);
+		        		content += "<li><a href='#' class='addressPage' value='" + data.firstPage + "'> <span aria-hidden='true'>&laquo;</span></a></li>";
+		        		content += "<li><a href='#' class='addressPage' value='" + data.beforePage + "'> <span aria-hidden='true'>&lt;</span></a></li>";
+		        	}
+		        	$.each(data.pageList, function(idx, val) {
+		        		console.log("pageList"+val);
+		        		if(val == data.currentPage){
+		        			content += "<li class='active'><a>" + val + "</a></li>";
+		        		} else{
+		        			content += "<li><a href='#' class='addressPage' value='" + val + "'>" + val + "</a></li>";
+		        		}
+		        	});
+		        	if(data.afterPage < data.lastPage){
+		        		content += "<li><a href='#' class='addressPage' value='" + data.afterPage + "'> <span aria-hidden='true'>&gt;</span></a></li>";
+		        		content += "<li><a href='#' class='addressPage' value='" + data.lastPage + "'> <span aria-hidden='true'>&raquo;</span></a></li>";
+		        	}
+		        	$("#medicalList").append(content);
 		        },
 		        error : function() { console.log('error');}
 			});
-		});		
+		});	
+		$(document).on("click",".addressPage",function(){
+			$("#medicalList").text("");
+			var addressCityName = $("#cityName")[0].value;
+			var addressDistrictName = $("#districtName")[0].value;
+			var medicalValue = $("#medicalName").val();
+			var addressCurrentPage = $(this)[0].attributes[2].value;
+ 			$.ajax({
+		    	url : '${pageContext.request.contextPath}/getMedicalAddressList',
+		        type : 'POST',
+		        data : 	{ 
+		        			cityName : addressCityName
+		        			, districtName : addressDistrictName
+			        		, medicalName : medicalValue
+			        		, currentPage : addressCurrentPage
+		        		},
+		        dataType : 'json',
+		        success : function(data) {
+		        	var content;
+		        	content = "<div class='col-xs-12'>";
+		        	$.each(data.medicalList, function(idx, val) {
+		        		content += "<div class='row' style='border-bottom:1px solid; border-bottom-color:#9c27b0;'><div class='col-xs-2' id='medicalAjaxName'>" + val.medicalName + "</div>"
+								 +"<div class='col-xs-6' id='medicalAddress'>" + val.medicalAddress + "</div>"
+								 +"<input type='hidden' id='medicalTel' value='" + val.medicalTel + "'>"
+								 +"<input type='hidden' id='medicalType' value='" + val.medicalType + "'>"
+								 +"<div class='col-xs-2'><input type='button' id='showGeo' class='btn btn-primary' value='위치보기'></div>"
+								 +"<div class='col-xs-2'><input type='button' class='medicalReturn btn btn-primary' value='선택'></div></div>";
+		        	});
+ 					content += "</div>";
+ 					content += "<div class='col-xs-2'></div>";
+		        	if( data.currentPage > 10){
+		        		console.log("currentPage"+data.currentPage);
+		        		content += "<li><a href='#' class='addressPage' value='" + data.firstPage + "'> <span aria-hidden='true'>&laquo;</span></a></li>";
+		        		content += "<li><a href='#' class='addressPage' value='" + data.beforePage + "'> <span aria-hidden='true'>&lt;</span></a></li>";
+		        	}
+		        	$.each(data.pageList, function(idx, val) {
+		        		console.log("pageList"+val);
+		        		if(val == data.currentPage){
+		        			content += "<li class='active'><a>" + val + "</a></li>";
+		        		} else{
+		        			content += "<li><a href='#' class='addressPage' value='" + val + "'>" + val + "</a></li>";
+		        		}
+		        	});
+		        	if(data.afterPage < data.lastPage){
+		        		content += "<li><a href='#' class='addressPage' value='" + data.afterPage + "'> <span aria-hidden='true'>&gt;</span></a></li>";
+		        		content += "<li><a href='#' class='addressPage' value='" + data.lastPage + "'> <span aria-hidden='true'>&raquo;</span></a></li>";
+		        	}
+		        	$("#medicalList").append(content);
+		        },
+		        error : function() { console.log('error');}
+			});
+		});
 		$(document).on("click",".medicalReturn",function(){
-			console.log($(this).closest("td").siblings("#medicalAddress"));
-			console.log($(this).closest("td").siblings("#medicalAddress").text());
-			opener.document.treatmentForm.hospitalAddress.value = $(this).closest("td").siblings("#medicalAddress").text();
+			console.log($(this).closest("div").closest("div").siblings("#medicalAddress"));
+			console.log($(this).closest("div").closest("div").siblings("#medicalAddress").text());
+			opener.document.treatmentForm.hospitalAddress.value = $(this).closest("div").closest("div").siblings("#medicalAddress").text();
+			opener.document.treatmentForm.hospitalName.value = $(this).closest("div").closest("div").siblings("#medicalAjaxName").text();
 			removeWindow();
 		});
 	});
@@ -126,30 +176,40 @@
 </head>
 <body>
 	<div id="containerMedical" align="center">
+	<form name="medicalMapForm">
+		<input type="hidden" id="medicalMapName" name="medicalMapName">
+		<input type="hidden" id="medicalMapType" name="medicalMapType">
+		<input type="hidden" id="medicalMapTel" name="medicalMapTels">
+		<input type="hidden" id="medicalMapAddress" name="medicalMapAddress">
+	</form>
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
-				<table>
-					<tr>
-						<td>
-							시
-							<select id="cityName" name="cityName">
-								<c:forEach var = "city" items = "${cityList}">
-									<option value="${city.cityName}">
-										${city.cityName}
-									</option>	
-								</c:forEach>
-							</select>
-						</td>
-						<td>	
-							<select id="districtName" name="districtName"></select>
-							
-							병원 명 : <input type="text" id="medicalName" name="medicalName">
-							<input type="button" id="medicalBtn" name="medicalBtn" value="검색">
-						</td>
-					</tr>
-				</table>
-				<div id="map" style="width:100%;height:400px;"></div>
-				<div id="medicalList"></div>
+			<div class="col-xs-12">
+				<div class="col-xs-3">
+					<select id="cityName" name="cityName" class="form-control">
+						<option>
+							시도선택 
+						</option>
+						<c:forEach var = "city" items = "${cityList}">
+							<option value="${city.cityName}">
+								${city.cityName}
+							</option>	
+						</c:forEach>
+					</select>
+				</div>
+				<div class="col-xs-3">
+					<select id="districtName" name="districtName" class="form-control">
+						<option>
+							시/군/구 선택 
+						</option>
+					</select>
+				</div>
+				<div class="col-xs-4">
+					<input type="text" id="medicalName" class="form-control" name="medicalName" placeholder="병원 명 ex)푸른안과">
+				</div>
+				<div class="col-xs-1">
+					<input type="button" class="btn btn-primary" id="medicalBtn" name="medicalBtn" value="검색">
+				</div>
+				<div><nav><ul class="pagination" id="medicalList"></ul></nav></div>
 			</div>
 		</div>
 	</div>

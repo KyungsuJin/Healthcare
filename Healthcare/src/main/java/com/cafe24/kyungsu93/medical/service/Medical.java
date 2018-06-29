@@ -4,6 +4,8 @@ public class Medical {
 	private String medicalNo;
 	private String medicalType;
 	private String medicalName;
+	private String cityName;
+	private String districtName;
 	private String medicalAddress;
 	private String medicalTel;
 	
@@ -25,6 +27,18 @@ public class Medical {
 	public void setMedicalName(String medicalName) {
 		this.medicalName = medicalName;
 	}
+	public String getCityName() {
+		return cityName;
+	}
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+	public String getDistrictName() {
+		return districtName;
+	}
+	public void setDistrictName(String districtName) {
+		this.districtName = districtName;
+	}
 	public String getMedicalAddress() {
 		return medicalAddress;
 	}
@@ -40,7 +54,8 @@ public class Medical {
 	@Override
 	public String toString() {
 		return "Medical [medicalNo=" + medicalNo + ", medicalType=" + medicalType + ", medicalName=" + medicalName
-				+ ", medicalAddress=" + medicalAddress + ", medicalTel=" + medicalTel + "]";
+				+ ", cityName=" + cityName + ", districtName=" + districtName + ", medicalAddress=" + medicalAddress
+				+ ", medicalTel=" + medicalTel + "]";
 	}
 	
 }

@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cafe24.kyungsu93.bloodpressure.service.BloodPressure;
+import com.cafe24.kyungsu93.bloodsugar.service.BloodSugar;
 import com.cafe24.kyungsu93.bodymassindex.service.BodyMassIndex;
+import com.cafe24.kyungsu93.healthscreen.service.HealthScreenDao;
 import com.cafe24.kyungsu93.healthscreen.service.HealthScreenRequest;
 import com.cafe24.kyungsu93.healthscreen.service.HealthScreenResponse;
 import com.cafe24.kyungsu93.healthscreen.service.HealthScreenService;
@@ -67,11 +69,11 @@ public class HealthScreenController {
 	
 	//건강검진표 등록을 위한 메서드
 	@RequestMapping(value="/addHealthScreen", method=RequestMethod.POST)
-	public String addHealthScreen(HealthScreenRequest healthScreenRequest, BodyMassIndex bodyMassIndex, /*BloodSugar bloodSugar,*/ BloodPressure bloodPressure, HttpSession session) {
+	public String addHealthScreen(HealthScreenRequest healthScreenRequest, BodyMassIndex bodyMassIndex, BloodSugar bloodSugar, BloodPressure bloodPressure, HttpSession session) {
 		logger.debug("HealthScreenController.addHealthScreen POST 메서드 실행");
 		if(session.getAttribute("memberSessionLevel").toString().equals("2")) {
 			//여기에서 체질량, 혈당, 혈압을 모두 매개변수로 받은뒤, service로 보낸다.
-			healthScreenService.addHealthScreen(healthScreenRequest, bodyMassIndex, /*bloodSugar,*/ bloodPressure);		
+			healthScreenService.addHealthScreen(healthScreenRequest, bodyMassIndex, bloodSugar, bloodPressure);		
 			logger.debug("HealthScreenController.addHealthScreen.healthSurveyRequest : "+healthScreenRequest.toString());
 			return "redirect:/getHealthScreenList";
 		}else {
@@ -83,10 +85,13 @@ public class HealthScreenController {
 	@RequestMapping(value="/getHealthScreenResult", method=RequestMethod.GET)
 	public String getHealthScreenResult(Model model, HealthScreenRequest healthScreenRequest, HttpSession session) {
 		//결과를 보려는 건강검진표의 번호를 healthScreenRequest에 담아 호출한다.
-		HealthScreenResponse healthScreenResponse = healthScreenService.getHealthScreenResult(healthScreenRequest);
-		if(session.getAttribute("memberSessionNo").toString().equals(healthScreenRequest.getMemberNo())) {
-			logger.debug("HealthScreenController.getHealthScreenResult.healthScreenResponse : "+ healthScreenResponse.toString());
-			model.addAttribute("healthScreen", healthScreenResponse);
+		Map<String, Object> map = healthScreenService.getHealthScreenOne(healthScreenRequest);
+		if(session.getAttribute("memberSessionNo").toString().equals(((HealthScreenResponse)map.get("healthScreen")).getMemberNo())) {
+			System.out.println(map);
+			model.addAttribute("healthScreen", map.get("healthScreen"));
+			model.addAttribute("bloodSugar", map.get("bloodSugar"));
+			model.addAttribute("bloodPressure", map.get("bloodPressure"));
+			model.addAttribute("bodyMassIndex", map.get("bodyMassIndex"));
 			return "healthscreen/getHealthScreenResult";
 		} else {
 			return "redirect:/";
@@ -96,10 +101,11 @@ public class HealthScreenController {
 	//건강검진표 삭제를 위한 메서드
 	@RequestMapping(value="/removeHealthScreen", method=RequestMethod.GET)
 	public String removeHealthScreen(HealthScreenRequest healthScreenRequest, HttpSession session) {
-		if(session.getAttribute("memberSessionNo").toString().equals(healthScreenService.getHealthScreenOne(healthScreenRequest).getMemberNo())) {
+		Map<String, Object> map = healthScreenService.getHealthScreenOne(healthScreenRequest);
+		if(session.getAttribute("memberSessionNo").toString().equals(((HealthScreenResponse)map.get("healthScreen")).getMemberNo())) {
 			logger.debug("HealthScreenController.removeHealthScreen 메서드 실행");
 			//삭제하려는 건강검진표의 번호를 healthScreenRequest에 담아 호출한다.
-			healthScreenService.removeHealthScreen(healthScreenRequest);
+			healthScreenService.removeHealthScreen(map, healthScreenRequest);
 			return "redirect:/getHealthScreenList";
 		} else {
 			return "redirect:/";
@@ -109,12 +115,14 @@ public class HealthScreenController {
 	//건강검진표 수정을 위해 특정 건강검진표의 내용을 가져오는 메서드
 	@RequestMapping(value="/modifyHealthScreen", method=RequestMethod.GET)
 	public String modifyHealthScreen(Model model, HealthScreenRequest healthScreenRequest, HttpSession session) {
-			logger.debug("HealthScreenController.modifyHealthScreen GET메서드 실행");
-			//수정하려는 건강검진표의 번호를 healthScreenRequest에 담아 호출한다.
-			HealthScreenResponse healthScreen = healthScreenService.getHealthScreenOne(healthScreenRequest);
-		if(session.getAttribute("memberSessionNo").toString().equals(healthScreen.getMemberNo())) {
-			logger.debug("HealthScreenController.healthScreen : " + healthScreen.toString());
-			model.addAttribute("healthScreen", healthScreen);
+		logger.debug("HealthScreenController.modifyHealthScreen GET메서드 실행");
+		//수정하려는 건강검진표의 번호를 healthScreenRequest에 담아 호출한다.
+		Map<String, Object> map = healthScreenService.getHealthScreenOne(healthScreenRequest);
+		if(session.getAttribute("memberSessionNo").toString().equals(((HealthScreenResponse)map.get("healthScreen")).getMemberNo())) {
+			model.addAttribute("healthScreen", map.get("healthScreen"));
+			model.addAttribute("bloodSugar", (BloodSugar)map.get("bloodSugar"));
+			model.addAttribute("bloodPressure", (BloodPressure)map.get("bloodPressure"));
+			model.addAttribute("bodyMassIndex", (BodyMassIndex)map.get("bodyMassIndex"));
 			return "healthscreen/modifyHealthScreen";
 		} else {
 			return "redirect:/";
@@ -123,10 +131,10 @@ public class HealthScreenController {
 	
 	//건강검진표 수정을 위한 메서드
 	@RequestMapping(value="/modifyHealthScreen", method=RequestMethod.POST)
-	public String modifyHealthScreen(HealthScreenRequest healthScreenRequest) {
+	public String modifyHealthScreen(HealthScreenRequest healthScreenRequest, BodyMassIndex bodyMassIndex, BloodSugar bloodSugar, BloodPressure bloodPressure) {
 		logger.debug("HealthScreenController.modifyHealthScreen POST메서드 실행");
 		//삭제하려는 건강검진표의 번호와 내용을 healthScreenRequest에 담아 호출한다.
-		healthScreenService.modifyHealthScreen(healthScreenRequest);
+		healthScreenService.modifyHealthScreen(healthScreenRequest, bodyMassIndex, bloodSugar, bloodPressure);
 		return "redirect:/getHealthScreenList";
 	}
 }

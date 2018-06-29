@@ -76,4 +76,35 @@ public class MedicationService {
 	public void modifyMedication(MedicationRequest medicationRequest) {
 		medicationDao.modifyMedication(medicationRequest);
 	}
+	
+	public Map<String, Object> getMedicationRecordList(MedicationRequest medicationRequest){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MedicationResponse medicationResponse = medicationDao.getMedicationContent(medicationRequest);
+		if(medicationResponse != null) {
+			medicationResponse.setMedicationStartDate(medicationResponse.getMedicationStartDate().split(" ")[0]);
+			medicationResponse.setMedicationEndDate(medicationResponse.getMedicationEndDate().split(" ")[0]);
+		}
+		List<MedicationRecord> list = medicationDao.getMedicationRecordList(medicationRequest);
+		Map<String, Object> termMap = new HashMap<String, Object>();
+		termMap.put("start", medicationResponse.getMedicationStartDate());
+		termMap.put("end", medicationResponse.getMedicationEndDate());
+		map.put("termDate", termMap);
+		for(MedicationRecord medicationRecord : list) {
+			medicationRecord.setMedicationRecordDate(medicationRecord.getMedicationRecordDate().split(" ")[0]);
+		}
+		map.put("medicationDateList", list);
+		
+		return map;
+	}
+	
+	public void addMedicationRecord(MedicationRecord medicationRecord) {
+		medicationRecord.setMedicationRecordNo("medication_record_"+(medicationDao.getMedicationRecordNo()+1));
+		medicationDao.addMedicationRecord(medicationRecord);
+	}
+	
+	public void removeMedicationRecordDate(MedicationRecord medicationRecord) {
+		medicationRecord.setMedicationRecordDate(medicationRecord.getMedicationRecordDate()+"%");
+		System.out.println(medicationRecord.toString());
+		medicationDao.removeMedicationRecordDate(medicationRecord);
+	}
 }

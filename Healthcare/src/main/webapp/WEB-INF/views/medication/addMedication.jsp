@@ -5,6 +5,7 @@
 <head>
 <jsp:include page="../include/header.jsp"></jsp:include>
 <style>
+	input{ text-align:center; }
 	#medicationContent { height: 300px; }
 </style>
 <script>
@@ -26,7 +27,7 @@ var memberNo = "member_1";
 		$("#medicineName").click(function(){
 			window.name = "parentForm";
 			window.open("${pageContext.request.contextPath}/getMedicineList?windowPop=1"
-					,"medicineForm", "width=600, height=430, resizable=no, scrollbars=no");
+					,"medicineForm", "width=650, height=650, resizable=no, scrollbars=no");
 		});
 		$(document).on("click", "#medicineInfo", function(){
 			if($("#medicineSeq").val() > 1){
@@ -48,25 +49,30 @@ var memberNo = "member_1";
 					<form id="medicationForm" name="medicationForm" action="${pageContext.request.contextPath}/addMedication" method="post">
 						<div class="row">
 							<div class="col-md-8 col-md-offset-2">
-								<input type="hidden" id="medicineSeq" class="form-control" name="medicineSeq" readonly>
-								<input type="hidden" id="medicineNo" class="form-control" name="medicineNo" readonly>
-								<div class="col-md-10">약 이름  <input id="medicineName" class="form-control" name="medicineName" readonly></input></div>
-								<div class="col-md-2" style="margin-top: 30px;"><input type="button" id="medicineInfo" class="btn btn-default" value="자세히"></div>
-							</div>
-							<div class="col-md-8 col-md-offset-2">
-								<div class="col-md-5">시작  <input id="medicationStartDate" class="form-control" type="date" name="medicationStartDate"></div>
-								<div class="col-md-2" style="margin-top : 55px">~</div>
-								<div class="col-md-5">끝  <input id="medicationEndDate" class="form-control" type="date" name="medicationEndDate"></div>
-							</div>
-							<div class="col-md-8 col-md-offset-2">
-								<div class="col-md-5">일일 복용량  <input id="dosage" class="form-control" type="number" name="dosage"></div>
-								<div class="col-md-5 col-md-offset-2">총 복용량  <input id="totalDosage" class="form-control" type="text" name="totalDosage"></div>
-							</div>
-							<div class="col-md-8 col-md-offset-2">
-								<div>복용 제목  <input id="medicationTitle" class="form-control" name="medicationTitle"></input></div>
-								<div>복용 내용  <textarea id="medicationContent" class="form-control" name="medicationContent"></textarea></div>
-								<button id="medicationBtn" class="btn btn-default" type="button">저장</button>
-								<input id="cancelBtn" class="btn btn-default" type="button" value="취소">
+								<div class="card">
+									<div class="card-header" data-background-color="purple"><h4 class="title">복약 등록</h4></div>
+									<div class="col-md-12">
+										<input type="hidden" id="medicineSeq" class="form-control" name="medicineSeq" readonly>
+										<input type="hidden" id="medicineNo" class="form-control" name="medicineNo" readonly>
+										<div class="col-md-10">약 이름  <input id="medicineName" class="form-control" name="medicineName" readonly></input></div>
+										<div class="col-md-2" style="margin-top: 30px;"><input type="button" id="medicineInfo" class="btn btn-default" value="자세히"></div>
+									</div>
+									<div class="col-md-12">
+										<div class="col-md-5">시작  <input id="medicationStartDate" class="form-control" type="date" name="medicationStartDate"></div>
+										<div class="col-md-2" style="margin-top : 55px">~</div>
+										<div class="col-md-5">끝  <input id="medicationEndDate" class="form-control" type="date" name="medicationEndDate"></div>
+									</div>
+									<div class="col-md-12">
+										<div class="col-md-5">일일 복용량  <input id="dosage" class="form-control" type="number" name="dosage"></div>
+										<div class="col-md-5 col-md-offset-2">총 복용량  <input id="totalDosage" class="form-control" type="text" name="totalDosage"></div>
+									</div>
+									<div class="col-md-12">
+										<div>복용 제목  <input id="medicationTitle" class="form-control" name="medicationTitle"></input></div>
+										<div>복용 내용  <textarea id="medicationContent" class="form-control" name="medicationContent"></textarea></div>
+										<button id="medicationBtn" class="btn btn-default" type="button">저장</button>
+										<input id="cancelBtn" class="btn btn-default" type="button" value="취소">
+									</div>
+								</div>
 							</div>
 						</div>
 					</form>

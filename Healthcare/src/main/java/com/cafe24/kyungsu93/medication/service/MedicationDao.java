@@ -53,4 +53,18 @@ public class MedicationDao {
 	public void modifyMedication(MedicationRequest medicationRequest) {
 		sqlSession.update(NS+"modifyMedication", medicationRequest);
 	}
+	
+	public List<MedicationRecord> getMedicationRecordList(MedicationRequest medicationRequest) {
+		return sqlSession.selectList(NS+"getMedicationRecordList", medicationRequest);
+	}
+	
+	public void addMedicationRecord(MedicationRecord medicationRecord) {
+		sqlSession.insert(NS+"addMedicationRecord", medicationRecord);
+	}
+	public void removeMedicationRecordDate(MedicationRecord medicationRecord) {
+		sqlSession.delete(NS+"removeMedicationRecordDate", medicationRecord);
+	}
+	public int getMedicationRecordNo() {
+		return sqlSession.selectOne(NS+"getMedicationRecordNo");
+	}
 }
