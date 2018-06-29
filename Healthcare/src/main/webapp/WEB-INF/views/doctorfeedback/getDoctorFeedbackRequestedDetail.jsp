@@ -39,7 +39,7 @@
 				location.href="${pageContext.request.contextPath}/addDoctorFeedbackApproval?doctorFeedbackRequestNo="+$('#doctorFeedbackRequestNo').val()+"&doctorFeedbackApproval=F";
 			})
 			$('.btnFeedback').click(function() {
-				location.href="${pageContext.request.contextPath}/addDoctorFeedbackResult?doctorFeedbackRequestNo="+$('#doctorFeedbackRequestNo').val()+"&memberNo="+$('#memberNo').val();
+				location.href="${pageContext.request.contextPath}/addDoctorFeedbackResult?doctorFeedbackRequestNo="+$('#doctorFeedbackRequestNo').val()+"&memberNo="+$('#memberNo').val()+"&diseaseNo="+$('#diseaseNo').val();
 			})
 		})
 	</script>
@@ -49,6 +49,7 @@
 	<input type="hidden" name="doctorNo" value="${memberSessionNo}">
 	<input type="hidden" id="memberNo" name="memberNo" value="${doctorFeedbackRequest.memberNo}">
 	<input type="hidden" id="doctorFeedbackRequestNo" name="doctorFeedbackRequestNo" value="${doctorFeedbackRequest.doctorFeedbackRequestNo}">
+	<input type="hidden" id="diseaseNo" name="diseaseNo" value="${doctorFeedbackRequest.diseaseNo}">	
 		<div class="div">
 			<div>
 				질병명 : <input type="text" name="diseaseName" value="${doctorFeedbackRequest.diseaseName}">

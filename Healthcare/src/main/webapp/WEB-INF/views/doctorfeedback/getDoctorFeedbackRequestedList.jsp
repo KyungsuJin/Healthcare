@@ -12,7 +12,6 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-
 	<title>Insert title here</title>
 </head>
 <body>
@@ -25,19 +24,36 @@
 				<td>의사명</td>
 				<td>회원명</td>
 				<td>날짜</td>	
+				<td>피드백완료여부</td>
+				<c:if test="${memberSessionLevel == 1}">
+					<td>삭제하기</td>
+				</c:if>
+				
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="tbody">
 			<c:forEach var="doctorFeedbackRequest" items="${list}" varStatus="status">
-				<tr onclick="location.href='${pageContext.request.contextPath}/getDoctorFeedbackRequestedDetail?doctorFeedbackRequestNo=${doctorFeedbackRequest.doctorFeedbackRequestNo}'" style="cursor:pointer;">
+			<input type="hidden" class="doctorFeedbackRequestNo" name="doctorFeedbackRequestNo" value="${doctorFeedbackRequest.doctorFeedbackRequestNo}">
+				<tr>					
+					
 					<td>${status.count}</td>
-					<td>${doctorFeedbackRequest.doctorFeedbackRequestTitle}</td>
+					<td><a href="${pageContext.request.contextPath}/getDoctorFeedbackRequestedDetail?doctorFeedbackRequestNo=${doctorFeedbackRequest.doctorFeedbackRequestNo}">${doctorFeedbackRequest.doctorFeedbackRequestTitle}</a></td>
 					<td>${doctorFeedbackRequest.doctorNo}</td>
 					<td>${doctorFeedbackRequest.memberNo}</td>
 					<td>${doctorFeedbackRequest.doctorFeedbackRequestDate}</td>
+					<c:choose>
+						<c:when test="${doctorFeedbackRequest.doctorFeedbackResult != null}">
+							<td><a href="${pageContext.request.contextPath}/getDoctorFeedbackResult?doctorFeedbackRequestNo=${doctorFeedbackRequest.doctorFeedbackRequestNo}">피드백 완료[확인하기]</a></td>
+						</c:when>
+						<c:when test="${doctorFeedbackRequest.doctorFeedbackResult == null}">
+							<td>피드백 요청중</td>
+						</c:when>
+					</c:choose>
+					<c:if test="${memberSessionLevel == 1}">
+						<td><a href="${pageContext.request.contextPath}/removeDoctorFeedbackRequest?doctorFeedbackRequestNo=${doctorFeedbackRequest.doctorFeedbackRequestNo}">삭제하기</a></td>
+					</c:if>
 				</tr>				
 			</c:forEach>
-			
 		</tbody>
 	</table>
 </body>

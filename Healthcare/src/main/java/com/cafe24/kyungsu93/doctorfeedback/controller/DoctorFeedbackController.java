@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.cafe24.kyungsu93.doctorfeedback.service.DoctorFeedbackRequest;
 import com.cafe24.kyungsu93.doctorfeedback.service.DoctorFeedbackResult;
 import com.cafe24.kyungsu93.doctorfeedback.service.DoctorFeedbackService;
+import com.cafe24.kyungsu93.doctorfeedback.service.DoctorGoodExercise;
 
 
 @Controller
@@ -21,44 +22,45 @@ public class DoctorFeedbackController {
 	private static final Logger logger = LoggerFactory.getLogger(DoctorFeedbackController.class);
 	@Autowired
 	DoctorFeedbackService doctorFeedbackService;
-	
+
 	@RequestMapping(value="/getDoctorFeedbackResultDetail", method=RequestMethod.GET)
 	public String getDoctorFeedbackResultDetail() {
 		logger.debug("DoctorFeedbackController_getDoctorFeedbackResultDetail");
 		return "";
 	}
-	@RequestMapping(value="/getDoctorFeedbackResultList", method=RequestMethod.GET)
-	public String getDoctorFeedbackResultList(Model model) {
-		logger.debug("DoctorFeedbackController_getDoctorFeedbackResultList");
-		List<DoctorFeedbackResult> list = doctorFeedbackService.getDoctorFeedbackResultList();
-		System.out.println("getDoctorFeedbackResultTitle : "+list.get(0).getDoctorFeedbackResultTitle());
-		System.out.println("list : "+list.size());
-		
+	@RequestMapping(value="/getDoctorFeedbackResult", method=RequestMethod.GET)
+	public String getDoctorFeedbackResult(Model model
+											,@RequestParam(value="doctorFeedbackRequestNo") String doctorFeedbackResultNo) {
+		logger.debug("DoctorFeedbackController_getDoctorFeedbackResult");
+		List<DoctorFeedbackResult> list = doctorFeedbackService.getDoctorFeedbackResult(doctorFeedbackResultNo);
+		System.out.println(list.size());
 		model.addAttribute("list", list);
-		return "doctorfeedback/getDoctorFeedbackResultList";
+		return "doctorfeedback/getDoctorFeedbackResult";
 	}	
 	@RequestMapping(value="/addDoctorFeedbackResult", method=RequestMethod.GET)
 	public String addDoctorFeedbackResult(Model model
 											,@RequestParam(value="doctorFeedbackRequestNo") String doctorFeedbackRequestNo
-											,@RequestParam(value="memberNo") String memberNo) {
+											,@RequestParam(value="memberNo") String memberNo
+											,@RequestParam(value="diseaseNo") String diseaseNo) {
 		logger.debug("DoctorFeedbackController_addDoctorFeedbackResult_GET");
 		model.addAttribute("doctorFeedbackRequestNo", doctorFeedbackRequestNo);
 		model.addAttribute("memberNo", memberNo);
+		model.addAttribute("diseaseNo", diseaseNo);
 		return "doctorfeedback/addDoctorFeedbackResult";
 
 	}
 	@RequestMapping(value="/addDoctorFeedbackResult", method=RequestMethod.POST)
-	public String addDoctorFeedbackResult(DoctorFeedbackResult doctorFeedbackResult) {
+	public String addDoctorFeedbackResult(DoctorFeedbackResult doctorFeedbackResult, DoctorGoodExercise doctorGoodExercise) {
 		logger.debug("DoctorFeedbackController_addDoctorFeedbackResult_POST");
-		doctorFeedbackService.addDoctorFeedbackResult(doctorFeedbackResult);
-		return "doctorfeedback/getDoctorFeedbackRequestedList";
+		doctorFeedbackService.addDoctorFeedbackResult(doctorFeedbackResult,doctorGoodExercise);
+		return "redirect:/getDoctorFeedbackResult?doctorFeedbackRequestNo="+doctorFeedbackResult.getDoctorFeedbackRequestNo();
 	}
 	@RequestMapping(value="/addDoctorFeedbackApprovalAcceptance", method=RequestMethod.GET)
 	public String addDoctorFeedbackApprovalAcceptance(@RequestParam(value="doctorFeedbackRequestNo") String doctorFeedbackRequestNo
 											,@RequestParam(value="doctorFeedbackApproval") String doctorFeedbackApproval) {
 		logger.debug("DoctorFeedbackController_addDoctorFeedbackApprovalAcceptance");
 		doctorFeedbackService.addDoctorFeedbackApproval(doctorFeedbackRequestNo, doctorFeedbackApproval);
-		return "doctorfeedback/getDoctorFeedbackRequestedDetail?doctorFeedbackRequestNo=1";
+		return "doctorfeedback/addDoctorFeedbackResult";
 	}
 	@RequestMapping(value="/getDoctorFeedbackRequestedDetail", method=RequestMethod.GET)
 	public String getDoctorFeedbackRequestedDetail(Model model

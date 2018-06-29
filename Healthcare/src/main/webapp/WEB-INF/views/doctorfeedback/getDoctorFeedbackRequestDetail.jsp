@@ -15,10 +15,13 @@
 	<title>Insert title here</title>
 	<script>
 		$(document).ready(function() {
-			
+			$('#btnFeedback').click(function() {
+				location.href="${pageContext.request.contextPath}/getDoctorFeedbackResult?doctorFeedbackRequestNo="+$('#doctorFeedbackRequestNo').val();
+			})
 		})
 	</script>
 <body>
+	<input type="hidden" id="doctorFeedbackRequestNo" name="doctorFeedbackRequestNo" value="${doctorFeedbackRequest.doctorFeedbackRequestNo}">
 	<div id="div">
 		<div>
 			질병명 : ${doctorFeedbackRequest.diseaseName}

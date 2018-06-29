@@ -15,30 +15,28 @@
 	<title>Insert title here</title>
 </head>
 <body>
-	<h1>getDoctorFeedBackRequestList.jsp</h1>
+	<h1>getAllInquireList.jsp</h1>
 	<table class="table">
 		<thead>
 			<tr>
-				<td>No</td>
-				<td>제목</td>
-				<td>회원명</td>
-				<td>의사명</td>
-				<td>날짜</td>	
-				<td>삭제</td>
+				<th>No</th>
+				<th>아이디</th>
+				<th>제목</th>
+				<th>내용</th>
+				<th>날짜</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="doctorFeedbackRequest" items="${list}" varStatus="status">
-				<tr style="cursor:pointer;" onclick="location.href='${pageContext.request.contextPath}/getDoctorFeedbackRequestDetail?doctorFeedbackRequestNo=${doctorFeedbackRequest.doctorFeedbackRequestNo}'">
+			<c:forEach var="inquire" items="${list}" varStatus="status">
+				<tr onclick="location.href='${pageContext.request.contextPath}/addInquireAnswer?inquireNo=${inquire.inquireNo}&memberNo=${inquire.memberId}'" style="cursor:pointer;">
 					<td>${status.count}</td>
-					<td>${doctorFeedbackRequest.doctorFeedbackRequestTitle}</td>
-					<td>${doctorFeedbackRequest.memberNo}</td>
-					<td>${doctorFeedbackRequest.doctorNo}</td>
-					<td>${doctorFeedbackRequest.doctorFeedbackRequestDate}</td>
-					<td><a href="${pageContext.request.contextPath}/removeDoctorFeedbackRequest?doctorFeedbackRequestNo=${doctorFeedbackRequest.doctorFeedbackRequestNo}">피드백요청삭제</a></td>
-				</tr>				
+					<td>${inquire.memberId}</td>
+					<td>${inquire.inquireTitle}</td>
+					<td>${inquire.inquireContent}</td>
+					<td>${inquire.inquireDate}</td>
+				</tr>
 			</c:forEach>
-			
+
 		</tbody>
 	</table>
 </body>

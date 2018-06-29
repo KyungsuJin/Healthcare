@@ -1,3 +1,4 @@
+<!-- 피드백결과를 확인하는 view -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -12,33 +13,29 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-	<title>Insert title here</title>
 </head>
 <body>
-	<h1>getDoctorFeedBackRequestList.jsp</h1>
+	<h1>getDoctorFeedbackResultList</h1>
 	<table class="table">
 		<thead>
 			<tr>
-				<td>No</td>
-				<td>제목</td>
-				<td>회원명</td>
-				<td>의사명</td>
-				<td>날짜</td>	
-				<td>삭제</td>
-			</tr>
+				<th>No</th>
+				<th>피드백제목</th>
+				<th>피드백내용</th>
+				<th>추천운동</th>
+				<th>피드백날짜</th>
+			</tr>	
 		</thead>
 		<tbody>
-			<c:forEach var="doctorFeedbackRequest" items="${list}" varStatus="status">
-				<tr style="cursor:pointer;" onclick="location.href='${pageContext.request.contextPath}/getDoctorFeedbackRequestDetail?doctorFeedbackRequestNo=${doctorFeedbackRequest.doctorFeedbackRequestNo}'">
+			<c:forEach var="doctorFeedbackResult" items="${list}" varStatus="status">
+				<tr>
 					<td>${status.count}</td>
-					<td>${doctorFeedbackRequest.doctorFeedbackRequestTitle}</td>
-					<td>${doctorFeedbackRequest.memberNo}</td>
-					<td>${doctorFeedbackRequest.doctorNo}</td>
-					<td>${doctorFeedbackRequest.doctorFeedbackRequestDate}</td>
-					<td><a href="${pageContext.request.contextPath}/removeDoctorFeedbackRequest?doctorFeedbackRequestNo=${doctorFeedbackRequest.doctorFeedbackRequestNo}">피드백요청삭제</a></td>
-				</tr>				
+					<td>${doctorFeedbackResult.doctorFeedbackResultTitle}</td>
+					<td>${doctorFeedbackResult.doctorFeedbackResultContent}</td>
+					<th>${doctorFeedbackResult.exerciseName}</th>
+					<td>${doctorFeedbackResult.doctorFeedbackResultDate}</td>
+				</tr>
 			</c:forEach>
-			
 		</tbody>
 	</table>
 </body>

@@ -4,6 +4,44 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.cafe24.kyungsu93.doctorfeedback.service.DoctorFeedbackMapper">
+	<select id="selectGetDoctorFeedbackRequestedListAll"
+			resultType="com.cafe24.kyungsu93.doctorfeedback.service.DoctorFeedbackRequest">
+		SELECT
+			a.doctor_feedback_request_no as doctorFeedbackRequestNo
+			,a.member_no as memberNo
+			,a.doctor_no as doctorNo
+			,a.disease_no as diseaseNo
+			,a.doctor_feedback_request_title as doctorFeedbackRequestTitle
+			,a.doctor_feedback_request_content as doctorFeedbackRequestContent
+			,a.doctor_feedback_request_date as doctorFeedbackRequestDate
+			,b.doctor_feedback_request_no as doctorFeedbackResult
+		FROM
+			doctor_feedback_request a LEFT OUTER JOIN doctor_feedback_result b
+		ON
+			 a.doctor_feedback_request_no = b.doctor_feedback_request_no
+	</select>
+	<insert id="insertDoctorGoodExercise"
+			parameterType="com.cafe24.kyungsu93.diet.service.Exercise">
+		INSERT INTO doctor_good_exercise(
+			doctor_feedback_request_no
+			,disease_no
+			,exercise_no
+		)VALUES(
+			#{doctorFeedbackRequestNo}
+			,#{diseaseNo}
+			,#{exerciseNo}
+		)
+	</insert>
+	<select id="selectGetExerciseList"
+			resultType="com.cafe24.kyungsu93.diet.service.Exercise">
+		SELECT
+			exercise_no as exerciseNo
+			,exercise_name as exerciseName
+			,exercise_calorie as exerciseCalorie
+			,exercise_date as exerciseDate
+		FROM
+			exercise	
+	</select>
 	<select id="selectDoctorFeedbackRequestDetail"
 			parameterType="String"
 			resultType="com.cafe24.kyungsu93.doctorfeedback.service.DoctorFeedbackRequest">
@@ -32,15 +70,21 @@
 			doctor_feedback_request_no = #{doctorFeedbackRequestNo}
 			
 	</update>
-	<select id="selectGetDoctorFeedbackResultList"
+	<select id="selectGetDoctorFeedbackResult"
+			parameterType="String"
 			resultType="com.cafe24.kyungsu93.doctorfeedback.service.DoctorFeedbackResult">
 		SELECT
-			doctor_feedback_request_no as doctorFeedbackRequestNo
-			,doctor_feedback_result_title as doctorFeedbackResultTitle
-			,doctor_feedback_result_content as doctorFeedbackResultContent
-			,doctor_feedback_result_date as doctorFeedbackResultDate
+			a.doctor_feedback_request_no as doctorFeedbackRequestNo
+			,a.doctor_feedback_result_title as doctorFeedbackResultTitle
+			,a.doctor_feedback_result_content as doctorFeedbackResultContent
+			,a.doctor_feedback_result_date as doctorFeedbackResultDate
+			,c.exercise_name as exerciseName
 		FROM
-			doctor_feedback_result
+			doctor_feedback_result a, doctor_good_exercise b, exercise c
+		WHERE
+			a.doctor_feedback_request_no = #{doctorFeedbackRequestNo}
+			AND a.doctor_feedback_request_no = b.doctor_feedback_request_no
+			AND b.exercise_no = c.exercise_no
 	</select>
 	<select id="selectForInsertFeedbackApproval"
 			parameterType="String"
@@ -120,17 +164,20 @@
 			parameterType="String"
 			resultType="com.cafe24.kyungsu93.doctorfeedback.service.DoctorFeedbackRequest">
 		SELECT
-			doctor_feedback_request_no as doctorFeedbackRequestNo
-			,member_no as memberNo
-			,doctor_no as doctorNo
-			,disease_no as diseaseNo
-			,doctor_feedback_request_title as doctorFeedbackRequestTitle
-			,doctor_feedback_request_content as doctorFeedbackRequestContent
-			,doctor_feedback_request_date as doctorFeedbackRequestDate
+			a.doctor_feedback_request_no as doctorFeedbackRequestNo
+			,a.member_no as memberNo
+			,a.doctor_no as doctorNo
+			,a.disease_no as diseaseNo
+			,a.doctor_feedback_request_title as doctorFeedbackRequestTitle
+			,a.doctor_feedback_request_content as doctorFeedbackRequestContent
+			,a.doctor_feedback_request_date as doctorFeedbackRequestDate
+			,b.doctor_feedback_request_no as doctorFeedbackResult
 		FROM
-			doctor_feedback_request
+			doctor_feedback_request a LEFT OUTER JOIN doctor_feedback_result b
+		ON
+			 a.doctor_feedback_request_no = b.doctor_feedback_request_no
 		WHERE
-			doctor_no = #{dotorNo}
+			doctor_no = #{memberNo}
 	</select>
 	<delete id="deleteDoctorFeedbackRequest"
 			parameterType="String">
@@ -178,7 +225,7 @@
 			,doctor_feedback_request_date
 		)
 		VALUES(
-			#{doctorFeedBackRequestNo}
+			#{doctorFeedbackRequestNo}
 			,#{memberNo}
 			,#{doctorNo}
 			,#{diseaseNo}

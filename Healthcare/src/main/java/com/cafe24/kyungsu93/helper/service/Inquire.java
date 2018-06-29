@@ -1,16 +1,31 @@
 package com.cafe24.kyungsu93.helper.service;
 
 public class Inquire {
-	private String inqireNo;
+	private String inquireNo;
 	private String memberNo;
 	private String inquireTitle;
 	private String inquireContent;
 	private String inquireDate;
-	public String getInqireNo() {
-		return inqireNo;
+	private String memberId;
+	private int answerCount;
+
+	public int getAnswerCount() {
+		return answerCount;
 	}
-	public void setInqireNo(String inqireNo) {
-		this.inqireNo = inqireNo;
+	public void setAnswerCount(int answerCount) {
+		this.answerCount = answerCount;
+	}
+	public String getMemberId() {
+		return memberId;
+	}
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+	public String getInquireNo() {
+		return inquireNo;
+	}
+	public void setInquireNo(String inquireNo) {
+		this.inquireNo = inquireNo;
 	}
 	public String getMemberNo() {
 		return memberNo;
@@ -38,8 +53,9 @@ public class Inquire {
 	}
 	@Override
 	public String toString() {
-		return "Inquire [inqireNo=" + inqireNo + ", memberNo=" + memberNo + ", inquireTitle=" + inquireTitle
-				+ ", inquireContent=" + inquireContent + ", inquireDate=" + inquireDate + "]";
+		return "Inquire [inquireNo=" + inquireNo + ", memberNo=" + memberNo + ", inquireTitle=" + inquireTitle
+				+ ", inquireContent=" + inquireContent + ", inquireDate=" + inquireDate + ", memberId=" + memberId
+				+ ", answerCount=" + answerCount + "]";
 	}
 	
 }

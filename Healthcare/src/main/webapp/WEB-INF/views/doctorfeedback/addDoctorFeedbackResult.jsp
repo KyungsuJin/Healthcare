@@ -18,24 +18,39 @@
 				$('.divDisease').toggle();
 			})
 				console.log("ajax시작");
-				$.ajax({
-					type : "POST"
-					,url : "${pageContext.request.contextPath}/getMemberDiseaseListForFeedback"
-					,data : {"memberNo" : $('#memberNo').val()}
-					,dataType : "json"
-					,success : function(result) {
-						alert('성공');
-						for(var i=0; i<result.length; i++){
-							$('.tbody').append('<tr><td>'+i+'</td>'+
-													'<td class="td">'+result[i].diseaseName+'</td>'+
-													'<td class="td">'+result[i].diseaseSubCategoryName+'</td>'+
-													'<td class="td">'+result[i].familyHistory+'</td></tr>')
-						}
+			$.ajax({
+				type : "POST"
+				,url : "${pageContext.request.contextPath}/getMemberDiseaseListForFeedback"
+				,data : {"memberNo" : $('#memberNo').val()}
+				,dataType : "json"
+				,success : function(result) {
+					for(var i=0; i<result.length; i++){
+						$('.tbody').append('<tr><td>'+i+'</td>'+
+												'<td class="td">'+result[i].diseaseName+'</td>'+
+												'<td class="td">'+result[i].diseaseSubCategoryName+'</td>'+
+												'<td class="td">'+result[i].familyHistory+'</td></tr>')
 					}
-					,error:function(request, status, error){
-						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+				,error:function(request, status, error){
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			})
+			$.ajax({
+				type : "POST"
+				,url : "${pageContext.request.contextPath}/getExerciseList"
+				,dataType : "json"
+				,success : function(result) {
+					alert("성공dlek");
+					console.log(result);
+					for(var i=0;i<result.length; i++){
+						$('#selectboxGoodExercise').append('<option value="'+result[i].exerciseNo+'">'+result[i].exerciseName+'</option>');
 					}
-				})
+					
+				}
+				,error:function(request, status, error){
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			})
 			$(document).on('click','#btnSend', function() {
 				$('#form').submit();
 			})
@@ -47,6 +62,7 @@
 	<form id="form" action="${pageContext.request.contextPath}/addDoctorFeedbackResult" method="POST">
 		<input type="hidden" id="memberNo" name="memberNo" value="${memberNo}">
 		<input type="hidden" name="doctorFeedbackRequestNo" value="${doctorFeedbackRequestNo}">
+		<input type="hidden" name="diseaseNo" value="${diseaseNo}">
 		<div class='divFome'>
 			<div class="divToggle">
 				<button type="button" class="btnToggle">회원질병 확인하기/숨기기</button>
@@ -72,6 +88,9 @@
 				피드백 내용
 				<div> 	
 					<textarea name="doctorFeedbackResultContent" cols="100" rows="30" autofocus="autofocus" required="required" style="resize: none;"></textarea>
+				</div>
+				<div>
+					추천 운동 : <select id="selectboxGoodExercise" name="exerciseNo"></select>
 				</div>
 				<button type="button" id="btnSend">피드백 보내기</button>
 			</div>

@@ -10,25 +10,12 @@ public class DoctorFeedbackRequest {
 	private String doctorFeedbackRequestContent;
 	private String doctorFeedbackRequestDate;
 	private String doctorFeedbackApproval;
-	private String doctorFeedbackresult;
-	
-	public String getDoctorFeedbackApproval() {
-		return doctorFeedbackApproval;
+	private String doctorFeedbackResult;
+	public String getDoctorFeedbackRequestNo() {
+		return doctorFeedbackRequestNo;
 	}
-	public void setDoctorFeedbackApproval(String doctorFeedbackApproval) {
-		this.doctorFeedbackApproval = doctorFeedbackApproval;
-	}
-	public String getDoctorFeedbackresult() {
-		return doctorFeedbackresult;
-	}
-	public void setDoctorFeedbackresult(String doctorFeedbackresult) {
-		this.doctorFeedbackresult = doctorFeedbackresult;
-	}
-	public String getDiseaseName() {
-		return diseaseName;
-	}
-	public void setDiseaseName(String diseaseName) {
-		this.diseaseName = diseaseName;
+	public void setDoctorFeedbackRequestNo(String doctorFeedbackRequestNo) {
+		this.doctorFeedbackRequestNo = doctorFeedbackRequestNo;
 	}
 	public String getMemberNo() {
 		return memberNo;
@@ -48,6 +35,12 @@ public class DoctorFeedbackRequest {
 	public void setDiseaseNo(String diseaseNo) {
 		this.diseaseNo = diseaseNo;
 	}
+	public String getDiseaseName() {
+		return diseaseName;
+	}
+	public void setDiseaseName(String diseaseName) {
+		this.diseaseName = diseaseName;
+	}
 	public String getDoctorFeedbackRequestTitle() {
 		return doctorFeedbackRequestTitle;
 	}
@@ -66,11 +59,17 @@ public class DoctorFeedbackRequest {
 	public void setDoctorFeedbackRequestDate(String doctorFeedbackRequestDate) {
 		this.doctorFeedbackRequestDate = doctorFeedbackRequestDate;
 	}
-	public String getDoctorFeedbackRequestNo() {
-		return doctorFeedbackRequestNo;
+	public String getDoctorFeedbackApproval() {
+		return doctorFeedbackApproval;
 	}
-	public void setDoctorFeedbackRequestNo(String doctorFeedbackRequestNo) {
-		this.doctorFeedbackRequestNo = doctorFeedbackRequestNo;
+	public void setDoctorFeedbackApproval(String doctorFeedbackApproval) {
+		this.doctorFeedbackApproval = doctorFeedbackApproval;
+	}
+	public String getDoctorFeedbackResult() {
+		return doctorFeedbackResult;
+	}
+	public void setDoctorFeedbackResult(String doctorFeedbackResult) {
+		this.doctorFeedbackResult = doctorFeedbackResult;
 	}
 	@Override
 	public String toString() {
@@ -78,10 +77,10 @@ public class DoctorFeedbackRequest {
 				+ ", doctorNo=" + doctorNo + ", diseaseNo=" + diseaseNo + ", diseaseName=" + diseaseName
 				+ ", doctorFeedbackRequestTitle=" + doctorFeedbackRequestTitle + ", doctorFeedbackRequestContent="
 				+ doctorFeedbackRequestContent + ", doctorFeedbackRequestDate=" + doctorFeedbackRequestDate
-				+ ", doctorFeedbackApproval=" + doctorFeedbackApproval + ", doctorFeedbackresult="
-				+ doctorFeedbackresult + "]";
+				+ ", doctorFeedbackApproval=" + doctorFeedbackApproval + ", doctorFeedbackResult="
+				+ doctorFeedbackResult + "]";
 	}
-
+	
 	
 	
 }

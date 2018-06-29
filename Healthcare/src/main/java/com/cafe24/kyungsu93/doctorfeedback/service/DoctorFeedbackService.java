@@ -9,8 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cafe24.kyungsu93.diet.service.Exercise;
 import com.cafe24.kyungsu93.disease.service.Disease;
 import com.cafe24.kyungsu93.disease.service.MyDiseaseDetail;
+
 
 
 @Service
@@ -21,13 +23,17 @@ public class DoctorFeedbackService {
 	@Autowired
 	HttpSession session;
 	
+	public List<Exercise> getExerciseList() {
+		logger.debug("DoctorFeedbackService_getExerciseList");
+		return doctorFeedbackDao.getExerciseList();
+	}
 	public DoctorFeedbackRequest getDoctorFeedbackRequestDetail(String doctorFeedbackRequestNo) {
 		logger.debug("DoctorFeedbackService_getDoctorFeedbackRequestDetail");
 		return doctorFeedbackDao.getDoctorFeedbackRequestDetail(doctorFeedbackRequestNo);
 	}
-	public List<DoctorFeedbackResult> getDoctorFeedbackResultList() {
-		logger.debug("DoctorFeedbackService_getDoctorFeedbackResultList");
-		return doctorFeedbackDao.getDoctorFeedbackResultList();
+	public List<DoctorFeedbackResult> getDoctorFeedbackResult(String doctorFeedbackResultNo) {
+		logger.debug("DoctorFeedbackService_getDoctorFeedbackResult");
+		return doctorFeedbackDao.getDoctorFeedbackResult(doctorFeedbackResultNo);
 	}
 	public String selectForInsertFeedbackApproval(String doctorFeedbackRequestNo) {
 		logger.debug("DoctorFeedbackService_doctorFeedbackRequestNo");
@@ -49,7 +55,7 @@ public class DoctorFeedbackService {
 		logger.debug("DoctorFeedbackService_getMemberDiseaseListForFeedback");
 		return doctorFeedbackDao.getMemberDiseaseListForFeedback(memberNo);
 	}
-	public int addDoctorFeedbackResult(DoctorFeedbackResult doctorFeedbackResult) {
+	public int addDoctorFeedbackResult(DoctorFeedbackResult doctorFeedbackResult, DoctorGoodExercise doctorGoodExercise) {
 		logger.debug("DoctorFeedbackService_addDoctorFeedbackResult");
 		//의사피드백결과를 db에 저장후
 		doctorFeedbackDao.addDoctorFeedbackResult(doctorFeedbackResult);
@@ -57,6 +63,8 @@ public class DoctorFeedbackService {
 		DoctorFeedbackApproval doctorFeedbackApproval = new DoctorFeedbackApproval();
 		doctorFeedbackApproval.setDoctorFeedbackResult("T");
 		doctorFeedbackApproval.setDoctorFeedbackRequestNo(doctorFeedbackResult.getDoctorFeedbackRequestNo());
+		//추천운동 추가
+		doctorFeedbackDao.addDoctorGoodExercise(doctorGoodExercise);
 		
 		return doctorFeedbackDao.updateDoctorFeedbackApproval(doctorFeedbackApproval);
 	}
@@ -67,6 +75,11 @@ public class DoctorFeedbackService {
 	public List<DoctorFeedbackRequest> getDoctorFeedbackRequestedList() {
 		logger.debug("DoctorFeedbackService_getDoctorFeedbackRequestedList");
 		String sMemberNo = (String)session.getAttribute("memberSessionNo");
+		Integer memberLevel = (Integer)session.getAttribute("memberSessionLevel");
+		if(memberLevel == 1) {
+			//관리자는 모든의사의 리스트를 보여줌
+			return doctorFeedbackDao.getDoctorFeedbackRequestedListAll();
+		}
 		return doctorFeedbackDao.getDoctorFeedbackRequestedList(sMemberNo);
 	}
 	public int removeDoctorFeedbackRequest(String doctorFeedbackRequestNo) {

@@ -8,8 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cafe24.kyungsu93.diet.service.Exercise;
 import com.cafe24.kyungsu93.disease.service.Disease;
 import com.cafe24.kyungsu93.disease.service.MyDiseaseDetail;
+
 
 @Repository
 public class DoctorFeedbackDao {
@@ -17,6 +19,21 @@ public class DoctorFeedbackDao {
 	@Autowired SqlSessionTemplate sqlSession;
 	String NS = "com.cafe24.kyungsu93.doctorfeedback.service.DoctorFeedbackMapper.";
 	
+	//관리자는 모든 의사의 피드백을 확인 할수 있다.
+	public List<DoctorFeedbackRequest> getDoctorFeedbackRequestedListAll() {
+		logger.debug("DoctorFeedbackService_getExerciseList");
+		return sqlSession.selectList(NS+"selectGetDoctorFeedbackRequestedListAll");
+	}
+	//의사가 피드백할때 추천운동 등록
+	public int addDoctorGoodExercise(DoctorGoodExercise doctorGoodExercise) {
+		logger.debug("DoctorFeedbackService_getExerciseList");
+		return sqlSession.insert(NS+"insertDoctorGoodExercise", doctorGoodExercise);
+	}
+	//의사가 피드백을 해줄때 운동을 추천해준다.
+	public List<Exercise> getExerciseList() {
+		logger.debug("DoctorFeedbackService_getExerciseList");
+		return sqlSession.selectList(NS+"selectGetExerciseList");
+	}
 	public DoctorFeedbackRequest getDoctorFeedbackRequestDetail(String doctorFeedbackRequestNo) {
 		logger.debug("DoctorFeedbackDao_getDoctorFeedbackRequestDetail");
 		return sqlSession.selectOne(NS+"selectDoctorFeedbackRequestDetail",doctorFeedbackRequestNo);
@@ -27,9 +44,9 @@ public class DoctorFeedbackDao {
 		return sqlSession.update(NS+"updateDoctorFeedbackApproval",doctorFeedbackApproval);
 	}
 	//의사피드백결과 리스트
-	public List<DoctorFeedbackResult> getDoctorFeedbackResultList() {
+	public List<DoctorFeedbackResult> getDoctorFeedbackResult(String doctorFeedbackResultNo) {
 		logger.debug("DoctorFeedbackDao_getDoctorFeedbackResultList");
-		return sqlSession.selectList(NS+"selectGetDoctorFeedbackResultList");
+		return sqlSession.selectList(NS+"selectGetDoctorFeedbackResult", doctorFeedbackResultNo);
 	}
 	//d
 	public int selectForInsertFeedbackApproval(String doctorFeedbackRequestNo) {
@@ -55,6 +72,7 @@ public class DoctorFeedbackDao {
 		logger.debug("DoctorFeedbackDao_getDoctorFeedbackRequestedDetail");
 		return sqlSession.selectOne(NS+"selectGetDoctorFeedbackRequestedDetail", doctorFeedbackRequestNo);
 	}
+	//의사가 요청된 피드백을 확인한다.
 	public List<DoctorFeedbackRequest> getDoctorFeedbackRequestedList(String doctorNo) {
 		logger.debug("DoctorFeedbackDao_getDoctorFeedbackRequestedList");
 		return sqlSession.selectList(NS+"selectGetDoctorFeedbackRequestedList",doctorNo);
@@ -63,6 +81,7 @@ public class DoctorFeedbackDao {
 		logger.debug("DoctorFeedbackDao_removeDoctorFeedbackRequest");
 		return sqlSession.delete(NS+"deleteDoctorFeedbackRequest", doctorFeedbackRequestNo);
 	}
+	
 	public List<Disease> getDiseaseList() {
 		logger.debug("DoctorFeedbackDao_getDiseaseList");
 		return sqlSession.selectList(NS+"selectGetDiseaseList");

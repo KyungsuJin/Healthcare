@@ -5,6 +5,14 @@ public class DoctorFeedbackResult {
 	private String doctorFeedbackResultTitle;
 	private String doctorFeedbackResultContent;
 	private String doctorFeedbackResultDate;
+	private String exerciseName;
+	
+	public String getExerciseName() {
+		return exerciseName;
+	}
+	public void setExerciseName(String exerciseName) {
+		this.exerciseName = exerciseName;
+	}
 	public String getDoctorFeedbackRequestNo() {
 		return doctorFeedbackRequestNo;
 	}
@@ -33,7 +41,8 @@ public class DoctorFeedbackResult {
 	public String toString() {
 		return "DoctorFeedbackResult [doctorFeedbackRequestNo=" + doctorFeedbackRequestNo
 				+ ", doctorFeedbackResultTitle=" + doctorFeedbackResultTitle + ", doctorFeedbackResultContent="
-				+ doctorFeedbackResultContent + ", doctorFeedbackResultDate=" + doctorFeedbackResultDate + "]";
+				+ doctorFeedbackResultContent + ", doctorFeedbackResultDate=" + doctorFeedbackResultDate
+				+ ", exerciseName=" + exerciseName + "]";
 	}
 
 	

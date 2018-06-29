@@ -3,6 +3,109 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.cafe24.kyungsu93.diet.service.HelperMapper">
-
+<mapper namespace="com.cafe24.kyungsu93.helper.service.HelperMapper">
+	<delete id="deleteInquireAnswer"
+			parameterType="String">
+		DELETE			
+		FROM
+			inquire_answer
+		WHERE
+			inquire_no = #{inquireNo}
+	</delete>
+	<delete id="deleteInquire"
+			parameterType="String">
+		DELETE			
+		FROM
+			inquire
+		WHERE
+			inquire_no = #{inquireNo}
+	</delete>
+	<select id="selectgetInquireAnswer"
+			parameterType="String"
+			resultType="com.cafe24.kyungsu93.helper.service.InquireAnswer">
+		SELECT
+			a.inquire_no as inquireNo
+			,a.member_no as memberNo
+			,a.inquire_answer_title as inquireAnswerTitle
+			,a.inquire_answer_content as inquireAnswerContent
+			,a.inquire_answer_date as inquireAnswerdate
+			,b.inquire_title as inquireTitle
+		FROM
+			inquire_answer a, inquire b
+		WHERE
+			a.inquire_no = #{inquireNo}
+			AND a.inquire_no = b.inquire_no
+	</select>
+	<select id="selectInquireAnswerCount"
+			parameterType="String"
+			resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			inquire_answer
+		WHERE	
+			inquire_no = #{inquireNo}
+	</select>
+	<insert id="insertInquireAnswer"
+			parameterType="com.cafe24.kyungsu93.helper.service.InquireAnswer">
+		INSERT INTO inquire_answer(
+			inquire_no
+			,member_no
+			,inquire_answer_title
+			,inquire_answer_content
+			,inquire_answer_date
+		)VALUES(
+			#{inquireNo}
+			,#{memberNo}
+			,#{inquireAnswerTitle}
+			,#{inquireAnswerContent}
+			,now()
+		)		
+	</insert>
+	<select id="SelectgetAllInquireList"
+			resultType="com.cafe24.kyungsu93.helper.service.Inquire">
+		SELECT
+			a.inquire_no as inquireNo
+			,a.member_no as memberNo
+			,a.inquire_title as inquireTitle
+			,a.inquire_content as inquireContent
+			,a.inquire_date as inquireDate
+			,b.member_id as memberId
+		FROM
+			inquire a, member b
+		WHERE
+			a.member_no = b.member_no
+	</select>
+	<select id="SelectGetInquireList"
+			parameterType="String"
+			resultType="com.cafe24.kyungsu93.helper.service.Inquire">
+		SELECT
+			a.inquire_no as inquireNo
+			,a.member_no as memberNo
+			,a.inquire_title as inquireTitle
+			,a.inquire_content as inquireContent
+			,a.inquire_date as inquireDate
+			,b.member_id as memberId
+		FROM
+			inquire a, member b
+		WHERE
+			a.member_no = #{memberNo}
+			AND a.member_no = b.member_no
+	</select>
+	<insert id="insertInquire"
+			parameterType="com.cafe24.kyungsu93.helper.service.Inquire">
+		INSERT INTO inquire(
+			inquire_no
+			,member_no
+			,inquire_title
+			,inquire_content
+			,inquire_date
+		)VALUES(
+			#{inquireNo}
+			,#{memberNo}
+			,#{inquireTitle}
+			,#{inquireContent}
+			,now()
+		)		
+	</insert>
 </mapper>

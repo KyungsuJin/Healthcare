@@ -6,6 +6,14 @@ public class InquireAnswer {
 	private String inquireAnswerTitle;
 	private String inquireAnswerContent;
 	private String inquireAnswerdate;
+	private String inquireTitle;	
+	
+	public String getInquireTitle() {
+		return inquireTitle;
+	}
+	public void setInquireTitle(String inquireTitle) {
+		this.inquireTitle = inquireTitle;
+	}
 	public String getInquireNo() {
 		return inquireNo;
 	}
@@ -40,7 +48,7 @@ public class InquireAnswer {
 	public String toString() {
 		return "InquireAnswer [inquireNo=" + inquireNo + ", memberNo=" + memberNo + ", inquireAnswerTitle="
 				+ inquireAnswerTitle + ", inquireAnswerContent=" + inquireAnswerContent + ", inquireAnswerdate="
-				+ inquireAnswerdate + "]";
+				+ inquireAnswerdate + ", inquireTitle=" + inquireTitle + "]";
 	}
 	
 	
