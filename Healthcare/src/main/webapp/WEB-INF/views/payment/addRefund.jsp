@@ -43,7 +43,31 @@
 			}
 		}
 	}
+	function reset(){
+		$('#refundTitle').val('');
+		$('#refundContent').val('');
+		$('#refundSum').val('');
+	}
+	function returnBtn(){
+		history.back();
+	}
+	function returnListBtn(){
+		location.href="${pageContext.request.contextPath}/refundList";
+	}  
 </script>
+<style>
+#center{
+width: 600;
+margin: 0 auto;
+}
+#purple{
+color: #9c27b0;
+ font-weight: bold;
+}
+h4{
+font-weight: bold;
+}
+</style>
 </head>
 <body>
 	<div class="sidebar-wrapper">
@@ -51,25 +75,37 @@
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<h1>포인트 결제 신청</h1>
+			<div id="center">
+				<h4>포인트 결제 신청</h4>
 				<form id="refundForm" name="refundForm" onsubmit="return check()" action="${pageContext.request.contextPath}/addRefund" method="post">
-				현재 고객님의 포인트 잔액은 ${map.memberPoint }입니다.
+					<span>현재 고객님의 포인트 잔액은<span id="purple"> ${map.memberPoint }</span>입니다.</span>
 					<input type=hidden name="memberNo" value="${sessionScope.memberSessionNo}">
-					<div>
-						환불 금액 : 
+					<div class="form-group">
+						<span>환불 금액</span>
 						<input type="text" id="refundSum" name="refundSum" onchange="checkSum()">&nbsp;<span id="Name"></span>
 					</div>
-					<div>
-						제목 : 
-						<input type="text" name="refundTitle" id="refundTitle">
+					<div class="form-group">
+						<input type="text" name="refundTitle" id="refundTitle" placeholder="제목을 입력해주세요">
 					</div>
-					<div>
-						환불 사유 : 
-						<input type="text" name="refundContent" id="refundContent">
+					<div class="form-group">
+						<input type="text" name="refundContent" id="refundContent" placeholder="내용을 입력해주세요">
 					</div>
-					<input type="submit" value="환불신청하기">
+					<div class="form-group" align="right">
+						<input type="submit" class="btn btn-sm btn-primary" value="환불신청">
+					</div>
 				</form>
-				<input type="button" onclick="cancleBtn()" value="결제취소">
+					<div class="navbar-form navbar-left">
+						<div class="form-group" style="margin:0px">
+							<input type="button" class="btn btn-primary" onclick="returnListBtn()" value="목록으로">
+						</div>
+					</div>
+					<div class="navbar-form navbar-right">
+						<div class="form-group" style="margin:0px">
+							<input type="button" class="btn btn-primary" onclick="reset()" value="다시입력">
+							<input type="button" class="btn btn-primary" onclick="returnBtn()" value="등록취소">
+						</div>
+					</div>
+				</div>	
 			</div>
 		</div>
 	</div>

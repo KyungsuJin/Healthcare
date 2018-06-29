@@ -91,11 +91,10 @@ public class BloodPressureService {
 		int beginRow = (currentPage-1)*pagePerRow;
 		String memberNo = (String) session.getAttribute("memberSessionNo");
 		int sessionLevel = (Integer) session.getAttribute("memberSessionLevel");
-		if(sessionLevel != 1) {
-			String Key = "memberNo";
-			map.put("Key", Key);
-			map.put("memberNo", memberNo);
-		}
+		logger.debug("memberNo:"+memberNo);
+		logger.debug("sessionLevel:"+sessionLevel);
+		map.put("sessionLevel", sessionLevel);
+		map.put("memberNo", memberNo);
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
 		map.put("startDate", startDate);

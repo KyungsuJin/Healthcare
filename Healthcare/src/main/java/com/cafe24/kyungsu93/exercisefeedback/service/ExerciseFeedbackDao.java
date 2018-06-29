@@ -23,6 +23,11 @@ public class ExerciseFeedbackDao {
 		return sqlSession.selectOne(NS+"memberNoSearchCount",memberNo);
 	}	
 	//운동피드백 요청 리스트 검색
+	public int exerciseFeedbackRequestListSearchCount(Map<String, Object> map) {
+		logger.debug("ExerciseFeedbackDao - exerciseFeedbackRequestListSearchCount 실행");
+		return sqlSession.selectOne(NS+"exerciseFeedbackRequestListSearchCount",map);
+	}	
+	//운동피드백 요청 리스트 검색
 	public List<ExerciseFeedbackRequest> exerciseFeedbackRequestListSearch(Map<String, Object> map) {
 		logger.debug("ExerciseFeedbackDao - exerciseFeedbackRequestListSearch 실행");
 		return sqlSession.selectList(NS+"exerciseFeedbackRequestListSearch",map);

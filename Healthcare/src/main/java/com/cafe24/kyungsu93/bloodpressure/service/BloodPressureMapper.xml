@@ -8,8 +8,8 @@
 		WHERE blood_pressure_no = #{bloodPressureNo}
 	</select>
 	<select id="bloodPressureSearchDateCount" 
-			parameterType="String" 
-			resultType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
+			parameterType="map" 
+			resultType="Integer">
       	 SELECT
 			count(*)
 			FROM blood_pressure 

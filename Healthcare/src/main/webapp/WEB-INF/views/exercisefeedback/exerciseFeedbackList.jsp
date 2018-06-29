@@ -92,7 +92,34 @@ $(document).ready(function(){
 		location.href="${pageContext.request.contextPath}/exerciseFeedbackPtList";
 	}
 	
+	function formSearchKeywordcheck(){
+   		var keyWord = $('#keyWord').val();
+ 		if(keyWord == ''|| keyWord == null){
+			alert('검색하실 내용을 입력해주세요.');
+			formSearchKeyword.keyWord.focus();
+			return false;
+		}else{ 
+			alert('리스트 검색이 완료되었습니다.');
+			return true;
+		}
+	} 
+	function exerciseFeedbackAll(){
+		location.href="${pageContext.request.contextPath}/exerciseFeedbackList";
+	}
 </script>
+<style>
+th td{
+text-align : center;
+}
+#purple{
+color: #9c27b0;
+font-weight: bold;
+font-size : 14px;
+}
+#tableCss{
+font-size : 14px;
+}
+</style>
 </head>
 <body>
 	<div class="sidebar-wrapper">
@@ -100,56 +127,105 @@ $(document).ready(function(){
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-			<h1>요청한운동피드백리스트</h1>
+			<h4>요청한운동피드백리스트</h4>
 				<!-- 기간 검색 -->   		
-				<form class="form-inline" id="formSearch" name="formSearch" onsubmit="return formSearchcheck()" action="${pageContext.request.contextPath}/exerciseFeedbackListSearch" method="POST"> 
-					<div class="form-group"> 
-						<label for="startDate">시작일</label>
-						<input type="text" class="form-control" id="startDate" name="startDate">
+					<div class="form-inline" style=" float:left; margin-right:450px;">
+						<form class="form-inline" id="formSearch" name="formSearch" onsubmit="return formSearchcheck()" action="${pageContext.request.contextPath}/exerciseFeedbackListSearch" method="POST"> 
+							<div class="form-group"> 
+								<input type="text" class="form-control" id="startDate" name="startDate" placeholder="시작일">
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" id="endDate" name="endDate" placeholder="종료일">
+							</div>
+							<div class="form-group">
+								<button class="btn btn-white btn-round btn-just-icon" type="submit"><i class="material-icons">search</i></button>
+							</div>
+							<div class="form-group">
+								<input type="button" class="btn btn-sm btn-primary" onclick="SearchWeek()" value="1주일">
+							</div>
+							<div class="form-group">
+								<input type="button" class="btn btn-sm btn-primary" onclick="SearchMonth()" value="1개월">
+							</div>
+							<div class="form-group">
+								<input type="button" class="btn btn-sm btn-primary" onclick="SearchSixMonth()" value="6개월">	
+							</div>
+							<div class="form-group">
+								<input type="button" class="btn btn-sm btn-primary" onclick="exerciseFeedbackAll()" value="전체보기">	
+							</div>				
+						</form>
 					</div>
-					<div class="form-group">
-					 	<label for="endDate">종료일</label>
-						<input type="text" class="form-control" id="endDate" name="endDate">
+					<div class="form-inline">
+						<form class="form-inline" id="formSearchKeyword" name="formSearchKeyword" onsubmit="return formSearchKeywordcheck()" action="${pageContext.request.contextPath}/exerciseFeedbackRequestListSearch" method="POST"> 
+							<div class="form-group">
+								 <select name="keyOption" class="form-control" size="1">
+								     <option value="exerciseFeedbackRequestNo" <c:out value="${keyOption == 'exerciseFeedbackRequestNo'?'selected':''}"/>>번호</option>
+							         <option value="exerciseFeedbackRequestTitle" <c:out value="${keyOption == 'exerciseFeedbackRequestTitle'?'selected':''}"/>>제목</option>
+									 <c:if test="${sessionScope.memberSessionLevel == 1 }">
+							            <option value="memberNo" <c:out value="${keyOption == 'memberNo'?'selected':''}"/>>일반회원번호</option>
+							            <option value="teacherNo" <c:out value="${keyOption == 'teacherNo'?'selected':''}"/>>강사번호</option>
+							        </c:if>
+							         <c:if test="${sessionScope.memberSessionLevel == 2 }">
+							      	  	<option value="memberName" <c:out value="${keyOption == 'memberName'?'selected':''}"/>>강사명</option>
+							        </c:if>
+							         <c:if test="${sessionScope.memberSessionLevel == 3 }">
+							         	<option value="memberName" <c:out value="${keyOption == 'memberName'?'selected':''}"/>>강사명</option>
+							        </c:if>
+							         <c:if test="${sessionScope.memberSessionLevel == 4 }">
+							            <option value="memberId" <c:out value="${keyOption == 'memberId'?'selected':''}"/>>회원아이디</option>
+							        </c:if>
+						        </select>
+						    </div>
+						    <div class="form-group">
+								<input class="form-control" type="text" id="keyWord" name="keyWord" placeholder="검색어" value="${keyWord}"/>
+							</div>
+							<div class="form-group">
+								<button class="btn btn-white btn-round btn-just-icon" type="submit"><i class="material-icons">search</i></button>
+							</div>
+						</form>
 					</div>
-					<div class="form-group">
-						<input class="btn btn-sm btn-default" type="submit" value="검색">
-					</div>
-					<div class="form-group">
-						<input type="button" class="btn btn-sm btn-default" onclick="SearchWeek()" value="1주일">
-					</div>
-					<div class="form-group">
-						<input type="button" class="btn btn-sm btn-default" onclick="SearchMonth()" value="1개월">
-					</div>
-					<div class="form-group">
-						<input type="button" class="btn btn-sm btn-default" onclick="SearchSixMonth()" value="6개월">	
-					</div>				
-				</form>
+				<div>
+				<!-- 일반검색 -->
+				<form>
 				<c:choose>
-					<c:when test="${result > 0 }">
-						총 ${searchresult }개의 게시물을 찾았습니다.
-						${startDate } ~ ${endDate }기간 동안의 리스트 검색 결과입니다.
+					<c:when test="${searchKeywordresult > 0 }">
+						총 ${searchKeywordresult }개의 게시물을 찾았습니다.
+						<span id="purple">${keyWord }</span> 검색한 리스트 결과입니다.
 					</c:when>
-					<c:when test="${result eq 0 }">
-						${startDate } ~ ${endDate } 기간 동안의 해당하는 리스트 검색 결과가 없습니다.
+					<c:when test="${searchKeywordresult eq 0 }">
+						<span id="purple"> ${keyWord }</span>로 해당하는 리스트 검색 결과가 없습니다.
 					</c:when>
 				</c:choose>
-				<table class="table table-hover">
+				<!-- 기간별검색 -->
+				<c:choose>
+					<c:when test="${searchresult > 0 }">
+						총 ${searchresult }개의 게시물을 찾았습니다.
+						<span id="purple">${startDate }</span> ~ <span id="purple">${endDate }</span>기간 동안의 리스트 검색 결과입니다.
+					</c:when>
+					<c:when test="${searchresult eq 0 }">
+						<span id="purple">${startDate }</span> ~ <span id="purple">${endDate }</span> 기간 동안의 해당하는 리스트 검색 결과가 없습니다.
+					</c:when>
+				</c:choose>
+				</form>
+				<table class="table table-hover" id="tableCss">
 					<thead>
 						<tr>
 							<th>피드백번호</th>
 							<th>제목</th>
 							<c:if test="${sessionScope.memberSessionLevel == 4 }">
-							<th>요청한회원아이디</th>
-							<th>요청날짜</th>
+								<th>요청한회원아이디</th>
+								<th>요청날짜</th>
 							</c:if>
 							<c:if test="${sessionScope.memberSessionLevel == 1 }">
-							<th>요청한회원번호</th>
-							<th>강사번호</th>
+								<th>요청한회원번호</th>
+								<th>강사번호</th>
 							</c:if>
 							<c:if test="${sessionScope.memberSessionLevel == 2 }">
-							<th>강사명</th>
-							<th>요청날짜</th>
-							<th>승인결과</th>
+								<th>강사명</th>
+								<th>요청날짜</th>
+							</c:if>
+							<c:if test="${sessionScope.memberSessionLevel == 3 }">
+								<th>강사명</th>
+								<th>요청날짜</th>
 							</c:if>
 						</tr>
 					</thead>
@@ -157,31 +233,37 @@ $(document).ready(function(){
 						<c:forEach var="exerciseFeedback" items="${list}">
 						<tr>
 							<td>${exerciseFeedback.exerciseFeedbackRequestNo }</td>
-							<td><a href="${pageContext.request.contextPath}/exerciseFeedbackRequestDetail?exerciseFeedbackRequestNo=${exerciseFeedback.exerciseFeedbackRequestNo }">${exerciseFeedback.exerciseFeedbackRequestTitle }</a>
+							<td><a id="purple" href="${pageContext.request.contextPath}/exerciseFeedbackRequestDetail?exerciseFeedbackRequestNo=${exerciseFeedback.exerciseFeedbackRequestNo }">${exerciseFeedback.exerciseFeedbackRequestTitle }</a></td>
 							<c:if test="${sessionScope.memberSessionLevel == 4 }">
-							<td>${exerciseFeedback.memberid }</td>
-							<td>${exerciseFeedback.exerciseFeedbackRequestDate }</td>
+								<td>${exerciseFeedback.memberId }</td>
+								<td>${exerciseFeedback.exerciseFeedbackRequestDate }</td>
 							</c:if>
 							<c:if test="${sessionScope.memberSessionLevel == 1 }">
-							<td>${exerciseFeedback.memberNo }</td>
-							<td>${exerciseFeedback.teacherNo }</td>
+								<td>${exerciseFeedback.memberNo }</td>
+								<td>${exerciseFeedback.teacherNo }</td>
 							</c:if>
 							<c:if test="${sessionScope.memberSessionLevel == 2 }">
-							<td>${exerciseFeedback.memberName }</td>
-							<td>${exerciseFeedback.exerciseFeedbackRequestDate }</td>
-							<td>${exerciseFeedback.exerciseFeedbackResult }</td>
+								<td>${exerciseFeedback.memberName }</td>
+								<td>${exerciseFeedback.exerciseFeedbackRequestDate }</td>
+							</c:if>
+							<c:if test="${sessionScope.memberSessionLevel == 3 }">
+								<td>${exerciseFeedback.memberName }</td>
+								<td>${exerciseFeedback.exerciseFeedbackRequestDate }</td>
 							</c:if>
 						</tr>
 						</c:forEach>
 					</tbody>
 				</table>
+				<div align="left">
+					<input type="button" class="btn btn-primary" onclick="exerciseFeedbackApprovalResult()" value="운동피드백요청결과">
+				</div>
 				<div align="right">
-					<input type="button" class="btn btn-sm btn-default" onclick="addExerciseFeedback()" value="운동피드백요청등록">
+					<input type="button" class="btn btn-primary" onclick="addExerciseFeedback()" value="운동피드백요청등록">
 				</div>
 				<div align="center">
 					<nav>
 						<ul class="pagination pagination-sm">
-							<c:if test="${currentPage > 5}">
+							<c:if test="${currentPage > 10}">
 								<li>
 									<a aria-label="first" href="${pageContext.request.contextPath }/exerciseFeedbackList?currentPage=1">&laquo;</a>
 								</li>
@@ -191,11 +273,16 @@ $(document).ready(function(){
 									<a aria-label="first" href="${pageContext.request.contextPath }/exerciseFeedbackList?currentPage=${firstBlockPage-1}">&lsaquo;</a>
 								</li>
 							</c:if>
-								<li>
-								<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
+							<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
+								<c:if test="${currentPage == i}">
+								<li class="active">
+								</c:if>
+								<c:if test="${currentPage != i}">
+								<li class="">
+								</c:if>
 									<a href="${pageContext.request.contextPath}/exerciseFeedbackList?currentPage=${i}">${i}</a>				
-								</c:forEach>		
 								</li>
+							</c:forEach>	
 							<c:if test="${lastBlockPage < totalBlock}">
 								<li>
 									<a aria-label="last" href="${pageContext.request.contextPath}/exerciseFeedbackList?currentPage=${lastBlockPage+1}">&rsaquo;</a>
@@ -210,6 +297,7 @@ $(document).ready(function(){
 					</nav>
 				</div>
 	 		</div>
+		</div>
 		</div>
 	</div>
 </body>

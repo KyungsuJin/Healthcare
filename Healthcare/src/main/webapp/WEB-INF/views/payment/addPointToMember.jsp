@@ -22,6 +22,16 @@
 			return true;
 		}
 	}
+	function reset(){
+		$('#pointChargingSum').val('');
+		$('#memberNo').val('');
+	}
+	function returnBtn(){
+		history.back();
+	}
+	function returnListBtn(){
+		location.href="${pageContext.request.contextPath}/pointChargingList";
+	}  
 </script>
 </head>
 <body>
@@ -30,13 +40,33 @@
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<h1>회원에게 포인트 지급</h1>
-				<form id="addPointForm" onsubmit="return check()" action="${pageContext.request.contextPath}/addPoint" method="POST">
-					회원번호 : <input type="text" id="memberNo" name="memberNo">
-					지급할 포인트 금액 :<input type="text" id="pointChargingSum" name="pointChargingSum">
-					<input type="submit" value="포인트지급">
-				</form>
-				<input type="button" onclick="cancleBtn()" value="취소">
+			<div id="center">
+				<h4>회원에게 포인트 지급</h4>
+					<form id="addPointForm" onsubmit="return check()" action="${pageContext.request.contextPath}/addPoint" method="POST">
+						<div class="form-group">
+						회원번호 : 
+						<input class="form-control" type="text" id="memberNo" name="memberNo">
+						</div>
+						<div class="form-group">
+						지급할 포인트 금액 :
+						<input class="form-control" type="text" id="pointChargingSum" name="pointChargingSum">
+						</div>
+						<div align="right">
+							<input type="submit" class="btn btn-sm btn-primary" value="포인트지급">
+						</div>
+					</form>
+					<div class="navbar-form navbar-left">
+						<div class="form-group" style="margin:0px">
+							<input type="button" class="btn btn-primary" onclick="returnListBtn()" value="목록으로">
+						</div>
+					</div>
+					<div class="navbar-form navbar-right">
+						<div class="form-group" style="margin:0px">
+							<input type="button" class="btn btn-primary" onclick="reset()" value="다시입력">
+							<input type="button" class="btn btn-primary" onclick="returnBtn()" value="등록취소">
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

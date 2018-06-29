@@ -375,7 +375,7 @@
 								</div>
 						</div>
 						<input type="button" class="btn btn-sm btn-default" onclick="cancleBtn()" value="이전">
-							<input type="button" class="btn btn-sm btn-default" onclick="exerciseFeedbackListBtn()" value="리스트보기">
+						<input type="button" class="btn btn-sm btn-default" onclick="exerciseFeedbackListBtn()" value="리스트보기">
 					</div>
 					</div>
 				</div>

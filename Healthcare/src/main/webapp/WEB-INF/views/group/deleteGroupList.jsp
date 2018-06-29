@@ -49,7 +49,9 @@
 			            <option value="groupKindName" <c:if test="${'diastolicPressure'==keyOption }"> selected</c:if>>그룹종류</option>
 			        </select>
 					<input class="form-control" type="text" id="keyWord" name="keyWord" value="${keyWord}"/>
-					<button class="btn btn-sm btn-default" type="submit">검색</button>  
+					<div class="form-group">
+						<button class="btn btn-white btn-round btn-just-icon" type="submit"><i class="material-icons">search</i></button>
+					</div>
 			    </form> 
 				<table class="table table-hober">
 					<thead>
@@ -75,8 +77,12 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				<input type="button" class="btn btn-sm btn-default" onclick="deleteGroupcheckCancle()" value="그룹삭제취소">
+				<div align="left">
+					<input type="button" class="btn btn-sm btn-primary" onclick="deleteGroupcheckCancle()" value="그룹삭제취소">
+				</div>
+				<div align="right">
 				<a href="${pageContext.request.contextPath}/groupList">그룹리스트로 돌아가기</a>
+				</div>
 				<nav>
 					<ul class="pagination pagination-sm">
 						<c:if test="${currentPage > 10}">
@@ -89,11 +95,16 @@
 								<a aria-label="first" href="${pageContext.request.contextPath }/deleteGroupList?currentPage=${firstBlockPage-1}">&lsaquo;</a>
 							</li>
 						</c:if>
-							<li>
 							<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
+								<c:if test="${currentPage == i}">
+								<li class="active">
+								</c:if>
+								<c:if test="${currentPage != i}">
+								<li class="">
+								</c:if>
 								<a href="${pageContext.request.contextPath}/deleteGroupList?currentPage=${i}">${i}</a>	
-							</c:forEach>		
 							</li>
+							</c:forEach>
 						<c:if test="${lastBlockPage < totalBlock}">
 							<li>
 								<a aria-label="last" href="${pageContext.request.contextPath}/deleteGroupList?currentPage=${lastBlockPage+1}">&rsaquo;</a>

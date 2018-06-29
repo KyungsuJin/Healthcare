@@ -6,6 +6,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>myPointPage</title>
 <jsp:include page="../include/header.jsp"></jsp:include>
+<script type="text/javascript">
+</script>
+<style>
+#center{
+width: 600;
+margin: 0 auto;
+}
+#purple{
+color: #9c27b0;
+ font-weight: bold;
+}
+h4{
+font-weight: bold;
+}
+</style>
 </head>
 <body>
 	<div class="sidebar-wrapper">
@@ -13,13 +28,16 @@
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<h1>포인트확인</h1>
-				현재 회원님의 포인트 잔액은 입니다.
-				
-				<a href="${pageContext.request.contextPath }/addPointCharging">포인트 충정하기</a>
-				<a href="${pageContext.request.contextPath }/">포인트충전리스트</a>
-				<a href="${pageContext.request.contextPath }/addRefund">환전 하기</a>
-				<a href="${pageContext.request.contextPath }/">환전리스트</a>
+				<div id="center">
+					<h4>나의 포인트 </h4>
+						현재 회원님의 현재 포인트 잔액은 <span id="purple">${memberPoint}</span> 입니다.
+						<div class="form-group">
+						<a class="btn btn-primary" type="button" href="${pageContext.request.contextPath }/addPointCharging">포인트 충정하기</a>
+						<a class="btn btn-primary" type="button" href="${pageContext.request.contextPath }/pointChargingList">포인트충전리스트</a>
+						<a class="btn btn-primary" type="button" href="${pageContext.request.contextPath }/addRefund">환전 하기</a>
+						<a class="btn btn-primary" type="button" href="${pageContext.request.contextPath }/refundList">환전리스트</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

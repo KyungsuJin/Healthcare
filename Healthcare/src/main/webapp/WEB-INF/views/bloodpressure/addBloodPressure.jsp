@@ -13,35 +13,35 @@ function check() {
 	var checkCHar = /^[0-9]*$/;
 	var systolicPressure = $('#systolicPressure').val();
 	var diastolicPressure = $('#diastolicPressure').val();
-	if(confirm("혈압정보를 수정하시겠습니까?")){
-		if(!checkCHar.test(diastolicPressure)){
-			alert("숫자만 입력할 수 있습니다.");
-			addBloodPRessureForm.systolicPressure.focus();
-			return false;
-		}
-		if(!checkCHar.test(diastolicPressure)){
-			alert("숫자만 입력할 수 있습니다.");
-			addBloodPRessureForm.diastolicPressure.focus();
-			return false;
-		}if(bloodPressureForm.systolicPressure.value == "") {
-			alert("이완기 혈압을 입력해주세요.");
-			bloodPressureForm.systolicPressure.focus();
-			return false;
-		  }
-		if(bloodPressureForm.diastolicPressure.value == ""){
-			alert("수축기 혈압을 입력해주세요.");
-			bloodPressureForm.diastolicPressure.focus();
-			return false;
-		}if(bloodPressureForm.memberNo.value == ""){
-			alert("회원번호을 입력해주세요.");
-			bloodPressureForm.memberNo.focus();
-			return false;
-		}else{
-			alert("혈압 정보가 수정 완료 되었습니다.");
-			return true;
+		if(confirm("혈압정보를 수정하시겠습니까?")){
+			if(!checkCHar.test(diastolicPressure)){
+				alert("숫자만 입력할 수 있습니다.");
+				addBloodPRessureForm.systolicPressure.focus();
+				return false;
+			}
+			if(!checkCHar.test(diastolicPressure)){
+				alert("숫자만 입력할 수 있습니다.");
+				addBloodPRessureForm.diastolicPressure.focus();
+				return false;
+			}if(bloodPressureForm.systolicPressure.value == "") {
+				alert("이완기 혈압을 입력해주세요.");
+				bloodPressureForm.systolicPressure.focus();
+				return false;
+			  }
+			if(bloodPressureForm.diastolicPressure.value == ""){
+				alert("수축기 혈압을 입력해주세요.");
+				bloodPressureForm.diastolicPressure.focus();
+				return false;
+			}if(bloodPressureForm.memberNo.value == ""){
+				alert("회원번호을 입력해주세요.");
+				bloodPressureForm.memberNo.focus();
+				return false;
+			}else{
+				alert("혈압 정보가 수정 완료 되었습니다.");
+				return true;
+			}
 		}
 	}
-}
 	function reset(){
 		$('#systolicPressure').val('');
 		$('#diastolicPressure').val('');
@@ -49,11 +49,21 @@ function check() {
 	function returnBtn(){
 		history.back();
 	}
+	function returnListBtn(){
+		location.href="${pageContext.request.contextPath}/bloodPressure";
+	}
 </script>
 <style>
 #center{
 width: 600;
 margin: 0 auto;
+}
+#purple{
+color: #9c27b0;
+ font-weight: bold;
+}
+h4{
+font-weight: bold;
 }
 </style>
 </head>
@@ -63,9 +73,9 @@ margin: 0 auto;
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<h2>혈압을 등록해 주세요.</h2>
 				<div id="center">
-					<form id="addBloodPRessureForm" action="${pageContext.request.contextPath}/addBloodPressure" method="post">
+				<h4>혈압을 등록해 주세요.</h4>
+					<form id="addBloodPRessureForm" onsubmit="return check()" action="${pageContext.request.contextPath}/addBloodPressure" method="post">
 						<c:if test="${sessionScope.memberSessionLevel == 1 }">
 						<div class="form-group">
 							<label>회원번호</label>
@@ -73,24 +83,32 @@ margin: 0 auto;
 						</div>
 						</c:if>
 						<c:if test="${sessionScope.memberSessionLevel != 1 }">
-							<input class="form-control" type="text" id="memberNo" name="memberNo" value="${sessionScope.memberSessionNo}">
+							<input class="form-control" type="hidden" id="memberNo" name="memberNo" value="${sessionScope.memberSessionNo}">
+							<span id="purple">${sessionScope.memberSessionId }</span><span>님! 안녕하세요.</span>
 						</c:if>
 						<div class="form-group">
-							<label for="diastolicPressure">수축기혈압을 적어주세요</label> 
+							<span><span id="purple">수축기혈압</span>을 입력해주세요</span> 
 							<input class="form-control" type="text" id="systolicPressure" name="systolicPressure" placeholder="systolicPressure/mmHg">
 						</div>
 						<div class="form-group">
-							<label for="diastolicPressure">이완기혈압을 적어주세요</label> 
+							<span><span id="purple">이완기혈압</span>을 입력해주세요</span>  
 							<input class="form-control" type="text" id="diastolicPressure" name="diastolicPressure" placeholder="diastolicPressure/mmHg">
 						</div>
 						<div align="right">
-						<input type="submit" class="btn btn-sm btn-default" value="등록">
+							<input type="submit" class="btn btn-sm btn-primary" value="등록">
 						</div>
 					</form>
-				</div>
-				<div align="right">
-					<input type="button" class="btn btn-sm btn-default" onclick="reset()" value="다시입력">
-					<input type="button" class="btn btn-sm btn-default" onclick="returnBtn()" value="등록취소">
+					<div class="navbar-form navbar-left">
+						<div class="form-group" style="margin:0px">
+							<input type="button" class="btn btn-primary" onclick="returnListBtn()" value="목록으로">
+						</div>
+					</div>
+					<div class="navbar-form navbar-right">
+						<div class="form-group" style="margin:0px">
+							<input type="button" class="btn btn-primary" onclick="reset()" value="다시입력">
+							<input type="button" class="btn btn-primary" onclick="returnBtn()" value="등록취소">
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

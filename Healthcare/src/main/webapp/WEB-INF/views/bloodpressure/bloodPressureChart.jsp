@@ -130,8 +130,8 @@
 	    		    return sysresult/arrLength;
 	      		}
 	    		console.log("평균값:"+Math.round(average(msg))+","+Math.round(averages(msg)));
-	    		$('#diastolicPressure').html('이완기 혈압의 평균은 '+Math.round(average(msg))+'mmHg입니다');
-	    		$('#systolicPressure').html('수축기 혈압의 평균은 '+Math.round(averages(msg))+'mmHg입니다');
+	    		$('#diastolicPressure').html('이완기 혈압의 평균은<span id="purple"> '+Math.round(average(msg))+'mmHg</span>입니다');
+	    		$('#systolicPressure').html('수축기 혈압의 평균은<span id="purple"> '+Math.round(averages(msg))+'mmHg</span>입니다');
 	    		/*
 	    		평균치 고혈압,저혈압 체크. 
 	    		수축기 혈압(최고혈압)이 140 mmHg 이상이거나 이완기 혈압(확장기 혈압 혹은 최저혈압)이 90 mmHg 이상
@@ -177,9 +177,16 @@
 	}
 </script>
 <style type="text/css">
-th td {
+tr {
 text-align: center;
-
+font-size: 12px;
+}
+#purple{
+color: #9c27b0;
+ font-weight: bold;
+}
+h5{
+ font-weight: bold;
 }
 </style>
 </head>
@@ -231,22 +238,24 @@ text-align: center;
 						</table>
 						<!-- 혈압 결과값 계산 -->
 						<div id="bloodPressureResult">
-						<h4>최근 한달간의 혈압 분석 결과</h4>
+						<h5>최근 한달간의 혈압 분석 결과</h5>
 							<div>
-								<label>수축기 혈압 :</label> <span id="systolicPressure"></span>
+								<span id="purple">수축기 혈압 :</span> 
+								<span id="systolicPressure"></span>
 								<div>
 								<span id="systolicresult"></span>
 								</div>
 							</div>
 							<div>
-								<label>이완기 혈압 :</label> <span id="diastolicPressure"></span>
+								<span id="purple">이완기 혈압 :</span>
+								<span id="diastolicPressure"></span>
 								<div>
 								<span id="diastolicresult"></span>
 								</div>
 							</div>
 					 	</div>
-						<div align="right">
-							<input type="button" class="btn btn-sm btn-default" onclick="returnBtn()" value="돌아가기">
+						<div class="navbar-form navbar-right">
+							<input type="button" class="btn btn-primary" onclick="returnBtn()" value="돌아가기">
 						</div>
 					</div>
 				</div>

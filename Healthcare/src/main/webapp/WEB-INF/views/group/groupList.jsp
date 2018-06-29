@@ -35,12 +35,12 @@
 								<td>${groupTable.groupName }</td>
 								<td>${groupTable.groupKindName }</td>
 								<td>${groupTable.groupCreateDate }</td>
-								<td><a class="btn btn-sm btn-default" type="button" href="${pageContext.request.contextPath}/groupDetail?groupNo=${groupTable.groupNo}">그룹상세보기</a></td>				
+								<td><a id="purple" href="${pageContext.request.contextPath}/groupDetail?groupNo=${groupTable.groupNo}">그룹상세보기</a></td>				
 							</tr>
 							</c:forEach>
 						</tbody>
 					</table>
-						<a class="btn btn-sm btn-default" href="${pageContext.request.contextPath}/addGroup">그룹생성하기</a>
+						<a class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/addGroup">그룹생성하기</a>
 					<nav>
 						<ul class="pagination pagination-sm">
 							<c:if test="${currentPage > 10}">
@@ -53,11 +53,16 @@
 									<a aria-label="first" href="${pageContext.request.contextPath }/groupList?currentPage=${firstBlockPage-1}">&lsaquo;</a>
 								</li>
 							</c:if>
-								<li>
 								<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
+								<c:if test="${currentPage == i}">
+								<li class="active">
+								</c:if>
+								<c:if test="${currentPage != i}">
+								<li class="">
+								</c:if>
 									<a href="${pageContext.request.contextPath}/groupList?currentPage=${i}">${i}</a>	
-								</c:forEach>		
 								</li>
+							</c:forEach>	
 							<c:if test="${lastBlockPage < totalBlock}">
 								<li>
 									<a aria-label="last" href="${pageContext.request.contextPath}/groupList?currentPage=${lastBlockPage+1}">&rsaquo;</a>

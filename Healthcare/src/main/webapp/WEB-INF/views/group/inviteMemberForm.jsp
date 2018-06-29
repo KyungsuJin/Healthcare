@@ -64,10 +64,30 @@
 	}
 }
 
-function cancleBtn() {
-    location.href="${pageContext.request.contextPath}/groupList";
-}   
+	function reset(){
+		$('#groupInviteMessage').val('');
+		$('#memberId').val('');
+	}
+	function returnBtn(){
+		history.back();
+	}
+	function returnListBtn(){
+		location.href="${pageContext.request.contextPath}/groupMain";
+	}  
 </script>
+<style>
+#center{
+width: 600;
+margin: 0 auto;
+}
+#purple{
+color: #9c27b0;
+ font-weight: bold;
+}
+h4{
+font-weight: bold;
+}
+</style>
 </head>
 <body>
 	<div class="sidebar-wrapper">
@@ -75,21 +95,35 @@ function cancleBtn() {
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<h1>InviteMemberForm</h1>
+				<div id="center">
+				<h4>InviteMemberForm</h4>
 					<form name="inviteForm" id="inviteForm" onsubmit="return check()" action="${pageContext.request.contextPath}/inviteMember" method="post">
 						<input type="hidden" name="groupNo" value="${groupTable.groupNo }">
-						그룹명 : ${groupTable.groupName } 그룹 종류 : ${groupTable.groupKindName}
-						<div>
-							초대하고자 하는  회원의 아이디를 검색해주세요.
+						<span>그룹명 :</span> <span id="purple">${groupTable.groupName }</span><span> 그룹 종류 : </span><span id="purple">${groupTable.groupKindName}</span>
+						<div class="form-group">
+							<span>초대하고자 하는  회원의 아이디를 검색해주세요.</span>
 							<input class="form-control" type="text" id="memberId" name="memberId" >
 							<input class="form-control" type="button" value="아이디검색하기" onclick="checkmemberId()">
 							<span class="form-control" id="result"></span><br>
 							<span class="form-control" id="resultInfomation"></span><br>
 						</div>
 						<input class="form-control" type="text" id="groupInviteMessage" name="groupInviteMessage" placeholder="초대메세지를 작성해주세요.">
-						<input class="form-control" type="submit" id="inviteBtn" value="초대하기">
+						<div align="right">
+							<input class="form-control"  class="btn btn-sm btn-primary" type="submit" id="inviteBtn" value="초대하기">
+						</div>
 					</form>
-						<input type="button" onclick="cancleBtn()" value="돌아기기">
+					<div class="navbar-form navbar-left">
+						<div class="form-group" style="margin:0px">
+							<input type="button" class="btn btn-primary" onclick="returnListBtn()" value="목록으로">
+						</div>
+					</div>
+					<div class="navbar-form navbar-right">
+						<div class="form-group" style="margin:0px">
+							<input type="button" class="btn btn-primary" onclick="reset()" value="다시입력">
+							<input type="button" class="btn btn-primary" onclick="returnBtn()" value="등록취소">
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

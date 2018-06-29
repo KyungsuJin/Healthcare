@@ -189,7 +189,7 @@ public class ExerciseFeedbackResponseService {
         logger.debug("pagePerRow:"+pagePerRow);
         logger.debug("======================page block=========================");
        
-        int pagePerBlock = 10; //보여줄 블록 수 
+        int pagePerBlock = pagePerRow; //보여줄 블록 수 
         int block = currentPage/pagePerBlock;
         int totalBlock = total/pagePerBlock;//총 블록수
         

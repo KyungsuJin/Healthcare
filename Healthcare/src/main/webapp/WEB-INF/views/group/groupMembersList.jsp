@@ -160,10 +160,15 @@ p {
 							</c:forEach>
 							</tbody>
 						</table>
-						<input type="hidden" id="groupNo" value="${groupNoSend }">
-						<input type="button" onclick="outGroupMember()" value="회원추방하기">
-						<input type="button" onclick="groupCalendar()" value="그룹캘린더보기">
-						<input type="button" onclick="inviteMemberBtn()" value="회원초대하기">
+						<div align="left">
+							<input type="hidden" id="groupNo" value="${groupNoSend }">
+							<input type="button" class="btn btn-primary" onclick="outGroupMember()" value="회원추방하기">
+						</div>
+						<div align="right">
+						<input type="button" class="btn btn-primary" onclick="groupCalendar()" value="그룹캘린더보기">
+						<input type="button" class="btn btn-primary" onclick="inviteMemberBtn()" value="회원초대하기">
+						</div>
+						<div align="center">
 						<nav>
 							<ul class="pagination pagination-sm">
 								<c:if test="${currentPage > 10}">
@@ -176,11 +181,16 @@ p {
 										<a aria-label="first" href="${pageContext.request.contextPath }/groupMemberList?currentPage=${firstBlockPage-1}">&lsaquo;</a>
 									</li>
 								</c:if>
-									<li>
-									<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
+								<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
+									<c:if test="${currentPage == i}">
+									<li class="active">
+									</c:if>
+									<c:if test="${currentPage != i}">
+									<li class="">
+									</c:if>
 										<a href="${pageContext.request.contextPath}/groupMemberList?currentPage=${i}">${i}</a>	
-									</c:forEach>		
 									</li>
+								</c:forEach>	
 								<c:if test="${lastBlockPage < totalBlock}">
 									<li>
 										<a aria-label="last" href="${pageContext.request.contextPath}/groupMemberList?currentPage=${lastBlockPage+1}">&rsaquo;</a>
@@ -192,12 +202,13 @@ p {
 									</li>
 								</c:if>
 							</ul>
-						</nav>	
+						</nav>
+						</div>	
 					</c:when>
 					<c:otherwise>
 						<input type="hidden" id="groupNo" value="${groupNoSend }">
 						현재 그룹에 회원이 없습니다. 회원을 초대하시겠습니까?
-						<input type="button" onclick="inviteMemberBtn()" value="회원초대하기">
+						<input type="button" class="btn btn-primary"  onclick="inviteMemberBtn()" value="회원초대하기">
 					</c:otherwise>
 				</c:choose>
 			</div>

@@ -33,6 +33,19 @@ function outGroupMember(){
   });
 }
 </script>
+<style>
+th td{
+text-align : center;
+}
+#purple{
+color: #9c27b0;
+font-weight: bold;
+font-size : 14px;
+}
+#tableCss{
+font-size : 14px;
+}
+</style>
 </head>
 <body>
 	<div class="sidebar-wrapper">
@@ -40,8 +53,8 @@ function outGroupMember(){
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<h1>초대한 회원 리스트</h1>
-					<table class="table table-hober">
+				<h4>초대한 회원 리스트</h4>
+					<table class="table table-hober" id="tableCss">
 						<thead>
 							<tr>
 								<th><input type="checkbox" name="selectAll" id="selectAll" onclick="checkAll();"></th>
@@ -66,36 +79,45 @@ function outGroupMember(){
 							</c:forEach>
 						</tbody>
 					</table>
-					<input type="button" onclick="outGroupMember()" value="초대취소하기">
-					<nav>
-						<ul class="pagination pagination-sm">
-							<c:if test="${currentPage > 10}">
-								<li>
-									<a aria-label="first" href="${pageContext.request.contextPath }/inviteMemberList?currentPage=1">&laquo;</a>
-								</li>
-							</c:if>
-							<c:if test="${firstBlockPage > 2}">
-								<li>
-									<a aria-label="first" href="${pageContext.request.contextPath }/inviteMemberList?currentPage=${firstBlockPage-1}">&lsaquo;</a>
-								</li>
-							</c:if>
-								<li>
+					<div align="center">
+						<input type="button" onclick="outGroupMember()" value="선택초대취소하기">
+					</div>
+					<div align="center">
+						<nav>
+							<ul class="pagination pagination-sm">
+								<c:if test="${currentPage > 10}">
+									<li>
+										<a aria-label="first" href="${pageContext.request.contextPath }/inviteMemberList?currentPage=1">&laquo;</a>
+									</li>
+								</c:if>
+								<c:if test="${firstBlockPage > 2}">
+									<li>
+										<a aria-label="first" href="${pageContext.request.contextPath }/inviteMemberList?currentPage=${firstBlockPage-1}">&lsaquo;</a>
+									</li>
+								</c:if>
 								<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
-									<a href="${pageContext.request.contextPath}/inviteMemberList?currentPage=${i}">${i}</a>	
-								</c:forEach>		
-								</li>
-							<c:if test="${lastBlockPage < totalBlock}">
-								<li>
-									<a aria-label="last" href="${pageContext.request.contextPath}/inviteMemberList?currentPage=${lastBlockPage+1}">&rsaquo;</a>
-								</li>
-							</c:if>
-							<c:if test="${currentPage < lastPage}">
-								<li>
-									<a aria-label="last" href="${pageContext.request.contextPath}/inviteMemberList?currentPage=${lastPage}">&raquo;</a>
-								</li>
-							</c:if>
-						</ul>
-					</nav>	
+									<c:if test="${currentPage == i}">
+									<li class="active">
+									</c:if>
+									<c:if test="${currentPage != i}">
+									<li class="">
+									</c:if>
+										<a href="${pageContext.request.contextPath}/inviteMemberList?currentPage=${i}">${i}</a>	
+									</li>
+								</c:forEach>
+								<c:if test="${lastBlockPage < totalBlock}">
+									<li>
+										<a aria-label="last" href="${pageContext.request.contextPath}/inviteMemberList?currentPage=${lastBlockPage+1}">&rsaquo;</a>
+									</li>
+								</c:if>
+								<c:if test="${currentPage < lastPage}">
+									<li>
+										<a aria-label="last" href="${pageContext.request.contextPath}/inviteMemberList?currentPage=${lastPage}">&raquo;</a>
+									</li>
+								</c:if>
+							</ul>
+						</nav>	
+					</div>
 			</div>
 		</div>
 	</div>

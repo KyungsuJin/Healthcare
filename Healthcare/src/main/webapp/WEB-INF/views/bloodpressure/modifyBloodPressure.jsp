@@ -57,6 +57,13 @@ function check() {
 	width: 600;
 	margin: 0 auto;
 }
+#purple{
+color: #9c27b0;
+ font-weight: bold;
+}
+h4{
+font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -65,32 +72,36 @@ function check() {
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-			<h2>수정할 내용을 적어주세요.</h2>
-				<div id="center" align="center">
+				<div id="center">
+				<h4>수정할 내용을 적어주세요.</h4>
 					<form id="bloodPressureForm" onsubmit="return check()" action="${pageContext.request.contextPath}/modifyBloodPressure" method="post">
 						<input type="hidden" name="bloodPressureNo" value="${bloodPressure.bloodPressureNo }">
 						<div class="form-group">
-							<label  for="bloodPressureNo">등록번호 : ${bloodPressure.bloodPressureNo }</label>
+							<span><span id="purple">등록번호 :</span> ${bloodPressure.bloodPressureNo }</span><br>
+							<span><span id="purple">등록일 :</span> ${bloodPressure.bloodPressureDate }</span>
 						</div>
 						<div class="form-group">
-							<label for="bloodPressureDate">등록일 : ${bloodPressure.bloodPressureDate }</label>
-						</div>
-						<div class="form-group">
-							<label for="diastolicPressure">수축기혈압을 적어주세요</label> 
+							<span><span id="purple">수축기혈압</span>을 적어주세요</span> 
 							<input class="form-control" type="text" id="systolicPressure" name="systolicPressure" placeholder="${bloodPressure.systolicPressure}">
 						</div>
 						<div class="form-group">
-							<label for="diastolicPressure">이완기혈압을 적어주세요</label> 
+							<span><span id="purple">이완기혈압</span>을 적어주세요</span> 
 							<input class="form-control" type="text" id="diastolicPressure" name="diastolicPressure" placeholder="${bloodPressure.diastolicPressure}">
 						</div>
-						<input type="submit" class="btn btn-sm btn-default" value="수정">
+						<div align="right">
+							<input type="submit" class="btn btn-sm btn-primary" value="수정">
+						</div>
 					</form>
-					<div align="left">
-						<input type="button" class="btn btn-sm btn-default" onclick="returnListBtn()" value="목록으로">
+					<div class="navbar-form navbar-left">
+						<div class="form-group" style="margin:0px">
+							<input type="button" class="btn btn-primary" onclick="returnListBtn()" value="목록으로">
+						</div>
 					</div>
-					<div align="right">
-						<input type="button" class="btn btn-sm btn-default" onclick="reset()" value="다시입력">
-						<input type="button" class="btn btn-sm btn-default" onclick="returnBtn()" value="수정취소">
+					<div class="navbar-form navbar-right">
+						<div class="form-group" style="margin:0px">
+							<input type="button" class="btn btn-primary" onclick="reset()" value="다시입력">
+							<input type="button" class="btn btn-primary" onclick="returnBtn()" value="수정취소">
+						</div>
 					</div>
 				</div>
  			</div>

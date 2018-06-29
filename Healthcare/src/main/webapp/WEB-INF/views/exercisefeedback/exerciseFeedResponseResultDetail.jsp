@@ -26,6 +26,14 @@ body { text-align: center;}
 th{
 text-align:center;
 }
+#purple{
+color: #9c27b0;
+font-weight: bold;
+font-size : 14px;
+}
+#tableCss{
+font-size : 14px;
+}
 </style>
 </head>
 <body>
@@ -39,7 +47,7 @@ text-align:center;
 				<div class='col-sm-12'>
 					<div class="row">
 						<div class='col-sm-5' style="text-align:center">
-							<table class="table table-hober">
+							<table class="table table-hober" id="tableCss">
 								<tr>
 									<th>요청번호</th>
 									<td>${map.exerciseFeedbackResultDetail.exerciseFeedbackRequestNo }</td>
@@ -58,8 +66,7 @@ text-align:center;
 								<tr>
 								<tr>
 									<th>내용</th>
-									<td>${map.exerciseFeedbackResultDetail.exerciseFeedbackContent }
-									</td>
+									<td>${map.exerciseFeedbackResultDetail.exerciseFeedbackContent }</td>
 								</tr>
 							</table>
 						</div>
@@ -84,10 +91,10 @@ text-align:center;
 				</div>
 				<div class="row">
 					<div class='col-sm-12'>
+					<c:if test="${sessionScope.memberSessionLevel == 2 }">
 						<c:if test="${map.result>0 }">
-							평가한 점수
-							평가한 날짜 : ${map.exerciseFeedbackEvaluation.exerciseFeedbackEvaluationDate }
-							평가점수 : ${map.exerciseFeedbackEvaluation.exerciseFeedbackEvaluationGrade }
+							평가한 날짜 : <span id="purple">${map.exerciseFeedbackEvaluation.exerciseFeedbackEvaluationDate }</span>
+							평가점수 : <span id="purple">${map.exerciseFeedbackEvaluation.exerciseFeedbackEvaluationGrade }</span>
 						</c:if>
 						<c:if test="${map.result < 1 }">
 							피드백을 평가해주세요!
@@ -97,16 +104,16 @@ text-align:center;
 							  3<input class="form-group" type="radio" name="gener" value="3">
 							  4<input class="form-group" type="radio" name="gener" value="4">
 							  5<input class="form-group" type="radio" name="gener" value="5">
-							  <input class="btn btn-sm btn-default" type="button" onclick="addEvaluationBtn()" value="평가하기">
+							  <input class="btn btn-sm btn-primary" type="button" onclick="addEvaluationBtn()" value="평가하기">
 							</form>
-							<input class="btn btn-sm btn-default" type="button" onclick="addSanctionBtn()" value="신고하기">
+							<input class="btn btn-sm btn-primary" type="button" onclick="addSanctionBtn()" value="신고하기">
 						</c:if>
+					</c:if>
 					</div>
 				</div>
-				<div>
-					<button class="btn btn-sm btn-default" onclick="listBtn()">리스트로 돌아가기</button>
+				<div class="form-group">
+					<button class="btn btn-primary" onclick="listBtn()">리스트로 돌아가기</button>
 				</div>
-				<form class="form-inline">
 				<div class="form-group">
 					<c:if test="${map.countNext > 0 }">
 						<p>다음글 : <a type="button" href="${pageContext.request.contextPath}/exerciseFeedResponseResultDetail?exerciseFeedbackRequestNo=${map.nextExerciseFeedback.exerciseFeedbackRequestNo}">${map.nextExerciseFeedback.exerciseFeedbackResultTitle }</a></p>
@@ -121,9 +128,7 @@ text-align:center;
 						<p>이전글 : 이전글이 없습니다.</p>
 					</c:if>
 				</div>
-				</form>
 			</div>
-		</div>
 		</div>
 	</div>
 </body>

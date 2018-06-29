@@ -56,11 +56,30 @@ var count = 0;
 	}
 }
 
-function cancleBtn() {
-    location.href="${pageContext.request.contextPath}/groupList";
-}   
+	function reset(){
+		$('#groupName').val('');
+		$('#groupInfo').val('');
+	}
+	function returnBtn(){
+		history.back();
+	}
+	function returnListBtn(){
+		location.href="${pageContext.request.contextPath}/groupMain";
+	} 
 </script>
-
+<style>
+#center{
+width: 600;
+margin: 0 auto;
+}
+#purple{
+color: #9c27b0;
+ font-weight: bold;
+}
+h4{
+font-weight: bold;
+}
+</style>
 </head>
 <body>
 	<div class="sidebar-wrapper">
@@ -72,28 +91,42 @@ function cancleBtn() {
 					<div class='col-sm-10'>
 						<div class="panel panel-default">
 						<div class="panel-body">
-							<h5>addBloodPressure</h5>
-								<form name="groupForm" id="groupForm" onsubmit="return check()" action="${pageContext.request.contextPath}/addGroup" method="post">
-									<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}">
-									<div>
-										그룹 종류를 선택해주세요.
-										<select class="form-control" name="groupKindNo">
-										  <option value="group_kind_1" selected="selected">가족</option>
-										  <option value="group_kind_2">회사</option>
-										  <option value="group_kind_3">친구</option>
-										</select>
-									</div>
-									<div>
-										그룹명 :
+							<div id="center">
+								<h4>그룹등록</h4>
+									<form name="groupForm" id="groupForm" onsubmit="return check()" action="${pageContext.request.contextPath}/addGroup" method="post">
+										<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}">
+										<div class="form-group">
+											<span><span id="purple">그룹 종류를</span>을 선택해주세요</span> 
+											<select class="form-control" name="groupKindNo">
+											  <option value="group_kind_1" selected="selected">가족</option>
+											  <option value="group_kind_2">회사</option>
+											  <option value="group_kind_3">친구</option>
+											</select>
+										</div>
+										<div class="form-group">
+											<span><span id="purple">그룹명</span>을 입력해주세요</span> 
 											<input type="text" class="form-control"  id="groupName" name="groupName" required class="groupName" maxlength="10" onchange="checkName()">&nbsp;<span id="Name"></span>
+										</div>
+										<div class="form-group">
+											<span><span id="purple">그룹소개</span>를 입력해주세요</span> 
+											<textarea class="form-control" name="groupInfo" style="resize: none;" cols="40" rows="8" placeholder="그룹 소개글을 입력해주세요"></textarea>
+										</div>
+										<div align="right">
+											<input class="btn btn-sm btn-primary" type="submit" value="등록하기">
+										</div>
+									</form>
+									<div class="navbar-form navbar-left">
+										<div class="form-group" style="margin:0px">
+											<input type="button" class="btn btn-primary" onclick="returnListBtn()" value="목록으로">
+										</div>
 									</div>
-									<div>
-										그룹 소개:
-										<textarea class="form-control" name="groupInfo" style="resize: none;" cols="40" rows="8" placeholder="그룹 소개글을 입력해주세요"></textarea>
+									<div class="navbar-form navbar-right">
+										<div class="form-group" style="margin:0px">
+											<input type="button" class="btn btn-primary" onclick="reset()" value="다시입력">
+											<input type="button" class="btn btn-primary" onclick="returnBtn()" value="등록취소">
+										</div>
 									</div>
-									<input class="btn btn-sm btn-default" type="submit" value="등록하기">
-								</form>
-									<input type="button" class="btn btn-sm btn-default" onclick="cancleBtn()" value="등록취소">
+								</div>
 							</div>
 						</div>
 					</div>

@@ -19,13 +19,12 @@
 	    return yyyy +"-"+(mm[1] ? mm : '0'+mm[0])+"-"+(dd[1] ? dd : '0'+dd[0]);
 	}
 	var today = new Date()
-
-$(document).ready(function(){
-
-	//검색 달력 생성
-	var rangeDate = 31; // set limit day
-	var setSdate, setEdate;
-	  $.datepicker.setDefaults({
+	
+	$(document).ready(function(){
+		//검색 달력 생성
+		var rangeDate = 31; // set limit day
+		var setSdate, setEdate;
+		$.datepicker.setDefaults({
 		    dateFormat: 'yy-mm-dd',
 		    prevText: '이전 달',
 		    nextText: '다음 달',
@@ -36,39 +35,19 @@ $(document).ready(function(){
 		    dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
 		    showMonthAfterYear: true,
 		    yearSuffix: '년'
-		  });
-
-		  $(function() {
-		    $("#startDate, #endDate").datepicker();
-		  });
-		//1주일전 혈압 검색
-		$('#bloodPressureWeek').click(function(){
-			today.setDate(today.getDate() -7)
-			var startDate = today.yyyymmdd()
-			var endDate = (new Date).yyyymmdd()
-			console.log("endDate:"+endDate);
-			console.log("startDate:"+startDate);
-			location.href="${pageContext.request.contextPath}/bloodPressureSearch?startDate="+startDate+"&&endDate="+endDate; 
-		 });
-		//1개월전  혈압 검색
-		$('#bloodPressureMonth').click(function(){
-			today.setDate(today.getMonth() -1)
-			var startDate = today.yyyymmdd()
-			var endDate = (new Date).yyyymmdd()
-			console.log("endDate:"+endDate);
-			console.log("startDate:"+startDate);
-			location.href="${pageContext.request.contextPath}/bloodPressureSearch?startDate="+startDate+"&&endDate="+endDate; 
-		 });
-		//6개월전  혈압 검색
-		$('#bloodPressureSixMonth').click(function(){
-			today.setDate(today.getMonth() -6)
-			var startDate = today.yyyymmdd()
-			var endDate = (new Date).yyyymmdd()
-			console.log("endDate:"+endDate);
-			console.log("startDate:"+startDate);
-			location.href="${pageContext.request.contextPath}/bloodPressureSearch?startDate="+startDate+"&&endDate="+endDate;
 		});
-});	
+		var i = $('#i').val();
+		var currentPage= $('#currentPage').val();
+		console.log('i:'+i);
+		console.log('currentPage:'+currentPage);
+		
+		$(function() {
+			$("#startDate, #endDate").datepicker();
+			if(currentPage == i){
+				$('#activeLi').addClass('active');
+			}
+		});
+	});	
 
 //체크박스 전체선택
 	function checkAll(){
@@ -137,11 +116,48 @@ $(document).ready(function(){
 	function bloodPressureChart(){
 		location.href="${pageContext.request.contextPath}/bloodPressureChart";
 	}
-
+	//1주일전 혈압 검색
+	function bloodPressureWeek(){
+		today.setDate(today.getDate() -7)
+		var startDate = today.yyyymmdd()
+		var endDate = (new Date).yyyymmdd()
+		console.log("endDate:"+endDate);
+		console.log("startDate:"+startDate);
+		location.href="${pageContext.request.contextPath}/bloodPressureSearch?startDate="+startDate+"&&endDate="+endDate; 
+	 }
+	//1개월전  혈압 검색
+	function bloodPressureMonth(){
+		today.setDate(today.getMonth() -1)
+		var startDate = today.yyyymmdd()
+		var endDate = (new Date).yyyymmdd()
+		console.log("endDate:"+endDate);
+		console.log("startDate:"+startDate);
+		location.href="${pageContext.request.contextPath}/bloodPressureSearch?startDate="+startDate+"&&endDate="+endDate; 
+	 }
+	//6개월전  혈압 검색
+	function bloodPressureSixMonth(){
+		today.setDate(today.getMonth() -6)
+		var startDate = today.yyyymmdd()
+		var endDate = (new Date).yyyymmdd()
+		console.log("endDate:"+endDate);
+		console.log("startDate:"+startDate);
+		location.href="${pageContext.request.contextPath}/bloodPressureSearch?startDate="+startDate+"&&endDate="+endDate;
+	}
+	function bloodPressureAll(){
+		location.href="${pageContext.request.contextPath}/bloodPressure";
+	}
 </script>
 <style>
 th td{
 text-align : center;
+}
+#purple{
+color: #9c27b0;
+font-weight: bold;
+font-size : 14px;
+}
+#tableCss{
+font-size : 14px;
 }
 </style>
 </head>
@@ -153,39 +169,45 @@ text-align : center;
 			<div class="content">
 			<h4>혈압리스트</h4>
 			<!-- 기간 검색 -->   		
-			<form class="form-inline" id="formSearch" name="formSearch" onsubmit="return formSearchcheck()" action="${pageContext.request.contextPath}/bloodPressureSearch" method="POST"> 
-				<div class="form-group"> 
-					<label for="startDate">시작일</label>
-					<input type="text" class="form-control" id="startDate" name="startDate">
-				</div>
-				<div class="form-group">
-				 	<label for="endDate">종료일</label>
-					<input type="text" class="form-control" id="endDate" name="endDate">
-				</div>
-				<div class="form-group">
-					<input class="btn btn-sm btn-default" type="submit" value="검색">
-				</div>
-				<div class="form-group">
-					<input type="button" class="btn btn-sm btn-default" onclick="SearchWeek()" value="1주일">
-				</div>
-				<div class="form-group">
-					<input type="button" class="btn btn-sm btn-default" onclick="SearchMonth()" value="1개월">
-				</div>
-				<div class="form-group">
-					<input type="button" class="btn btn-sm btn-default" onclick="SearchSixMonth()" value="6개월">	
-				</div>
-			</form>
+			<div>
+				<form class="form-inline" id="formSearch" name="formSearch" onsubmit="return formSearchcheck()" action="${pageContext.request.contextPath}/bloodPressureSearch" method="POST"> 
+					<div class="form-group"> 
+						<input type="text" class="form-control" id="startDate" name="startDate" placeholder="시작일">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" id="endDate" name="endDate" placeholder="종료일">
+					</div>
+					<div class="form-group">
+						<button class="btn btn-white btn-round btn-just-icon" type="submit"><i class="material-icons">search</i></button>
+					</div>
+					<div class="form-group">
+						<input type="button" class="btn btn-sm btn-primary" onclick="bloodPressureWeek()" value="1주일">
+					</div>
+					<div class="form-group">
+						<input type="button" class="btn btn-sm btn-primary" onclick="bloodPressureMonth()" value="1개월">
+					</div>
+					<div class="form-group">
+						<input type="button" class="btn btn-sm btn-primary" onclick="bloodPressureSixMonth()" value="6개월">	
+					</div>
+					<div class="form-group">
+						<input type="button" class="btn btn-sm btn-primary" onclick="bloodPressureAll()" value="전체보기">	
+					</div>
+				</form>
+			</div>
+				
+			<div>
 			<c:choose>
 			    <c:when test="${searchresult > 0 }">
 					<span>총 ${searchresult }개의 게시물을 찾았습니다.</span>
-					<span>${startDate } ~ ${endDate }기간 동안의 혈압 등록 리스트 검색 결과입니다.</span>
+					<span id="purple">${startDate }</span> ~ <span id="purple">${endDate }</span><span>기간 동안의 혈압 등록 리스트 검색 결과입니다.</span>
 			    </c:when>
 			    <c:when test="${searchresult eq 0 }">
 			 	   <span>${startDate } ~ ${endDate } 기간 동안의 해당하는 혈압 등록 리스트 검색 결과가 없습니다.</span>
 			    </c:when>
-			</c:choose>		    
+			</c:choose>
+			</div>		    
 		    <!-- 혈압리스트 -->
-			<table class="table table-hover">		
+			<table class="table table-hover" id="tableCss">		
 				<thead>
 					<tr>
 						<th><input type="checkbox" class="checkbox" name="selectAll" id="selectAll" onclick="checkAll();"></th>
@@ -210,21 +232,27 @@ text-align : center;
 							<td>${bloodPressure.diastolicPressure}</td>
 							<td>${bloodPressure.systolicPressure}</td>
 							<td>${bloodPressure.bloodPressureDate}</td>
-							<td><a type="button" class="btn btn-sm btn-default" href="${pageContext.request.contextPath}/modifyBloodPressure?bloodPressureNo=${bloodPressure.bloodPressureNo}">수정</a></td>
+							<td><a id="purple" href="${pageContext.request.contextPath}/modifyBloodPressure?bloodPressureNo=${bloodPressure.bloodPressureNo}">수정</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>	
 			</table>
-			<input type="button" class="btn btn-sm btn-default" onclick="bloodPressureCheckDelete()" value="선택삭제하기">
-				<div align="right">
-					<c:if test="${sessionScope.memberSessionLevel != 1 }">
-						<input type="button" class="btn btn-sm btn-default" onclick="bloodPressureChart()" value="혈압그래프보기">
-					</c:if>
-						<input type="button" class="btn btn-sm btn-default" onclick="addBloodPressure()" value="혈압등록">			
+				<div class="navbar-form navbar-left">
+					<div  class="form-group" style="margin:0px">
+						<input type="button" class="btn btn-primary" onclick="bloodPressureCheckDelete()" value="선택삭제하기">
+					</div>
 				</div>
-				<div align="center">
+				<div class="navbar-form navbar-right">
+					<div class="form-group" style="margin:0px">
+						<c:if test="${sessionScope.memberSessionLevel != 1 }">
+							<input type="button" class="btn btn-primary" onclick="bloodPressureChart()" value="혈압그래프보기">
+						</c:if>
+							<input type="button" class="btn btn-primary" onclick="addBloodPressure()" value="혈압등록">			
+					</div>
+				</div>
+				<div style="text-align:center">
 					<nav>
-						<ul class="pagination pagination-sm">
+						<ul class="pagination pagination-sm" id="pageUl">
 							<c:if test="${currentPage > 5}">
 								<li>
 									<a aria-label="first" href="${pageContext.request.contextPath }/bloodPressure?currentPage=1">&laquo;</a>
@@ -235,11 +263,16 @@ text-align : center;
 									<a aria-label="first" href="${pageContext.request.contextPath }/bloodPressure?currentPage=${firstBlockPage-1}">&lsaquo;</a>
 								</li>
 							</c:if>
-								<li>
-								<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
+							<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
+								<c:if test="${currentPage == i}">
+								<li class="active">
+								</c:if>
+								<c:if test="${currentPage != i}">
+								<li class="">
+								</c:if>
 									<a href="${pageContext.request.contextPath}/bloodPressure?currentPage=${i}">${i}</a>				
-								</c:forEach>		
 								</li>
+							</c:forEach>		
 							<c:if test="${lastBlockPage < totalBlock}">
 								<li>
 									<a aria-label="last" href="${pageContext.request.contextPath}/bloodPressure?currentPage=${lastBlockPage+1}">&rsaquo;</a>

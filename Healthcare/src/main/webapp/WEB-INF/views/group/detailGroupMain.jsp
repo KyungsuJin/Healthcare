@@ -49,19 +49,7 @@
 		function groupMemberOut() {
 		    location.href="${pageContext.request.contextPath}/groupOut?memberNo="memberNo;
 		}
-		$("[name='checkbox1']").change(function() {
-			if(!confirm('Do you wanna cancel me!')) {
-				this.checked = true;
-			}
-		});
-		$("[name='checkbox1']").bootstrapSwitch();
-		
-		$("[name='checkbox1']").bootstrapSwitch({
-			on: 'On',
-			off: 'Off ',
-			size: 'md'
-		});
-//토글버튼 추가하기(자기정보온오프,) 그룹메인 또는 다른곳에 만들기
+
 </script>
 <style type="text/css">
 
@@ -81,19 +69,17 @@
 			  <input type="checkbox">
 			  <span class="slider round"></span>
 			</label>
-			<p id="">OFF</p><p style="display:none;">ON</p>
-			<!--  -->
 				<div class="btn-group" role="group" aria-label="...">
-					<input type="button" onclick="groupDetail()" class="btn btn-default" value="그룹상세">
-					<button onclick="groupCalendar()" class="btn btn-default">그룹캘린더</button>
-					<button onclick="groupRelation()" class="btn btn-default">그룹관계도</button>
-					<button onclick="groupMemberList()" class="btn btn-default">회원리스트</button>
+					<input type="button" onclick="groupDetail()" class="btn  btn-sm btn-primary" value="그룹상세">
+					<button onclick="groupCalendar()" class="btn  btn-sm btn-primary">그룹캘린더</button>
+					<button onclick="groupRelation()" class="btn  btn-sm btn-primary">그룹관계도</button>
+					<button onclick="groupMemberList()" class="btn  btn-sm btn-primary">회원리스트</button>
 					<c:if test="${result >0 }">
-						<button type="button" onclick="groupMemberInvite()" class="btn btn-default">회원초대하기</button>
-						<button type="button" onclick="inviteGroupMemberList()" class="btn btn-default">그룹에초대한멤버</button>
+						<button type="button" onclick="groupMemberInvite()" class="btn  btn-sm btn-primary">회원초대하기</button>
+						<button type="button" onclick="inviteGroupMemberList()" class="btn  btn-sm btn-primary">그룹에초대한멤버</button>
 					</c:if>
-					<button onclick="groupMemberOut()" class="btn btn-default">탈퇴하기</button>
-					<button onclick="groupMain()" class="btn btn-default">그룹메인으로</button>
+					<button onclick="groupMemberOut()" class="btn  btn-sm btn-primary">탈퇴하기</button>
+					<button onclick="groupMain()" class="btn  btn-sm btn-primary">그룹메인으로</button>
 				</div>
 				<div>
 					<div class="row">
@@ -113,7 +99,7 @@
 							<div class="row">
 							<!-- 복약 -->
 								  <div class='col-sm-6'>
-								  <div class="panel panel-default">
+								  <div class="panel panel-warning">
 								  	<div class="panel-heading">
 								  		<h4 class="panel-title">
 								  			<span>복약</span>&nbsp;<span class="badge">42</span>&nbsp;<span><a href="#">more</a></span>
@@ -137,7 +123,7 @@
 			  					</div><!-- 복약 End -->
 			  					<!-- 진료 -->
 								<div class='col-sm-6'>
-								<div class="panel panel-default">
+								<div class="panel panel-info">
 								  	<div class="panel-heading">
 								  		<h4 class="panel-title">
 								  			<span>진료</span>&nbsp;<span class="badge">42</span>&nbsp;<span><a href="#">more</a></span>
@@ -160,7 +146,7 @@
 			  				<div class="row">
 			  				<!-- 건강검진 -->
 			  					<div class='col-sm-6'>
-									<div class="panel panel-default">
+									<div class="panel panel-danger">
 										<div class="panel-heading">
 											<h4 class="panel-title">
 												<span>건강검진</span>&nbsp;<span class="badge">42</span>&nbsp;<span><a href="#">more</a></span>
@@ -182,7 +168,7 @@
 			  					</div><!-- 건강검진 End -->
 			  					<!-- 건강설문 -->
 			  					<div class='col-sm-6'>
-			  						<div class="panel panel-default">
+			  						<div class="panel panel-success">
 								  		<div class="panel-heading">
 								  			<h4 class="panel-title">
 								  				<span>건강설문</span>&nbsp;<span class="badge">42</span>&nbsp;<span><a href="#">more</a></span>

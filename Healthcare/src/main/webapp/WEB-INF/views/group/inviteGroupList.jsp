@@ -9,6 +9,19 @@
 <script type="text/javascript">
 
 </script>
+<style>
+th td{
+text-align : center;
+}
+#purple{
+color: #9c27b0;
+font-weight: bold;
+font-size : 14px;
+}
+#tableCss{
+font-size : 14px;
+}
+</style>
 </head>
 <body>
 	<div class="sidebar-wrapper">
@@ -16,9 +29,8 @@
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<h1>나를 초대한 그룹 리스트</h1>
-					
-					<table class="table table-hober">
+				<h4>나를 초대한 그룹 리스트</h4>
+					<table class="table table-hober" id="tableCss">
 						<thead>
 							<tr>
 								<th>그룹명</th>
@@ -37,11 +49,12 @@
 								<td>${groupInvite.groupInfo }</td>
 								<td>${groupInvite.groupInviteMessage }</td>
 								<td>${groupInvite.groupInviteDate }</td>
-								<td><a href="${pageContext.request.contextPath}/accpetGroup?groupName=${groupInvite.groupName}" id="accpetGroup">수락하기</a></td>
+								<td><a id="purple" href="${pageContext.request.contextPath}/accpetGroup?groupName=${groupInvite.groupName}" id="accpetGroup">수락하기</a></td>
 							</tr>
 							</c:forEach>
 						</tbody>
 					</table>
+					<div align="center">
 					<nav>
 						<ul class="pagination pagination-sm">
 							<c:if test="${currentPage > 10}">
@@ -54,11 +67,16 @@
 									<a aria-label="first" href="${pageContext.request.contextPath }/inviteGroupList?currentPage=${firstBlockPage-1}">&lsaquo;</a>
 								</li>
 							</c:if>
-								<li>
-								<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
+							<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
+								<c:if test="${currentPage == i}">
+								<li class="active">
+								</c:if>
+								<c:if test="${currentPage != i}">
+								<li class="">
+								</c:if>
 									<a href="${pageContext.request.contextPath}/inviteGroupList?currentPage=${i}">${i}</a>	
-								</c:forEach>		
 								</li>
+							</c:forEach>
 							<c:if test="${lastBlockPage < totalBlock}">
 								<li>
 									<a aria-label="last" href="${pageContext.request.contextPath}/inviteGroupList?currentPage=${lastBlockPage+1}">&rsaquo;</a>
@@ -71,6 +89,7 @@
 							</c:if>
 						</ul>
 					</nav>
+					</div>
 			</div>
 		</div>
 	</div>

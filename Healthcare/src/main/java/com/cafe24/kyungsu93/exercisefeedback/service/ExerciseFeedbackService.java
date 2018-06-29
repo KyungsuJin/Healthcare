@@ -11,8 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cafe24.kyungsu93.message.service.Message;
+import com.cafe24.kyungsu93.message.service.MessageDao;
 import com.cafe24.kyungsu93.payment.service.PointCharging;
 import com.cafe24.kyungsu93.payment.service.PointChargingDao;
 
@@ -24,16 +25,30 @@ public class ExerciseFeedbackService {
 	private ExerciseFeedbackDao exerciseFeedbackDao;
 	@Autowired
 	private PointChargingDao pointChargingDao;
+	@Autowired
+	private MessageDao messageDao;
 	private static final Logger logger = LoggerFactory.getLogger(ExerciseFeedbackService.class);	
+
 	/**
-	 * 요청한 회원 리스트
+	 * 피드백 전 포인트 검색
+	 * @param memberNo
+	 * @return
+	 */
+	public int exerciseFeedbackMemberPointCheck(String memberNo) {
+		PointCharging pointCharging = pointChargingDao.selectMemberPoint(memberNo);
+		int count = pointCharging.getMemberPoint();
+		return count;
+	}
+	/**
+	 * 운동피드백 요청 일반 검색
+	 * @param session
 	 * @param keyOption
-	 * @param keyword
+	 * @param keyWord
 	 * @param currentPage
 	 * @param pagePerRow
 	 * @return
 	 */
-	public Map<String,Object> exerciseFeedbackRequestListSearch(HttpSession session, String keyOption, String keyWord,int currentPage, int pagePerRow) {
+	public Map<String,Object> exerciseFeedbackRequestListSearch(HttpSession session,String keyOption, String keyWord,int currentPage, int pagePerRow) {
 		logger.debug("ExerciseFeedbackService - exerciseFeedbackRequestListSearch 실행");
 		Map<String,Object> map = new HashMap<String,Object>();
 		String memberNo = (String) session.getAttribute("memberSessionNo");
@@ -49,7 +64,7 @@ public class ExerciseFeedbackService {
 		map.put("keyOption", keyOption);
 		logger.debug("가져온 데이터:"+keyWord+","+keyOption);
 		List<ExerciseFeedbackRequest> list = exerciseFeedbackDao.exerciseFeedbackRequestListSearch(map);
-		int total = list.size();
+		int total = exerciseFeedbackDao.exerciseFeedbackRequestListSearchCount(map);
 		logger.debug("total:"+total);
 		int lastPage = total/pagePerRow;
         if(total % pagePerRow != 0) {
@@ -62,7 +77,7 @@ public class ExerciseFeedbackService {
         logger.debug("pagePerRow:"+pagePerRow);
         logger.debug("======================page block=========================");
        
-        int pagePerBlock = 10; //보여줄 블록 수 
+        int pagePerBlock = pagePerRow; //보여줄 블록 수 
         int block = currentPage/pagePerBlock;
         int totalBlock = total/pagePerBlock;//총 블록수
         
@@ -91,20 +106,8 @@ public class ExerciseFeedbackService {
 		returnMap.put("firstBlockPage", firstBlockPage);
 		returnMap.put("lastBlockPage", lastBlockPage);
 		returnMap.put("totalBlock", totalBlock);
-		returnMap.put("keyword", keyWord);
-		returnMap.put("keyOption", keyOption);
 		returnMap.put("total", total);
 		return returnMap;
-	}
-	/**
-	 * 피드백 전 포인트 검색
-	 * @param memberNo
-	 * @return
-	 */
-	public int exerciseFeedbackMemberPointCheck(String memberNo) {
-		PointCharging pointCharging = pointChargingDao.selectMemberPoint(memberNo);
-		int count = pointCharging.getMemberPoint();
-		return count;
 	}
 	/**
 	 * 운동 피드백 PT 회원 검색
@@ -137,7 +140,7 @@ public class ExerciseFeedbackService {
         logger.debug("pagePerRow:"+pagePerRow);
         logger.debug("======================page block=========================");
        
-        int pagePerBlock = 10; //보여줄 블록 수 
+        int pagePerBlock = pagePerRow; //보여줄 블록 수 
         int block = currentPage/pagePerBlock;
         int totalBlock = total/pagePerBlock;//총 블록수
         
@@ -166,8 +169,6 @@ public class ExerciseFeedbackService {
 		returnMap.put("firstBlockPage", firstBlockPage);
 		returnMap.put("lastBlockPage", lastBlockPage);
 		returnMap.put("totalBlock", totalBlock);
-		returnMap.put("keyWord", keyWord);
-		returnMap.put("keyOption", keyOption);
 		returnMap.put("total", total);
 		return returnMap;
 	}
@@ -209,7 +210,7 @@ public class ExerciseFeedbackService {
         logger.debug("pagePerRow:"+pagePerRow);
         logger.debug("======================page block=========================");
        
-        int pagePerBlock = 10; //보여줄 블록 수 
+        int pagePerBlock = pagePerRow; //보여줄 블록 수 
         int block = currentPage/pagePerBlock;
         int totalBlock = total/pagePerBlock;//총 블록수
         
@@ -238,8 +239,6 @@ public class ExerciseFeedbackService {
 		returnMap.put("firstBlockPage", firstBlockPage);
 		returnMap.put("lastBlockPage", lastBlockPage);
 		returnMap.put("totalBlock", totalBlock);
-		returnMap.put("startDate", startDate);
-		returnMap.put("endDate", endDate);
 		returnMap.put("total", total);
 		return returnMap;
 	}
@@ -258,7 +257,6 @@ public class ExerciseFeedbackService {
 	 */
 	public void feedbackapprovalAccept(String exerciseFeedbackRequestNo) {
 		logger.debug("ExerciseFeedbackService - feedbackapprovalAccept실행");	
-		
 		exerciseFeedbackDao.feedbackapprovalAccept(exerciseFeedbackRequestNo);
 	}
 	
@@ -328,10 +326,39 @@ public class ExerciseFeedbackService {
 	 * 운동피드백등록
 	 * @param exerciseFeedbackRequest
 	 */
-	public void exerciseFeedbackRequest(ExerciseFeedbackRequest exerciseFeedbackRequest) {
+	public void exerciseFeedbackRequest(HttpSession session,ExerciseFeedbackRequest exerciseFeedbackRequest) {
 		logger.debug("ExerciseFeedbackService - exerciseFeedbackRequest실행");		
+		String teacherNo = exerciseFeedbackRequest.getTeacherNo();
+		String teacherName = exerciseFeedbackRequest.getMemberName();
+		String memberName = (String) session.getAttribute("memberSessionName");
+		logger.debug("teacherNo:"+teacherNo);
+		logger.debug("teacherName:"+teacherName);
+		logger.debug("memberName:"+memberName);
 		exerciseFeedbackRequest.setExerciseFeedbackRequestNo("exercise_feedback_request_"+(exerciseFeedbackDao.exerciseFeedbackRequestNo()+1));
 		exerciseFeedbackDao.exerciseFeedbackRequest(exerciseFeedbackRequest);
+		//메세지 
+		logger.debug("ExerciseFeedbackResponseService - sendMessage 시작");
+		Message message = new Message();
+		int result = (messageDao.messageNo())+1;//메시지의 no 를 구함
+		String messageNo = "message_";
+		//받는사람
+		message.setMemberReceiveNo(teacherNo);
+		//보내는사람
+		message.setSendMessageNo(messageNo+result);
+		String memberSendNo = "member_1";//관리자
+		String memberSendMessageId ="rlaansrl";
+		message.setMemberSendNo(memberSendNo);
+		message.setSendMessageId(memberSendMessageId);
+		logger.debug("messageNo : "+message.getSendMessageNo());
+		//메세지 내용
+		String messageTitle = teacherName+"님에게 피드백 요청이 들어왔습니다.";
+		message.setMessageTitle(messageTitle);
+		String messageContent = teacherName+"님에게 "+memberName+"님의 운동 피드백 요청이 들어왔습니다. 자세한 내용은 피드백 요청 리스트에서 확인 가능합니다.";
+		message.setMessageContent(messageContent);		
+		messageDao.sendMessage(message);//send_Message 테이블 에 데이트를 셋
+		messageDao.sendMessageContent(message);//발신자 테이블에 데이터 셋
+		messageDao.receiveMessageContent(message);//수신자 테이블에 데이터 셋
+		logger.debug("ExerciseFeedbackResponseService - sendMessage 완료");
 	}
 	
 	/**
@@ -367,7 +394,7 @@ public class ExerciseFeedbackService {
         logger.debug("pagePerRow:"+pagePerRow);
         logger.debug("====================== page block =========================");
        
-        int pagePerBlock = 10; //보여줄 블록 수 
+        int pagePerBlock = pagePerRow; //보여줄 블록 수 
         int block = currentPage/pagePerBlock;
         int totalBlock = total/pagePerBlock;//총 블록수
         
@@ -471,71 +498,6 @@ public class ExerciseFeedbackService {
 		logger.debug("====================== page block =========================");
 		Map<String,Object> returnMap = new HashMap<String,Object>();
 		returnMap.put("exercisePtlist", exercisePtlist);
-		returnMap.put("lastPage", lastPage);
-		returnMap.put("firstBlockPage", firstBlockPage);
-		returnMap.put("lastBlockPage", lastBlockPage);
-		returnMap.put("totalBlock", totalBlock);
-		return returnMap;
-	}
-	
-	/**
-	 * 운동피드백요청리스트
-	 * @param currentPage
-	 * @param pagePerRow
-	 * @return
-	 */
-	public Map<String, Object> exerciseFeedbackRequestList(HttpSession session, int currentPage, int pagePerRow){
-		logger.debug("ExerciseFeedbackService - exerciseFeedbackRequestList 실행");
-		Map<String,Object> map = new HashMap<String,Object>();
-		String memberNo = (String) session.getAttribute("memberSessionNo");
-		int sessionLevel = (Integer) session.getAttribute("memberSessionLevel");
-		logger.debug("memberNo:"+memberNo);
-		logger.debug("sessionLevel:"+sessionLevel);
-		map.put("sessionLevel", sessionLevel);
-		map.put("memberNo", memberNo);
-		int beginRow = (currentPage-1)*pagePerRow;
-		map.put("beginRow", beginRow);
-		map.put("pagePerRow", pagePerRow);
-		//운동피드백 요청 리스트
-		List<ExerciseFeedbackRequest> exercisefeedbacklist = exerciseFeedbackDao.exerciseFeedbackRequestList(map);
-		//게시판 전체 게시물 수
-		int total = exerciseFeedbackDao.exerciseFeedbackRequestTotalCount(map);
-		int lastPage = total/pagePerRow;
-        if(total % pagePerRow != 0) {
-            lastPage++;
-        }
-        logger.debug("exercisefeedbacklist:"+exercisefeedbacklist);
-        logger.debug("lastPage:"+lastPage);
-        logger.debug("currentPage:"+currentPage);
-        logger.debug("beginRow:"+beginRow);
-        logger.debug("pagePerRow:"+pagePerRow);
-        logger.debug("====================== page block =========================");
-       
-        int pagePerBlock = 10; //보여줄 블록 수 
-        int block = currentPage/pagePerBlock;
-        int totalBlock = total/pagePerBlock;//총 블록수
-        
-        if(currentPage % pagePerBlock != 0) {
-        	block ++;
-        }
-        int firstBlockPage = (block-1)*pagePerBlock+1;
-        int lastBlockPage = block*pagePerBlock;
-        
-		if(lastPage > 0) {			
-			if(lastPage % pagePerBlock != 0) {
-				totalBlock++;
-			}
-		}
-		if(lastBlockPage >= totalBlock) {
-			lastBlockPage = totalBlock;
-		}
-		logger.debug("firstBlockPage:"+firstBlockPage);
-		logger.debug("lastBlockPage:"+lastBlockPage);
-		logger.debug("block:"+block);
-		logger.debug("totalBlock:"+totalBlock);
-		logger.debug("====================== page block =========================");
-		Map<String,Object> returnMap = new HashMap<String,Object>();
-		returnMap.put("exercisefeedbacklist", exercisefeedbacklist);
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("firstBlockPage", firstBlockPage);
 		returnMap.put("lastBlockPage", lastBlockPage);

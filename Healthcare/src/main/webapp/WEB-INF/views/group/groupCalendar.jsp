@@ -168,16 +168,15 @@ font-size: 15px;
 				<div class='col-sm-10'>
 					<div class="btn-group" role="group" aria-label="...">
 						<input type="hidden" id="groupName" value="${groupName}">
-						<input type="button" onclick="groupDetail()" class="btn btn-default" value="그룹상세">
-						<button onclick="groupCalendar()" class="btn btn-default">그룹캘린더</button>
-						<button onclick="groupRelation()" class="btn btn-default">그룹관계도</button>
-						<button onclick="groupMemberList()" class="btn btn-default">회원리스트</button>
+						<input type="button" onclick="groupDetail()" class="btn btn-sm btn-primary" value="그룹상세">
+						<button onclick="groupCalendar()" class="btn btn-sm btn-primary">그룹캘린더</button>
+						<button onclick="groupRelation()" class="btn btn-sm btn-primary">그룹관계도</button>
+						<button onclick="groupMemberList()" class="btn btn-sm btn-primary">회원리스트</button>
 						<c:if test="${result >0 }">
-							<button type="button" onclick="groupMemberInvite()" class="btn btn-default">회원초대하기</button>
-							<button type="button" onclick="inviteGroupMemberList()" class="btn btn-default">그룹에초대한멤버</button>
+							<button type="button" onclick="groupMemberInvite()" class="btn btn-sm btn-primary">회원초대하기</button>
+							<button type="button" onclick="inviteGroupMemberList()" class="btn btn-sm btn-primary">그룹에초대한멤버</button>
 						</c:if>
-						<button onclick="groupMemberOut()" class="btn btn-default">탈퇴하기</button>
-						<button onclick="groupMain()" class="btn btn-default">그룹메인으로</button>
+						<button onclick="groupMain()" class="btn btn-sm btn-primary">그룹메인으로</button>
 					</div>
 				</div>
 					<div class='col-sm-10'>
