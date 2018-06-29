@@ -21,15 +21,15 @@
 					,data: {"memberNo" : $("#memberNo").val()}
 					,dataType: "json"
 					,success:function(result){
-						$("#miniBodyMassIndexChart").remove();
-						$("#miniChartChange").append('<a href="#" id="miniBodyWeightChart">몸무게 차트보기</a>');
 						console.log(result);
 						if(result.length>=2){
+							$("#miniBodyMassIndexChart").remove();
+							$("#miniBmiChartChange").append('<a href="#" id="miniBodyWeightChart">몸무게 차트보기</a>');
 							//구글 차트
 							google.charts.load('current', {'packages':['corechart']});
 							google.charts.setOnLoadCallback(drawChart);
 							var chartDateformat = 'yy년MM월dd일';
-							var chartLineCount = 15;
+							var chartLineCount = 7;
 						      function drawChart() {
 						        var data = new google.visualization.DataTable();
 						        
@@ -66,7 +66,7 @@
 						        chart.draw(data, options);
 						      }
 						}else{
-					    	  $("#curve_chart").append('<a href="${pageContext.request.contextPath}/addBodyMassIndex">체질량 등록하기</a>');
+					    	  $("#miniBmiChartChange").append('<a href="${pageContext.request.contextPath}/addBodyMassIndex">체질량 등록하기</a>');
 					    }
 					}
 				});
@@ -79,9 +79,10 @@
 						,data: {"memberNo" : $("#memberNo").val()}
 						,dataType: "json"
 						,success:function(result){
-							$("#miniBodyWeightChart").remove();
-							$("#miniChartChange").append('<a href="#" id="miniBodyMassIndexChart">BMI차트 보기</a>');
 							console.log(result);
+
+							$("#miniBodyWeightChart").remove();
+							$("#miniBmiChartChange").append('<a href="#" id="miniBodyMassIndexChart">BMI차트 보기</a>');
 							if(result.length>=2){
 								//구글 차트
 								google.charts.load('current', {'packages':['corechart']});
@@ -117,9 +118,7 @@
 							        window.addEventListener('resize', function() { dashboard.draw(data); }, false);
 							        chart.draw(data, options);
 							      }
-								}else{
-							    	  $("#curve_chart").append('<a href="${pageContext.request.contextPath}/addBodyMassIndex">체질량 등록하기</a>');
-							    }
+								}
 							}
 						});
 		  		});
@@ -134,26 +133,13 @@
 		  			//받아온 데이터 값 확인. 
 		  			console.log(msg);
 		  			
+		  			if(msg.length>=2){
 		  			//구글 차트
-		  			google.charts.load('current', {'packages':['line']}); //차트 스타일
-		  			google.charts.setOnLoadCallback(drawChart);
-		  			var chartDateformat = 'yy년MM월dd일';
-		  			var chartLineCount = 10;
+			  			google.charts.load('current', {'packages':['line']}); //차트 스타일
+			  			google.charts.setOnLoadCallback(drawChart);
+			  			var chartDateformat = 'yy년MM월dd일';
+			  			var chartLineCount = 10;
 		  				function drawChart() {
-		  					//배열값 확인.
-		  					if(msg!=undefined && Array.isArray(msg)){
-		  						console.log('array 확인');
-		  						console.log(msg);
-		  						console.log(msg.length);
-
-		  						for(var i=0; i < msg.length; i++){
-		  						console.log("1:"+msg[i].systolicPressure);
-		  						console.log("2:"+msg[i].diastolicPressure);
-		  						}
-		  					}else{
-		  						console.log('데이터 없음');
-		  						console.log(msg);
-		  					}
 		  					var data = new google.visualization.DataTable();
 		  					//하단의 등록일을 표시해 줄 컬럼
 		  					data.addColumn('datetime', '등록일[day]');
@@ -194,9 +180,12 @@
 		  						};
 		  					  //입력값을 화면에 뿌려주는 역할.
 		  				      var chart = new google.charts.Line(document.getElementById('linechart_material'));
-		  				    window.addEventListener('resize', function() { chart.draw(data, options); }, false);
+		  				      window.addEventListener('resize', function() { chart.draw(data, options); }, false);
 		  				      chart.draw(data, google.charts.Line.convertOptions(options));
 		  	            	}
+		  				}else{
+		  					$("#miniBloodPressureChart").append('<a href="${pageContext.request.contextPath}/addBloodPressure">혈압 등록하기</a>');
+		  				}
 		  			});
 		  		}
 		  		
@@ -220,7 +209,7 @@
                                     <i class="material-icons">content_copy</i>
                                 </div>
                                 <div class="card-content">
-                                    <p class="category">Used Space</p>
+                                    <p class="category">팀프로젝트 소개</p>
                                     <h3 class="title">49/50
                                         <small>GB</small>
                                     </h3>
@@ -289,24 +278,16 @@
                                 <c:if test="${sessionScope.memberSessionLevel eq null}">
                                     	<div class="ct-chart" id="dailySalesChart"></div>
 	                                <div class="card-content">
-	                                    <h4 class="title">자신의 체질량 차트</h4>
-	                                    <p class="category">
-	                                        <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
-	                                </div>
-	                                <div class="card-footer">
-	                                    <div class="stats">
-	                                        <i class="material-icons">access_time</i> updated 4 minutes ago
-	                                    </div>
+	                                    <h4 class="title">자신만의 차트를 만들어보세요!</h4>
 	                                </div>
 	                            </c:if>
 	                            <c:if test="${sessionScope.memberSessionLevel eq 2}">
-                                    	<div class="ct-chart" id="curve_chart">
-                                    	</div>
+                                    	<div class="ct-chart" id="curve_chart"></div>
 	                                <div class="card-content">
-	                                    <h4 class="title" style="text-align:center;">자신의 차트</h4>
+	                                    <h4 class="title" style="text-align:center;">체질량 차트</h4>
 	                                </div>
 	                                <div class="card-footer">
-	                                    <div class="stats" id="miniChartChange">
+	                                    <div class="stats" id="miniBmiChartChange">
 	                                    </div>
 	                                </div>
 	                            </c:if>
@@ -316,14 +297,20 @@
                        
                         <div class="col-md-6">
                             <div class="card">
+                            	<c:if test="${sessionScope.memberSessionLevel eq null}">
+                                   	 <div class="ct-chart" id="emailsSubscriptionChart"></div>
+	                                <div class="card-content">
+	                                    <h4 class="title">자신만의 차트를 만들어보세요!</h4>
+	                                       
+	                               	</div>
+	                            </c:if>
                             	<c:if test="${sessionScope.memberSessionLevel eq 2}">
                                     <div class="ct-chart" id="linechart_material"></div>
 	                                <div class="card-content">
 	                                    <h4 class="title"  style="text-align:center;">혈압 차트</h4>
 	                                </div>
 	                                <div class="card-footer">
-	                                    <div class="stats" >
-	                                        <a href="#">혈당 차트보기</a>
+	                                    <div class="stats" id="miniBloodPressureChart">
 	                                    </div>
 	                                </div>
                                 </c:if>

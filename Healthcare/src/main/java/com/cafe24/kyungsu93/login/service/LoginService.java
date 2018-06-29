@@ -54,6 +54,7 @@ public class LoginService {
 			map.put("memberSessionLevel", memberSession.getMemberLevel());
 			map.put("memberSessionName", memberSession.getMemberName());
 			map.put("memberSessionNo", memberSession.getMemberNo());
+			map.put("memberSessionPoint", memberSession.getMemberPoint());
 		}
 		map.put("result",result);
 		logger.debug("result : "+result);

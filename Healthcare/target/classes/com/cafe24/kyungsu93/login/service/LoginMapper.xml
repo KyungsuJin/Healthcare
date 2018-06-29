@@ -16,6 +16,7 @@
   			SELECT member_level AS memberLevel
   				,member_name AS memberName
   				,member_no AS memberNo
+  				,member_point AS memberPoint
   			FROM member
   			WHERE member_id=#{id}
   	</select>
