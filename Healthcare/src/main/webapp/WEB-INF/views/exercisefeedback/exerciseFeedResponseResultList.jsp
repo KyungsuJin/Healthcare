@@ -6,7 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>exerciseFeedResponseResultList</title>
 <jsp:include page="../include/header.jsp"></jsp:include>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 function requestListBtn() {
     location.href="${pageContext.request.contextPath}/exerciseFeedbackList";
@@ -35,7 +34,7 @@ font-size : 14px;
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-			<h4>exercuseFeedResponseResultList</h4>
+			<h4>운동피드백답변리스트</h4>
 				<table class="table table-hover" id="tableCss">
 					<thead>
 						<tr>
@@ -57,7 +56,7 @@ font-size : 14px;
 					</tbody>
 				</table>
 				<div align="right">
-					<button class="btn btn-primary" onclick="requestListBtn()">요청리스트로 돌아가기</button>
+					<button class="btn btn-primary" onclick="requestListBtn()">요청리스트</button>
 					<c:if test="${sessionScope.memberSessionLevel != 4 }">
 						<button class="btn btn-primary" onclick="addRequestBtn()">운동피드백 요청하기</button>
 					</c:if>

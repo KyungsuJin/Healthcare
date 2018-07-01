@@ -5,14 +5,40 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>addGroup</title>
 <jsp:include page="../include/header.jsp"></jsp:include>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
+//그룹종류 리스트
+	$(document).ready(function(){
+		groupKindListajax();
+	});
+	function groupKindListajax(){		
+		var groupKindListAjax = $.ajax({
+		    type : "POST",
+		    url : "${pageContext.request.contextPath}/groupKindListSelect",
+		    dataType : "json",
+		    contentType: "application/json; charset=UTF-8"
+		}); 
+		groupKindListAjax.done(function(data){
+			console.log(data.list.length); 
+			console.log(data.list[1]);
+			var list = data.list;
+			if(list.length > 0){
+		       	for (var i=0; i<list.length; i++){
+		       		var groupKindNo = list[i].groupKindNo;
+		       		var groupKindName = list[i].groupKindName;
+		       		$('#groupKindNo').append('<option value="'+groupKindNo+'">'+groupKindName+'</option>');
+		       	}
+		     }
+		}); 
+		groupKindListAjax.fail(function(jqXHR, textStatus){
+			alert( "Request failed: " + textStatus );
+		});
+	}
 var count = 0;
 	function checkName(){		
 		var groupName = $('#groupName').val();
 		var checkCHar = /[!#$%^&*()?+=\/]/;
 		if(groupName == "" || groupName == null ||checkCHar.test(groupName)){
-			$('#Name').html('공백 또는 특수문자가 포함된 아이디는 사용할 수 없습니다.');
+			$('#Name').html('공백 또는 특수문자가 포함된 그룹명은 사용할 수 없습니다.');
 			groupForm.groupName.focus();
 			return false;
 		}
@@ -48,6 +74,10 @@ var count = 0;
 		if(groupForm.groupInfo.value == ""){
 			alert("그룹 소개글을 해주세요.");
 			groupForm.groupInfo.focus();
+			return false;
+		}if(groupForm.groupKindNo.value == "선택해주세요"){
+			alert("그룹 종류를 선택해주세요.");
+			groupForm.groupKindNo.focus();
 			return false;
 		}else{
 			alert("그룹 생성이 완료 되었습니다.");
@@ -88,31 +118,38 @@ font-weight: bold;
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
 				<div class="row">
-					<div class='col-sm-10'>
-						<div class="panel panel-default">
-						<div class="panel-body">
-							<div id="center">
-								<h4>그룹등록</h4>
+					<div class="col-md-2">
+					</div>
+                     <div class="col-md-8">
+					 	<div class="card">
+                         	<div class="card-header" data-background-color="purple">
+                         		<h4 class="title">그룹 등록</h4>
+							</div>
+							<div class="card-content">
 									<form name="groupForm" id="groupForm" onsubmit="return check()" action="${pageContext.request.contextPath}/addGroup" method="post">
-										<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}">
-										<div class="form-group">
-											<span><span id="purple">그룹 종류를</span>을 선택해주세요</span> 
-											<select class="form-control" name="groupKindNo">
-											  <option value="group_kind_1" selected="selected">가족</option>
-											  <option value="group_kind_2">회사</option>
-											  <option value="group_kind_3">친구</option>
-											</select>
-										</div>
-										<div class="form-group">
-											<span><span id="purple">그룹명</span>을 입력해주세요</span> 
-											<input type="text" class="form-control"  id="groupName" name="groupName" required class="groupName" maxlength="10" onchange="checkName()">&nbsp;<span id="Name"></span>
-										</div>
-										<div class="form-group">
-											<span><span id="purple">그룹소개</span>를 입력해주세요</span> 
-											<textarea class="form-control" name="groupInfo" style="resize: none;" cols="40" rows="8" placeholder="그룹 소개글을 입력해주세요"></textarea>
-										</div>
-										<div align="right">
-											<input class="btn btn-sm btn-primary" type="submit" value="등록하기">
+										<div class="row">
+											<div class="col-md-2">
+											</div>
+											<div class="col-md-8">	
+												<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}">
+												<div class="form-group">
+													<span><span id="purple">그룹 종류</span>를 선택해주세요</span> 
+													<select class="form-control" id="groupKindNo" name="groupKindNo">
+													  <option value="선택해주세요" selected="selected">선택해주세요</option>
+													</select>
+												</div>
+												<div class="form-group">
+													<span><span id="purple">그룹명</span>을 입력해주세요</span> 
+													<input type="text" class="form-control"  id="groupName" name="groupName" maxlength="10" onchange="checkName()" placeholder="그룹명을 입력해주세요">&nbsp;<span id="Name"></span>
+												</div>
+												<div class="form-group">
+													<span><span id="purple">그룹소개글</span>을 입력해주세요</span> 
+													<textarea class="form-control" id="groupInfo" name="groupInfo" style="resize: none;" cols="40" rows="8" placeholder="그룹 소개글을 입력해주세요"></textarea>
+												</div>
+												<div class="form-group">
+													<input class="btn btn-sm btn-primary pull-right" type="submit" value="등록">
+												</div>
+											</div>
 										</div>
 									</form>
 									<div class="navbar-form navbar-left">
@@ -123,7 +160,7 @@ font-weight: bold;
 									<div class="navbar-form navbar-right">
 										<div class="form-group" style="margin:0px">
 											<input type="button" class="btn btn-primary" onclick="reset()" value="다시입력">
-											<input type="button" class="btn btn-primary" onclick="returnBtn()" value="등록취소">
+											<input type="button" class="btn btn-primary" onclick="returnBtn()" value="취소">
 										</div>
 									</div>
 								</div>
@@ -133,6 +170,5 @@ font-weight: bold;
 				</div>
 			</div>
 		</div>
-	</div>
 </body>
 </html>

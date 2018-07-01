@@ -7,7 +7,21 @@
 <title>pointChargingList</title>
 <jsp:include page="../include/header.jsp"></jsp:include>
 <script type="text/javascript">
-
+function check() {		
+	var pointChargingRoot = $("input[type=radio]:checked").val();
+	if(pointChargingForm.pointChargingNumber.value == "") {
+		alert("전화번호를 입력해주세요.");
+		pointChargingForm.pointChargingNumber.focus();
+		return false;
+	}if(pointChargingRoot == "" || pointChargingRoot == null|| pointChargingRoot!= 3) {
+		alert("결제방식을 선택해주세요.");
+		pointChargingForm.selectedPointChargRoot.focus();
+		return false;
+		}else{
+		alert("결제 신청이 완료 되었습니다.");
+		return true;
+	}
+}
 </script>
 <style>
 th td{

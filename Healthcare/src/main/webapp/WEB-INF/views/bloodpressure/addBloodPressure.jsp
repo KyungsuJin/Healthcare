@@ -6,14 +6,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>addBloodPressure</title>
 <jsp:include page="../include/header.jsp"></jsp:include>
-<!-- jQuery -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 function check() {
 	var checkCHar = /^[0-9]*$/;
 	var systolicPressure = $('#systolicPressure').val();
 	var diastolicPressure = $('#diastolicPressure').val();
-		if(confirm("혈압정보를 수정하시겠습니까?")){
+		if(confirm("혈압을 등록하시겠습니까?")){
 			if(!checkCHar.test(diastolicPressure)){
 				alert("숫자만 입력할 수 있습니다.");
 				addBloodPRessureForm.systolicPressure.focus();
@@ -54,16 +52,13 @@ function check() {
 	}
 </script>
 <style>
-#center{
-width: 600;
-margin: 0 auto;
-}
 #purple{
 color: #9c27b0;
  font-weight: bold;
 }
 h4{
 font-weight: bold;
+text-align: center;
 }
 </style>
 </head>
@@ -73,40 +68,56 @@ font-weight: bold;
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<div id="center">
-				<h4>혈압을 등록해 주세요.</h4>
-					<form id="addBloodPRessureForm" onsubmit="return check()" action="${pageContext.request.contextPath}/addBloodPressure" method="post">
-						<c:if test="${sessionScope.memberSessionLevel == 1 }">
-						<div class="form-group">
-							<label>회원번호</label>
-							<input class="form-control" type="text" id="memberNo" name="memberNo">
-						</div>
-						</c:if>
-						<c:if test="${sessionScope.memberSessionLevel != 1 }">
-							<input class="form-control" type="hidden" id="memberNo" name="memberNo" value="${sessionScope.memberSessionNo}">
-							<span id="purple">${sessionScope.memberSessionId }</span><span>님! 안녕하세요.</span>
-						</c:if>
-						<div class="form-group">
-							<span><span id="purple">수축기혈압</span>을 입력해주세요</span> 
-							<input class="form-control" type="text" id="systolicPressure" name="systolicPressure" placeholder="systolicPressure/mmHg">
-						</div>
-						<div class="form-group">
-							<span><span id="purple">이완기혈압</span>을 입력해주세요</span>  
-							<input class="form-control" type="text" id="diastolicPressure" name="diastolicPressure" placeholder="diastolicPressure/mmHg">
-						</div>
-						<div align="right">
-							<input type="submit" class="btn btn-sm btn-primary" value="등록">
-						</div>
-					</form>
-					<div class="navbar-form navbar-left">
-						<div class="form-group" style="margin:0px">
-							<input type="button" class="btn btn-primary" onclick="returnListBtn()" value="목록으로">
-						</div>
+				<div class="row">
+					<div class="col-md-2">
 					</div>
-					<div class="navbar-form navbar-right">
-						<div class="form-group" style="margin:0px">
-							<input type="button" class="btn btn-primary" onclick="reset()" value="다시입력">
-							<input type="button" class="btn btn-primary" onclick="returnBtn()" value="등록취소">
+                     <div class="col-md-8">
+					 	<div class="card">
+                         	<div class="card-header" data-background-color="purple">
+                         		<h4 class="title">혈압 등록</h4>
+							</div>
+							<div class="card-content">
+								<form id="addBloodPRessureForm" onsubmit="return check()" action="${pageContext.request.contextPath}/addBloodPressure" method="post">
+									<div class="row">
+										<div class="col-md-2">
+										</div>
+										<div class="col-md-8">	
+											<c:if test="${sessionScope.memberSessionLevel == 1 }">
+											<div class="form-group">
+												<span>회원번호</span>
+												<input class="form-control" type="text" id="memberNo" name="memberNo">
+											</div>
+											</c:if>
+											<c:if test="${sessionScope.memberSessionLevel != 1 }">
+												<input class="form-control" type="hidden" id="memberNo" name="memberNo" value="${sessionScope.memberSessionNo}">
+												<span id="purple">${sessionScope.memberSessionId }</span><span>님! 안녕하세요.</span>
+											</c:if>
+											<div class="form-group">
+												<span><span id="purple">수축기혈압</span>을 입력해주세요</span> 
+												<input class="form-control" type="text" id="systolicPressure" name="systolicPressure" placeholder="systolicPressure/mmHg">
+											</div>
+											<div class="form-group">
+												<span><span id="purple">이완기혈압</span>을 입력해주세요</span>  
+												<input class="form-control" type="text" id="diastolicPressure" name="diastolicPressure" placeholder="diastolicPressure/mmHg">
+											</div>
+											<div class="form-group">
+												<input type="submit" class="btn btn-sm btn-primary pull-right" value="등록">
+											</div>
+										</div>
+									</div>
+								</form>
+								<div class="navbar-form navbar-left">
+									<div class="form-group" style="margin:0px">
+										<input type="button" class="btn btn-primary" onclick="returnListBtn()" value="목록으로">
+									</div>
+								</div>
+								<div class="navbar-form navbar-right">
+									<div class="form-group" style="margin:0px">
+										<input type="button" class="btn btn-primary" onclick="reset()" value="다시입력">
+										<input type="button" class="btn btn-primary" onclick="returnBtn()" value="등록취소">
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

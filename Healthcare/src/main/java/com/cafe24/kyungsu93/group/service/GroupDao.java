@@ -15,6 +15,104 @@ public class GroupDao{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.group.service.GroupMapper.";
+
+	//그룹종류 리스트 선택용
+	public List<Group> groupKindListSelect() {
+		logger.debug("GroupDao - groupKindListSelect 실행");
+		 List<Group> list = sqlSession.selectList(NS+"groupKindListSelect");
+		return list;
+	}
+	//그룹종류번호 카운트
+	public int groupKindNo() {
+		logger.debug("GroupInviteDao - groupKindNo 실행");
+		return sqlSession.selectOne(NS+"groupKindNo");
+	}
+	//그룹종류 번호 선택
+	public Group groupKindNoSelect(String groupKindName) {
+		logger.debug("GroupInviteDao - groupKindNoSelect 실행");
+		return sqlSession.selectOne(NS+"groupKindNoSelect",groupKindName);
+	}
+	
+	//그룹종류업데이트
+	public int updateGroupKind(Group group) {
+		logger.debug("Group - updateGroupKind 실행");
+		return sqlSession.update(NS+"updateGroupKind",group);
+	}
+	
+	//그룹종류 리스트 카운트
+	public int groupKindListTotalCount() {
+		logger.debug("GroupInviteDao - groupKindListTotalCount 실행");
+		return sqlSession.selectOne(NS+"groupKindListTotalCount");
+	}
+	//그룹종류 리스트
+	public List<Group> groupKindList(Map<String,Integer> map) {
+		logger.debug("GroupDao - groupKindList 실행");
+		 List<Group> list = sqlSession.selectList(NS+"groupKindList",map);
+		return list;
+	}
+	
+	//그룹 종류 등록
+	public int addGroupKind(Group group) {
+		logger.debug("GroupDao - addGroupKind 실행");
+		return sqlSession.insert(NS+"addGroupKind", group);
+	}
+	
+	//그룹삭제리스트키옵션검색 카운트
+	public int groupdeleteSearchKeyoptionCount(Map<String,Object> map) {
+		logger.debug("GroupInviteDao - groupdeleteSearchKeyoptionCount 실행");
+		return sqlSession.selectOne(NS+"groupdeleteSearchKeyoptionCount",map);
+	}
+	
+	//그룹삭제리스트키옵션검색
+	public List<Group> deleteGroupListSearchKeyoption(Map<String,Object> map) {
+		logger.debug("GroupDao - deleteGroupListSearchKeyoption 실행");
+		 List<Group> list = sqlSession.selectList(NS+"deleteGroupListSearchKeyoption",map);
+		return list;
+	}
+	
+	//그룹삭제리스트날짜검색 카운트
+	public int groupdeleteSearchDateCount(Map<String,Object> map) {
+		logger.debug("GroupInviteDao - groupdeleteSearchDateCount 실행");
+		return sqlSession.selectOne(NS+"groupdeleteSearchDateCount",map);
+	}
+	
+	//그룹삭제리스트날짜검색
+	public List<Group> deleteGroupListSearchDate(Map<String,Object> map) {
+		logger.debug("GroupDao - deleteGroupListSearchDate 실행");
+		 List<Group> list = sqlSession.selectList(NS+"deleteGroupListSearchDate",map);
+		return list;
+	}
+	
+	//그룹 삭제 리스트 카운트
+	public int groupdeleteSelectCount(Map<String,Object> map) {
+		logger.debug("GroupInviteDao - groupdeleteSelectCount 실행");
+		return sqlSession.selectOne(NS+"groupdeleteSelectCount",map);
+	}
+	//그룹리스트키옵션검색 카운트
+	public int groupListSearchKeyoptionCount(Map<String,Object> map) {
+		logger.debug("GroupInviteDao - groupListSearchKeyoptionCount 실행");
+		return sqlSession.selectOne(NS+"groupListSearchKeyoptionCount",map);
+	}
+	
+	//그룹리스트키옵션검색
+	public List<Group> groupListSearchKeyoption(Map<String,Object> map) {
+		logger.debug("GroupDao - groupListSearchKeyoption 실행");
+		 List<Group> list = sqlSession.selectList(NS+"groupListSearchKeyoption",map);
+		return list;
+	}
+	
+	//그룹리스트날짜검색 카운트
+	public int groupListSearchDateCount(Map<String,Object> map) {
+		logger.debug("GroupInviteDao - groupListSearchDateCount 실행");
+		return sqlSession.selectOne(NS+"groupListSearchDateCount",map);
+	}
+	
+	//그룹리스트날짜검색
+	public List<Group> groupListSearchDate(Map<String,Object> map) {
+		logger.debug("GroupDao - groupListSearchDate 실행");
+		 List<Group> list = sqlSession.selectList(NS+"groupListSearchDate",map);
+		return list;
+	}
 	
 	//그룹에 가입된 회원 리스트
 	public List<Group> groupMemberList(String groupNo) {
@@ -22,13 +120,13 @@ public class GroupDao{
 		return sqlSession.selectList(NS+"groupMemberList",groupNo);
 	}
 	
-	//가입된 그룹 체크 카운트
+	//생성한 그룹 체크 카운트(그룹메인)
 	public int memberGroupCreateCheckCount(String memberNo) {
 		logger.debug("GroupInviteDao - memberGroupCreateCheckCount 실행");
 		return sqlSession.selectOne(NS+"memberGroupCreateCheckCount",memberNo);
 	}
 	
-	//가입된 그룹 체크
+	//생성한 그룹 체크(그룹메인)
 	public List<Group> memberGroupCreateCheck(String memberNo) {
 		logger.debug("GroupInviteDao - memberGroupCreateCheck 실행");
 		return sqlSession.selectList(NS+"memberGroupCreateCheck",memberNo);
@@ -75,7 +173,7 @@ public class GroupDao{
 		return sqlSession.selectOne(NS+"prevGroupDetail",groupNo);
 	}
 	
-	public List<Group> deleteGroupList(Map<String,Integer> map) {
+	public List<Group> deleteGroupList(Map<String,Object> map) {
 		logger.debug("GroupDao - deleteGroupList 실행");
 		 List<Group> list = sqlSession.selectList(NS+"deleteGroupList",map);
 		return list;
@@ -131,7 +229,7 @@ public class GroupDao{
 		return sqlSession.selectOne(NS+"modifyGroup",groupNo);
 	}
 	
-	public List<Group> groupList(Map<String,Integer> map) {
+	public List<Group> groupList(Map<String,Object> map) {
 		logger.debug("GroupDao - groupList 실행");
 		 List<Group> list = sqlSession.selectList(NS+"groupList",map);
 		return list;
@@ -145,6 +243,11 @@ public class GroupDao{
 	public int checkGroupNameCount(String groupName) {
 		logger.debug("GroupDao - checkGroupNameCount 실행");
 		return sqlSession.selectOne(NS+"checkGroupNameCount",groupName);
+	}
+	
+	public int groupListCount(Map<String,Object> map) {
+		logger.debug("GroupDao - groupTotalCount 실행");
+		return sqlSession.selectOne(NS+"groupListCount");
 	}
 	
 	public int groupTotalCount() {

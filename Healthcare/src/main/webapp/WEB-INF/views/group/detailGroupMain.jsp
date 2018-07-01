@@ -6,15 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>detailGroupMain</title>
 <jsp:include page="../include/header.jsp"></jsp:include>
-<!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script src="bootstrap-switch.js" ></script>
-<!-- jQuery -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 	var groupName = $('#groupName').val();
 	var groupNo = $('#groupNo').val();
@@ -64,137 +55,172 @@
 			<input type="hidden" id="groupNo" value="${detailGroup.groupNo}">
 			<input type="hidden" id="groupName" value="${groupName}">
 			<input type="hidden" id="memberNo" value="${memberNo}">
-			<!-- 개인정보 on/off  -->
-			<label class="switch">
-			  <input type="checkbox">
-			  <span class="slider round"></span>
-			</label>
-				<div class="btn-group" role="group" aria-label="...">
-					<input type="button" onclick="groupDetail()" class="btn  btn-sm btn-primary" value="그룹상세">
-					<button onclick="groupCalendar()" class="btn  btn-sm btn-primary">그룹캘린더</button>
-					<button onclick="groupRelation()" class="btn  btn-sm btn-primary">그룹관계도</button>
-					<button onclick="groupMemberList()" class="btn  btn-sm btn-primary">회원리스트</button>
-					<c:if test="${result >0 }">
-						<button type="button" onclick="groupMemberInvite()" class="btn  btn-sm btn-primary">회원초대하기</button>
-						<button type="button" onclick="inviteGroupMemberList()" class="btn  btn-sm btn-primary">그룹에초대한멤버</button>
-					</c:if>
-					<button onclick="groupMemberOut()" class="btn  btn-sm btn-primary">탈퇴하기</button>
-					<button onclick="groupMain()" class="btn  btn-sm btn-primary">그룹메인으로</button>
+				<div class="center">
+					<div class="btn-group" role="group">
+						<input type="button" onclick="groupDetail()" class="btn  btn-sm btn-primary" value="그룹상세">
+						<button onclick="groupCalendar()" class="btn btn-sm btn-primary">그룹캘린더</button>
+						<button onclick="groupRelation()" class="btn btn-sm btn-primary">그룹관계도</button>
+						<button onclick="groupMemberList()" class="btn btn-sm btn-primary">회원리스트</button>
+						<c:if test="${result >0 }">
+							<button type="button" onclick="groupMemberInvite()" class="btn btn-sm btn-primary">회원초대하기</button>
+							<button type="button" onclick="inviteGroupMemberList()" class="btn btn-sm btn-primary">그룹에초대한멤버</button>
+						</c:if>
+						<button onclick="groupMemberOut()" class="btn btn-sm btn-primary">탈퇴하기</button>
+						<button onclick="groupMain()" class="btn btn-sm btn-primary">그룹메인으로</button>
+					</div>
 				</div>
 				<div>
 					<div class="row">
-						<div class='col-sm-10'>
-							<div class="panel panel-default">
-								<div class="panel-heading"><h3 class="panel-title">그룹소개</h3></div>
-								<div class="panel-body">
-									${detailGroup.groupInfo }
+	                     <div class="col-md-10">
+						 	<div class="card">
+						 		<div class="card-header" data-background-color="orange">
+	                         		<h4 class="title">그룹 소개</h4>
 								</div>
-							</div>							  	
+								<div class="card-content">
+									<div class="row">
+										<div class="col-md-8">	
+											${detailGroup.groupInfo }
+										</div>
+									</div>							  	
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="row">
-					 <div class='col-sm-10'>
-					<div class="panel panel-default">
-						<div class="panel-body">
+					 <div class="col-md-12">
 							<div class="row">
-							<!-- 복약 -->
-								  <div class='col-sm-6'>
-								  <div class="panel panel-warning">
-								  	<div class="panel-heading">
-								  		<h4 class="panel-title">
-								  			<span>복약</span>&nbsp;<span class="badge">42</span>&nbsp;<span><a href="#">more</a></span>
-								  		</h4>
-								  	</div>
-								  	<table class="table">
-										<c:if test="${historyMedicineCount>0 }">
-											<table class="table">	
-												<c:forEach var="addHistoryMedicine" items="${addHistoryMedicine }">
-													<tr>
-														<td>${addHistoryMedicine.memberName }회원님이  글을 등록하셨습니다.</td>
-													</tr>
-												</c:forEach>
-											</table>
-										</c:if >
-										<c:if test="${historyMedicineCount==0 }">
-											<td>히스토리가 없습니다.</td>
-										</c:if>
-									</table>
-									</div>
-			  					</div><!-- 복약 End -->
-			  					<!-- 진료 -->
-								<div class='col-sm-6'>
-								<div class="panel panel-info">
-								  	<div class="panel-heading">
-								  		<h4 class="panel-title">
-								  			<span>진료</span>&nbsp;<span class="badge">42</span>&nbsp;<span><a href="#">more</a></span>
-								  		</h4>
-								  	</div>
-									<table class="table">
-										<c:if test="${historyTreatmemtCount>0 }">
-											<c:forEach var="addHistoryTreatmemt" items="${addHistoryTreatmemt }">
-												<tr>
-													<td>${addHistoryTreatmemt.memberName }회원님이  글을 등록하셨습니다.</td>
-											</c:forEach>
-										</c:if>
-											<c:if test="${historyTreatmemtCount == 0 }">
-											<td>히스토리가 없습니다.</td>
-										</c:if>
-									</table>
-									</div>
-			  					</div><!-- 진료 End -->
-			  				</div>
-			  				<div class="row">
-			  				<!-- 건강검진 -->
-			  					<div class='col-sm-6'>
-									<div class="panel panel-danger">
-										<div class="panel-heading">
-											<h4 class="panel-title">
-												<span>건강검진</span>&nbsp;<span class="badge">42</span>&nbsp;<span><a href="#">more</a></span>
-											</h4>
+								<div class="col-md-6">
+									<div class="card card-stats">
+									 	<div class="card-header" data-background-color="blue">
+									 		<i class="material-icons">content_copy</i>
 										</div>
-										<table class="table">
-											<c:if test="${historyHealthScreenCount>0 }">
-												<c:forEach var="addHistoryHealthScreen" items="${addHistoryHealthScreen }">
-													<tr>
-														<td>${addHistoryHealthScreen.memberName }회원님이  글을 등록하셨습니다.</td>
-													</tr>
-												</c:forEach>
-											</c:if>
-											<c:if test="${historyHealthScreenCount==0 }">
-												히스토리가 없습니다.
-											</c:if>
-										</table>
+										<div class="card-content">
+											<div class="row">
+												<div class="col-md-6">		
+													<p class="category">복약</p>
+													<h4  class="title">그룹 복약 일정</h4>
+												</div>
+											</div>
+										</div>
+										<div class="card-footer">
+											<div class="stats">	
+												<table class="table">		
+													<c:if test="${historyMedicineCount>0 }">
+														<c:forEach var="addHistoryMedicine" items="${addHistoryMedicine }">
+															<tr>
+																<td>${addHistoryMedicine.memberName }회원님이  글을 등록하셨습니다.</td>
+															</tr>
+														</c:forEach>
+													</c:if>
+													<c:if test="${historyMedicineCount==0 }">
+														<td>히스토리가 없습니다.</td>
+													</c:if>
+												</table>
+											</div>
+										</div>	
 									</div>
-			  					</div><!-- 건강검진 End -->
+				  				</div><!-- 복약 End --><!-- 진료 -->
+								<div class="col-md-6">
+									<div class="card card-stats">
+									 	<div class="card-header" data-background-color="green">
+									 		<i class="material-icons">content_copy</i>
+										</div>
+										<div class="card-content">
+											<div class="row">
+												<div class="col-md-6">		
+													<p class="category">진료</p>
+													<h4  class="title">그룹 진료 일정</h4>
+												</div>
+											</div>
+										</div>
+										<div class="card-footer">
+											<div class="stats">			
+												<table class="table">
+													<c:if test="${historyTreatmemtCount>0 }">
+														<c:forEach var="addHistoryTreatmemt" items="${addHistoryTreatmemt }">
+															<tr>
+																<td>${addHistoryTreatmemt.memberName }회원님이  글을 등록하셨습니다.</td>
+														</c:forEach>
+													</c:if>
+													<c:if test="${historyTreatmemtCount == 0 }">
+														<td>히스토리가 없습니다.</td>
+													</c:if>
+												</table>
+											</div>
+						  				</div><!-- 진료 End -->
+					  				</div>
+				  				</div>
+				  		</div>
+			  			<div class="row">
+			  				<!-- 건강검진 -->
+							<div class="col-md-6">
+								<div class="card card-stats">
+								 	<div class="card-header" data-background-color="green">
+								 		<i class="material-icons">content_copy</i>
+									</div>
+									<div class="card-content">
+										<div class="row">
+											<div class="col-md-6">		
+												<p class="category">건강검진</p>
+												<h4  class="title">그룹 건강검진 일정</h4>
+											</div>
+										</div>
+									</div>
+									<div class="card-footer">
+										<div class="stats">			
+												<table class="table">
+													<c:if test="${historyHealthScreenCount>0 }">
+														<c:forEach var="addHistoryHealthScreen" items="${addHistoryHealthScreen }">
+															<tr>
+																<td>${addHistoryHealthScreen.memberName }회원님이  글을 등록하셨습니다.</td>
+															</tr>
+														</c:forEach>
+													</c:if>
+													<c:if test="${historyHealthScreenCount==0 }">
+														히스토리가 없습니다.
+													</c:if>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div><!-- 건강검진 End -->
 			  					<!-- 건강설문 -->
-			  					<div class='col-sm-6'>
-			  						<div class="panel panel-success">
-								  		<div class="panel-heading">
-								  			<h4 class="panel-title">
-								  				<span>건강설문</span>&nbsp;<span class="badge">42</span>&nbsp;<span><a href="#">more</a></span>
-								  			</h4>
-								  		</div>
-				  						<table class="table">
-											<c:if test="${historyHealthSurveyCount>0 }">
-												<c:forEach var="addHistoryHealthSurvey" items="${addHistoryHealthSurvey }">
-													<tr>
-														<td>${addHistoryHealthSurvey.memberName }회원님이 글을 등록하셨습니다.</td>
-													</tr>
-												</c:forEach>
-											</c:if>
-											<c:if test="${historyHealthSurveyCount==0 }">
-												히스토리가 없습니다.
-											</c:if>
-										</table>
+								<div class="col-md-6">
+									<div class="card card-stats">
+									 	<div class="card-header" data-background-color="blue">
+									 		<i class="material-icons">content_copy</i>
+										</div>
+										<div class="card-content">
+											<div class="row">
+												<div class="col-md-6">	
+												<p class="category">건강설문</p>
+													<h4  class="title">그룹 건강설문 일정</h4>
+												</div>
+											</div>
+										</div>
+										<div class="card-footer">
+											<div class="stats">
+							  						<table class="table">
+														<c:if test="${historyHealthSurveyCount>0 }">
+															<c:forEach var="addHistoryHealthSurvey" items="${addHistoryHealthSurvey }">
+																<tr>
+																	<td>${addHistoryHealthSurvey.memberName }회원님이 글을 등록하셨습니다.</td>
+																</tr>
+															</c:forEach>
+														</c:if>
+														<c:if test="${historyHealthSurveyCount==0 }">
+															히스토리가 없습니다.
+														</c:if>
+													</table>
+												</div>
+											</div>
 									</div>
 			  					</div><!-- 건강설문 End -->
 				  			</div>
 						</div>
-						</div>
-					</div>
-				</div><!-- groupHistory End -->
+					</div><!-- groupHistory End -->
+				</div>
 			</div>
-		</div>
 		</div>
 	</div>
 </body>

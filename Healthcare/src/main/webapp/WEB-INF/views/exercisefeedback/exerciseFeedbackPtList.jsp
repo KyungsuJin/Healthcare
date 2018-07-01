@@ -106,13 +106,13 @@ font-size : 14px;
 								<td>${teacher.memberTotalFeedback }</td>
 								<td>${teacher.memberAgreeFeedback }</td>
 								<td>${teacher.evaluationAverageGrade }</td>
-								<td><a id="purple" href="${pageContext.request.contextPath}/exerciseFeedbackRequest?memberNo=${teacher.memberNo}">선택하기</a></td>
+								<td><a id="purple" href="${pageContext.request.contextPath}/exerciseFeedbackRequest?memberNo=${teacher.memberNo}">선택</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
 				<div align="right">
-					<button class="btn btn-primary" onclick="requestListBtn()">요청리스트로 돌아가기</button>
+					<button class="btn btn-primary" onclick="requestListBtn()">목록으로</button>
 				</div>
 				<div align="center">
 					<nav>

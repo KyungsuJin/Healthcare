@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,15 @@ public class PointChargingService {
 	@Autowired
 	private PointChargingDao pointChargingDao;
 	private static final Logger logger = LoggerFactory.getLogger(PointChargingService.class);
-
+	public PointCharging point(HttpSession session) {
+		String memberNo = (String) session.getAttribute("memberSessionNo");
+		logger.debug("memberNo:"+memberNo);
+		PointCharging pointCharging = pointChargingDao.selectMemberPoint(memberNo);
+		int memberPoint = pointCharging.getMemberPoint();
+		logger.debug("memberPoint:"+memberPoint);
+		return pointCharging;
+		
+	}
 	/**
 	 * 포인트 지급
 	 * @param memberNo
@@ -46,16 +56,17 @@ public class PointChargingService {
 	 * 포인트 승인 거절
 	 * @param pointChargingNo
 	 */
-	public void deniedPointCharging(String pointChargingNo) {
+	public void deniedPointCharging(HttpSession session,String pointChargingNo) {
 		logger.debug("PointChargingService - deniedPointCharging실행");
 		PointCharging pointCharging = new PointCharging();
 		pointCharging.setPointChargingNo(pointChargingNo);
+		String memberNoDirector = (String) session.getAttribute("memberSessionNo");
 		int count = 0;
 		count = pointChargingDao.pointChargingNoResultCount(pointChargingNo);
 		if(count > 0) {
 			logger.debug("포인트 적립 중복.");
 		}else {
-		String pointChargingDirectorNo = "member_1";
+		String pointChargingDirectorNo = memberNoDirector;
 		pointCharging.setPointChargingDirectorNo(pointChargingDirectorNo);
 		pointChargingDao.deniedPointCharging(pointCharging);
 		}
@@ -64,17 +75,19 @@ public class PointChargingService {
 	 * 포인트 신청 승인
 	 * @param pointChargingNo
 	 */
-	public void acceptPointCharging(String pointChargingNo) {
+	public void acceptPointCharging(HttpSession session,String pointChargingNo) {
 		logger.debug("PointChargingService - pointChargingSum실행");
+		
 		PointCharging pointCharging = new PointCharging();
 		pointCharging.setPointChargingNo(pointChargingNo);
+		pointChargingDao.updateapprovalResultPointCharging(pointCharging);
 		//포인트 적립 중복 체크
 		int count = 0;
 		count = pointChargingDao.pointChargingNoResultCount(pointChargingNo);
 		if(count > 0) {
 			logger.debug("포인트 적립 중복.");
 		}else {
-		String pointChargingDirectorNo = "member_1";
+		String pointChargingDirectorNo = (String) session.getAttribute("memberSessionNo");
 		pointCharging.setPointChargingDirectorNo(pointChargingDirectorNo);
 		pointChargingDao.acceptPointCharging(pointCharging);
 		//포인트 적립

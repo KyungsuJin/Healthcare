@@ -57,6 +57,22 @@ $(document).ready(function(){
 		history.back();
 	} 
 </script>
+<style>
+th{
+text-align:center;
+}
+#purple{
+color: #9c27b0;
+font-weight: bold;
+font-size : 14px;
+}
+#tableCss{
+font-size : 14px;
+}
+h4{
+text-align:center;
+}
+</style>
 </head>
 <body>
 	<div class="sidebar-wrapper">
@@ -64,78 +80,108 @@ $(document).ready(function(){
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<input type="hidden" id="memberNo" value="${map.exerciseFeedbackDetail.memberNo }">
-				<h4>게시글 상세보기</h4>
-					<table class="table table-hober" id="tableCss">
-						<tr>
-							<td>요청번호</td>
-							<td>${map.exerciseFeedbackDetail.exerciseFeedbackRequestNo }</td>
-						<tr>
-						<tr>
-							<td>등록일</td>
-							<td>${map.exerciseFeedbackDetail.exerciseFeedbackRequestDate }</td>
-						</tr>
-						<tr>
-							<td>아이디</td>
-							<td>${map.exerciseFeedbackDetail.memberId }</td>
-						<tr>
-						<tr>
-							<td>회원명</td>
-							<td>${map.exerciseFeedbackDetail.memberName }</td>
-						<tr>
-						<tr>
-							<td>제목</td>
-							<td>${map.exerciseFeedbackDetail.exerciseFeedbackRequestTitle }</td>
-						<tr>
-						<tr>
-							<td>내용</td>
-							<td>${map.exerciseFeedbackDetail.exerciseFeedbackRequestContent }</td>
-					</table>
-					<c:choose>
-						<c:when test="${sessionScope.memberSessionNo == map.exerciseFeedbackDetail.teacherNo }">
-							<div class="form-group">
-								<c:if test="${map.approvalResult eq 0}"> 
-									<div class="form-group">
-										<button class="btn btn-sm btn-primary" onclick="acceptBtn()">수락</button>
-										<button class="btn btn-sm btn-primary" onclick="deniedBtn()">거절</button>
+				<div class="row">
+				 <div class="col-md-2">
+				 </div>
+                     <div class="col-md-8">
+					 	<div class="card">
+                         	<div class="card-header" data-background-color="purple">
+                         		<h4 class="title">운동 피드백 요청 상세보기</h4>
+							</div>
+							<div class="card-content">
+								<input type="hidden" id="memberNo" value="${map.exerciseFeedbackDetail.memberNo }">
+								<div class="row">
+									 <div class="col-md-2">
+									 </div>
+										<div class="col-md-8">	
+											<table class="table table-hober" id="tableCss">
+												<tr>
+													<td>요청번호</td>
+													<td>${map.exerciseFeedbackDetail.exerciseFeedbackRequestNo }</td>
+												<tr>
+												<tr>
+													<td>등록일</td>
+													<td>${map.exerciseFeedbackDetail.exerciseFeedbackRequestDate }</td>
+												</tr>
+												<tr>
+													<td>아이디</td>
+													<td>${map.exerciseFeedbackDetail.memberId }</td>
+												<tr>
+												<tr>
+													<td>회원명</td>
+													<td>${map.exerciseFeedbackDetail.memberName }</td>
+												<tr>
+												<tr>
+													<td>제목</td>
+													<td>${map.exerciseFeedbackDetail.exerciseFeedbackRequestTitle }</td>
+												<tr>
+												<tr>
+													<td>내용</td>
+													<td>${map.exerciseFeedbackDetail.exerciseFeedbackRequestContent }</td>
+											</table>
+											<c:choose>
+												<c:when test="${sessionScope.memberSessionNo == map.exerciseFeedbackDetail.teacherNo }">
+													<div class="form-group">
+														<c:if test="${map.approvalResult eq 0}"> 
+															<div class="form-group">
+																<button class="btn btn-sm btn-primary" onclick="acceptBtn()">수락</button>
+																<button class="btn btn-sm btn-primary" onclick="deniedBtn()">거절</button>
+															</div>
+														</c:if>
+														<c:if test="${map.approvalResult>0 }">
+																<div class="form-group">
+																	<span>${map.exerciseFeedbackDetail.memberName }님의 요청을 ${map.exerciseFeedbackResultDetail.exerciseFeedbackApprovalDate }에 ${map.exerciseFeedbackResultDetail.exerciseFeedbackApproval}하였습니다.</span> 
+																</div>
+															<c:if test="${map.exerciseFeedbackResultDetail.exerciseFeedbackResult eq '대기'}">
+																<div class="form-group">
+																	<span>아직 ${map.exerciseFeedbackDetail.memberName }님의 운동 피드백 요청에 대한 답변을 하지 않았습니다.</span>
+																	<a type="button" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/exerciseFeedResponse?exerciseFeedbackRequestNo=${map.nextExerciseFeedback.exerciseFeedbackRequestNo}">답변등록</a>
+																</div>
+															</c:if>
+														</c:if>
+													</div>
+												</c:when>
+											</c:choose>
+											<form class="form-inline">
+												<c:if test="${map.countNext > 0 }">
+													<div class="form-group">
+													<p> <span id="purple">다음글</span> : <a type="button" href="${pageContext.request.contextPath}/exerciseFeedbackRequestDetail?exerciseFeedbackRequestNo=${map.nextExerciseFeedback.exerciseFeedbackRequestNo}">${map.nextExerciseFeedback.exerciseFeedbackRequestTitle }</a></p>
+													</div>
+												</c:if>
+												<c:if test="${map.countNext eq 0 || map.countNext == null}">
+													<div class="form-group">
+													<p> <span id="purple">다음글</span>이 없습니다.</p>
+													</div>
+												</c:if>
+												<c:if test="${map.countPrev >0 }">
+													<div class="form-group pull-right">
+													<p><span id="purple">이전글 </span>: <a type="button" href="${pageContext.request.contextPath}/exerciseFeedbackRequestDetail?exerciseFeedbackRequestNo=${map.prevExerciseFeedback.exerciseFeedbackRequestNo}">${map.prevExerciseFeedback.exerciseFeedbackRequestTitle }</a></p>
+													</div>
+												</c:if>
+												<c:if test="${map.countPrev eq 0 || map.countPrev == null}">
+													<div class="form-group pull-right">
+													<p><span id="purple">이전글</span>이 없습니다.</p>
+													</div>
+												</c:if>
+											</form>
+											<div class="navbar-form navbar-left">
+												<div class="form-group" style="margin:0px">
+													<input type="button" class="btn btn-primary" onclick="listBtn()" value="목록으로">
+												</div>
+											</div>
+											<div class="navbar-form navbar-right">
+												<div class="form-group" style="margin:0px">
+													<c:if test="${sessionScope.memberSessionNo == map.exerciseFeedbackDetail.memberNo }">
+														<button class="btn btn-primary" onclick="cnacleBtn()">요청취소</button>
+													</c:if>
+												</div>
+											</div>
+										</div>
 									</div>
-								</c:if>
-								<c:if test="${map.approvalResult>0 }">
-										<div class="form-group">
-											<label>${map.exerciseFeedbackDetail.memberName }님의 요청을 ${map.exerciseFeedbackResultDetail.exerciseFeedbackApprovalDate }에 ${map.exerciseFeedbackResultDetail.exerciseFeedbackApproval}하였습니다.</label> 
-										</div>
-									<c:if test="${map.exerciseFeedbackResultDetail.exerciseFeedbackResult eq '대기'}">
-										<div class="form-group">
-											<label>아직 ${map.exerciseFeedbackDetail.memberName }님의 운동 피드백 요청에 대한 답변을 하지 않았습니다.</label> 
-											<a type="button" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/exerciseFeedResponse?exerciseFeedbackRequestNo=${map.nextExerciseFeedback.exerciseFeedbackRequestNo}">운동 피드백 답변하기</a>
-										</div>
-									</c:if>
-								</c:if>
+								</div>
 							</div>
-						</c:when>
-						<c:when test="${sessionScope.memberSessionLevel !=4 }">
-							<div class="form-group">
-								<button class="btn btn-sm btn-primary" onclick="cnacleBtn()">요청취소</button>
-							</div>
-						</c:when>
-					</c:choose>
-					<div class="form-group">
-						<button class="btn btn-sm btn-primary" onclick="listBtn()">운동 피드백 요청 리스트로 돌아가기</button>
-					</div>
-					<div>
-						<c:if test="${map.countNext > 0 }">
-							<p>다음글 : <a type="button" href="${pageContext.request.contextPath}/exerciseFeedbackRequestDetail?exerciseFeedbackRequestNo=${map.nextExerciseFeedback.exerciseFeedbackRequestNo}">${map.nextExerciseFeedback.exerciseFeedbackRequestTitle }</a></p>
-						</c:if>
-						<c:if test="${map.countNext eq 0 || map.countNext == null}">
-							<p>다음글 : 다음글이 없습니다.</p>
-						</c:if>
-						<c:if test="${map.countPrev >0 }">
-							<p>이전글 : <a type="button" href="${pageContext.request.contextPath}/exerciseFeedbackRequestDetail?exerciseFeedbackRequestNo=${map.prevExerciseFeedback.exerciseFeedbackRequestNo}">${map.prevExerciseFeedback.exerciseFeedbackRequestTitle }</a></p>
-						</c:if>
-						<c:if test="${map.countPrev eq 0 || map.countPrev == null}">
-							<p>이전글 : 이전글이 없습니다.</p>
-						</c:if>
-					</div>
+						</div>
+					</div>	
 			</div>
 		</div>
 	</div>

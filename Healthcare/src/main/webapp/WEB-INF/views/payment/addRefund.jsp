@@ -75,34 +75,52 @@ font-weight: bold;
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-			<div id="center">
-				<h4>포인트 결제 신청</h4>
-				<form id="refundForm" name="refundForm" onsubmit="return check()" action="${pageContext.request.contextPath}/addRefund" method="post">
-					<span>현재 고객님의 포인트 잔액은<span id="purple"> ${map.memberPoint }</span>입니다.</span>
-					<input type=hidden name="memberNo" value="${sessionScope.memberSessionNo}">
-					<div class="form-group">
-						<span>환불 금액</span>
-						<input type="text" id="refundSum" name="refundSum" onchange="checkSum()">&nbsp;<span id="Name"></span>
+			<div class="row">
+					<div class="col-md-2">
 					</div>
-					<div class="form-group">
-						<input type="text" name="refundTitle" id="refundTitle" placeholder="제목을 입력해주세요">
-					</div>
-					<div class="form-group">
-						<input type="text" name="refundContent" id="refundContent" placeholder="내용을 입력해주세요">
-					</div>
-					<div class="form-group" align="right">
-						<input type="submit" class="btn btn-sm btn-primary" value="환불신청">
-					</div>
-				</form>
-					<div class="navbar-form navbar-left">
-						<div class="form-group" style="margin:0px">
-							<input type="button" class="btn btn-primary" onclick="returnListBtn()" value="목록으로">
-						</div>
-					</div>
-					<div class="navbar-form navbar-right">
-						<div class="form-group" style="margin:0px">
-							<input type="button" class="btn btn-primary" onclick="reset()" value="다시입력">
-							<input type="button" class="btn btn-primary" onclick="returnBtn()" value="등록취소">
+                     <div class="col-md-8">
+					 	<div class="card">
+                         	<div class="card-header" data-background-color="purple">
+                         		<h4 class="title">환불 신청</h4>
+							</div>
+							<div class="card-content">
+								<form id="refundForm" name="refundForm" onsubmit="return check()" action="${pageContext.request.contextPath}/addRefund" method="post">
+									<div class="row">
+										<div class="col-md-2">
+										</div>
+										<div class="col-md-8">	
+											<span>현재 고객님이 환불할 수 있는 금액은<span id="purple"> ${map.memberPoint }</span>입니다.</span>
+											<input type=hidden name="memberNo" value="${sessionScope.memberSessionNo}">
+											<div class="form-group">
+												<span><span id="purple">환불 금액</span>을 숫자만 입력해주세요</span>
+												<input type="text" id="refundSum" name="refundSum" onchange="checkSum()">&nbsp;<span id="Name"></span>
+											</div>
+											<div class="form-group">
+											<span><span id="purple">환불 제목</span>을 입력해주세요</span>
+												<input type="text" name="refundTitle" id="refundTitle" placeholder="제목을 입력해주세요">
+											</div>
+											<div class="form-group">
+											<span><span id="purple">환불 사유</span>를 입력해주세요</span>
+												<textarea name="refundContent" id="refundContent" style="resize: none;" cols="40" rows="8" placeholder="내용을 입력해주세요"></textarea>
+											</div>
+											<div class="form-group">
+												<input type="submit" class="btn btn-sm btn-primary pull-right" value="환불신청">
+											</div>
+										</div>
+									</div>
+								</form>
+								<div class="navbar-form navbar-left">
+									<div class="form-group" style="margin:0px">
+										<input type="button" class="btn btn-primary" onclick="returnListBtn()" value="목록으로">
+									</div>
+								</div>
+								<div class="navbar-form navbar-right">
+									<div class="form-group" style="margin:0px">
+										<input type="button" class="btn btn-primary" onclick="reset()" value="다시입력">
+										<input type="button" class="btn btn-primary" onclick="returnBtn()" value="등록취소">
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>	

@@ -45,6 +45,24 @@ public class GroupRestController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	//그룹 종류 선택리스트
+	@RequestMapping(value="/groupKindListSelect", method=RequestMethod.POST)
+	@ResponseBody
+	public void groupKindListSelect(HttpServletResponse response) {
+		logger.debug("GroupRestController - groupKindListSelect ajax 실행");
+		Map<String,Object> map = groupService.groupKindListSelect();
+		Gson gson = new Gson();
+		String json = "";
+		json = gson.toJson(map);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("utf-8");
+		try {
+			response.getWriter().print(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 	//그룹 관계도

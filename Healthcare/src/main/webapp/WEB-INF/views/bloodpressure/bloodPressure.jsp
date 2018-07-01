@@ -202,7 +202,7 @@ font-size : 14px;
 					<span id="purple">${startDate }</span> ~ <span id="purple">${endDate }</span><span>기간 동안의 혈압 등록 리스트 검색 결과입니다.</span>
 			    </c:when>
 			    <c:when test="${searchresult eq 0 }">
-			 	   <span>${startDate } ~ ${endDate } 기간 동안의 해당하는 혈압 등록 리스트 검색 결과가 없습니다.</span>
+			 	   <span><span id="purple">${startDate }</span> ~ <span id="purple">${endDate }</span>기간에 해당하는 혈압 등록 리스트 검색 결과가 없습니다.</span>
 			    </c:when>
 			</c:choose>
 			</div>		    

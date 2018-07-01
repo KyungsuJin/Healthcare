@@ -95,32 +95,42 @@ font-weight: bold;
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<div id="center">
-				<h4>InviteMemberForm</h4>
-					<form name="inviteForm" id="inviteForm" onsubmit="return check()" action="${pageContext.request.contextPath}/inviteMember" method="post">
-						<input type="hidden" name="groupNo" value="${groupTable.groupNo }">
-						<span>그룹명 :</span> <span id="purple">${groupTable.groupName }</span><span> 그룹 종류 : </span><span id="purple">${groupTable.groupKindName}</span>
-						<div class="form-group">
-							<span>초대하고자 하는  회원의 아이디를 검색해주세요.</span>
-							<input class="form-control" type="text" id="memberId" name="memberId" >
-							<input class="form-control" type="button" value="아이디검색하기" onclick="checkmemberId()">
-							<span class="form-control" id="result"></span><br>
-							<span class="form-control" id="resultInfomation"></span><br>
-						</div>
-						<input class="form-control" type="text" id="groupInviteMessage" name="groupInviteMessage" placeholder="초대메세지를 작성해주세요.">
-						<div align="right">
-							<input class="form-control"  class="btn btn-sm btn-primary" type="submit" id="inviteBtn" value="초대하기">
-						</div>
-					</form>
-					<div class="navbar-form navbar-left">
-						<div class="form-group" style="margin:0px">
-							<input type="button" class="btn btn-primary" onclick="returnListBtn()" value="목록으로">
-						</div>
+				<div class="row">
+					<div class="col-md-2">
 					</div>
-					<div class="navbar-form navbar-right">
-						<div class="form-group" style="margin:0px">
-							<input type="button" class="btn btn-primary" onclick="reset()" value="다시입력">
-							<input type="button" class="btn btn-primary" onclick="returnBtn()" value="등록취소">
+                     <div class="col-md-8">
+					 	<div class="card">
+					 	<div class="card-header" data-background-color="purple">
+                         		<h4 class="title">회원초대</h4>
+							</div>
+							<div class="card-content">
+								<form name="inviteForm" id="inviteForm" onsubmit="return check()" action="${pageContext.request.contextPath}/inviteMember" method="post">
+									<input type="hidden" name="groupNo" value="${groupTable.groupNo }">
+									<span>그룹명 :</span> <span id="purple">${groupTable.groupName }</span><span> 그룹 종류 : </span><span id="purple">${groupTable.groupKindName}</span>
+									<div class="form-group">
+										<span>초대하고자 하는  회원의 아이디를 입력해주세요.</span>
+										<input class="form-control" type="text" id="memberId" name="memberId" >
+										<input class="form-control" type="button" value="아이디검색하기" onclick="checkmemberId()">
+										<span class="form-control" id="result"></span><br>
+										<span class="form-control" id="resultInfomation"></span><br>
+									</div>
+									<input class="form-control" type="text" id="groupInviteMessage" name="groupInviteMessage" placeholder="초대메세지를 작성해주세요.">
+									<div class="form-group">
+										<input class="form-control"  class="btn btn-sm btn-primary pull-right" type="submit" id="inviteBtn" value="초대하기">
+									</div>
+								</form>
+								<div class="navbar-form navbar-left">
+									<div class="form-group" style="margin:0px">
+										<input type="button" class="btn btn-primary" onclick="returnListBtn()" value="목록으로">
+									</div>
+								</div>
+								<div class="navbar-form navbar-right">
+									<div class="form-group" style="margin:0px">
+										<input type="button" class="btn btn-primary" onclick="reset()" value="다시입력">
+										<input type="button" class="btn btn-primary" onclick="returnBtn()" value="등록취소">
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

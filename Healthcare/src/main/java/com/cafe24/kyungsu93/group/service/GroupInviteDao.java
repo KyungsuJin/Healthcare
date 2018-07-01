@@ -126,7 +126,33 @@ public class GroupInviteDao {
 		logger.debug("GroupInviteDao - acceptGroupList 실행");
 		int row = sqlSession.insert(NS+"acceptGroupList",groupInvite);
 		return row;
-	}	
+	}
+	
+	//그룹 회원리스트   날짜 검색 카운트
+	public int groupMembersListSearchDateCount(Map<String,Object> map) {
+		logger.debug("GroupInviteDao - groupMembersListSearchDateCount 실행");
+		return sqlSession.selectOne(NS+"groupMembersListSearchDateCount",map);
+	}
+		
+	//그룹 회원리스트   날짜검색
+	public List<GroupInvite> groupMembersListSearchDate(Map<String,Object> map) {
+		logger.debug("GroupInviteDao - groupMembersListSearchDate 실행");
+		 List<GroupInvite> list = sqlSession.selectList(NS+"groupMembersListSearchDate",map);
+		return list;
+	}
+	
+	//그룹 회원리스트  키옵션 검색 카운트
+	public int groupMembersListCountSearchKeyoption(Map<String,Object> map) {
+		logger.debug("GroupInviteDao - groupMembersListCountSearchKeyoption 실행");
+		return sqlSession.selectOne(NS+"groupMembersListCountSearchKeyoption",map);
+	}
+	
+	//그룹 회원리스트 키옵션검색
+	public List<GroupInvite> groupMembersListSearchKeyoption(Map<String,Object> map) {
+		logger.debug("GroupInviteDao - groupMembersListSearchKeyoption 실행");
+		 List<GroupInvite> list = sqlSession.selectList(NS+"groupMembersListSearchKeyoption",map);
+		return list;
+	}
 	
 	//그룹 회원리스트 카운트
 	public int groupMemberListCount(String groupName) {
@@ -141,8 +167,38 @@ public class GroupInviteDao {
 		return list;
 	}
 	
-	//그룹초대리스트
-	public List<GroupInvite> inviteGroupList(Map<String,Integer> map) {
+	//그룹초대리스트  날짜 검색 카운트
+	public int inviteGroupListSearchDatetotalCount(Map<String,Object> map) {
+		logger.debug("GroupInviteDao - inviteGroupListSearchDatetotalCount 실행");
+		return sqlSession.selectOne(NS+"inviteGroupListSearchDatetotalCount",map);
+	}
+		
+	//그룹초대리스트  날짜검색
+	public List<GroupInvite> inviteGroupListSearchDate(Map<String,Object> map) {
+		logger.debug("GroupInviteDao - inviteGroupListSearchDate 실행");
+		 List<GroupInvite> list = sqlSession.selectList(NS+"inviteGroupListSearchDate",map);
+		return list;
+	}
+	
+	//그룹초대리스트  키옵션 검색 카운트
+	public int inviteGroupListSearchKeyoptiontotalCount(Map<String,Object> map) {
+		logger.debug("GroupInviteDao - inviteGroupListSearchKeyoptiontotalCount 실행");
+		return sqlSession.selectOne(NS+"inviteGroupListSearchKeyoptiontotalCount",map);
+	}
+	
+	//그룹초대리스트  키옵션검색
+	public List<GroupInvite> inviteGroupListSearchKeyoption(Map<String,Object> map) {
+		logger.debug("GroupInviteDao - inviteGroupListSearchKeyoption 실행");
+		 List<GroupInvite> list = sqlSession.selectList(NS+"inviteGroupListSearchKeyoption",map);
+		return list;
+	}
+	//그룹초대리스트 카운트
+	public int inviteGroupListtotalCount(Map<String,Object> map) {
+		logger.debug("GroupInviteDao - inviteGroupListtotalCount 실행");
+		return sqlSession.selectOne(NS+"inviteGroupListtotalCount",map);
+	}
+	//나를 초대한 그룹리스트
+	public List<GroupInvite> inviteGroupList(Map<String, Object> map) {
 		logger.debug("GroupInviteDao - inviteGroupList 실행");
 		 List<GroupInvite> list = sqlSession.selectList(NS+"inviteGroupList",map);
 		return list;
@@ -185,7 +241,44 @@ public class GroupInviteDao {
 		return sqlSession.selectOne(NS+"totalCountInvite");
 	}
 	
-	public List<GroupInvite> groupInviteList(Map<String,Integer> map) {
+	public GroupInvite groupNameFind(String groupNo) {
+		logger.debug("GroupInviteDao - groupNameFind 실행");
+		return sqlSession.selectOne(NS+"groupNameFind",groupNo);
+	}
+	
+	//그룹에 초대한 회원리스트 날짜 검색 카운트
+	public int groupInviteListSearchDatetotalCount(Map<String,Object> map) {
+		logger.debug("GroupInviteDao - groupInviteListSearchDatetotalCount 실행");
+		return sqlSession.selectOne(NS+"groupInviteListSearchDatetotalCount",map);
+	}
+		
+	//그룹에 초대한 회원리스트 날짜검색
+	public List<GroupInvite> groupInviteListSearchDate(Map<String,Object> map) {
+		logger.debug("GroupInviteDao - groupInviteSearchDateList 실행");
+		 List<GroupInvite> list = sqlSession.selectList(NS+"groupInviteListSearchDate",map);
+		return list;
+	}
+	
+	//그룹에 초대한 회원리스트 키옵션 검색 카운트
+	public int groupInviteListSearchKeyoptiontotalCount(Map<String,Object> map) {
+		logger.debug("GroupInviteDao - groupInviteListSearchKeyoptiontotalCount 실행");
+		return sqlSession.selectOne(NS+"groupInviteListSearchKeyoptiontotalCount",map);
+	}
+	
+	//그룹에 초대한 회원리스트 키옵션검색
+	public List<GroupInvite> groupInviteListSearchKeyoption(Map<String,Object> map) {
+		logger.debug("GroupInviteDao - groupInviteListSearchKeyoption 실행");
+		 List<GroupInvite> list = sqlSession.selectList(NS+"groupInviteListSearchKeyoption",map);
+		return list;
+	}
+	
+	//그룹에 초대한 회원리스트 카운트
+	public int groupInviteListtotalCount(String groupNo) {
+		logger.debug("GroupInviteDao - groupInviteListtotalCount 실행");
+		return sqlSession.selectOne(NS+"groupInviteListtotalCount",groupNo);
+	}
+	//그룹에 초대한 회원리스트
+	public List<GroupInvite> groupInviteList(Map<String,Object> map) {
 		logger.debug("GroupInviteDao - groupInviteList 실행");
 		 List<GroupInvite> list = sqlSession.selectList(NS+"groupInviteList",map);
 		return list;

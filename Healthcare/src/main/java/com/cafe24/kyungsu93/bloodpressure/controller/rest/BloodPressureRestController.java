@@ -27,7 +27,7 @@ public class BloodPressureRestController {
 	private BloodPressureService bloodPressureService;
 	private static final Logger logger = LoggerFactory.getLogger(BloodPressureRestController.class);
 	
-	//설문에 혈압이 등록되어있는지 검색
+	//건강검진표에 혈압이 등록되어있는지 검색
 	@RequestMapping(value="/bloodPressureNoCountToHealthScreen", method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Integer> bloodPressureNoCountToHealthScreen(@RequestParam(value="bloodPressureNo") String bloodPressureNo) {

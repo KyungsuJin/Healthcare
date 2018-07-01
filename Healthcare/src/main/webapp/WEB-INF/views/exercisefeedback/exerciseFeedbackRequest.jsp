@@ -5,13 +5,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>exerciseFeedbackReqeust</title>
 <jsp:include page="../include/header.jsp"></jsp:include>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		var memberNo = $('#memberNo').val();
 		var checkPoint = 1000;
  		ajaxData();
- 		
 	});		
 	
 	function ajaxData() {
@@ -32,9 +30,9 @@
 				}
 			}
 		});
-			check.fail(function(jqXHR, textStatus){
-				alert( "Request failed: " + textStatus );
-			}); 
+		check.fail(function(jqXHR, textStatus){
+			alert( "Request failed: " + textStatus );
+		}); 
 	}
 	
  	function checkForm() {
@@ -43,7 +41,7 @@
 				alert("제목을 입력해주세요.");
 				exercisefeedbackForm.exerciseFeedbackTitle.focus();
 				return false;
-			  }
+			}
 			if(exercisefeedbackForm.exerciseFeedbackContent.value == ""){
 				alert("내용을 해주세요.");
 				exercisefeedbackForm.exerciseFeedbackContent.focus();
@@ -54,8 +52,8 @@
 		}
 	}
 	function reset(){
-		$('#exerciseFeedbackRequestTitle').val('');
-		$('#exerciseFeedbackRequestContent').val('');
+		$('#exerciseFeedbackRequestTitle').val("");
+		$('#exerciseFeedbackRequestContent').val("");
 	}
 	function cancleBtn() {
 		history.back();
@@ -70,10 +68,6 @@ color: #9c27b0;
 font-weight: bold;
 font-size : 14px;
 }
-#center{
-width: 600;
-margin: 0 auto;
-}
 </style>
 </head>
 <body>
@@ -82,37 +76,51 @@ margin: 0 auto;
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<div id="center">
-				<h4>운동 피드백 요청 스텝2</h4>
-					<form class="form-horizen" id="exercisefeedbackForm" onsubmit="return checkForm()" action="${pageContext.request.contextPath}/exerciseFeedbackRequest" method="POST">
-						<div class="form-group">
-							<p>선택한 강사 : ${map.ptMemberName }</p>
-							<span id="myPoint"></span>
-							<input type="hidden" name="memberName" value="${map.ptMemberName}">
-							<input type="hidden" name="teacherNo" value="${map.ptMemberNo}">
-							<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}"> 
-						</div>
-						<div class="form-group">
-							<span id="purple">제목</span>
-							<input class="form-control" type="text" name="exerciseFeedbackRequestTitle" id="exerciseFeedbackTitle" placeholder="제목을 입력해주세요">
-						</div>
-						<div class="form-group">
-							<label for="contents">내용</label>
-							<textarea class="form-control" name="exerciseFeedbackRequestContent" id="exerciseFeedbackContent" style="resize: none;" cols="40" rows="8" placeholder="내용을 입력해주세요"></textarea>
-						</div>
-						<div align="right">
-							<input type="submit" class="btn btn-sm btn-primary" value="등록">
-						</div>
-					</form>
-					<div class="navbar-form navbar-left">
-						<div class="form-group" style="margin:0px">
-							<input type="button" class="btn btn-primary" onclick="returnListBtn()" value="목록으로">
-						</div>
+				<div class="row">
+					<div class="col-md-2">
 					</div>
-					<div class="navbar-form navbar-right">
-						<div class="form-group" style="margin:0px">
-							<input type="button" class="btn btn-primary" onclick="reset()" value="다시입력">
-							<input type="button" class="btn btn-primary" onclick="cancleBtn()" value="등록취소">
+                     <div class="col-md-8">
+					 	<div class="card">
+							<div class="card-header" data-background-color="purple">
+			                   <h4 class="title">운동 피드백 요청 스텝2</h4>
+							</div>
+							<div class="card-content">
+								<form class="form-horizen" id="exercisefeedbackForm" onsubmit="return checkForm()" action="${pageContext.request.contextPath}/exerciseFeedbackRequest" method="POST">
+									<div class="row">
+										<div class="col-md-2">
+										</div>
+										<div class="col-md-8">
+											<div class="form-group">
+												<p>선택한 강사 : ${map.ptMemberName }</p>
+												<span id="myPoint"></span>
+												<input type="hidden" name="memberName" value="${map.ptMemberName}">
+												<input type="hidden" name="teacherNo" value="${map.ptMemberNo}">
+												<input type="hidden" name="memberNo" value="${sessionScope.memberSessionNo}"> 
+											</div>
+											<div class="form-group">
+												<input class="form-control" type="text" id="exerciseFeedbackTitle" name="exerciseFeedbackRequestTitle" placeholder="제목을 입력해주세요">
+											</div>
+											<div class="form-group">
+												<textarea class="form-control" id="exerciseFeedbackContent" name="exerciseFeedbackRequestContent" style="resize: none;" cols="40" rows="8" placeholder="내용을 입력해주세요"></textarea>
+											</div>
+											<div class="form-group">
+												<input type="submit" class="btn btn-sm btn-primary pull-right" value="등록">
+											</div>
+										</div>
+									</div>
+								</form>
+								<div class="navbar-form navbar-left">
+									<div class="form-group" style="margin:0px">
+										<input type="button" class="btn btn-primary" onclick="returnListBtn()" value="목록으로">
+									</div>
+								</div>
+								<div class="navbar-form navbar-right">
+									<div class="form-group" style="margin:0px">
+										<input type="button" class="btn btn-primary" onclick="reset()" value="다시입력">
+										<input type="button" class="btn btn-primary" onclick="cancleBtn()" value="등록취소">
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -2,6 +2,8 @@ package com.cafe24.kyungsu93.payment.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,53 +42,46 @@ public class PaymentController {
 	public String addPoint(PointCharging pointCharging) {
 		logger.debug("PaymentController - addPoint 리다이렉트 실행");
 		pointChargingService.addPoint(pointCharging);
-		return "redirect:/addPointResult";
+		return "redirect:/pointChargingList";
 	}
 	
 	//환불 지급 완료
 	@RequestMapping(value="/completeRefund", method=RequestMethod.GET)
-	public String completeRefund(@RequestParam(value="refundNo") String refundNo) {
+	public String completeRefund(HttpSession session,@RequestParam(value="refundNo") String refundNo) {
 		logger.debug("PaymentController - completeRefund 리다이렉트 실행");
-		refundService.completeRefund(refundNo);
+		refundService.completeRefund(session, refundNo);
 		return "redirect:/refundCompleteList";
 	}
 	
 	//환불 거절
 	@RequestMapping(value="/deniedRefund", method=RequestMethod.GET)
-	public String deniedRefund(@RequestParam(value="refundNo") String refundNo) {
+	public String deniedRefund(HttpSession session,@RequestParam(value="refundNo") String refundNo) {
 		logger.debug("PaymentController - deniedRefund 리다이렉트 실행");
-		refundService.deniedRefund(refundNo);
+		refundService.deniedRefund(session, refundNo);
 		return "redirect:/refundList";
 	}
 	
 	//환불 승인
 	@RequestMapping(value="/acceptRefund", method=RequestMethod.GET)
-	public String acceptRefund(@RequestParam(value="refundNo") String refundNo) {
+	public String acceptRefund(HttpSession session,@RequestParam(value="refundNo") String refundNo) {
 		logger.debug("PaymentController - acceptRefund 리다이렉트 실행");
-		refundService.acceptRefund(refundNo);
+		refundService.acceptRefund(session, refundNo);
 		return "redirect:/refundList";
 	}
 	//포인트 결제 신청 거절
 	@RequestMapping(value="/deniedCharging", method=RequestMethod.GET)
-	public String deniedPointCharging(@RequestParam(value="pointChargingNo") String pointChargingNo) {
+	public String deniedPointCharging(HttpSession session,@RequestParam(value="pointChargingNo") String pointChargingNo) {
 		logger.debug("PaymentController - deniedPointCharging 실행");
-		pointChargingService.deniedPointCharging(pointChargingNo);
+		pointChargingService.deniedPointCharging(session, pointChargingNo);
 		return "redirect:/pointChargingList";
 	}
 	
 	//포인트 결제 승인
 	@RequestMapping(value="/acceptCharging", method=RequestMethod.GET)
-	public String acceptPointCharging(@RequestParam(value="pointChargingNo") String pointChargingNo) {
+	public String acceptPointCharging(HttpSession session,@RequestParam(value="pointChargingNo") String pointChargingNo) {
 		logger.debug("PaymentController - acceptPointCharging 실행");
-		pointChargingService.acceptPointCharging(pointChargingNo);
+		pointChargingService.acceptPointCharging(session, pointChargingNo);
 		return "redirect:/pointChargingList";
-	}
-	
-	//환불 신청 완료 결과
-	@RequestMapping(value="/refundResult", method=RequestMethod.GET)
-	public String refundResult() {
-		logger.debug("PaymentController - refundResult 포워드 실행");
-		return "payment/refundResult";
 	}
 	
 	//환불 신청 완료
@@ -94,16 +89,23 @@ public class PaymentController {
 	public String addRefund(Refund refund) {
 		logger.debug("PaymentController - addRefund 리다이렉트 실행");
 		refundService.addrefund(refund);
-		return "redirect:/refundResult";
+		return "redirect:/refundApprovalList";
 	}
 	
 	//환불 신청 
 	@RequestMapping(value="/addRefund", method=RequestMethod.GET)
-	public String addRefund(Model model) {
+	public String addRefund(Model model,HttpSession session) {
 		logger.debug("PaymentController - addRefund 포워드 실행");
-		Map<String,Object> map = refundService.memberPoint();
+		Map<String,Object> map = refundService.memberPoint(session);
 		model.addAttribute("map",map);
 		return "payment/addRefund";
+	}
+		
+	//포인트지급
+	@RequestMapping(value="/addPointToMember", method=RequestMethod.GET)
+	public String addPointToMember() {
+		logger.debug("PaymentController - addPointToMember 포워드 실행");
+		return "payment/addPointToMember";
 	}
 	
 	//포인트 결제 신청 완료 결과
@@ -125,8 +127,10 @@ public class PaymentController {
 	
 	//포인트 결제 신청 
 	@RequestMapping(value="/addPointCharging", method=RequestMethod.GET)
-	public String addpointCharging() {
+	public String addpointCharging(Model model,HttpSession session) {
 		logger.debug("PaymentController - addPointCharging 포워드 실행");
+		PointCharging pointCharging = pointChargingService.point(session);
+		model.addAttribute("pointCharging", pointCharging);
 		return "payment/addPointCharging";
 	}
 	

@@ -13,12 +13,12 @@
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<h1>환불 승인 대기 리스트</h1>
-				<form id="formSearch" name="formSearch" onsubmit="return formSearchcheck()" action="${pageContext.request.contextPath}/deleteGroupListSearch" method="post">
+				<h4>환불 리스트</h4>
+				<form id="formSearch" name="formSearch" onsubmit="return formSearchcheck()" action="${pageContext.request.contextPath}/refundListSearch" method="post">
 					<select name="keyOption" size="1">
-			            <option value="all" <c:if test="${'all'==keyOption }"> selected</c:if>>전체검색</option>
-			            <option value="groupName" <c:if test="${'systolicPressure'==keyOption }"> selected</c:if>>개인정보공개유무</option>
-			            <option value="groupKindName" <c:if test="${'diastolicPressure'==keyOption }"> selected</c:if>>회원명</option>
+			            <option value="refundNo" <c:if test="${'refundNo'==keyOption }"> selected</c:if>>번호</option>
+			            <option value="memberId" <c:if test="${'memberId'==keyOption }"> selected</c:if>>아이디</option>
+			            <option value="refundDate" <c:if test="${'refundDate'==keyOption }"> selected</c:if>>환불신청날짜</option>
 			        </select>
 					<input type="text" id="keyWord" name="keyWord" value="${keyWord}"/>
 					<button type="submit">검색</button>  
@@ -27,8 +27,8 @@
 					<thead>
 						<tr>
 							<th>번호</th>
-							<th>환불제목</th>
-							<th>회원아이디</th>
+							<th>제목</th>
+							<th>아이디</th>
 							<th>환불신청날짜</th>
 						</tr>
 					</thead>

@@ -6,7 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>groupDetail</title>
 <jsp:include page="../include/header.jsp"></jsp:include>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 
@@ -40,9 +39,33 @@ $(document).ready(function(){
 	}
 	
 	function modifyBtn(){	
+		var groupNo = $('#groupNo').val();
 		location.href="${pageContext.request.contextPath}/modifyGroup?groupNo="+groupNo;
 	}
+	function listBtn(){	
+		history.back();
+	}
+	function groupMainBtn(){
+		var groupName= $('#groupName').val();
+		location.href="${pageContext.request.contextPath}/detailGroupMain?groupName="+groupName;
+	}
 </script>
+<style>
+th{
+text-align:center;
+}
+#purple{
+color: #9c27b0;
+font-weight: bold;
+font-size : 14px;
+}
+#tableCss{
+font-size : 14px;
+}
+h4{
+text-align:center;
+}
+</style>
 </head>
 <body>
 	<div class="sidebar-wrapper">
@@ -50,52 +73,87 @@ $(document).ready(function(){
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<h1>그룹 상세보기</h1>
-				<input type="hidden" id="groupNo" value="${map.groupDetail.groupNo}">
-				<input type="hidden" id="groupName" value="${map.groupDetail.groupName}">
-					<table>
-						<tr>
-							<td>그룹명</td>
-							<td>${map.groupDetail.groupName }</td>
-						<tr>
-						<tr>
-							<td>그룹종류</td>
-							<td>${map.groupDetail.groupKindName }</td>
-						<tr>
-						<tr>
-							<td>그룹장</td>
-							<td>${map.groupDetail.memberName }</td>
-						<tr>
-						<tr>
-							<td>그룹설명</td>
-							<td>${map.groupDetail.groupInfo }</td>
-						<tr>
-						<tr>
-							<td>생성일</td>
-							<td>${map.groupDetail.groupCreateDate }</td>
-						</tr>
-					</table>
-					<div id="groupModify">
-						<input type="button" onclick="deleteBtn()" value="그룹삭제">
-						<input type="button" onclick="modifyBtn()" value="그룹수정하기">
+				<div class="row">
+					<div class="col-md-2">
 					</div>
-					<div>
-						<a href="${pageContext.request.contextPath}/detailGroupMain?groupName=${map.groupDetail.groupName }">그룹메인으로</a>
+                     <div class="col-md-8">
+					 	<div class="card">
+                         	<div class="card-header" data-background-color="purple">
+                         		<h4 class="title">그룹 상세보기</h4>
+							</div>
+							<div class="card-content">
+								<div class="row">
+									<div class="col-md-2">
+									</div>
+									<div class="col-md-8">	
+											<input type="hidden" id="groupNo" value="${map.groupDetail.groupNo}">
+											<input type="hidden" id="groupName" value="${map.groupDetail.groupName}">
+												<table class="table table-hober" id="tableCss">
+													<tr>
+														<td>그룹명</td>
+														<td>${map.groupDetail.groupName }</td>
+													<tr>
+													<tr>
+														<td>그룹종류</td>
+														<td>${map.groupDetail.groupKindName }</td>
+													<tr>
+													<tr>
+														<td>그룹장</td>
+														<td>${map.groupDetail.memberName }</td>
+													<tr>
+													<tr>
+														<td>그룹설명</td>
+														<td>${map.groupDetail.groupInfo }</td>
+													<tr>
+													<tr>
+														<td>생성일</td>
+														<td>${map.groupDetail.groupCreateDate }</td>
+													</tr>
+												</table>
+												<form class="form-inline">
+													<c:if test="${map.countNext > 0 }">
+														<div class="form-group">
+															<p><span id="purple">다음글</span> : <a type="button" href="${pageContext.request.contextPath}/groupDetail?groupNo=${map.nextGroup.groupNo}">${map.nextGroup.groupName }</a></p>
+														</div>
+													</c:if>
+													<c:if test="${map.countNext eq 0 || map.countNext == null}">
+														<div class="form-group">
+															<p><span id="purple">다음글</span>이 없습니다.</p>
+														</div>
+													</c:if>
+													<c:if test="${map.countPrev > 0 }">
+														<div class="form-group pull-right">
+															<p><span id="purple">이전글</span> : <a type="button" href="${pageContext.request.contextPath}/groupDetail?groupNo=${map.prevGroup.groupNo}">${map.prevGroup.groupName }</a></p>
+														</div>
+													</c:if>
+													<c:if test="${map.countPrev eq 0 || map.countPrev == null}">
+														<div class="form-group pull-right">
+															<p><span id="purple">이전글</span>이 없습니다.</p>
+														</div>
+													</c:if>
+												</form>
+												<div class="navbar-form navbar-left">
+													<div class="form-group" style="margin:0px">
+														<button class="btn btn-primary" onclick="listBtn()">목록</button>
+													</div>
+												</div>
+												<div class="navbar-form navbar-right">
+													<div class="form-group" style="margin:0px">
+														<c:if test="${sessionScope.memberSessionNo == map.groupDetail.memberNo}">
+														<button class="btn btn-primary" onclick="deleteBtn()">삭제</button>
+														<button class="btn btn-primary" onclick="modifyBtn()">수정</button>
+														</c:if>
+														<button class="btn btn-primary" onclick="groupMainBtn()">그룹메인</button>
+													</div>
+												</div>
+											<div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div>
-						<c:if test="${map.countNext > 0 }">
-							<p>다음글 : <a type="button" href="${pageContext.request.contextPath}/groupDetail?groupNo=${map.nextGroup.groupNo}">${map.nextGroup.groupName }</a></p>
-						</c:if>
-						<c:if test="${map.countNext eq 0 }">
-							<p>다음글이 없습니다.</p>
-						</c:if>
-						<c:if test="${map.countPrev > 0 }">
-							<p>이전글 : <a type="button" href="${pageContext.request.contextPath}/groupDetail?groupNo=${map.prevGroup.groupNo}">${map.prevGroup.groupName }</a></p>
-						</c:if>
-						<c:if test="${map.countPrev eq 0 }">
-							<p>이전글이 없습니다.</p>
-						</c:if>
-					</div>
+				</div>								
 			</div>
 		</div>
 	</div>

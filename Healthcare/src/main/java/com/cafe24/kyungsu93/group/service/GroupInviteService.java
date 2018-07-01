@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,9 +74,12 @@ public class GroupInviteService {
 	 * @param memberNo
 	 * @return
 	 */
-	public Map<String, Object> groupJoinCreateCheck(String memberNo) {
-		logger.debug("GroupInviteService - groupCalendarList 실행");
-		memberNo = "member_1";
+	public Map<String, Object> groupJoinCreateCheck(HttpSession session) {
+		logger.debug("GroupInviteService - groupJoinCreateCheck 실행");
+		String memberNo = (String) session.getAttribute("memberSessionNo");
+		int sessionLevel = (Integer) session.getAttribute("memberSessionLevel");
+		logger.debug("memberNo:"+memberNo);
+		logger.debug("sessionLevel:"+sessionLevel);
 		Map<String,Object> returnMap = new HashMap<String,Object>();
 		//가입햇는지
 		int result = 0;
@@ -187,7 +192,123 @@ public class GroupInviteService {
 			groupInviteDao.acceptGroupList(groupInvite);
 		}
 	}
-		
+	public Map<String,Object> groupMembersListSearchDate(String groupName,String startDate, String endDate,int currentPage, int pagePerRow) {
+		logger.debug("GroupService - groupListSearch 실행");
+		Map<String,Object> map = new HashMap<String,Object>();
+		int beginRow = (currentPage-1)*pagePerRow;
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		map.put("startDate", startDate);
+		map.put("groupName", groupName);
+		map.put("endDate", endDate);
+		logger.debug("가져온 데이터:"+startDate+","+endDate);
+		List<GroupInvite> list = groupInviteDao.groupMembersListSearchDate(map);
+		int total = groupInviteDao.groupMembersListSearchDateCount(map);
+		logger.debug("total:"+total);
+		int lastPage = total/pagePerRow;
+        if(total % pagePerRow != 0) {
+            lastPage++;
+        }
+        logger.debug("list:"+list);
+        logger.debug("lastPage:"+lastPage);
+        logger.debug("currentPage:"+currentPage);
+        logger.debug("beginRow:"+beginRow);
+        logger.debug("pagePerRow:"+pagePerRow);
+        logger.debug("======================page block=========================");
+       
+        int pagePerBlock = pagePerRow; //보여줄 블록 수 
+        int block = currentPage/pagePerBlock;
+        int totalBlock = total/pagePerBlock;//총 블록수
+        
+        if(currentPage % pagePerBlock != 0) {
+        	block ++;
+        }
+        int firstBlockPage = (block-1)*pagePerBlock+1;
+        int lastBlockPage = block*pagePerBlock;
+        
+		if(lastPage > 0) {			
+			if(lastPage % pagePerBlock != 0) {
+				totalBlock++;
+			}
+		}
+		if(lastBlockPage >= totalBlock) {
+			lastBlockPage = totalBlock;
+		}
+		logger.debug("firstBlockPage:"+firstBlockPage);
+		logger.debug("lastBlockPage:"+lastBlockPage);
+		logger.debug("block:"+block);
+		logger.debug("totalBlock:"+totalBlock);
+		logger.debug("======================page block=========================");
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("list", list);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("firstBlockPage", firstBlockPage);
+		returnMap.put("lastBlockPage", lastBlockPage);
+		returnMap.put("totalBlock", totalBlock);
+		returnMap.put("startDate", startDate);
+		returnMap.put("endDate", endDate);
+		returnMap.put("total", total);
+		return returnMap;
+	}
+	
+	public Map<String,Object> groupMembersListSearchKeyoption(String groupName, String KeyOption, String KeyWord,int currentPage, int pagePerRow) {
+		logger.debug("GroupService - groupMembersListSearchKeyoption 실행");
+		Map<String,Object> map = new HashMap<String,Object>();
+		int beginRow = (currentPage-1)*pagePerRow;
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		map.put("groupName", groupName);
+		map.put("KeyOption", KeyOption);
+		map.put("KeyWord", KeyWord);
+		logger.debug("가져온 데이터:"+KeyOption+","+KeyWord);
+		List<GroupInvite> list = groupInviteDao.groupMembersListSearchKeyoption(map);
+		int total = groupInviteDao.groupMembersListCountSearchKeyoption(map);
+		logger.debug("total:"+total);
+		int lastPage = total/pagePerRow;
+        if(total % pagePerRow != 0) {
+            lastPage++;
+        }
+        logger.debug("list:"+list);
+        logger.debug("lastPage:"+lastPage);
+        logger.debug("currentPage:"+currentPage);
+        logger.debug("beginRow:"+beginRow);
+        logger.debug("pagePerRow:"+pagePerRow);
+        logger.debug("======================page block=========================");
+       
+        int pagePerBlock = pagePerRow; //보여줄 블록 수 
+        int block = currentPage/pagePerBlock;
+        int totalBlock = total/pagePerBlock;//총 블록수
+        
+        if(currentPage % pagePerBlock != 0) {
+        	block ++;
+        }
+        int firstBlockPage = (block-1)*pagePerBlock+1;
+        int lastBlockPage = block*pagePerBlock;
+        
+		if(lastPage > 0) {			
+			if(lastPage % pagePerBlock != 0) {
+				totalBlock++;
+			}
+		}
+		if(lastBlockPage >= totalBlock) {
+			lastBlockPage = totalBlock;
+		}
+		logger.debug("firstBlockPage:"+firstBlockPage);
+		logger.debug("lastBlockPage:"+lastBlockPage);
+		logger.debug("block:"+block);
+		logger.debug("totalBlock:"+totalBlock);
+		logger.debug("======================page block=========================");
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("list", list);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("firstBlockPage", firstBlockPage);
+		returnMap.put("lastBlockPage", lastBlockPage);
+		returnMap.put("totalBlock", totalBlock);
+		returnMap.put("KeyOption", KeyOption);
+		returnMap.put("KeyWord", KeyWord);
+		returnMap.put("total", total);
+		return returnMap;
+	}
 	/**
 	 * 그룹 회원 리스트
 	 * @param currentPage
@@ -257,14 +378,163 @@ public class GroupInviteService {
 	}
 	
 	/**
+	 * 그룹 초대 리스트 키옵션 검색
+	 * @param session
+	 * @param KeyOption
+	 * @param KeyWord
+	 * @param currentPage
+	 * @param pagePerRow
+	 */
+	public Map<String,Object> inviteGroupListSearchKeyoption(HttpSession session, String KeyOption, String KeyWord,int currentPage, int pagePerRow) {
+		logger.debug("GroupService - inviteGroupListSearchKeyoption 실행");
+		Map<String,Object> map = new HashMap<String,Object>();
+		String memberNo = (String) session.getAttribute("memberSessionNo");
+		int sessionLevel = (Integer) session.getAttribute("memberSessionLevel");
+		logger.debug("memberNo:"+memberNo);
+		logger.debug("sessionLevel:"+sessionLevel);
+		map.put("sessionLevel", sessionLevel);
+		map.put("memberNo", memberNo);
+		int beginRow = (currentPage-1)*pagePerRow;
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		map.put("KeyOption", KeyOption);
+		map.put("KeyWord", KeyWord);
+		logger.debug("가져온 데이터:"+KeyOption+","+KeyWord);
+		List<GroupInvite> list = groupInviteDao.inviteGroupListSearchKeyoption(map);
+		int total = groupInviteDao.inviteGroupListSearchKeyoptiontotalCount(map);
+		logger.debug("total:"+total);
+		int lastPage = total/pagePerRow;
+        if(total % pagePerRow != 0) {
+            lastPage++;
+        }
+        logger.debug("list:"+list);
+        logger.debug("lastPage:"+lastPage);
+        logger.debug("currentPage:"+currentPage);
+        logger.debug("beginRow:"+beginRow);
+        logger.debug("pagePerRow:"+pagePerRow);
+        logger.debug("======================page block=========================");
+       
+        int pagePerBlock = pagePerRow; //보여줄 블록 수 
+        int block = currentPage/pagePerBlock;
+        int totalBlock = total/pagePerBlock;//총 블록수
+        
+        if(currentPage % pagePerBlock != 0) {
+        	block ++;
+        }
+        int firstBlockPage = (block-1)*pagePerBlock+1;
+        int lastBlockPage = block*pagePerBlock;
+        
+		if(lastPage > 0) {			
+			if(lastPage % pagePerBlock != 0) {
+				totalBlock++;
+			}
+		}
+		if(lastBlockPage >= totalBlock) {
+			lastBlockPage = totalBlock;
+		}
+		logger.debug("firstBlockPage:"+firstBlockPage);
+		logger.debug("lastBlockPage:"+lastBlockPage);
+		logger.debug("block:"+block);
+		logger.debug("totalBlock:"+totalBlock);
+		logger.debug("======================page block=========================");
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("list", list);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("firstBlockPage", firstBlockPage);
+		returnMap.put("lastBlockPage", lastBlockPage);
+		returnMap.put("totalBlock", totalBlock);
+		returnMap.put("KeyOption", KeyOption);
+		returnMap.put("KeyWord", KeyWord);
+		returnMap.put("total", total);
+		return returnMap;
+	}
+	/**
+	 * 그룹 초대 리스트 날짜 검색
+	 * @param session
+	 * @param startDate
+	 * @param endDate
+	 * @param currentPage
+	 * @param pagePerRow
+	 * @return
+	 */
+	public Map<String,Object> inviteGroupListSearchDate(HttpSession session,String startDate, String endDate,int currentPage, int pagePerRow) {
+		logger.debug("GroupService - groupListSearch 실행");
+		Map<String,Object> map = new HashMap<String,Object>();
+		String memberNo = (String) session.getAttribute("memberSessionNo");
+		int sessionLevel = (Integer) session.getAttribute("memberSessionLevel");
+		logger.debug("memberNo:"+memberNo);
+		logger.debug("sessionLevel:"+sessionLevel);
+		map.put("sessionLevel", sessionLevel);
+		map.put("memberNo", memberNo);
+		int beginRow = (currentPage-1)*pagePerRow;
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
+		logger.debug("가져온 데이터:"+startDate+","+endDate);
+		List<GroupInvite> list = groupInviteDao.inviteGroupListSearchDate(map);
+		int total = groupInviteDao.inviteGroupListSearchDatetotalCount(map);
+		logger.debug("total:"+total);
+		int lastPage = total/pagePerRow;
+        if(total % pagePerRow != 0) {
+            lastPage++;
+        }
+        logger.debug("list:"+list);
+        logger.debug("lastPage:"+lastPage);
+        logger.debug("currentPage:"+currentPage);
+        logger.debug("beginRow:"+beginRow);
+        logger.debug("pagePerRow:"+pagePerRow);
+        logger.debug("======================page block=========================");
+       
+        int pagePerBlock = pagePerRow; //보여줄 블록 수 
+        int block = currentPage/pagePerBlock;
+        int totalBlock = total/pagePerBlock;//총 블록수
+        
+        if(currentPage % pagePerBlock != 0) {
+        	block ++;
+        }
+        int firstBlockPage = (block-1)*pagePerBlock+1;
+        int lastBlockPage = block*pagePerBlock;
+        
+		if(lastPage > 0) {			
+			if(lastPage % pagePerBlock != 0) {
+				totalBlock++;
+			}
+		}
+		if(lastBlockPage >= totalBlock) {
+			lastBlockPage = totalBlock;
+		}
+		logger.debug("firstBlockPage:"+firstBlockPage);
+		logger.debug("lastBlockPage:"+lastBlockPage);
+		logger.debug("block:"+block);
+		logger.debug("totalBlock:"+totalBlock);
+		logger.debug("======================page block=========================");
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("list", list);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("firstBlockPage", firstBlockPage);
+		returnMap.put("lastBlockPage", lastBlockPage);
+		returnMap.put("totalBlock", totalBlock);
+		returnMap.put("startDate", startDate);
+		returnMap.put("endDate", endDate);
+		returnMap.put("total", total);
+		return returnMap;
+	}
+	/**
 	 * 나를 초대한 그룹 리스트
 	 * @param currentPage
 	 * @param pagePerRow
 	 * @return
 	 */
-	public Map<String, Object> inviteGroupList(int currentPage, int pagePerRow){
+	public Map<String, Object> inviteGroupList(HttpSession session,int currentPage, int pagePerRow){
 		logger.debug("GroupInviteService - inviteGroupList 실행");
-		Map<String,Integer> map = new HashMap<String,Integer>();
+		Map<String,Object> map = new HashMap<String,Object>();
+		String memberNo = (String) session.getAttribute("memberSessionNo");
+		int sessionLevel = (Integer) session.getAttribute("memberSessionLevel");
+		logger.debug("memberNo:"+memberNo);
+		logger.debug("sessionLevel:"+sessionLevel);
+		map.put("sessionLevel", sessionLevel);
+		map.put("memberNo", memberNo);
 		int beginRow = (currentPage-1)*pagePerRow;
 		map.put("beginRow", beginRow);
 		map.put("pagePerRow", pagePerRow);
@@ -312,6 +582,141 @@ public class GroupInviteService {
 		returnMap.put("totalBlock", totalBlock);
 		return returnMap;
 	}
+	/**
+	 * 그룹에 초대한 멤버 리스트 날짜 검색
+	 * @param groupNo
+	 * @param startDate
+	 * @param endDate
+	 * @param currentPage
+	 * @param pagePerRow
+	 * @return
+	 */
+	public Map<String,Object> groupInviteListSearchDate(String groupNo,String startDate, String endDate,int currentPage, int pagePerRow) {
+		logger.debug("GroupService - groupListSearch 실행");
+		Map<String,Object> map = new HashMap<String,Object>();
+		int beginRow = (currentPage-1)*pagePerRow;
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		map.put("startDate", startDate);
+		map.put("groupNo", groupNo);
+		map.put("endDate", endDate);
+		logger.debug("가져온 데이터:"+startDate+","+endDate);
+		List<GroupInvite> list = groupInviteDao.groupInviteListSearchDate(map);
+		int total = groupInviteDao.groupInviteListSearchDatetotalCount(map);
+		logger.debug("total:"+total);
+		int lastPage = total/pagePerRow;
+        if(total % pagePerRow != 0) {
+            lastPage++;
+        }
+        logger.debug("list:"+list);
+        logger.debug("lastPage:"+lastPage);
+        logger.debug("currentPage:"+currentPage);
+        logger.debug("beginRow:"+beginRow);
+        logger.debug("pagePerRow:"+pagePerRow);
+        logger.debug("======================page block=========================");
+       
+        int pagePerBlock = pagePerRow; //보여줄 블록 수 
+        int block = currentPage/pagePerBlock;
+        int totalBlock = total/pagePerBlock;//총 블록수
+        
+        if(currentPage % pagePerBlock != 0) {
+        	block ++;
+        }
+        int firstBlockPage = (block-1)*pagePerBlock+1;
+        int lastBlockPage = block*pagePerBlock;
+        
+		if(lastPage > 0) {			
+			if(lastPage % pagePerBlock != 0) {
+				totalBlock++;
+			}
+		}
+		if(lastBlockPage >= totalBlock) {
+			lastBlockPage = totalBlock;
+		}
+		logger.debug("firstBlockPage:"+firstBlockPage);
+		logger.debug("lastBlockPage:"+lastBlockPage);
+		logger.debug("block:"+block);
+		logger.debug("totalBlock:"+totalBlock);
+		logger.debug("======================page block=========================");
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("list", list);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("firstBlockPage", firstBlockPage);
+		returnMap.put("lastBlockPage", lastBlockPage);
+		returnMap.put("totalBlock", totalBlock);
+		returnMap.put("startDate", startDate);
+		returnMap.put("endDate", endDate);
+		returnMap.put("total", total);
+		return returnMap;
+	}
+	
+	/**
+	 * 그룹에 초대한 멤버 리스트 키옵션 검색
+	 * @param groupNo
+	 * @param KeyOption
+	 * @param KeyWord
+	 * @param currentPage
+	 * @param pagePerRow
+	 * @return
+	 */
+	public Map<String,Object> groupInviteListSearchKeyoption(String groupNo, String KeyOption, String KeyWord,int currentPage, int pagePerRow) {
+		logger.debug("GroupService - groupInviteListSearchKeyoption 실행");
+		Map<String,Object> map = new HashMap<String,Object>();
+		int beginRow = (currentPage-1)*pagePerRow;
+		map.put("beginRow", beginRow);
+		map.put("pagePerRow", pagePerRow);
+		map.put("groupNo", groupNo);
+		map.put("KeyOption", KeyOption);
+		map.put("KeyWord", KeyWord);
+		logger.debug("가져온 데이터:"+KeyOption+","+KeyWord);
+		List<GroupInvite> list = groupInviteDao.groupInviteListSearchKeyoption(map);
+		int total = groupInviteDao.groupInviteListSearchKeyoptiontotalCount(map);
+		logger.debug("total:"+total);
+		int lastPage = total/pagePerRow;
+        if(total % pagePerRow != 0) {
+            lastPage++;
+        }
+        logger.debug("list:"+list);
+        logger.debug("lastPage:"+lastPage);
+        logger.debug("currentPage:"+currentPage);
+        logger.debug("beginRow:"+beginRow);
+        logger.debug("pagePerRow:"+pagePerRow);
+        logger.debug("======================page block=========================");
+       
+        int pagePerBlock = pagePerRow; //보여줄 블록 수 
+        int block = currentPage/pagePerBlock;
+        int totalBlock = total/pagePerBlock;//총 블록수
+        
+        if(currentPage % pagePerBlock != 0) {
+        	block ++;
+        }
+        int firstBlockPage = (block-1)*pagePerBlock+1;
+        int lastBlockPage = block*pagePerBlock;
+        
+		if(lastPage > 0) {			
+			if(lastPage % pagePerBlock != 0) {
+				totalBlock++;
+			}
+		}
+		if(lastBlockPage >= totalBlock) {
+			lastBlockPage = totalBlock;
+		}
+		logger.debug("firstBlockPage:"+firstBlockPage);
+		logger.debug("lastBlockPage:"+lastBlockPage);
+		logger.debug("block:"+block);
+		logger.debug("totalBlock:"+totalBlock);
+		logger.debug("======================page block=========================");
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("list", list);
+		returnMap.put("lastPage", lastPage);
+		returnMap.put("firstBlockPage", firstBlockPage);
+		returnMap.put("lastBlockPage", lastBlockPage);
+		returnMap.put("totalBlock", totalBlock);
+		returnMap.put("KeyOption", KeyOption);
+		returnMap.put("KeyWord", KeyWord);
+		returnMap.put("total", total);
+		return returnMap;
+	}
 	
 	/**
 	 * 그룹에 초대한 회원리스트
@@ -319,14 +724,17 @@ public class GroupInviteService {
 	 * @param pagePerRow
 	 * @return
 	 */
-	public Map<String, Object> groupInviteList(int currentPage, int pagePerRow){
-		logger.debug("GroupInviteService - groupMemberList 실행");
-		Map<String,Integer> map = new HashMap<String,Integer>();
+	public Map<String, Object> groupInviteList(String groupNo, int currentPage, int pagePerRow){
+		logger.debug("GroupInviteService - groupInviteList 실행");
+		Map<String,Object> map = new HashMap<String,Object>();
 		int beginRow = (currentPage-1)*pagePerRow;
 		map.put("beginRow", beginRow);
+		map.put("groupNo", groupNo);
 		map.put("pagePerRow", pagePerRow);
 		List<GroupInvite> list = groupInviteDao.groupInviteList(map);
-		int total = groupInviteDao.totalCountInvite();
+		GroupInvite	groupNameFind = groupInviteDao.groupNameFind(groupNo);
+		String groupName = groupNameFind.getGroupName();
+		int total = groupInviteDao.groupInviteListtotalCount(groupNo);
 		int lastPage = total/pagePerRow;
         if(total % pagePerRow != 0) {
             lastPage++;
@@ -362,7 +770,8 @@ public class GroupInviteService {
 		logger.debug("totalBlock:"+totalBlock);
 		logger.debug("====================== page block =========================");
 		Map<String,Object> returnMap = new HashMap<String,Object>();
-		returnMap.put("list", list);
+		returnMap.put("list", list);	
+		returnMap.put("groupName", groupName);
 		returnMap.put("lastPage", lastPage);
 		returnMap.put("firstBlockPage", firstBlockPage);
 		returnMap.put("lastBlockPage", lastBlockPage);

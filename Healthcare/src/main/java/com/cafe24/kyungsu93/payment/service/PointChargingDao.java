@@ -16,6 +16,12 @@ public class PointChargingDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.payment.service.PointChargingMapper.";
+
+	//포인트 결제 승인 완료 업데이트
+	public int updateapprovalResultPointCharging(PointCharging pointCharging) {
+		logger.debug("pointChargingDao - updateapprovalResultPointCharging 실행");
+		return sqlSession.update(NS+"updateapprovalResultPointCharging", pointCharging);
+	}
 	
 	//멤버 포인트 업데이트
 	public int updateMemberPointCharging(PointCharging updatePoint) {

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,11 +67,11 @@ public class RefundService {
 	 * 환불 지급완료
 	 * @param refundNo
 	 */
-	public void completeRefund(String refundNo) {
+	public void completeRefund(HttpSession session, String refundNo) {
 		logger.debug("RefundService - completeRefund실행");
 		Refund refund = new Refund();
+		String refundCompleteDirectorNo = (String) session.getAttribute("memberSessionNo");
 		refund.setRefundNo(refundNo);
-		String refundCompleteDirectorNo = "member_1";
 		refund.setRefundCompleteDirectorNo(refundCompleteDirectorNo);
 		refundDao.completeRefund(refund);
 		}	
@@ -78,11 +80,11 @@ public class RefundService {
 	 * 환불 거절
 	 * @param refundNo
 	 */
-	public void deniedRefund(String refundNo) {
+	public void deniedRefund(HttpSession session,String refundNo) {
 		logger.debug("RefundService - deniedRefund실행");
 		Refund refund = new Refund();
+		String refundDirectorNo = (String) session.getAttribute("memberSessionNo");
 		refund.setRefundNo(refundNo);
-		String refundDirectorNo = "member_1";
 		refund.setRefundDirectorNo(refundDirectorNo);
 		refundDao.deniedRefund(refund);
 		}	
@@ -91,11 +93,11 @@ public class RefundService {
 	 * 환불 승인
 	 * @param refundNo
 	 */
-	public void acceptRefund(String refundNo) {
+	public void acceptRefund(HttpSession session, String refundNo) {
 		logger.debug("RefundService - acceptRefund실행");
+		String refundDirectorNo = (String) session.getAttribute("memberSessionNo");
 		Refund refund = new Refund();
 		refund.setRefundNo(refundNo);
-		String refundDirectorNo = "member_1";
 		refund.setRefundDirectorNo(refundDirectorNo);
 		refundDao.acceptRefund(refund);
 		}	
@@ -104,10 +106,9 @@ public class RefundService {
 	 * 회원 포인트 조회
 	 * @return
 	 */
-	public Map<String,Object> memberPoint() {
+	public Map<String,Object> memberPoint(HttpSession session) {
 		logger.debug("RefundService - memberPoint실행");
-		PointCharging pointCharging = new PointCharging();
-		String memberNo = "member_99";/*pointCharging.getMemberNo();*/
+		String memberNo = (String) session.getAttribute("memberSessionNo");
 		PointCharging memberPointSearch = pointChargingDao.selectMemberPoint(memberNo);
 		
 		int memberPoint = memberPointSearch.getMemberPoint();

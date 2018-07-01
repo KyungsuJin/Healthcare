@@ -1,61 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cafe24.kyungsu93.bloodpressure.service.BloodPressureMapper">
- 		<select id="bloodPressureSearchAll" 
-		 		parameterType="map" 
-		 		resultType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
+	<select id="bloodPressureNoCountToHealthScreen" parameterType="String" resultType="Integer">
+		SELECT 
+		count(*)
+		FROM health_screen
+		WHERE blood_pressure_no = #{bloodPressureNo}
+	</select>
+	<select id="bloodPressureSearchDateCount" 
+			parameterType="map" 
+			resultType="Integer">
       	 SELECT
-			blood_pressure_no as bloodPressureNo,
-			member_no as memberNo,
-			systolic_pressure as systolicPressure,
-			diastolic_pressure as diastolicPressure,
-			blood_pressure_date as bloodPressureDate
-			FROM blood_pressure  		
-			<include refid="search"></include>
-			ORDER BY blood_pressure_date DESC
-		</select>
-		<select id="bloodPressureSearchDate" 
-				parameterType="map" 
-				resultType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
-      	 SELECT
-			blood_pressure_no as bloodPressureNo,
-			member_no as memberNo,
-			systolic_pressure as systolicPressure,
-			diastolic_pressure as diastolicPressure,
-			blood_pressure_date as bloodPressureDate
-			FROM blood_pressure  		
-			<![CDATA[
-			WHERE blood_pressure_date >= #{startDate} and blood_pressure_date < #{endDate}
-			]]>
-			ORDER BY blood_pressure_date DESC
-		</select>
-		<sql id="search">
+			count(*)
+			FROM blood_pressure 
+			WHERE blood_pressure_date >= #{startDate} AND #{endDate} > blood_pressure_date
 			<choose>
-				<when test="keyField == 'systolicPressure'"> 
-					WHERE systolic_pressure like CONCAT(#{keyWord}, '%') 
-				</when> 
-				<when test="keyField == 'diastolicPressure'"> 
-					WHERE diastolic_pressure like CONCAT(#{keyWord} , '%') 
-				</when> 
-				<otherwise>
-					WHERE systolic_pressure like CONCAT(#{keyWord}, '%')
-					OR diastolic_pressure like CONCAT(#{keyWord} , '%') 
-				</otherwise>
-			</choose> 
-		</sql>
-		<select id="bloodPressurechart"
-			 parameterType="String"
+				<when test="sessionLevel != 1">
+					AND member_no = #{memberNo}
+				</when>
+			</choose>
+	</select>
+	<select id="bloodPressureSearchDate" 
+			parameterType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure" 
 			resultType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
+      	 SELECT
+			blood_pressure_no as bloodPressureNo,
+			member_no as memberNo,
+			systolic_pressure as systolicPressure,
+			diastolic_pressure as diastolicPressure,
+			blood_pressure_date as bloodPressureDate
+			FROM blood_pressure  		
+			WHERE blood_pressure_date >= #{startDate} AND #{endDate} > blood_pressure_date
+			<choose>
+				<when test="sessionLevel != 1">
+					AND member_no = #{memberNo}
+				</when>
+			</choose>
+			ORDER BY blood_pressure_date DESC
+			LIMIT #{beginRow},#{pagePerRow}
+	</select> 
+	<select id="bloodPressurechart"
+		 parameterType="String"
+		resultType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
 		SELECT 
 			systolic_pressure as systolicPressure,
 			diastolic_pressure as diastolicPressure,
 			blood_pressure_date as bloodPressureDate
 		FROM blood_pressure
 		WHERE member_no = #{memberNo}
-		AND blood_pressure_date > (NOW() - INTERVAL 7 DAY)
+		AND blood_pressure_date > (NOW() - INTERVAL 30 DAY)
 		ORDER BY blood_pressure_date ASC
 	 </select>
-	 	 <select id="bloodPressureOne"
+ 	 <select id="bloodPressureOne"
 			 parameterType="String"
 			resultType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
 		SELECT
@@ -78,7 +74,7 @@
 		DELETE FROM blood_pressure WHERE blood_pressure_no = #{bloodPressureNo}
 	</delete>
 	<select id="bloodPressureList" 
-			parameterType="Integer" 
+			parameterType="map" 
 			resultType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
 		SELECT
 			blood_pressure_no as bloodPressureNo,
@@ -86,22 +82,33 @@
 			systolic_pressure as systolicPressure,
 			diastolic_pressure as diastolicPressure,
 			blood_pressure_date as bloodPressureDate
-			FROM blood_pressure 		
+			FROM blood_pressure 	
+			<choose>
+				<when test="sessionLevel != 1">
+					WHERE member_no = #{memberNo}
+				</when>
+			</choose>
 			ORDER BY blood_pressure_date DESC
 			LIMIT #{beginRow},#{pagePerRow}
 	</select>
- 	<select id="BloodPressureId" resultType="Integer">
+ 	<select id="bloodPressureNo" resultType="Integer">
 		SELECT
-		max(CAST(substring(blood_pressure_no,16) AS DECIMAL))
+		INFULL(MAX(CAST(SUBSTRING(blood_pressure_no,16)as decimal)),0) 
 		FROM blood_pressure
 	</select>
-	<select id="bloodPressureCount" resultType="Integer">
+	<select id="bloodPressureCount" parameterType="map" resultType="Integer">
 		SELECT
 		count(*)
 		FROM blood_pressure
+			<choose>
+				<when test="sessionLevel != 1">
+					WHERE member_no = #{memberNo}
+				</when>
+			</choose>
 	</select>
 	<insert id="addBloodPressure" 
 			parameterType="com.cafe24.kyungsu93.bloodpressure.service.BloodPressure">
+			
 	 	INSERT INTO blood_pressure (
 			blood_pressure_no, member_No, systolic_pressure, diastolic_pressure, blood_pressure_date
 			)

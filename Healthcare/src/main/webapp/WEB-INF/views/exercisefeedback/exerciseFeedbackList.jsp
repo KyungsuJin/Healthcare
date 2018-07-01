@@ -7,7 +7,6 @@
 <title>exerciseFeedbackList</title>
 <jsp:include page="../include/header.jsp"></jsp:include>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript">
 	//날짜 형식 
@@ -61,7 +60,7 @@ $(document).ready(function(){
 	}  
 	//1주일전 검색
 	function SearchWeek(){
-			today.setDate(today.getDate() -3)
+		today.setDate(today.getDate() -7)
 		var startDate = today.yyyymmdd()
 		var endDate = (new Date).yyyymmdd()
 		console.log("endDate:"+endDate);
@@ -91,7 +90,7 @@ $(document).ready(function(){
 	function addExerciseFeedback(){
 		location.href="${pageContext.request.contextPath}/exerciseFeedbackPtList";
 	}
-	
+	//일반검색
 	function formSearchKeywordcheck(){
    		var keyWord = $('#keyWord').val();
  		if(keyWord == ''|| keyWord == null){
@@ -104,7 +103,7 @@ $(document).ready(function(){
 		}
 	} 
 	function exerciseFeedbackAll(){
-		location.href="${pageContext.request.contextPath}/exerciseFeedbackList";
+		location.href="${pageContext.request.contextPath}/exerciseFeedResponseResultList";
 	}
 </script>
 <style>
@@ -129,7 +128,7 @@ font-size : 14px;
 			<div class="content">
 			<h4>요청한운동피드백리스트</h4>
 				<!-- 기간 검색 -->   		
-					<div class="form-inline" style=" float:left; margin-right:450px;">
+					<div class="form-inline" style="float:left;">
 						<form class="form-inline" id="formSearch" name="formSearch" onsubmit="return formSearchcheck()" action="${pageContext.request.contextPath}/exerciseFeedbackListSearch" method="POST"> 
 							<div class="form-group"> 
 								<input type="text" class="form-control" id="startDate" name="startDate" placeholder="시작일">
@@ -154,7 +153,8 @@ font-size : 14px;
 							</div>				
 						</form>
 					</div>
-					<div class="form-inline">
+				<!-- 일반 검색 -->
+					<div class="form-inline pull-right">
 						<form class="form-inline" id="formSearchKeyword" name="formSearchKeyword" onsubmit="return formSearchKeywordcheck()" action="${pageContext.request.contextPath}/exerciseFeedbackRequestListSearch" method="POST"> 
 							<div class="form-group">
 								 <select name="keyOption" class="form-control" size="1">
@@ -254,11 +254,15 @@ font-size : 14px;
 						</c:forEach>
 					</tbody>
 				</table>
-				<div align="left">
-					<input type="button" class="btn btn-primary" onclick="exerciseFeedbackApprovalResult()" value="운동피드백요청결과">
+				<div class="navbar-form navbar-left">
+					<div  class="form-group" style="margin:0px">
+						<input type="button" class="btn btn-primary" onclick="addExerciseFeedback()" value="운동피드백요청등록">
+					</div>
 				</div>
-				<div align="right">
-					<input type="button" class="btn btn-primary" onclick="addExerciseFeedback()" value="운동피드백요청등록">
+				<div class="navbar-form navbar-right">
+					<div class="form-group" style="margin:0px">
+						<input type="button" class="btn btn-primary" onclick="exerciseFeedbackApprovalResult()" value="운동피드백요청결과">
+					</div>
 				</div>
 				<div align="center">
 					<nav>

@@ -291,7 +291,18 @@
     		return true();
     	}
 	}
-
+	function reset(){
+		$('#foodSelect').val('');
+		$('#exerciseSelect').val('');
+		$('#exerciseFeedbackTitle').val('');
+		$('#exerciseFeedbackContent').val('');
+	}
+	function returnBtn(){
+		history.back();
+	}
+	function returnListBtn(){
+		location.href="${pageContext.request.contextPath}/exerciseFeedbackList";
+	}
 </script>
 </head>
 <body>
@@ -300,28 +311,35 @@
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<div class='col-sm-10'>
-				<h5>exerciseFeedReponse</h5> 받는 회원명 : ${exerciseFeedbackset.memberName }
-					<div class="panel panel-default">
-						<div class="panel-body">
-							<div class="row">
-								<div class='col-sm-6'>
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+                     <div class="col-md-8">
+					 	<div class="card">
+                         	<div class="card-header" data-background-color="purple">
+                         		<h4 class="title">운동피드백 답변 작성</h4>
+							</div>
+							<div class="card-content">
+								<div class="row">
+									<div class="col-md-2">
+									</div>
+									<div class="col-md-8">	
 								<form class="form-horizontal" id="exercisefeedbackForm" onsubmit="return check()" action="${pageContext.request.contextPath}/addExerciseFeedbackRequestResult" method="post">
 									<div>
 										<input type="text" class="form-control" id="exerciseFeedbackTitle" name="exerciseFeedbackTitle" placeholder="제목을 입력해주세요">
 									</div>
-									<div>
+									<div class="form-group">
 										<input type="hidden" id="memberNo" name="memberNo" value="${exerciseFeedbackset.memberNo }">
 										<input type="hidden" id="exerciseFeedbackRequestNo" name="exerciseFeedbackRequestNo" value="${exerciseFeedbackset.exerciseFeedbackRequestNo}">
 									</div>
 									<textarea class="form-control" id="exerciseFeedbackContent" name="exerciseFeedbackContent" style="resize: none;" cols="40" rows="8" placeholder="내용을 입력해주세요"></textarea>
-									<input id="submitBtn" class="btn btn-sm btn-default" type="submit" value="등록하기">
-								</form>
-								</div>
-								<div class='col-sm-6'>
-									<div>
-									<input type="button" class="btn btn-xs btn-default" onclick="foodFeedbackBtn()" value="음식피드백 등록하기">
+									<div class="form-group">
+									<input id="submitBtn" class="btn btn-sm btn-primary pull-right" type="submit" value="등록하기">
 									</div>
+								</form>
+								<div class="form-group">
+									<input type="button" class="btn btn-sm btn-primary pull-left" onclick="foodFeedbackBtn()" value="음식피드백 등록하기">
+								</div>
 									<div id="foodFeedback">
 										<div>
 											음식을 검색해주세요. 총 3개까지만 선택이 가능합니다.<br>
@@ -335,20 +353,18 @@
 											  <option value="채소류">채소류</option>
 											</select>
 											<input type="text" class="form-control" name="foodName" id="foodName" placeholder="ex)좁쌀,메밀">
-											<input type="button" class="btn btn-xs btn-default" value="음식 검색하기" onclick="checkFoodInfo()">
+											<input type="button" class="btn btn-sm btn-primary" value="음식 검색하기" onclick="checkFoodInfo()">
 											<div id="searchResult">
 												<span id="foodSearchResult"></span><br>
 												<select name="food" id="food">
 													<option value="1" selected="selected">음식을 선택해주세요</option>
 												</select>
 												<input type="text" id="ingestionAmount" name="ingestionAmount" placeholder="섭취량을 적어주세요">
-												<input type="button" class="btn btn-xs btn-default" onclick="foodAddBtn()" value="음식추가하기">
+												<input type="button" class="btn btn-sm btn-primary" onclick="foodAddBtn()" value="음식추가하기">
 											</div>
-										</div>
-									</div>
-									
+										</div>									
 									<!-- 운동피드백 -->
-									<input type="button" class="btn btn-xs btn-default" onclick="exerciseFeedbackBtn()" value="운동피드백 등록하기">
+									<input type="button" class="btn btn-sm btn-primary pull-right" onclick="exerciseFeedbackBtn()" value="운동피드백 등록하기">
 									<div id="exerciseFeedback">
 										<div><br>
 											운동을 선택해주세요. 총 3개까지만 선택이 가능합니다.<br>
@@ -373,10 +389,21 @@
 										</div>
 									</form>
 								</div>
+								<div class="navbar-form navbar-left">
+									<div class="form-group" style="margin:0px">
+										<input type="button" class="btn btn-primary" onclick="returnListBtn()" value="목록으로">
+									</div>
+								</div>
+								<div class="navbar-form navbar-right">
+									<div class="form-group" style="margin:0px">
+										<input type="button" class="btn btn-primary" onclick="reset()" value="다시입력">
+										<input type="button" class="btn btn-primary" onclick="returnBtn()" value="등록취소">
+									</div>
+								</div>
+								</div>
+							</div>
+							</div>
 						</div>
-						<input type="button" class="btn btn-sm btn-default" onclick="cancleBtn()" value="이전">
-						<input type="button" class="btn btn-sm btn-default" onclick="exerciseFeedbackListBtn()" value="리스트보기">
-					</div>
 					</div>
 				</div>
 			</div>

@@ -4,7 +4,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.cafe24.kyungsu93.group.service.Group;
 import com.cafe24.kyungsu93.group.service.GroupInvite;
@@ -27,6 +27,56 @@ public class GroupController {
 	@Autowired
 	private GroupInviteService groupInviteService;
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
+
+	//그룹 종류 등록 폼(관리자)
+	@RequestMapping(value="/modifyGroupKind", method=RequestMethod.POST)
+	public String modifyGroupKind(Group group) {
+		logger.debug("GroupController - modifyGroupKind 리다이렉트 실행");
+		groupService.updateGroupKind(group);
+		return "redirect:/groupKindList";
+	}
+	
+	//그룹 종류 수정 폼(관리자)
+	@RequestMapping(value="/modifyGroupKind", method=RequestMethod.GET)
+	public String modifyGroupKind(Model model,@RequestParam(value="groupKindName") String groupKindName) {
+		logger.debug("GroupController - modifyGroupKind 포워드 실행");
+		Group group = groupService.groupKindNoSelect(groupKindName);
+		String groupKindNo = group.getGroupKindNo();
+		model.addAttribute("groupKindNo",groupKindNo);
+		model.addAttribute("groupKindName", groupKindName);
+		return "group/modifyGroupKind";
+	}
+	
+	//그룹 종류 리스트(관리자)
+	@RequestMapping(value="/groupKindList", method=RequestMethod.GET)
+	public String groupKindList(Model model
+								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
+		logger.debug("GroupController - groupKindList 포워드 실행");
+		Map<String,Object> map = groupService.groupKindList(currentPage, pagePerRow);
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
+		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
+		model.addAttribute("totalBlock", map.get("totalBlock"));
+		return "group/groupKindList";
+	}
+	
+	//그룹 종류 등록 폼(관리자)
+	@RequestMapping(value="/addGroupKind", method=RequestMethod.POST)
+	public String addGroupKind(Group group) {
+		logger.debug("GroupController - addGroupKind 리다이렉트 실행");
+		groupService.addGroupKind(group);
+		return "redirect:/groupKindList";
+	}
+	
+	//그룹 종류 등록 폼(관리자)
+	@RequestMapping(value="/addGroupKind", method=RequestMethod.GET)
+	public String addGroupKind() {
+		logger.debug("GroupController - addGroupKind 포워드 실행");
+		return "group/addGroupKind";
+	}
 	
 	//그룹 메인
 	@RequestMapping(value="/detailGroupMain", method=RequestMethod.GET)
@@ -51,9 +101,7 @@ public class GroupController {
 	@RequestMapping(value="/groupMain", method=RequestMethod.GET)
 	public String groupMain(Model model,HttpSession session) {
 		logger.debug("GroupController - groupMain 포워드 실행");
-		String memberNo = (String) session.getAttribute("memberSessionNo");
-		logger.debug("memberNo:"+memberNo);
-		Map<String,Object> map = groupInviteService.groupJoinCreateCheck(memberNo);
+		Map<String,Object> map = groupInviteService.groupJoinCreateCheck(session);
 		model.addAttribute("map", map);
 		logger.debug("map:"+map);
 		return "group/groupMain";
@@ -111,7 +159,53 @@ public class GroupController {
 		groupInviteService.acceptGroupList(groupInvite);
 		return "redirect:/inviteGroupList";
 	}
-
+	
+	//그룹 회원 리스트 키워드 검색
+	@RequestMapping(value="/groupMembersListSearchKeyoption", method= {RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView groupMembersListSearchKeyoption(@RequestParam(value="KeyOption") String KeyOption
+									,@RequestParam(value="groupName") String groupName	
+									,@RequestParam(value="KeyWord")String KeyWord
+									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
+		logger.debug("GroupController - groupMembersList groupMembersListSearchKeyoption ModelAndView 실행");
+		Map<String,Object> map = groupInviteService.groupMembersListSearchKeyoption(groupName, KeyOption, KeyWord, currentPage, pagePerRow);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("group/groupMembersList");
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("groupName", groupName);
+		modelAndView.addObject("KeyOption", map.get("KeyOption"));
+		modelAndView.addObject("KeyWord", map.get("KeyWord"));
+		modelAndView.addObject("searchKeywordresult", map.get("total"));
+		modelAndView.addObject("totalBlock", map.get("totalBlock"));
+		modelAndView.addObject("firstBlockPage", map.get("firstBlockPage"));
+		modelAndView.addObject("lastBlockPage", map.get("lastBlockPage"));
+		modelAndView.addObject("lastPage", map.get("lastPage"));
+		modelAndView.addObject("currentPage", currentPage);
+		return modelAndView;
+	}
+	//그룹 회원 리스트 날짜 검색
+	@RequestMapping(value="/groupMembersListSearchDate", method= {RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView groupMembersListSearchDate(@RequestParam(value="startDate") String startDate
+									,@RequestParam(value="groupName") String groupName
+									,@RequestParam(value="endDate")String endDate
+									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
+		logger.debug("GroupController - groupMembersList groupMembersListSearchDate ModelAndView 실행");
+		Map<String,Object> map = groupInviteService.groupMembersListSearchDate(groupName, startDate, endDate, currentPage, pagePerRow);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("group/groupMembersList");
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("groupName", groupName);
+		modelAndView.addObject("startDate", map.get("startDate"));
+		modelAndView.addObject("endDate", map.get("endDate"));
+		modelAndView.addObject("searchresult", map.get("total"));
+		modelAndView.addObject("totalBlock", map.get("totalBlock"));
+		modelAndView.addObject("firstBlockPage", map.get("firstBlockPage"));
+		modelAndView.addObject("lastBlockPage", map.get("lastBlockPage"));
+		modelAndView.addObject("lastPage", map.get("lastPage"));
+		modelAndView.addObject("currentPage", currentPage);
+		return modelAndView;
+	}
 	//그룹 회원 리스트
 	@RequestMapping(value="/groupMembersList", method=RequestMethod.GET)
 	public String groupMemberList(Model model
@@ -123,6 +217,7 @@ public class GroupController {
 		Map<String,Object> map = groupInviteService.groupMemberList(currentPage, pagePerRow, groupName);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("groupName", groupName);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
@@ -142,14 +237,58 @@ public class GroupController {
 		logger.debug("map:"+map);
 		return "group/groupDetail";
 	}
-	
+	//나를 초대한 그룹 리스트 키워드 검색
+	@RequestMapping(value="/inviteGroupListKeywordSearch", method= {RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView inviteGroupListSearchKeyoption(@RequestParam(value="KeyOption") String KeyOption
+									,HttpSession session
+									,@RequestParam(value="KeyWord")String KeyWord
+									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
+		logger.debug("GroupController - inviteGroupList inviteGroupListSearchKeyoption ModelAndView 실행");
+		Map<String,Object> map = groupInviteService.inviteGroupListSearchKeyoption(session, KeyOption, KeyWord, currentPage, pagePerRow);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("group/inviteGroupList");
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("KeyOption", map.get("KeyOption"));
+		modelAndView.addObject("KeyWord", map.get("KeyWord"));
+		modelAndView.addObject("searchKeywordresult", map.get("total"));
+		modelAndView.addObject("totalBlock", map.get("totalBlock"));
+		modelAndView.addObject("firstBlockPage", map.get("firstBlockPage"));
+		modelAndView.addObject("lastBlockPage", map.get("lastBlockPage"));
+		modelAndView.addObject("lastPage", map.get("lastPage"));
+		modelAndView.addObject("currentPage", currentPage);
+		return modelAndView;
+	}
+	//나를 초대한 그룹 리스트 날짜 검색
+	@RequestMapping(value="/inviteGroupListSearch", method= {RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView inviteGroupListSearchDate(@RequestParam(value="startDate") String startDate
+									,HttpSession session
+									,@RequestParam(value="endDate")String endDate
+									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
+		logger.debug("GroupController - inviteGroupList inviteGroupListSearchDate ModelAndView 실행");
+		Map<String,Object> map = groupInviteService.inviteGroupListSearchDate(session, startDate, endDate, currentPage, pagePerRow);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("group/inviteGroupList");
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("startDate", map.get("startDate"));
+		modelAndView.addObject("endDate", map.get("endDate"));
+		modelAndView.addObject("searchresult", map.get("total"));
+		modelAndView.addObject("totalBlock", map.get("totalBlock"));
+		modelAndView.addObject("firstBlockPage", map.get("firstBlockPage"));
+		modelAndView.addObject("lastBlockPage", map.get("lastBlockPage"));
+		modelAndView.addObject("lastPage", map.get("lastPage"));
+		modelAndView.addObject("currentPage", currentPage);
+		return modelAndView;
+	}
 	//나를 초대한 그룹 리스트
 	@RequestMapping(value="/inviteGroupList", method=RequestMethod.GET)
 	public String inviteGroupList(Model model
+									,HttpSession session
 									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
 		logger.debug("GroupController - inviteGroupList 포워드 실행");
-		Map<String,Object> map = groupInviteService.inviteGroupList(currentPage, pagePerRow);
+		Map<String,Object> map = groupInviteService.inviteGroupList(session, currentPage, pagePerRow);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("list", map.get("list"));
@@ -159,20 +298,66 @@ public class GroupController {
 		return "group/inviteGroupList";
 	}
 	
+	//그룹에 초대한 멤버 리스트 키워드 검색
+	@RequestMapping(value="/groupInviteListSearchKeyoption", method= {RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView groupInviteListSearchKeyoption(@RequestParam(value="KeyOption") String KeyOption
+									,@RequestParam(value="groupNo") String groupNo	
+									,@RequestParam(value="KeyWord")String KeyWord
+									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
+		logger.debug("GroupController - inviteMemberList groupInviteListSearchKeyoption ModelAndView 실행");
+		Map<String,Object> map = groupInviteService.groupInviteListSearchKeyoption(groupNo, KeyOption, KeyWord, currentPage, pagePerRow);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("group/inviteMemberList");
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("KeyOption", map.get("KeyOption"));
+		modelAndView.addObject("KeyWord", map.get("KeyWord"));
+		modelAndView.addObject("searchKeywordresult", map.get("total"));
+		modelAndView.addObject("totalBlock", map.get("totalBlock"));
+		modelAndView.addObject("firstBlockPage", map.get("firstBlockPage"));
+		modelAndView.addObject("lastBlockPage", map.get("lastBlockPage"));
+		modelAndView.addObject("lastPage", map.get("lastPage"));
+		modelAndView.addObject("currentPage", currentPage);
+		return modelAndView;
+	}
+	//그룹에 초대한 멤버 리스트 날짜 검색
+	@RequestMapping(value="/groupInviteListSearchDate", method= {RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView groupInviteListSearchDate(@RequestParam(value="startDate") String startDate
+									,@RequestParam(value="groupNo") String groupNo
+									,@RequestParam(value="endDate")String endDate
+									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
+		logger.debug("GroupController - inviteMemberList groupInviteListSearchDate ModelAndView 실행");
+		Map<String,Object> map = groupInviteService.groupInviteListSearchDate(groupNo, startDate, endDate, currentPage, pagePerRow);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("group/inviteMemberList");
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("startDate", map.get("startDate"));
+		modelAndView.addObject("endDate", map.get("endDate"));
+		modelAndView.addObject("searchresult", map.get("total"));
+		modelAndView.addObject("totalBlock", map.get("totalBlock"));
+		modelAndView.addObject("firstBlockPage", map.get("firstBlockPage"));
+		modelAndView.addObject("lastBlockPage", map.get("lastBlockPage"));
+		modelAndView.addObject("lastPage", map.get("lastPage"));
+		modelAndView.addObject("currentPage", currentPage);
+		return modelAndView;
+	}
 	//그룹에 초대한 멤버 리스트
 	@RequestMapping(value="/inviteMemberList", method=RequestMethod.GET)
 	public String inviteMemberList(Model model
+									,@RequestParam(value="groupNo") String groupNo
 									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
 		logger.debug("GroupController - inviteMemberList 포워드 실행");
-		Map<String,Object> map = groupInviteService.groupInviteList(currentPage, pagePerRow);
+		Map<String,Object> map = groupInviteService.groupInviteList(groupNo, currentPage, pagePerRow);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("groupNo", groupNo);
+		model.addAttribute("groupName", map.get("groupName"));
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("lastBlockPage", map.get("lastBlockPage"));
 		model.addAttribute("firstBlockPage", map.get("firstBlockPage"));
 		model.addAttribute("totalBlock", map.get("totalBlock"));
-		model.addAttribute("groupNoSend", map.get("groupNoSend"));
 		return "group/inviteMemberList";
 	}
 	
@@ -212,13 +397,58 @@ public class GroupController {
 		return "group/modifyGroup";
 	}	
 	
+	//삭제 유예 등록된 그룹 리스트키워드 검색
+	@RequestMapping(value="/deleteGroupListKeywordSearch", method= {RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView deleteGroupListSearchKeyoption(@RequestParam(value="KeyOption") String KeyOption
+									,HttpSession session
+									,@RequestParam(value="KeyWord")String KeyWord
+									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
+		logger.debug("GroupController - deleteGroupList deleteGroupListKeywordSearch ModelAndView 실행");
+		Map<String,Object> map = groupService.deleteGroupListSearchKeyoption(session, KeyOption, KeyWord, currentPage, pagePerRow);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("group/deleteGroupList");
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("KeyOption", map.get("KeyOption"));
+		modelAndView.addObject("KeyWord", map.get("KeyWord"));
+		modelAndView.addObject("searchKeywordresult", map.get("total"));
+		modelAndView.addObject("totalBlock", map.get("totalBlock"));
+		modelAndView.addObject("firstBlockPage", map.get("firstBlockPage"));
+		modelAndView.addObject("lastBlockPage", map.get("lastBlockPage"));
+		modelAndView.addObject("lastPage", map.get("lastPage"));
+		modelAndView.addObject("currentPage", currentPage);
+		return modelAndView;
+	}
+	//삭제 유예 등록된 그룹 리스트 날짜 검색
+	@RequestMapping(value="/deleteGroupListSearch", method= {RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView deleteGroupListSearchDate(@RequestParam(value="startDate") String startDate
+									,HttpSession session
+									,@RequestParam(value="endDate")String endDate
+									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
+		logger.debug("GroupController - deleteGroupList deleteGroupListSearchDate ModelAndView 실행");
+		Map<String,Object> map = groupService.deleteGroupListSearchDate(session, startDate, endDate, currentPage, pagePerRow);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("group/deleteGroupList");
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("startDate", map.get("startDate"));
+		modelAndView.addObject("endDate", map.get("endDate"));
+		modelAndView.addObject("searchresult", map.get("total"));
+		modelAndView.addObject("totalBlock", map.get("totalBlock"));
+		modelAndView.addObject("firstBlockPage", map.get("firstBlockPage"));
+		modelAndView.addObject("lastBlockPage", map.get("lastBlockPage"));
+		modelAndView.addObject("lastPage", map.get("lastPage"));
+		modelAndView.addObject("currentPage", currentPage);
+		return modelAndView;
+	}
 	//삭제 유예 등록된 그룹 리스트
 	@RequestMapping(value="/deleteGroupList", method=RequestMethod.GET)
 	public String deleteGroupList(Model model
+							,HttpSession session
 							,@RequestParam(value="currentPage", defaultValue="1") int currentPage
 							,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
 		logger.debug("GroupController - deleteGroupList 포워드 실행");
-		Map<String,Object> map = groupService.deleteGroupList(currentPage, pagePerRow);
+		Map<String,Object> map = groupService.deleteGroupList(session, currentPage, pagePerRow);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("list", map.get("list"));
@@ -228,13 +458,58 @@ public class GroupController {
 		return "group/deleteGroupList";
 	}
 	
+	//생성된 그룹 리스트 키워드 검색
+	@RequestMapping(value="/groupListKeywordSearch", method= {RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView groupListKeywordSearch(@RequestParam(value="KeyOption") String KeyOption
+									,HttpSession session
+									,@RequestParam(value="KeyWord")String KeyWord
+									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
+		logger.debug("GroupController - groupList groupListSearchKeyoption ModelAndView 실행");
+		Map<String,Object> map = groupService.groupListSearchKeyoption(session, KeyOption, KeyWord, currentPage, pagePerRow);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("group/groupList");
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("KeyOption", map.get("KeyOption"));
+		modelAndView.addObject("KeyWord", map.get("KeyWord"));
+		modelAndView.addObject("searchKeywordresult", map.get("total"));
+		modelAndView.addObject("totalBlock", map.get("totalBlock"));
+		modelAndView.addObject("firstBlockPage", map.get("firstBlockPage"));
+		modelAndView.addObject("lastBlockPage", map.get("lastBlockPage"));
+		modelAndView.addObject("lastPage", map.get("lastPage"));
+		modelAndView.addObject("currentPage", currentPage);
+		return modelAndView;
+	}
+	//생성된 그룹 리스트 날짜 검색
+	@RequestMapping(value="/groupListSearch", method= {RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView groupListSearch(@RequestParam(value="startDate") String startDate
+									,HttpSession session
+									,@RequestParam(value="endDate")String endDate
+									,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+									,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
+		logger.debug("GroupController - groupList groupListSearch ModelAndView 실행");
+		Map<String,Object> map = groupService.groupListSearch(session, startDate, endDate, currentPage, pagePerRow);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("group/groupList");
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("startDate", map.get("startDate"));
+		modelAndView.addObject("endDate", map.get("endDate"));
+		modelAndView.addObject("searchresult", map.get("total"));
+		modelAndView.addObject("totalBlock", map.get("totalBlock"));
+		modelAndView.addObject("firstBlockPage", map.get("firstBlockPage"));
+		modelAndView.addObject("lastBlockPage", map.get("lastBlockPage"));
+		modelAndView.addObject("lastPage", map.get("lastPage"));
+		modelAndView.addObject("currentPage", currentPage);
+		return modelAndView;
+	}
 	//생성된 그룹 리스트
 	@RequestMapping(value="/groupList", method=RequestMethod.GET)
 	public String groupList(Model model
-								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
-								,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
+							,HttpSession session
+							,@RequestParam(value="currentPage", defaultValue="1") int currentPage
+							,@RequestParam(value="pagePerRow", defaultValue="10")int pagePerRow) {
 		logger.debug("GroupController - groupList 포워드 실행");
-		Map<String,Object> map = groupService.groupList(currentPage, pagePerRow);
+		Map<String,Object> map = groupService.groupList(session, currentPage, pagePerRow);
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("list", map.get("list"));
