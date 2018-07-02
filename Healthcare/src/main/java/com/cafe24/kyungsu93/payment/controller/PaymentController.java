@@ -110,10 +110,9 @@ public class PaymentController {
 	
 	//포인트 결제 신청 완료 결과
 	@RequestMapping(value="/pointChargingResult", method=RequestMethod.GET)
-	public String pointChargingResult(Model model) {
+	public String pointChargingResult(Model model,PointCharging pointCharging) {
 		logger.debug("PaymentController - pointChargingResult 포워드 실행");
-		/*PointCharging pointCharging = pointChargingService.pointChargingSum(memberNo);
-		model.addAttribute("pointCharging",pointCharging);*/
+		model.addAttribute("pointCharging",pointCharging);
 		return "payment/pointChargingResult";
 	}
 	

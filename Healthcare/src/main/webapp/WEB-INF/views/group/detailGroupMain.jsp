@@ -12,33 +12,41 @@
 	var memberNo = $('#memberNo').val();
 	
 		function groupDetail() {
+			var groupNo = $('#groupNo').val();
 		    location.href="${pageContext.request.contextPath}/groupDetail?groupNo="+groupNo;
 		}   
 		
 		function groupCalendar() {
-		    location.href="${pageContext.request.contextPath}/groupMembersList?groupName="+groupName;
+			var groupName = $('#groupName').val();
+		    location.href="${pageContext.request.contextPath}/groupCalendar?groupName="+groupName;
 		}   
 		
 		function groupRelation() {
+			var groupName = $('#groupName').val();
 		    location.href="${pageContext.request.contextPath}/groupMemberRelation?groupName="+groupName;
 		}   
 		
 		function groupMemberInvite() {
+			var groupNo = $('#groupNo').val();
 		    location.href="${pageContext.request.contextPath}/inviteMemberForm?groupNo="+groupNo;
 		}   
 		
 		function inviteGroupMemberList() {
+			var groupNo = $('#groupNo').val();
 		    location.href="${pageContext.request.contextPath}/inviteMemberList?groupNo="+groupNo;
 		}   
 		
 		function groupMemberList() {
+			var groupName = $('#groupName').val();
 		    location.href="${pageContext.request.contextPath}/groupMembersList?groupName="+groupName;
 		}   
 		function groupMain() {
+			var memberNo = $('#memberNo').val();
 		    location.href="${pageContext.request.contextPath}/groupMain?memberNo="+memberNo;
 		}   
 		function groupMemberOut() {
-		    location.href="${pageContext.request.contextPath}/groupOut?memberNo="memberNo;
+			var memberNo = $('#memberNo').val();
+		    location.href="${pageContext.request.contextPath}/groupOut?memberNo="+memberNo;
 		}
 
 </script>
@@ -55,7 +63,8 @@
 			<input type="hidden" id="groupNo" value="${detailGroup.groupNo}">
 			<input type="hidden" id="groupName" value="${groupName}">
 			<input type="hidden" id="memberNo" value="${memberNo}">
-				<div class="center">
+				<div align="center">
+					<h4>${groupName}</h4>
 					<div class="btn-group" role="group">
 						<input type="button" onclick="groupDetail()" class="btn  btn-sm btn-primary" value="그룹상세">
 						<button onclick="groupCalendar()" class="btn btn-sm btn-primary">그룹캘린더</button>
@@ -71,9 +80,11 @@
 				</div>
 				<div>
 					<div class="row">
+						<div class="col-md-1">
+						</div>
 	                     <div class="col-md-10">
 						 	<div class="card">
-						 		<div class="card-header" data-background-color="orange">
+						 		<div class="card-header" data-background-color="purple">
 	                         		<h4 class="title">그룹 소개</h4>
 								</div>
 								<div class="card-content">
@@ -89,14 +100,16 @@
 					<div class="row">
 					 <div class="col-md-12">
 							<div class="row">
-								<div class="col-md-6">
+								<div class="col-md-1">
+								</div>
+								<div class="col-md-5">
 									<div class="card card-stats">
-									 	<div class="card-header" data-background-color="blue">
+									 	<div class="card-header" data-background-color="orange">
 									 		<i class="material-icons">content_copy</i>
 										</div>
 										<div class="card-content">
 											<div class="row">
-												<div class="col-md-6">		
+												<div class="col-md-5">		
 													<p class="category">복약</p>
 													<h4  class="title">그룹 복약 일정</h4>
 												</div>
@@ -120,14 +133,14 @@
 										</div>	
 									</div>
 				  				</div><!-- 복약 End --><!-- 진료 -->
-								<div class="col-md-6">
+								<div class="col-md-5">
 									<div class="card card-stats">
-									 	<div class="card-header" data-background-color="green">
+									 	<div class="card-header" data-background-color="purple">
 									 		<i class="material-icons">content_copy</i>
 										</div>
 										<div class="card-content">
 											<div class="row">
-												<div class="col-md-6">		
+												<div class="col-md-5">		
 													<p class="category">진료</p>
 													<h4  class="title">그룹 진료 일정</h4>
 												</div>
@@ -152,15 +165,17 @@
 				  				</div>
 				  		</div>
 			  			<div class="row">
+				  			<div class="col-md-1">
+							</div>
 			  				<!-- 건강검진 -->
-							<div class="col-md-6">
+							<div class="col-md-5">
 								<div class="card card-stats">
-								 	<div class="card-header" data-background-color="green">
+								 	<div class="card-header" data-background-color="purple">
 								 		<i class="material-icons">content_copy</i>
 									</div>
 									<div class="card-content">
 										<div class="row">
-											<div class="col-md-6">		
+											<div class="col-md-5">		
 												<p class="category">건강검진</p>
 												<h4  class="title">그룹 건강검진 일정</h4>
 											</div>
@@ -185,14 +200,14 @@
 									</div>
 								</div><!-- 건강검진 End -->
 			  					<!-- 건강설문 -->
-								<div class="col-md-6">
+								<div class="col-md-5">
 									<div class="card card-stats">
-									 	<div class="card-header" data-background-color="blue">
+									 	<div class="card-header" data-background-color="orange">
 									 		<i class="material-icons">content_copy</i>
 										</div>
 										<div class="card-content">
 											<div class="row">
-												<div class="col-md-6">	
+												<div class="col-md-5">	
 												<p class="category">건강설문</p>
 													<h4  class="title">그룹 건강설문 일정</h4>
 												</div>

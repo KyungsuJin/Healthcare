@@ -76,7 +76,7 @@
 				console.log(data);   
 			if(data.count> 0){
 				alert('현재 건강설문에서 사용중인 혈압 차트이기 때문에 삭제가 불가능합니다.');
-			return count = 0;
+			return false;
 			}else if(data.count == 0){
 				alert(bloodPressureNo+'번이 삭제가 완료되었습니다.');
 				location.href='${pageContext.request.contextPath}/deleteBloodPressure?bloodPressureNo='+bloodPressureNo;

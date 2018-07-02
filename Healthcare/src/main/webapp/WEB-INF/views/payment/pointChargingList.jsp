@@ -83,10 +83,10 @@ font-size : 14px;
 							</c:if>
 							<c:forEach var="i" begin="${firstBlockPage}" end="${lastBlockPage}" step="1">
 								<c:if test="${currentPage == i}">
-								<li class="active">
+									<li class="active">
 								</c:if>
 								<c:if test="${currentPage != i}">
-								<li class="">
+									<li class="">
 								</c:if>
 									<a href="${pageContext.request.contextPath}/pointChargingList?currentPage=${i}">${i}</a>				
 								</li>

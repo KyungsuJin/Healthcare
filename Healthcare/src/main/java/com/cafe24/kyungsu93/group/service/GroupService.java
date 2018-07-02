@@ -368,7 +368,7 @@ public class GroupService {
 			logger.debug("유예 기간 groupExpiredDate:"+groupExpiredDate);
 			int compare = now.compareTo(groupExpiredDate);
 			//현재 날짜와 비교해서 유예기간 만료된 그룹 삭제
-			if(compare > 0) {
+			if(compare < 0) {
 				logger.debug("유예기간 날짜이 지났습니다. 그룹 삭제 진행.");
 				Group number = groupDao.groupDdayNo(groupExpiredDate);
 				String groupNo = number.getGroupNo();

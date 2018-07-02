@@ -51,7 +51,6 @@ function check() {
 	}
 </script>
 <style>
-
 #purple{
 color: #9c27b0;
 font-weight: bold;

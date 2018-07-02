@@ -13,12 +13,13 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.9.4/scheduler.css">
 <script type="text/javascript" src="https://fullcalendar.io/releases/fullcalendar-scheduler/1.9.4/scheduler.min.js"></script>
 <script type="text/javascript">
-var groupName = $('#groupName').val();
+
 $(document).ready(function(){
 	  ajaxData(); 
 });
 
 function ajaxData() {
+	var groupName = $('#groupName').val();
 	var request = $.ajax({
 	type : "POST",
 	url : "${pageContext.request.contextPath}/groupCalendarList?groupName="+groupName
@@ -55,7 +56,7 @@ function ajaxData() {
 	 					,resourceIds: medication[i].memberId
 	 					,start: medication[i].medicationStartDate
 	 					,end: medication[i].medicationEndDate
-	 					,color: '#997000'
+	 					,color: '#FF5E00'
 	 	 			})
 	 	 		}
 	 		}
@@ -68,7 +69,7 @@ function ajaxData() {
 		 				,title: '[진료]'+treatment[i].treatmentTitle
 		 				,resourceIds: treatment[i].memberId
 		 				,start: treatment[i].tratmentDate
-		 				,color: '#BCE55C'
+		 				,color: '#0100FF'
 		 	 		})
 				}
 		 	 }
@@ -123,7 +124,6 @@ function ajaxData() {
 			    	timelineDay:{ 
 			    		buttonText: '오늘 일정 보기',
 			    		slotLabelFormat : ['H:mm'],
-						slotDuration: '00:15'
 					},
 					listWeek: {
 						buttonText: '일주일 일정 보기',
@@ -165,7 +165,7 @@ font-size: 15px;
 		<div class="main-panel">
 			<jsp:include page="../include/top.jsp"></jsp:include>
 			<div class="content">
-				<div class='col-sm-10'>
+				<div align="center">
 					<div class="btn-group" role="group" aria-label="...">
 						<input type="hidden" id="groupName" value="${groupName}">
 						<input type="button" onclick="groupDetail()" class="btn btn-sm btn-primary" value="그룹상세">
@@ -179,13 +179,11 @@ font-size: 15px;
 						<button onclick="groupMain()" class="btn btn-sm btn-primary">그룹메인으로</button>
 					</div>
 				</div>
-					<div class='col-sm-10'>
-						<div class="panel panel-default">
-							<div class="panel-body">
-							<div class="box-body">
-								</div><!-- /.box-body -->
-								<div id="calendardaily"></div>
-							</div>
+					<div class="row">
+					<div class="col-md-2">
+					</div>
+					<div class="col-md-8">
+					<div id="calendardaily"></div>
 					</div>
 				</div>
 			</div>

@@ -305,7 +305,7 @@
 		ON b.group_kind_no = d.group_kind_no		
 		<choose>
 			<when test="sessionLevel != 1">
-				WHERE b.member_no = #{memberNo}
+				WHERE c.member_no = #{memberNo}
 			</when>
 		</choose>
 		ORDER BY group_expired_date DESC

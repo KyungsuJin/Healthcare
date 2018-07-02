@@ -93,18 +93,18 @@ font-weight: bold;
 											<input type=hidden name="memberNo" value="${sessionScope.memberSessionNo}">
 											<div class="form-group">
 												<span><span id="purple">환불 금액</span>을 숫자만 입력해주세요</span>
-												<input type="text" id="refundSum" name="refundSum" onchange="checkSum()">&nbsp;<span id="Name"></span>
+												<input class="form-control" type="text" id="refundSum" name="refundSum" onchange="checkSum()">&nbsp;<span id="Name"></span>
 											</div>
 											<div class="form-group">
 											<span><span id="purple">환불 제목</span>을 입력해주세요</span>
-												<input type="text" name="refundTitle" id="refundTitle" placeholder="제목을 입력해주세요">
+												<input class="form-control" type="text" name="refundTitle" id="refundTitle" placeholder="제목을 입력해주세요">
 											</div>
 											<div class="form-group">
 											<span><span id="purple">환불 사유</span>를 입력해주세요</span>
-												<textarea name="refundContent" id="refundContent" style="resize: none;" cols="40" rows="8" placeholder="내용을 입력해주세요"></textarea>
+												<textarea class="form-control" name="refundContent" id="refundContent" style="resize: none;" cols="40" rows="8" placeholder="내용을 입력해주세요"></textarea>
 											</div>
 											<div class="form-group">
-												<input type="submit" class="btn btn-sm btn-primary pull-right" value="환불신청">
+												<input  type="submit" class="btn btn-sm btn-primary pull-right" value="환불신청">
 											</div>
 										</div>
 									</div>

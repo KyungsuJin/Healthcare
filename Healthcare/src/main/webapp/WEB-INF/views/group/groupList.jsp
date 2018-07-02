@@ -89,6 +89,9 @@
 	function addGroupBtn(){
 		location.href="${pageContext.request.contextPath}/addGroup";
 	}
+	function addGroupKindBtn(){
+		location.href="${pageContext.request.contextPath}/addGroupKind";
+	}
 	function groupDeleteListBtn(){
 		location.href="${pageContext.request.contextPath}/deleteGroupList";
 	}
@@ -201,6 +204,7 @@ font-size : 14px;
 					<div class="navbar-form navbar-left">
 						<div  class="form-group" style="margin:0px">
 							<input type="button" class="btn btn-primary" onclick="addGroupBtn()" value="그룹생성">
+							<input type="button" class="btn btn-primary" onclick="addGroupKindBtn()" value="그룹종류생성">
 						</div>
 					</div>
 					<div class="navbar-form navbar-right">

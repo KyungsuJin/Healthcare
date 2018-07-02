@@ -93,7 +93,7 @@
 	</select>
  	<select id="bloodPressureNo" resultType="Integer">
 		SELECT
-		INFULL(MAX(CAST(SUBSTRING(blood_pressure_no,16)as decimal)),0) 
+		IFNULL(MAX(CAST(SUBSTRING(blood_pressure_no,16)as decimal)),0) 
 		FROM blood_pressure
 	</select>
 	<select id="bloodPressureCount" parameterType="map" resultType="Integer">
