@@ -15,7 +15,7 @@
 	<title>Insert title here</title>
 </head>
 <body>
-	<h1>getInquireList.jsp</h1>
+	getComplainList
 	<table class="table">
 		<thead>
 			<tr>
@@ -28,27 +28,27 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="inquire" items="${list}" varStatus="status">
+			<c:forEach var="complain" items="${list}" varStatus="status">
 				<tr>
 					<td>${status.count}</td>
-					<td>${inquire.memberId}</td>
-					<td>${inquire.inquireTitle}</td>
-					<td>${inquire.inquireContent}</td>
-					<td>${inquire.inquireDate}</td>
-					<td><a href="${pageContext.request.contextPath}/removeInquire?inquireNo=${inquire.inquireNo}">삭제하기</a></td>					
+					<td>${complain.memberId}</td>
+					<td>${complain.complainTitle}</td>
+					<td>${complain.complainContent}</td>
+					<td>${complain.complainDate}</td>
+					<td>${complain.complainDate}</td>
+					<td><a href="${pageContext.request.contextPath}/removeComplain?complainNo=${complain.complainNo}">삭제하기</a></td>
 				</tr>
-				<c:if test="${inquire.answerCount > 0}">
+				<c:if test="${complain.complainAnswerCount > 0}">
 					<tr>
 						<td></td>
 						<td colspan="4" style="color: #2593e5;">
-							<a href="${pageContext.request.contextPath}/getInquireAnswer?inquireNo=${inquire.inquireNo}">RE : ${inquire.inquireTitle}</a>
+							<a href="${pageContext.request.contextPath}/getComplainAnswer?complainNo=${complain.complainNo}">RE : ${complain.complainTitle}</a>
 						</td>
 					</tr>
 				</c:if>
-
-				</c:forEach>
-
+			</c:forEach>
 		</tbody>
 	</table>
+
 </body>
 </html>

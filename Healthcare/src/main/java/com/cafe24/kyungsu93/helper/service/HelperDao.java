@@ -15,6 +15,52 @@ public class HelperDao {
 	@Autowired
 	SqlSessionTemplate sqlSession;
 	
+	
+	//complain PK 생성
+	public int selectInquireNo() {
+		logger.debug("HelperController_selectInquireNo");	
+		return sqlSession.delete(NS+"selectComplainNo");
+	}
+	//신고 취소하기
+	public int removeComplain(String complainNo) {
+		logger.debug("HelperController_removeComplain");	
+		return sqlSession.delete(NS+"deleteComplain", complainNo);
+	}
+	//신고에 대한 답변을 보여준다.
+	public ComplainAnswer getComplainAnswer(String complainNo) {
+		logger.debug("HelperService_getComplainAnswer");
+		return sqlSession.selectOne(NS+"selectgetComplainAnswer", complainNo);
+	}
+	//신고 답변의 count를 조회한다. 잇으면 리스트 아래 답글이생김
+	public int selectComplainAnswerCount(String complainNo) {
+		return sqlSession.selectOne(NS+"selectComplainAnswerCount", complainNo);
+	}
+	//신고에 대한 답변 등록
+	public int addComplainAnswer(ComplainAnswer complainAnswer) {
+		logger.debug("HelperService_addComplainAnswer");
+		return sqlSession.insert(NS+"insertComplainAnswer", complainAnswer);
+	}
+	//관리자가 모든 신고 리스트 보기
+	public List<Complain> getAllComplainList() {
+		logger.debug("HelperService_getAllComplainList");
+		return sqlSession.selectList(NS+"selectGetAllComplainList");
+	}
+	//신고리스트
+	public List<Complain> getComplainList(String memberNo) {
+		logger.debug("HelperDao_getComplainList");
+		return sqlSession.selectList(NS+"selectGetComplainList", memberNo);
+	}
+	//신고 Pk
+	public int selectComplainNo() {
+		logger.debug("HelperDao_selectComplainNo");
+		return sqlSession.selectOne(NS+"selectComplainNo");
+	}
+	//신고하기
+	public int addComplain(Complain complain) {
+		logger.debug("HelperDao_addComplain");
+		return sqlSession.insert(NS+"insertComplain", complain);
+	}
+	//제재 리스트
 	public List<Sanction> getSanctionKindList() {
 		logger.debug("HelperService_getSanctionKindList");
 		return sqlSession.selectList(NS+"selectGetSanctionKindList");

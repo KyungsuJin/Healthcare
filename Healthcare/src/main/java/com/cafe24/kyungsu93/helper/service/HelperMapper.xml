@@ -4,6 +4,120 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cafe24.kyungsu93.helper.service.HelperMapper">
+	<select id="selectInquireNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(cast(SUBSTRING(inquire_no,9) as decimal)), 0)
+		FROM
+			inquire
+	</select>
+	<delete id="deleteComplain"
+			parameterType="String">
+		DELETE
+		FROM
+			complain
+		WHERE	
+			complain_no=#{complainNo}
+	</delete>
+	<select id="selectgetComplainAnswer"
+			parameterType="String"
+			resultType="com.cafe24.kyungsu93.helper.service.ComplainAnswer">
+		SELECT
+			a.complain_no as complainNo
+			,a.member_no as memberNo
+			,a.complain_answer_title as complainAnswerTitle
+			,a.complain_answer_content as complainAnswerContent
+			,a.complain_answer_date as complainAnswerDate
+			,b.complain_title as complainTitle
+		FROM
+			complain_answer a, complain b
+		WHERE
+			a.complain_no = #{complainNo}
+			AND a.complain_no = b.complain_no
+	</select>
+	<select id="selectComplainAnswerCount"
+			parameterType="String"
+			resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			complain_answer
+		WHERE	
+			complain_no = #{complainNo}
+	</select>
+	<insert id="insertComplainAnswer"
+			parameterType="com.cafe24.kyungsu93.helper.service.ComplainAnswer">
+		INSERT INTO complain_answer(
+			complain_no
+			,member_no
+			,complain_answer_title
+			,complain_answer_content
+			,complain_answer_date
+		)VALUES(
+			#{complainNo}
+			,#{memberNo}
+			,#{complainAnswerTitle}
+			,#{complainAnswerContent}
+			,now()
+		)		
+	</insert>
+	<select id="selectGetAllComplainList"
+			resultType="com.cafe24.kyungsu93.helper.service.Complain">
+		SELECT
+			a.complain_no as complainNo
+			,a.member_no as memberNo
+			,a.complain_title as complainTitle
+			,a.complain_content as complainContent
+			,a.complain_date as complainDate
+			,b.member_id as memberId
+		FROM
+			complain a, member b
+		WHERE
+			a.member_no = b.member_no
+	</select>
+	<select id="selectGetComplainList"
+			parameterType="String"
+			resultType="com.cafe24.kyungsu93.helper.service.Complain">
+		SELECT
+			a.complain_no as complainNo
+			,a.complain_member_no as complainMemberNo
+			,a.member_no as memberNo
+			,a.complain_title as complainTitle
+			,a.complain_content as complainContent
+			,a.complain_date as complainDate
+			,b.member_id as memberId
+		FROM
+			complain a, member b
+		WHERE
+			a.member_no = #{memeber_no}
+			AND a.member_no = b.member_no
+	</select>
+	<select id="selectComplainNo" resultType="Integer">
+		SELECT
+			IFNULL(MAX(cast(SUBSTRING(complain_no, 10) as decimal)), 0)
+		FROM
+			complain
+	</select>
+	<insert id="insertComplain"
+			parameterType = "com.cafe24.kyungsu93.helper.service.Complain">
+<!-- 		<selectKey resultType="int" keyProperty="complainNo" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey> -->
+		INSERT INTO complain(
+			complain_no
+			,complain_member_no
+			,member_no
+			,complain_title
+			,complain_content
+			,complain_date
+		)VALUES(
+			#{complainNo}
+			,#{complainMemberNo}
+			,#{memberNo}
+			,#{complainTitle}
+			,#{complainContent}
+			,now()
+		)
+	</insert>
 	<delete id="deleteInquireAnswer"
 			parameterType="String">
 		DELETE			

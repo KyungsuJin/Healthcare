@@ -7,18 +7,18 @@
 	<title>Insert title here</title>
 </head>
 <body>
-	<form action="" method="POST">
+	<h1>addComplain.jsp</h1>
+	<form action="${pageContext.request.contextPath}/addComplain" method="POST">
+		<input type="hidden" name="memberNo" value="${memberSessionNo}">
+			신고대상 : <input type="text" name="complainMemberNo">
 		<div>
-			신고 제목 : <input type="text" name="complainTitle">
+			제목 : <input type="text" name="complainTitle">
 		</div>
 		<div>
-			신고 대상 : <input type="text" name="complainMemberNo">
-		</div>
-		<div>
-			신고 내용 <br>
+			내용 <br>
 			<textarea name="complainContent" cols="100" rows="30" autofocus="autofocus" required="required" style="resize: none;"></textarea>
 		</div>
-		
+		<button type="submit">답변보내기</button>
 	</form>
 </body>
 </html>
