@@ -193,79 +193,61 @@
 	  	
 	</script>
 </head>
-
+<style>
+#textsize{
+ font-size : 7px;
+ line-height:120%;
+}
+#textsize2{
+ font-size : 7px;
+ line-height:120%;
+}
+</style>
 <body>
-	<div class="wrapper" style="overflow:auto; overflow-y:hidden; width:auto; height:auto; padding:0 0 17px 0;">
-			<input type="hidden" id="memberNo" value="${sessionScope.memberSessionNo}">
-			<jsp:include page="include/left.jsp"></jsp:include>
+	<div class="wrapper" style="overflow:auto; overflow-y:hidden; width:auto; height:auto; padding:-5px 0px 17px 0px;">
+		<input type="hidden" id="memberNo" value="${sessionScope.memberSessionNo}">
+		<jsp:include page="include/left.jsp"></jsp:include>
         <div class="main-panel">
             <jsp:include page="include/top.jsp"></jsp:include>
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
                             <div class="card card-stats">
                                 <div class="card-header" data-background-color="orange">
                                     <i class="material-icons">content_copy</i>
                                 </div>
                                 <div class="card-content">
                                     <p class="category">팀프로젝트 소개</p>
-                                    <h3 class="title">49/50
-                                        <small>GB</small>
-                                    </h3>
+                                    	소셜 네트워크+<br>건강데이터베이스 기반의 <br>건강관리 사이트 헬프 입니다.
                                 </div>
                                 <div class="card-footer">
                                     <div class="stats">
-                                        <i class="material-icons text-danger">warning</i>
-                                        <a href="#pablo">Get More Space...</a>
+                                        <p id="textsize">헬프란? 헬스와 프렌트의 합성어로써 건강 친구라는 의미입니다.
+                                        <br>서로 도와 건강을 관리하자는 의미에서 비롯되었습니다.</p>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="col-lg-9 col-md-9 col-sm-9">
                             <div class="card card-stats">
-                                <div class="card-header" data-background-color="green">
-                                    <i class="material-icons">store</i>
+                                <div>
                                 </div>
                                 <div class="card-content">
-                                    <p class="category">Revenue</p>
-                                    <h3 class="title">$34,245</h3>
+	                                    <span class="title"><br></span>
+	                                    <div align="center">
+	                                   		<br>
+	                                   <a href="${pageContext.request.contextPath}/loginDirect?memberId=rlaansrl&memberPw=1234">관리자 로그인</a>
+	                                   | <a href="${pageContext.request.contextPath}/loginDirect?memberId=1234&memberPw=1234">일반회원 로그인</a>
+	                                    | <a href="${pageContext.request.contextPath}/loginDirect?memberId=rlaansrl93&memberPw=1234">의사회원 로그인</a>
+	                                   | <a href="${pageContext.request.contextPath}/loginDirect?memberId=rlaansrl936&memberPw=1234">PT 회원 로그인</a>
+	                                		<br><br>
+	                                	</div>
                                 </div>
                                 <div class="card-footer">
                                     <div class="stats">
-                                        <i class="material-icons">date_range</i> Last 24 Hours
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="card card-stats">
-                                <div class="card-header" data-background-color="red">
-                                    <i class="material-icons">info_outline</i>
-                                </div>
-                                <div class="card-content">
-                                    <p class="category">Fixed Issues</p>
-                                    <h3 class="title">75</h3>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">local_offer</i> Tracked from Github
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="card card-stats">
-                                <div class="card-header" data-background-color="blue">
-                                    <i class="fa fa-twitter"></i>
-                                </div>
-                                <div class="card-content">
-                                    <p class="category">Followers</p>
-                                    <h3 class="title">+245</h3>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="stats">
-                                        <i class="material-icons">update</i> Just Updated
+                                       <p> <a href="#">클릭하면 자동으로 로그인이 됩니다.</a></p>
                                     </div>
                                 </div>
                             </div>
@@ -274,11 +256,10 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card">
-                                
                                 <c:if test="${sessionScope.memberSessionLevel eq null}">
                                     	<div class="ct-chart" id="dailySalesChart"></div>
 	                                <div class="card-content">
-	                                    <h4 class="title">자신만의 차트를 만들어보세요!</h4>
+	                                    <h5 class="title">차트를 이용해 자신의 건강을 수치화 해보세요!</h5>
 	                                </div>
 	                            </c:if>
 	                            <c:if test="${sessionScope.memberSessionLevel eq 2}">
@@ -294,14 +275,12 @@
                                 
                             </div>
                         </div>
-                       
                         <div class="col-md-6">
                             <div class="card">
                             	<c:if test="${sessionScope.memberSessionLevel eq null}">
                                    	 <div class="ct-chart" id="emailsSubscriptionChart"></div>
 	                                <div class="card-content">
-	                                    <h4 class="title">자신만의 차트를 만들어보세요!</h4>
-	                                       
+	                                    <h4 class="title">좀 더 건강한 내일을 위한 자신만의 차트를 만들어보세요!</h4>
 	                               	</div>
 	                            </c:if>
                             	<c:if test="${sessionScope.memberSessionLevel eq 2}">
@@ -321,259 +300,74 @@
                         <div class="col-lg-6 col-md-12">
                             <div class="card card-nav-tabs">
                                 <div class="card-header" data-background-color="purple">
-                                    <div class="nav-tabs-navigation">
-                                        <div class="nav-tabs-wrapper">
-                                            <span class="nav-tabs-title">Tasks:</span>
-                                            <ul class="nav nav-tabs" data-tabs="tabs">
-                                                <li class="active">
-                                                    <a href="#profile" data-toggle="tab">
-                                                        <i class="material-icons">bug_report</i> Bugs
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="#messages" data-toggle="tab">
-                                                        <i class="material-icons">code</i> Website
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="#settings" data-toggle="tab">
-                                                        <i class="material-icons">cloud</i> Server
-                                                        <div class="ripple-container"></div>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                     <h4 class="title">주요기능</h4>
+                                    <p class="category">헬프의 기능을 소개합니다.</p>
                                 </div>
                                 <div class="card-content">
-                                    <div class="tab-content">
-                                        <div class="tab-pane active" id="profile">
-                                            <table class="table">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input type="checkbox" name="optionsCheckboxes" checked>
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                                        <td class="td-actions text-right">
-                                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-simple btn-xs">
-                                                                <i class="material-icons">edit</i>
-                                                            </button>
-                                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                                <i class="material-icons">close</i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input type="checkbox" name="optionsCheckboxes">
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                                                        <td class="td-actions text-right">
-                                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-simple btn-xs">
-                                                                <i class="material-icons">edit</i>
-                                                            </button>
-                                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                                <i class="material-icons">close</i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input type="checkbox" name="optionsCheckboxes">
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                                                        </td>
-                                                        <td class="td-actions text-right">
-                                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-simple btn-xs">
-                                                                <i class="material-icons">edit</i>
-                                                            </button>
-                                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                                <i class="material-icons">close</i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input type="checkbox" name="optionsCheckboxes" checked>
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        <td>Create 4 Invisible User Experiences you Never Knew About</td>
-                                                        <td class="td-actions text-right">
-                                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-simple btn-xs">
-                                                                <i class="material-icons">edit</i>
-                                                            </button>
-                                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                                <i class="material-icons">close</i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="tab-pane" id="messages">
-                                            <table class="table">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input type="checkbox" name="optionsCheckboxes" checked>
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                                                        </td>
-                                                        <td class="td-actions text-right">
-                                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-simple btn-xs">
-                                                                <i class="material-icons">edit</i>
-                                                            </button>
-                                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                                <i class="material-icons">close</i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input type="checkbox" name="optionsCheckboxes">
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                                        <td class="td-actions text-right">
-                                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-simple btn-xs">
-                                                                <i class="material-icons">edit</i>
-                                                            </button>
-                                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                                <i class="material-icons">close</i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="tab-pane" id="settings">
-                                            <table class="table">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input type="checkbox" name="optionsCheckboxes">
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                                                        <td class="td-actions text-right">
-                                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-simple btn-xs">
-                                                                <i class="material-icons">edit</i>
-                                                            </button>
-                                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                                <i class="material-icons">close</i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input type="checkbox" name="optionsCheckboxes" checked>
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                                                        </td>
-                                                        <td class="td-actions text-right">
-                                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-simple btn-xs">
-                                                                <i class="material-icons">edit</i>
-                                                            </button>
-                                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                                <i class="material-icons">close</i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input type="checkbox" name="optionsCheckboxes">
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                                        <td class="td-actions text-right">
-                                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-simple btn-xs">
-                                                                <i class="material-icons">edit</i>
-                                                            </button>
-                                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                                <i class="material-icons">close</i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+									  <!-- Indicators -->
+									 <ol class="carousel-indicators">
+									    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+									    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+									    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+									  </ol>
+									  <div class="carousel-inner" role="listbox">
+									    <div class="item active">
+									      <img src="./img/sample.JPG" alt="...">
+										      <div class="carousel-caption d-none d-md-block">
+											    <p><h5>캘린더로 자신의 건강을 체계적으로 관리해보세요!<h5></p>
+											  </div>
+									    </div>
+									    <div class="item">
+									      <img src="./img/sample.JPG" alt="...">
+										      <div class="carousel-caption">
+										        ...
+										      </div>
+									    </div>
+									     <div class="item">
+									      <img src="./img/sample.JPG" alt="...">
+										      <div class="carousel-caption">
+										        ...
+										      </div>
+									      </div>
+									  </div>
+									
+									  <!-- Controls -->
+									  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+									    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+									    <span class="sr-only">Previous</span>
+									  </a>
+									  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+									    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+									    <span class="sr-only">Next</span>
+									  </a>
+									</div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-12">
                             <div class="card">
                                 <div class="card-header" data-background-color="orange">
-                                    <h4 class="title">Employees Stats</h4>
-                                    <p class="category">New employees on 15th September, 2016</p>
+                                    <h4 class="title">팀원 소개</h4>
+                                    <p class="category">헬프의 팀원을 소개합니다. 해당 글씨를 클릭하면 이동합니다.</p>
                                 </div>
                                 <div class="card-content table-responsive">
                                     <table class="table table-hover">
-                                        <thead class="text-warning">
-                                            <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Salary</th>
-                                            <th>Country</th>
-                                        </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Dakota Rice</td>
-                                                <td>$36,738</td>
-                                                <td>Niger</td>
+                                    	    <tr>
+                                                <td>1. 진경수 [팀장] : <a href="#">사이트</a> | <a href="#">이력서</a> | <a href="#">깃허브</a></td>
                                             </tr>
                                             <tr>
-                                                <td>2</td>
-                                                <td>Minerva Hooper</td>
-                                                <td>$23,789</td>
-                                                <td>Curaçao</td>
+                                                <td>2. 김문기 [팀원] : <a href="#">사이트</a> | <a href="#">이력서</a> | <a href="#">깃허브</a></td>
                                             </tr>
                                             <tr>
-                                                <td>3</td>
-                                                <td>Sage Rodriguez</td>
-                                                <td>$56,142</td>
-                                                <td>Netherlands</td>
+                                                <td>3. 박지하 [팀원] : <a href="#">사이트</a> | <a href="#">이력서</a> | <a href="#">깃허브</a></td>
                                             </tr>
                                             <tr>
-                                                <td>4</td>
-                                                <td>Philip Chaney</td>
-                                                <td>$38,735</td>
-                                                <td>Korea, South</td>
+                                                <td>4. 도정만 [팀원] : <a href="#">사이트</a> | <a href="#">이력서</a> | <a href="#">깃허브</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>5. 나윤주 [팀원] : <a href="#">사이트</a> | <a href="#">이력서</a> | <a href="#">깃허브</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -588,7 +382,7 @@
                     <nav class="pull-left">
                         <ul>
                         	<li>
-                                 	팀원 소개
+                                 	팀원
                             </li>
                             <li>
                                 <a href="#">
@@ -629,6 +423,7 @@
         </div>
     </div>
 </body>
+
 <script type="text/javascript">
     $(document).ready(function() {
         demo.initDashboardPageCharts();

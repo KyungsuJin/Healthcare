@@ -3,15 +3,14 @@
 <nav class="navbar navbar-transparent navbar-absolute">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="${pageContext.request.contextPath}/"> 건강매니지먼트 </a>
-                        
-                    </div>
+	                        <button type="button" class="navbar-toggle" data-toggle="collapse">
+	                            <span class="sr-only">Toggle navigation</span>
+	                            <span class="icon-bar"></span>
+	                            <span class="icon-bar"></span>
+	                            <span class="icon-bar"></span>
+	                        </button> 
+	                       	 <a class="navbar-brand" href="${pageContext.request.contextPath}/"></a>
+	                    </div>
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                         	<c:if test="${!empty sessionScope.memberSessionId}">
@@ -19,7 +18,6 @@
 	                                <a href="#" id="messageList">
 	                                    <i class="glyphicon glyphicon-envelope"></i>
 	                                    <p class="hidden-lg hidden-md">메시지</p>
-	                                    
 	                                </a>
 	                            </li>
 	                        </c:if>
