@@ -10,7 +10,24 @@
 
 </head>
 <body>
-<table><!-- 회원이 의사가 요청한 건강정보 요청을 받는곳 -->
+<style>
+h1 {
+    color: white;
+    text-align: center;
+     width: 80.5%; 
+     margin: auto;
+	} 
+div {
+    width: 80%; 
+    text-align: center;
+    margin: auto;
+    border: 3px solid purple;
+    
+} 
+</style>
+<h1 style="background-color:purple;"> 건강정보 조회 신청 현황</h1>
+<div>
+	<table  class="table table-hover"><!-- 회원이 의사가 요청한 건강정보 요청을 받는곳 -->
 		<thead>
 			<tr>
 				<th>건강정보요청코드</th>
@@ -30,13 +47,11 @@
 					<td>${doctorRequest.requestTitle }</td>
 					<td>${doctorRequest.requestContent }</td>
 					<td>${doctorRequest.requestDate }</td>
-					<%-- <td><a type="button" href="${pageContext.request.contextPath}/modifyBloodSugar?bloodSugarNo=${bloodSugar.bloodSugarNo}" id="buttonModify">수정</a></td>
-					<td><a type="button" href="${pageContext.request.contextPath}/deleteBloodSugar?bloodSugarNo=${bloodSugar.bloodSugarNo}" id="buttonDelete">삭제</a></td>   --%>
 				</tr>
 			</c:forEach>	
 		</tbody>
 	</table>
-	<a id="memberListForDoctor" href="${pageContext.request.contextPath}/memberListForDoctor">요청하기</a>
+		<a id="memberListForDoctor" href="${pageContext.request.contextPath}/memberListForDoctor">요청하기</a>
 	<nav>
 		<ul class="pagination pagination-sm">
 			<c:if test="${currentPage > 10}">
@@ -66,5 +81,6 @@
 			</c:if>
 		</ul>
 	</nav>
+</div>
 </body>
 </html>

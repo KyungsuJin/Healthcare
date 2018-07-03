@@ -35,13 +35,13 @@ public class NoticeDao {
 
 	public int updateNotice(Notice notice) {
 		logger.debug("16번"+notice);
-		logger.debug("BloodsugarDao 에서 updateBloodsugar 실행------------------3번"+notice);
+		logger.debug("NoticeDao 에서 updateNotice 실행------------------3번"+notice);
 		logger.debug("-------------12번"+notice);
 		return sqlSession.update(NS+"updateNotice",notice);
     }
 	
 	public Notice selectNoticeOne(String noticeNo) {
-		logger.debug("BloodsugarDao 에서 selectBloodsugarOne 실행"+noticeNo);
+		logger.debug("NoticeDao 에서 selectNoticeOne 실행"+noticeNo);
 		logger.debug("------------3번"+noticeNo);
 		return sqlSession.selectOne(NS+"noticeOne",noticeNo);
 	}
@@ -52,33 +52,6 @@ public class NoticeDao {
 		return sqlSession.delete(NS+"deletenotice",noticeNo);
 	}
 	
-	/*public int noticeSearchCount(Map<String, Object> map) {
-		logger.debug("35번"+map);
-		logger.debug("NoticeDao 에서 noticeCount 실행");
-		return sqlSession.selectOne(NS+"noticeSearchCount",map);
-	}
-	
-	public List<Notice> noticeSearchDate(Map<String, Object> map) {
-		logger.debug("NoticeDao 에서 noticeSearchDate 실행");
-		logger.debug("26번"+map);
-		List<Notice> list = sqlSession.selectList(NS+"noticeSearchDate",map);
-		logger.debug("27번"+map);
-		logger.debug("27번-1"+list);
-		return list;
-	}
-		
-	public List<Notice> noticeSearchAll(Map<String, Object> map) {
-		logger.debug("NoticeDao 에서 noticeSearchAll 실행");
-		logger.debug("38번"+map);
-		List<Notice> list = sqlSession.selectList(NS+"noticeSearchAll",map);
-		return list;
-	}*/
-	
-	/*public int noticeCountView(int noticeNo) {
-		logger.debug("BloodsugarDao 에서 updateBloodsugar 실행------------------3번"+noticeNo);
-		logger.debug("-------------12번"+noticeNo);
-		return sqlSession.update(NS+"noticeCountView",noticeNo);
-    }*/
 	
 	public List<Notice> noticeListDetail(Map<String,Object> map) {
 		logger.debug("NoticeDao 에서 NoticeList 실행");
@@ -92,13 +65,69 @@ public class NoticeDao {
 		return sqlSession.selectOne(NS+"noticeDetailCount");
 	}
 	
-	/*public List<Notice> noticeDetail(Map<String,Integer> map) {
-		logger.debug("NoticeDao 에서 noticeDetailCount 실행");
-		List<Notice> list = sqlSession.selectOne(NS+"noticeDetailCount",map);
-		return list;*/
+
 	public int selectNoticNo() {
 	logger.debug("NoticeDao - selectNoticeNo 실행");
 	int row = sqlSession.selectOne(NS+"selectNoticNo");
 	return row;
 	}
+	
+	public List<Notice> noticeCountUp(Map<String,Object> map) {
+		logger.debug("NoticeDao 에서 NoticeList 실행");
+		logger.debug("4번"+map);
+		List<Notice> list = sqlSession.selectList(NS+"noticeCountUp",map);
+		return list;
+    }
+	
 }
+	
+
+
+
+
+
+
+
+
+
+
+
+		/*public int noticeSearchCount(Map<String, Object> map) {
+			logger.debug("35번"+map);
+			logger.debug("NoticeDao 에서 noticeCount 실행");
+			return sqlSession.selectOne(NS+"noticeSearchCount",map);
+		}
+		
+		public List<Notice> noticeSearchDate(Map<String, Object> map) {
+			logger.debug("NoticeDao 에서 noticeSearchDate 실행");
+			logger.debug("26번"+map);
+			List<Notice> list = sqlSession.selectList(NS+"noticeSearchDate",map);
+			logger.debug("27번"+map);
+			logger.debug("27번-1"+list);
+			return list;
+		}
+			
+		public List<Notice> noticeSearchAll(Map<String, Object> map) {
+			logger.debug("NoticeDao 에서 noticeSearchAll 실행");
+			logger.debug("38번"+map);
+			List<Notice> list = sqlSession.selectList(NS+"noticeSearchAll",map);
+			return list;
+		}*/
+		
+		/*public int noticeCountView(int noticeNo) {
+			logger.debug("BloodsugarDao 에서 updateBloodsugar 실행------------------3번"+noticeNo);
+			logger.debug("-------------12번"+noticeNo);
+			return sqlSession.update(NS+"noticeCountView",noticeNo);
+	    }*/	
+		
+	
+	/*public List<Notice> noticeCountUp(Map<String,Object> map) {
+		logger.debug("NoticeDao 에서 noticeCountUp 실행------------------3번"+map);
+		logger.debug("-------------12번"+map);
+		List<Notice> list = sqlSession.update(NS+"noticeCountUp",map);
+		return list;*/
+
+	/*public List<Notice> noticeDetail(Map<String,Integer> map) {
+	logger.debug("NoticeDao 에서 noticeDetailCount 실행");
+	List<Notice> list = sqlSession.selectOne(NS+"noticeDetailCount",map);
+	return list;*/

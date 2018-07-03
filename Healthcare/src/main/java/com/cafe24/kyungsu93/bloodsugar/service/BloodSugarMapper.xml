@@ -4,6 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.cafe24.kyungsu93.bloodsugar.service.BloodSugarMapper">  
+ 
+ <!--  Id:SeachTable  String 형으로 리턴을 해주고, VO로 값을 넣어주는 메서드
+inner Join을 이용해서 blood_sugar과 member 테이블의 member_no값을 비교해서 join 했다. -->
   
   <select id="searchTable" 
 				resultType="String" 
@@ -15,7 +18,9 @@
 				INNER JOIN member b
 				ON a.member_no = b.member_no
   </select>	
- 
+<!--  id:bloodSuarList  Integer 형으로 리턴을 해주고, VO로 값을 넣어주는 메서드
+join문을 사용해서 blood_sugar과 member 테이블의 member_no 값을 비교해 join 했고,
+Limit 로 제한을 걸어줬다 시작부분과 끝부분의 페이징 제한. -->
   <select id="bloodSugarList" 
 		  parameterType="Integer" 
 		  resultType="com.cafe24.kyungsu93.bloodsugar.service.BloodSugar">
@@ -29,13 +34,15 @@
 	ON m.member_no= b.member_no
 	Limit #{beginRow},#{pagePerRow}
   </select>
-  
+  <!-- id:bloodSugarCount Integer형으로 리턴을 해주고,
+blood_sugar 안의 모든 레이블 개수를 세서 가져온다. 페이징을 위한 것이다. -->
   <select id="bloodSugarCount" resultType="Integer">
 		SELECT
 		count(*)
 		FROM blood_sugar
 	</select>
-  
+ <!--  id:addBloodSugar VO로 값을 넣는다.
+Insert문으로 값을 입력해준다. blood_sugar_date 는 now()로 쿼리문에 작성해 현재시간을 입력 받는다.  -->
   <insert id="addBloodSugar" parameterType="com.cafe24.kyungsu93.bloodsugar.service.BloodSugar">
     
   INSERT INTO blood_sugar(
@@ -53,7 +60,8 @@
 	, now()
 	)  
   </insert>
-  
+ <!--  id:bloodSugarOne
+blood_sugar의 member_no와 member의 member_no가 일치하는 레이블만 값을 select 해온다. -->
   <select id="bloodSugarOne"
 			 parameterType="String"
 			resultType="com.cafe24.kyungsu93.bloodsugar.service.BloodSugar">
@@ -69,6 +77,8 @@
 		WHERE blood_sugar_no = #{bloodSugarNo}
 		
 	 </select>
+	 <!-- id:updateBloodSugar
+blood_sugar_no가 일치하는 것에 대해서 update 쿼리를 실행한다. -->
 	 <update id="updateBloodSugar" parameterType="com.cafe24.kyungsu93.bloodsugar.service.BloodSugar">
 		UPDATE blood_sugar
 		SET blood_sugar_no =  #{bloodSugarNo}
@@ -79,11 +89,14 @@
 	WHERE blood_sugar_no = #{bloodSugarNo}
 
 	</update>
-	
+<!-- 	id:deleteBloodSugar VO로 값을 보낸다.
+blood_sugar_no값이 일치하는 것의 한 레이블을 삭제한다. -->
 	<delete id="deleteBloodSugar"  parameterType="com.cafe24.kyungsu93.bloodsugar.service.BloodSugar">
 		DELETE FROM blood_sugar WHERE blood_sugar_no = #{bloodSugarNo}
 	</delete>
-	
+	<!-- id:bloodSugarNo Integer로 리턴한다.
+IFNULL으로 NULL이면 NULL을 NULL이 아니면 값을 표현해주고, 최대값을 구한뒤 .
+blood_sugar_no의13번째를 잘라 형변환을 해주고 아니면 0이라고 표시해준다 -->
 	<select id="bloodSugarNo" resultType="Integer">
 		SELECT
 		IFNULL(MAX(CAST(SUBSTRING(blood_sugar_no,13)as decimal)),0) 

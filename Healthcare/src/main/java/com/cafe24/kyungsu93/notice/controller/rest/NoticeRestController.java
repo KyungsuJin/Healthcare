@@ -1,3 +1,4 @@
+package com.cafe24.kyungsu93.notice.controller.rest;
 /*package com.cafe24.kyungsu93.noticeRest.controller;
 import java.io.IOException;
 import java.util.HashMap;

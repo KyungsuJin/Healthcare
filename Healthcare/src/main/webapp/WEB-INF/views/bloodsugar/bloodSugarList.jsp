@@ -6,35 +6,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>bloodSugarList</title>
+<jsp:include page="../include/header.jsp"></jsp:include>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-
-<script>
-/*     $(document).ready(function(){
-    	 $('#searchBtn').click(function(){
-			var searchValue = jQuery('#formSearch #searchValue').val(); 
-			if (searchValue == '') { 
-				alert('검색어를 입력하세요.'); 
-				} else { 
-					jQuery('#formSearch').submit(); 
-				} 
-			JQuery('#formSearch #searchCode value').val('${mapSearch.searchCode}');
-		});
-	}); */
-</script>
 
 </head>
 <body>
-	<h1>bloodsugaList</h1>
-	 <%-- <form id="formSearch" name="formSearch"  action="${pageContext.request.contextPath}/BloodsugarSearch" method="post"> 
-		<select id="searchCode" name="searchCode"> 
-		<option value="fastingbloodsugar" selected="Bloodsugarno">혈당코드</option> 
-		<option value="memberno">회원코드</option> 
-		</select>		
-		<input type="text" id="searchValue" name="searchValue" value="${mapSearch.searchCode}"/> 
-		<button type="button" id="searchBtn">검색</button> 
-	</form>	 --%>
-	 
+	 <div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+<style>
+</style>	
+<div> 
 	<table>
 		<thead>
 			<tr>
@@ -55,11 +39,13 @@
 					<td>${bloodSugar.bloodSugarDate }</td>
 					<td><a type="button" href="${pageContext.request.contextPath}/modifyBloodSugar?bloodSugarNo=${bloodSugar.bloodSugarNo}" id="buttonModify">수정</a></td>
 					<td><a type="button" href="${pageContext.request.contextPath}/deleteBloodSugar?bloodSugarNo=${bloodSugar.bloodSugarNo}" id="buttonDelete">삭제</a></td>  
-				</tr>
+				</tr>	
 			</c:forEach>	
+			<tr>
+				<td><a id="addBloodSugar" href="${pageContext.request.contextPath}/addBloodSugar">혈당등록하기</a><td>
+			<tr>
 		</tbody>
 	</table>
-	<a id="addBloodSugar" href="${pageContext.request.contextPath}/addBloodSugar">혈당등록하기</a>
 	<nav>
 		<ul class="pagination pagination-sm">
 			<c:if test="${currentPage > 10}">
@@ -89,5 +75,10 @@
 			</c:if>
 		</ul>
 	</nav>
+	</div>
+	</div>
+			</div>
+		</div>
+	
 </body>
 </html>

@@ -132,7 +132,9 @@ public class BloodsugarController {
 	private BloodSugarService bloodSugarService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(BloodsugarController.class);
-	
+	//addBloodSugar
+	//혈당을 입력해주는 기능의 메서드이다. jsp에서 get방식으로 받아서 바로 다시  포워딩 시켜준뒤,
+	//addbloodsugar.jsp에서 폼을 가져와 입력받고 다시 post 방식으로 받아서 list로 리다이렉트 한다.
 	@RequestMapping(value="/addBloodSugar", method = RequestMethod.GET)
 	public String addBloodSugar() {
 		logger.debug("addBloodSugar 폼 요청");
@@ -147,7 +149,10 @@ public class BloodsugarController {
 			bloodSugarService.addBloodSugar(bloodSugar);
 			return "redirect:/bloodSugarList";
 	}
-
+	//bloodSugarList
+	//자신이 입력한 혈당의 리스트를 보는 곳이다. 페이징 작업을 하기 위해 currentpage와 pageperrow 가 디폴트값이 설정되어 입력되어 있다.
+	//Service에서 Map형으로 바꿔서 Mapper에서 맵형리턴값 받고, Controller에서 Map형에 담아줘서 Model에 addAttribute 해서 jsp에 뿌려준다.
+	//페이징은 Put 메서드 활용해서 Map 에 리스트와 currentpage와 pageperrow ,PK값 담아줬다.
 	@RequestMapping(value="/bloodSugarList", method=RequestMethod.GET)
 	public String bloodSugarList(Model model
 								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
@@ -162,7 +167,9 @@ public class BloodsugarController {
 		model.addAttribute("totalBlock", map.get("totalBlock"));
 		return "bloodsugar/bloodSugarList";
 	}
-	
+	//modifyBloodsugar 
+	//자신이 입력한 혈당의 리스트를 수정하는 곳이다. select문을 이용해서 입력된 값을 불러오고, 다시 update문을 이용해 값을 업데이트 한다.
+	//get 방식에서는 앵커태그와 param 사용해서 PK값을 가져와서 model에 담아서 보냈고 post 에서는 커맨드객체 활용해서 리다이렉트 시켰다.
 	@RequestMapping(value="/modifyBloodSugar", method=RequestMethod.POST)
 	public String updateBloodSugar(HttpSession session ,BloodSugar bloodSugar) {				
 		logger.debug("BloodSugarController 에서 updateBloodPressure 리다이렉트 실행");
@@ -183,7 +190,9 @@ public class BloodsugarController {
 		logger.debug("+++++++++++++++++988"+bloodSugar);
 		return "bloodsugar/modifyBloodSugar";
 	}
-	
+	//deleteBloodSugar
+	//자신이 입력한 혈당의 리스트 삭제하는 곳이다. slect문과 delete문을 이용하여 pk 값으로 레이블 찾아서 삭제했다.
+	//따로 jsp는 필요하지 않기에 만들지 않았다.  
 	@RequestMapping(value="/deleteBloodSugar", method= RequestMethod.GET)
 	public String deleteBloodSugar(@RequestParam(value="bloodSugarNo") String bloodSugarNo) {
 		logger.debug("BloodSugarController 에서 deleteBloodSugar  리다이렉트 실행");

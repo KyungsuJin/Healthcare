@@ -4,7 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cafe24.kyungsu93.notice.service.NoticeMapper">
-
+<!-- id:noticeList map형식으로 리턴시킨다, VO에 값 담아준다.
+select문 사용하여 notice 의 모든 정보 가져온다. -->
 	 <select id="noticeList" parameterType="java.util.Map"
 		resultType="com.cafe24.kyungsu93.notice.service.Notice">
 		SELECT
@@ -17,13 +18,13 @@
 		FROM notice
 		
 	</select>
-
+<!-- id:noticeCount Integer형식으로 리턴시킨다. select문 사용해서 모든 레이블 갯수 가져온다. -->
 	<select id="noticeCount" resultType="Integer">
 		SELECT
 		count(*)
 		FROM notice
 	</select>
-
+<!-- id:addnotice VO에 값담아준다. 공지 등록하는 쿼리이다. -->
 	<insert id="addnotice"
 		parameterType="com.cafe24.kyungsu93.notice.service.Notice">
 
@@ -45,7 +46,7 @@
 		)
 
 	</insert>
-
+<!-- id:noticeOne VO에 값 담아준다. select 문으로 notice 테이블의 notice_no 일치하는 것들 가져온다. -->
 	<select id="noticeOne" parameterType="String"
 		resultType="com.cafe24.kyungsu93.notice.service.Notice">
 		SELECT
@@ -60,6 +61,7 @@
 		
 
 	</select>
+	<!-- id:updateNotice VO에 값 담아준다 Update문 활용해서 notice_no가 일치하는 것에 업데이트 시켠준다. -->
 	<update id="updateNotice" parameterType="com.cafe24.kyungsu93.notice.service.Notice">
 		UPDATE notice
 		SET
@@ -72,12 +74,46 @@
 		WHERE notice_no = #{noticeNo}
 
 	</update>
-
+<!-- id:deletenotice VO값 담아준다 Delete문으로 notice_no가 일치하는 레이블 삭제한다. -->
 	<delete id="deletenotice"
 		parameterType="com.cafe24.kyungsu93.notice.service.Notice">
 		DELETE FROM notice WHERE notice_no = #{noticeNo}
 	</delete>
 
+<!-- 	id:noticeListDetail Map형 리턴해준다. VO에 값담아준다 상세내용을 보여주기 위한 쿼리 notice_no가 일치하면 값 불러온다. -->
+	<select id="noticeListDetail" parameterType="java.util.Map"
+			resultType="com.cafe24.kyungsu93.notice.service.Notice">
+			SELECT
+			notice_no AS noticeNo
+			,member_no AS memberNo
+			,notice_title AS noticeTitle
+			,notice_content AS noticeContent
+			,notice_count AS noticeCount
+			,notice_date AS noticeDate
+			FROM notice
+			WHERE notice_no = #{noticeNo}
+			LIMIT #{beginRow},#{pagePerRow}
+	</select>
+<!-- id:noticeDetailCount Integer형 리턴해준다 notice 레이블 갯수 세서 불러온다. -->
+	<select id="noticeDetailCount" resultType="Integer">
+			SELECT
+			count(*)
+			FROM notice
+	</select>
+<!-- id:selectNoticNo Integer 형리턴 해준다. IFNULL사용해서 NULL이면 NULL표시 아니면 값표시 해주고 최대값 불러온다.
+notice_no의 8번쨰 글자에서 잘라서 형변환하고 값이 없으면  0 표시해준다.  -->
+	<select id="selectNoticNo" resultType="Integer">
+		SELECT
+		IFNULL(MAX(CAST(SUBSTRING(notice_no,8)as decimal)),0) 
+		FROM notice
+	</select>
+	<!-- id:noticeCountUp VO에 값 담아준다. notice_count에 1 누를 때마다 더해주는 쿼리 notice_no가 일치해야한다. -->
+	<update id="noticeCountUp" parameterType="com.cafe24.kyungsu93.notice.service.Notice">
+        UPDATE notice
+        SET notice_count = #{noticeCount} +1
+        WHERE notice_no = #{noticeNo}
+	</update>
+	
 	<!-- <select id="noticeSearchCount" resultType="Integer">
 			SELECT
 			count(*)
@@ -122,35 +158,10 @@
 			</choose> 
 		</sql>
  -->		
-		<update id="noticeCountView" parameterType="String">
+		<!-- <update id="noticeCountView" parameterType="String">
         UPDATE notice
               SET noticeCount = noticeCount + 1 
-         WHERE notice_no = #{noticeNo}
-		</update>
-
-	<select id="noticeListDetail" parameterType="java.util.Map"
-			resultType="com.cafe24.kyungsu93.notice.service.Notice">
-			SELECT
-			notice_no AS noticeNo
-			,member_no AS memberNo
-			,notice_title AS noticeTitle
-			,notice_content AS noticeContent
-			,notice_count AS noticeCount
-			,notice_date AS noticeDate
-			FROM notice
-			WHERE notice_no = #{noticeNo}
-			LIMIT #{beginRow},#{pagePerRow}
-	</select>
-
-	<select id="noticeDetailCount" resultType="Integer">
-			SELECT
-			count(*)
-			FROM notice
-	</select>
+         WHERE notice_no = #{noticeNo} -->
+		<!-- </update> -->
 	
-	<select id="selectNoticNo" resultType="Integer">
-		SELECT
-		IFNULL(MAX(CAST(SUBSTRING(notice_no,8)as decimal)),0) 
-		FROM notice
-	</select>
 </mapper>

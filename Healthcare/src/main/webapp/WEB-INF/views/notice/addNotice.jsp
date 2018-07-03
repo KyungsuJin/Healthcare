@@ -17,7 +17,7 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-<script>
+<!-- <script>
 	$(document).ready(function(){
 		// 입력폼 
 		//공백 또는 "" 불가
@@ -43,9 +43,9 @@
 		});
 	});
 
-</script>
+</script> -->
 
-<title>addNotice</title>
+<title>공지등록</title>
 </head>
 <body>
 <div class="container">
@@ -55,10 +55,10 @@
 			<label for="noticeNo">addNotice : </label>
 			<input class="form-control" name = "noticeNo"  id=noticeNo type="text"/>	
 		</div> -->
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<label for="memberNo">memberno : </label>
 			<input class="form-control" name = "memberNo"  id="memberNo" type="text"/>	
-		</div>
+		</div> -->
 		<div class="form-group">
 			<label for="noticeTitle">noticetitle : </label>
 			<input class="form-control" name = "noticeTitle"  id="noticeTitle" type="text"/>	
@@ -67,9 +67,9 @@
 			<label for="noticeContent">noticecontent : </label>
 			<input class="form-control" name = "noticeContent"  id="noticeContent" type="text"/>	
 		</div>
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<label for="noticeCount">noticecount : </label>
-			<input class="form-control" name = "noticeCount"  id="noticeCount" type="text"/>	
+			<input class="form-control" name = "noticeCount"  id="noticeCount" type="text"/>	 -->
 		</div>
 		<!-- <div class="form-group">
 			<label for="noticeDate">noticedate : </label>

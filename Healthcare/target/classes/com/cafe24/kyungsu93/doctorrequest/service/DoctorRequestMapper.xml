@@ -3,7 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.cafe24.kyungsu93.doctorrequest.service.DoctorRequestMapper">  
-  
+ <!--  id:doctorRequestList
+Map형으로 리턴시킨다. VO에 값 담아준다.
+request_health_information 과 member 테이블의 member_no값이 일치하는 것만 select 한다. -->
   <select id="doctorRequestList" parameterType="java.util.Map" resultType="com.cafe24.kyungsu93.doctorrequest.service.DoctorRequest">
  	 SELECT r.request_health_information_no AS requestHealthInformationNo
   			,r.teacher_no AS teacherNo 
@@ -17,20 +19,25 @@
 	ON r.member_no=m.member_no
 
   </select>
-  
+ <!--  id:doctorRequestCount 
+Integer형으로 리턴시킨다.
+전체 레이블의 개수를 카운트한다. -->
 	<select id="doctorRequestCount" resultType="Integer">
 		SELECT
 		count(*)
 		FROM request_health_information
 	</select>
 	
+<!-- 	id:memberNo VO에 값 담아준다.
+memberNo가 일치하는 것들의 값을 select 해준다. -->
 	<select id="memberNo" resultType="com.cafe24.kyungsu93.doctorrequest.service.DoctorRequest">
 		SELECT 
 	 	member_no AS memberNo
 		FROM member
 	</select>
 	
-	  
+	<!-- id:doctorReqeust VO에 값 담아준다.
+insert 문 실행한다. 시간은 now()사용하여 현재 값 담아준다. -->
   <insert id="doctorRequest" parameterType="com.cafe24.kyungsu93.doctorrequest.service.DoctorRequest">
     
   INSERT INTO request_health_information(
@@ -50,13 +57,19 @@
 	, now()
 	)  
   </insert>
-  
+ 
+<!--   id:requestNO
+IFNULL사용해서 NULL일 경우 NULL값, 값이 있으면 값을 표현해준다. 가장 큰값을 찾아온다. 형변환 해준다. health_information_no 의
+ 글자를 잘라서 값이 없으면 0이라고 표시해준다. -->
   <select id="requestNo" resultType="Integer">
 		SELECT
 		IFNULL(MAX(CAST(SUBSTRING(request_health_information_no,28)as decimal)),0) 
 		FROM request_health_information
   </select>
   
+<!--   id:doctorRequestListcheck
+Map 형으로 리턴해준다, VO에 값을 담아준다.
+request_health_information 테이블 안에서 teacher_no가 일치하는 것 만 select 해온다. -->
   <select id="doctorRequestListcheck" 
 		  parameterType="java.util.Map" 
 		  resultType="com.cafe24.kyungsu93.doctorrequest.service.DoctorRequest">
@@ -70,12 +83,11 @@
 	WHERE teacher_no = #{teacherNo}
 	Limit #{beginRow},#{pagePerRow}
   </select>
-  
+ <!--  id:doctorRequestCountForList request_health_information의 전체 입력된 레이블 갯수를 카운트해서 가져온다. -->
   <select id="doctorRequestCountForList" resultType="Integer">
 		SELECT
 		count(*)
 		FROM request_health_information
   </select>
-	
 	
 </mapper>

@@ -98,6 +98,33 @@ public class NoticeService {
 		logger.debug("99번"+noticeNo);
 		return noticeDao.deletenoticeCount(noticeNo);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/*public Map<String, Object> noticeSearchDate(String startDate, String endDate) {
 		logger.debug("NoticeService - noticeSearchDate 실행");
 		logger.debug("22번"+startDate);
@@ -252,4 +279,16 @@ public class NoticeService {
 			logger.debug("-----------11번"+notice);
 			List<Notice>list = noticeDao.noticeDetail(notice);
 }*/
+
+		public Map<String, Object> noticeCountUp (int noticeCount, String noticeNo) {
+			logger.debug("15번"+noticeCount);
+			logger.debug("updateNotice noticeCount");
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("noticeCount", noticeCount);
+			map.put("noticeNo", noticeNo);
+			List<Notice> list = noticeDao.noticeCountUp(map);
+			logger.debug("18번"+noticeCount);
+			return map;
+		}
 }
+

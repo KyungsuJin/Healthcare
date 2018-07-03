@@ -26,7 +26,11 @@ public class DoctorRequestController {
 	private DoctorRequestService doctorRequestService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(DoctorRequestController.class);
-	//일반회원이 자신에게 요청한 의사를 볼 수 있고 제목 내용 등도 같이 보여준다. 요청날짜도 알 수 있다.
+	//doctorRequestList
+	//일반회원이 자신의 건강정보 열람을 요청한 의사의 정보를 보는곳이다.
+	//current page , pageperrow 기본값 정해줘서 페이징을 위한 준비를 해놓고, map메서드 put 함수를 통해 데이터 넣어주고, 
+	//Model addAttribute를 통해 모델에 담아 jsp로 뿌려준다.
+
 	@RequestMapping(value="/doctorRequestList", method=RequestMethod.GET)
 	public String doctorRequestList(Model model
 								,@RequestParam(value="currentPage", defaultValue="1") int currentPage
@@ -45,7 +49,9 @@ public class DoctorRequestController {
 		logger.debug("30번"+map);
 		return "doctorrequest/doctorRequestList";
 	}
-	//의사가 일반회원 리스트 보는곳
+	//memberListForDoctor
+	//의사회원이 일반회원에게 건강정보 조회 요청을 위해 모든 일반회원 리스트 보는 곳이다.
+	//memberNo를 Service,Dao를 거쳐 Mapper에서 일반회원 전체 리스트만 뽑아와서 jsp에서 보여준다.
 	@RequestMapping(value="/memberListForDoctor", method=RequestMethod.GET)
 	public String memberList(Model model
 									,@RequestParam(value="memberNo",defaultValue="1")String memberNo) {
@@ -57,7 +63,9 @@ public class DoctorRequestController {
 		model.addAttribute("list",list);
 		return "doctorrequest/memberListForDoctor";
 	}
-	//의사가 일반회원에게 정보조회 요청 보내는곳
+	//addrequestDoctor 
+	//의사회원이 일반회원에게 건강정보 조회 요청을 하는 곳이다.
+	//커맨드객체 사용해서 doctorRequest형을 선언해주고, Service Dao Mapper 거쳐서 doctorRequestList로 리다이렉트 해준다.
 		@RequestMapping(value="/addrequestDoctor",method=RequestMethod.GET)
 		public String requestDoctor() {
 			return "doctorrequest/addDoctorRequest";
@@ -71,6 +79,24 @@ public class DoctorRequestController {
 			logger.debug("6번"+doctorRequest);
 			return "redirect:/doctorRequestList";
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		/*@RequestMapping(value="/requestDoctorList", method=RequestMethod.GET)
 		public String requestDoctorList(Model model
 									,@RequestParam(value="currentPage", defaultValue="1") int currentPage

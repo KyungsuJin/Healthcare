@@ -10,6 +10,33 @@
 <script type="text/javascript"></script>
 </head>
 <body>
+<h1>공지사항 상세내용</h1>
+<style>
+/* h1 {
+    color: white;
+    text-align: center;
+     width: 80.5%; 
+     margin: auto;
+	} 
+div {
+    width: 80%; 
+    text-align: center;
+      .align-center { text-align: center; }
+    margin-left:auto;
+    margin-right:auto;
+    margin:0 auto;
+    border: 3px solid purple;
+    
+table {
+     text-align: center;
+    margin: auto;
+	margin-left:auto;
+    margin-right:auto;
+    
+}  */
+</style>
+
+<div>
 	<table>		
 		<thead>
 			<tr>
@@ -32,9 +59,10 @@
 				<td>${notice.noticeContent }</td>
 				<td>${notice.noticeCount }</td>
 				<td>${notice.noticeDate }</td>
-				<td></td>
+				<td><%-- noticeNO=${gdfgdfgdfg}&noticeCount=${ghfghfghfgh} --%></td>
 				<td><a type="button" href="${pageContext.request.contextPath}/modifyNotice?noticeNo=${notice.noticeNo}" id="modifyNotice">수정</a></td>
 			 	<td><a type="button" href="${pageContext.request.contextPath}/deleteNotice?noticeNo=${notice.noticeNo}"id="deleteNotice">삭제</a></td>
+			 	<td><a type="button" href="${pageContext.request.contextPath}/noticeCountUp?noticeCount=${notice.noticeCount}&noticeNo=${notice.noticeNo}" id="noticeCountUp">재실행(카운트)</a></td>
 				<%-- <td><a type="button" href="${pageContext.request.contextPath}/deleteNotice?noticeNo=${notice.noticeNo}" id="deleteNotice">삭제</a></td> --%> 
 			</tr>
 		</c:forEach>
@@ -71,5 +99,6 @@
 		</c:if>
 		</ul>
 	</nav>
+</div>
 </body>
 </html> 

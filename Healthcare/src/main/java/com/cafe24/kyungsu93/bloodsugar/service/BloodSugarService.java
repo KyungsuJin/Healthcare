@@ -118,7 +118,7 @@ public class BloodSugarService {
 	
 	@Autowired
 	private BloodSugarDao bloodSugarDao;
-	
+	//리스트 맵형으로 넘김 페이징 처리 해줌
 	public  Map<String, Object> bloodSugarList(int currentPage, int pagePerRow) {
 		logger.debug("BloodSugar service BloodSugarList 실행");
 		Map<String,Integer> map = new HashMap<String,Integer>();
@@ -172,25 +172,25 @@ public class BloodSugarService {
 		returnMap.put("totalBlock", totalBlock);
 		return returnMap;
 	}
-
+	//혈당 등록 넘겨주는 서비스
 	public void addBloodSugar (BloodSugar bloodSugar) {
 		bloodSugar.setBloodSugarNo("blood_sugar_"+(bloodSugarDao.selectBloodSugarNo()+1));
 		logger.debug("addBloodSugar BloodSugarService");
 		bloodSugarDao.addBloodSugar(bloodSugar);	
 	}
 	
-	
+	//혈당 하나를 가져오는 메서드(수정 할 떄 값 불러와서 보여주는)
 	public BloodSugar selectBloodSugarOne(String bloodSugarNo) {
 		logger.debug("BloodSugarService 에서 selectBloodSugarOne 실행");
 		return bloodSugarDao.selectBloodSugarOne(bloodSugarNo);
 		
 	}
-	
+	//수정 업데이트문 메서드
 	public void updateBloodSugar (BloodSugar bloodSugar) {
 		logger.debug("updateBloodSugar BloodSugarService");
 		bloodSugarDao.updateBloodSugar(bloodSugar);
 	}
-	
+	//삭제 문 메서드
 	public int deleteBloodSugar(String bloodSugarNo) {
 		logger.debug("BloodPressureService 에서 deleteBloodSugar 실행");
 		return bloodSugarDao.deleteSugarCount(bloodSugarNo);

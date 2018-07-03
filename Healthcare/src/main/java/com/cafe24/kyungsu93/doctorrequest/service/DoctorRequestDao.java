@@ -8,8 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import com.cafe24.kyungsu93.bloodsugar.service.BloodSugar;
 import com.cafe24.kyungsu93.member.service.Member;
 
 @Repository
@@ -18,11 +16,6 @@ public class DoctorRequestDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.doctorrequest.service.DoctorRequestMapper.";
-	/*public List<DoctorRequest> doctorrequestList(Map<String,Integer> map) {
-	logger.debug("2번-2"+map);
-	logger.debug("DoctorRequestDao 에서 DoctorRequest 실행");
-	return sqlSession.selectList(NS+"doctorrequestList",map);
-	}*/
 	
 	public List<DoctorRequest> doctorRequestList(Map<String,Integer> map) {
 		logger.debug("DoctorRequestDao 에서 doctorRequestList 실행");
@@ -48,6 +41,22 @@ public class DoctorRequestDao {
 		int row = sqlSession.selectOne(NS+"requestNo");
 		return row;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/*public List<DoctorRequest> requestDoctorList(Map<String,Object> map) {
 		logger.debug("DoctorRequestDao 에서 doctorRequestList 실행");
 		logger.debug("3번"+map);

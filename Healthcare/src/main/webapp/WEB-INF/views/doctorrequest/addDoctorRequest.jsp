@@ -18,31 +18,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script type="text/javascript">
 </script>
-<!-- <script>
-	$(document).ready(function(){
-		// 입력폼 
-		//공백 또는 "" 불가
-		$('#addbutton').click(function(){
-			if($('#bloodSugarNo').val()==""){
-				alert("혈당코드를 입력하세요.")
-				$('#bloodSugarNo').focus();
-			}else if($('memberNo').val()==""){
-				alert("회원코드를 입력하세요.")
-				$('#memberNo').focus();
-			}else if($('fastingBloodSugar').val()==""){
-				alert("혈당을 입력하세요.")
-				$('#fastingBloodSugar').focus();
-			}else if($('fastingState').val()==""){
-				alert("공복여부를 입력하세요.")
-				$('#fastingState').focus();
-			}else{
-				$('#bloodSugarDate').submit();
-			}
-		});
-	});
 
-</script>
- -->
 <title>addDoctorRequest</title>
 </head>
 <body>

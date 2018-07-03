@@ -7,7 +7,7 @@
 <title>modifyNotice</title>
 </head>
 <body>
-<h1>modifyNotice</h1>
+<h1>공지수정</h1>
 
 <table border="1">
 <thead>
@@ -19,7 +19,6 @@
 	<td>조회수</td>
 	<td>입력날짜</td>
 </tr>
-				<%--  ${notice.memberno}  --%>
 	<tr>
 	<form action="${pageContext.request.contextPath}/modifyNotice" method="POST">
 		<td><input type="hidden" name="noticeNo" value="${notice.noticeNo}"></td>

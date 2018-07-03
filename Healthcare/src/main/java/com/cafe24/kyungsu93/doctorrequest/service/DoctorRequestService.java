@@ -81,6 +81,30 @@ public  Map<String, Object> doctorRequestList(int currentPage, int pagePerRow) {
 		doctorRequest.setRequestHealthInformationNo("request_health_information_"+(doctorRequestDao.selectdoctorRequest()+1));
 		doctorRequestDao.doctorRequest(doctorRequest);
 		logger.debug("27번"+doctorRequest);
+		
+	}
+}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 /*	}
 	public  Map<String, Object> requestDoctorList(int currentPage, int pagePerRow,String teacherNo) {
 		logger.debug("doctorRequest service doctorRequestList 실행 부분");
@@ -134,8 +158,8 @@ public  Map<String, Object> doctorRequestList(int currentPage, int pagePerRow) {
 		returnMap.put("lastBlockPage", lastBlockPage);
 		returnMap.put("totalBlock", totalBlock);
 		return returnMap;*/
-		}
-}
+	/*	}
+}*/
 	/*public void addBloodSugar (BloodSugar bloodSugar) {
 		bloodSugar.setBloodSugarNo("blood_sugar_"+(BloodSugarDao.selectBloodSugarNo()+1));
 		logger.debug("addBloodSugar BloodSugarService");
