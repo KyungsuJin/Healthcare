@@ -646,6 +646,11 @@
  	                        </a>
  						</li>
  						<li>
+ 	                       <a href="https://github.com/KyungsuJin/Healthcare.git">
+ 	                            <p>깃허브</p>
+ 	                        </a>
+ 	                    </li>
+ 						<li>
  	                       <a href="#" download="./img/healthTeamSystemStructure.JPG">
  	                            <p>시스템구조도</p>
  	                        </a>
