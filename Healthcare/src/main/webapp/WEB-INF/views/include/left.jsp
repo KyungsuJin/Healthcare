@@ -651,17 +651,17 @@
  	                        </a>
  	                    </li>
  						<li>
- 	                       <a href="#" download="./img/healthTeamSystemStructure.JPG">
+ 	                       <a href="./img/healthTeamSystemStructure.JPG" download>
  	                            <p>시스템구조도</p>
  	                        </a>
  	                    </li>
  						<li>
- 	                       <a href="#" download="./img/healpTeamERD.gif">
+ 	                       <a href="./img/healpTeamERD.gif" download>
  	                            <p>ERD</p>
  	                        </a>
  	                    </li>
  				        <li>
- 	                       <a href="#"  download="./img/#">
+ 	                       <a href="./img/#"  download>
  	                            <p>이력서</p>
  	                        </a>
  	                    </li>
