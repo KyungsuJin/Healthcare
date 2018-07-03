@@ -26,8 +26,6 @@ public class DietService {
 	@Autowired
 	HttpSession session;
 	
-
-	
 	private static final Logger logger = LoggerFactory.getLogger(DietService.class);
 	
 	public int addCalorieBattle(String memberNo) {

@@ -66,7 +66,7 @@
 				$('#btnAdd').parent().remove();
 				$(addFood).children('.td').after(addSelectBox);
 				
-			})
+			
 			$('#btnAdd').click(function() {
 				$('#form').submit();
 			})

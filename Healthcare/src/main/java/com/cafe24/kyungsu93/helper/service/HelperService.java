@@ -1,6 +1,12 @@
 package com.cafe24.kyungsu93.helper.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,8 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.cafe24.kyungsu93.member.service.Member;
 
 @Service
 public class HelperService {
@@ -19,7 +26,76 @@ public class HelperService {
 	@Autowired
 	HttpSession session;
 	
-	
+	public List<Sanction> getAllSanctionList() {
+		logger.debug("HelperService_getAllSanctionList");
+		return helperDao.getAllSanctionList();
+	}
+	public int addSanction(Sanction sanction) {
+		logger.debug("HelperController_addSanction");
+		Calendar cal = new GregorianCalendar();
+	    cal.setTime(new Date());
+	    
+	    Map<String, String> map = new HashMap<String, String>();
+	    SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    String strDate = fm.format(cal.getTime());
+
+	    if(sanction.getSanctionKindNo().equals("sanction_kind_5")) {
+	    	System.out.println("포인트 회수");
+	    	helperDao.updateMemberPoint(sanction);
+	    }else if(sanction.getSanctionKindNo().equals("sanction_kind_1")) {
+	    	System.out.println("3일정지"); 
+	    	cal.add(Calendar.DAY_OF_YEAR, 3);// 3일을 더한다.
+	    	
+	    	fm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	 	    strDate = fm.format(cal.getTime());
+	 	    System.out.println(strDate);
+	 	    
+ 	    	sanction.setSanctionEndDate(strDate);
+	    }else if(sanction.getSanctionKindNo().equals("sanction_kind_2")) {
+	    	System.out.println("7일정지"); 
+	    	cal.add(Calendar.DAY_OF_YEAR, 7); // 7일을 더한다.
+	    	
+	    	fm = new SimpleDateFormat("yyyy-MM-dd");
+	 	    strDate = fm.format(cal.getTime());
+	 	    sanction.setSanctionEndDate(strDate);
+	    }else if(sanction.getSanctionKindNo().equals("sanction_kind_3")) {
+	    	System.out.println("15일정지");
+	    	cal.add(Calendar.DAY_OF_YEAR, 15); // 15일을 더한다.
+	    	
+	    	fm = new SimpleDateFormat("yyyy-MM-dd");
+	 	    strDate = fm.format(cal.getTime());
+	 	    
+	 	    sanction.setSanctionEndDate(strDate);
+	    }else if(sanction.getSanctionKindNo().equals("sanction_kind_4")) {
+	    	System.out.println("한달정지");
+	    	cal.add(Calendar.MONTH, 1); // 한달을 더한다.
+	    	
+	    	fm = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+	 	    strDate = fm.format(cal.getTime());
+	 	    
+	 	    sanction.setSanctionEndDate(strDate);
+	    }else if(sanction.getSanctionKindNo().equals("sanction_kind_6")) {
+	    	System.out.println("영구정지");
+	    	cal.add(Calendar.YEAR, 10); // 10년을 더한다.
+	    	
+	    	fm = new SimpleDateFormat("yyyy-MM-dd");
+	 	    strDate = fm.format(cal.getTime());
+	 	    
+	 	    sanction.setSanctionEndDate(strDate);
+	    }		
+	    
+		int result = (helperDao.selectSanctionNo())+1;
+		logger.debug("HelperService_addSanction", result);
+		String temp = "sanction_";
+		String sanctionNo = temp +result;
+		sanction.setSanctionNo(sanctionNo);
+		
+		return helperDao.addSanction(sanction);
+	}
+	public Member selectMemberIdForSanction(String memberId) {
+		logger.debug("HelperController_selectMemberIdForSanction");
+		return helperDao.selectMemberIdForSanction(memberId);
+	}
 	public int removeComplain(String complainNo) {
 		logger.debug("HelperController_removeComplain");	
 		return helperDao.removeComplain(complainNo);
@@ -120,7 +196,7 @@ public class HelperService {
 		}*/
 		return 1;
 	}
-	public List<Sanction> getSanctionKindList() {
+	public List<SanctionKind> getSanctionKindList() {
 		logger.debug("HelperService_getSanctionKindList");
 		return helperDao.getSanctionKindList();
 	}

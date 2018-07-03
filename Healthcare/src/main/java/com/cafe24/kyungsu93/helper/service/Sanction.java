@@ -9,6 +9,21 @@ public class Sanction {
 	private String sanctionStartDate;
 	private String sanctionEndDate;
 	private String sanctionDate;
+	private int sanctionPoint;
+	private String memberId;
+	
+	public String getMemberId() {
+		return memberId;
+	}
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+	public int getSanctionPoint() {
+		return sanctionPoint;
+	}
+	public void setSanctionPoint(int sanctionPoint) {
+		this.sanctionPoint = sanctionPoint;
+	}
 	public String getSanctionNo() {
 		return sanctionNo;
 	}
@@ -62,7 +77,8 @@ public class Sanction {
 		return "Sanction [sanctionNo=" + sanctionNo + ", sanctionMemberNo=" + sanctionMemberNo + ", sanctionKindNo="
 				+ sanctionKindNo + ", sanctionTitle=" + sanctionTitle + ", sanctionContent=" + sanctionContent
 				+ ", sanctionStartDate=" + sanctionStartDate + ", sanctionEndDate=" + sanctionEndDate
-				+ ", sanctionDate=" + sanctionDate + "]";
+				+ ", sanctionDate=" + sanctionDate + ", sanctionPoint=" + sanctionPoint + ", memberId=" + memberId
+				+ "]";
 	}
 	
 	

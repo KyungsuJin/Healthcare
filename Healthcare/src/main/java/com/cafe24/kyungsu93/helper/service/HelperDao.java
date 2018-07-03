@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cafe24.kyungsu93.member.service.Member;
+
 @Repository
 public class HelperDao {
 	private static final Logger logger = LoggerFactory.getLogger(HelperDao.class);
@@ -15,7 +17,31 @@ public class HelperDao {
 	@Autowired
 	SqlSessionTemplate sqlSession;
 	
-	
+	//제재 리스트
+	public List<Sanction> getAllSanctionList() {
+		logger.debug("HelperDao_selectGetAllSanctionList");
+		return sqlSession.selectList(NS+"selectGetAllSanctionList");
+	}
+	//제재 포인트 회수
+	public int updateMemberPoint(Sanction sanction) {
+		logger.debug("HelperController_updateMemberPoint");
+		return sqlSession.update(NS+"updateMemberPoint", sanction);
+	}
+	//제재 Pk
+	public int selectSanctionNo() {
+		logger.debug("HelperController_selectSanctionNo");
+		return sqlSession.selectOne(NS+"selectSanctionNo");
+	}
+	//제재 추가하기
+	public int addSanction(Sanction sanction) {
+		logger.debug("HelperController_addSanction");
+		return sqlSession.insert(NS+"insertSanction", sanction);
+	}
+	//제재를 하기위해 아이디 검색
+	public Member selectMemberIdForSanction(String memberId) {
+		logger.debug("HelperController_selectMemberIdForSanction");
+		return sqlSession.selectOne(NS+"selectMemberIdForSanction", memberId);
+	}
 	//complain PK 생성
 	public int selectInquireNo() {
 		logger.debug("HelperController_selectInquireNo");	
@@ -60,8 +86,8 @@ public class HelperDao {
 		logger.debug("HelperDao_addComplain");
 		return sqlSession.insert(NS+"insertComplain", complain);
 	}
-	//제재 리스트
-	public List<Sanction> getSanctionKindList() {
+	//제재 종류 리스트
+	public List<SanctionKind> getSanctionKindList() {
 		logger.debug("HelperService_getSanctionKindList");
 		return sqlSession.selectList(NS+"selectGetSanctionKindList");
 	}

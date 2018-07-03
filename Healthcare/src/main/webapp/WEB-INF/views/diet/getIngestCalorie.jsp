@@ -76,7 +76,6 @@
 					<td><a href="${pageContext.request.contextPath}/removeIngestCalorie?ingestCalorieNo=${ingestCalorie.ingestCalorieNo}&memberNo=${ingestCalorie.memberNo}">삭제</a></td>
 				</tr>
 			</c:forEach>
-
 		</tbody>
 	</table>
 	<button type="button" class="btnA">ssibal</button>
