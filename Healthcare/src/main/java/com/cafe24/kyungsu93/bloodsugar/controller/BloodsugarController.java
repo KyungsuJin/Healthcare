@@ -172,7 +172,7 @@ public class BloodsugarController {
 	//get 방식에서는 앵커태그와 param 사용해서 PK값을 가져와서 model에 담아서 보냈고 post 에서는 커맨드객체 활용해서 리다이렉트 시켰다.
 	@RequestMapping(value="/modifyBloodSugar", method=RequestMethod.POST)
 	public String updateBloodSugar(HttpSession session ,BloodSugar bloodSugar) {				
-		logger.debug("BloodSugarController 에서 updateBloodPressure 리다이렉트 실행");
+		logger.debug("BloodSugarController 에서 updateBloodSugar 리다이렉트 실행");
 		logger.debug("---------------------------------11번"+bloodSugar);
 		bloodSugarService.updateBloodSugar(bloodSugar);
 		return "redirect:/bloodSugarList";
