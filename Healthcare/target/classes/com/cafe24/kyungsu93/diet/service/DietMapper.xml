@@ -4,6 +4,75 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cafe24.kyungsu93.diet.service.DietMapper">
+	<select id="selectGetCalorieInfo"
+			parameterType="String"
+			resultType="com.cafe24.kyungsu93.diet.service.CalorieBattle">
+		SELECT
+			a.calorie_battle_no as calorieBattleNo
+			,a.member_no as memberNo
+			,a.consume_calorie as consumeCalorie
+			,a.ingest_calorie as ingestCalorie
+			,a.oneday_calorie as oneDayCalorie
+			,a.carbohydrate as carbohydrate
+			,a.protein as protein
+			,a.fat as fat
+			,a.sugar as sugar
+			,a.natrium as natrium
+			,a.cholesterol as cholesterol
+			,a.sfa as sfa
+			,a.calorie_battle_date as calorieBattleDate
+			,b.member_id as memberId
+		FROM
+			calorie_battle a, member b
+		WHERE
+			b.member_no = #{memberNo}
+		 	AND a.member_no = b.member_no
+	</select>
+	<select id="selectGetCalorieBattleSearchList"
+			parameterType="String"
+			resultType="com.cafe24.kyungsu93.diet.service.BodyMassIndexResponse">
+		SELECT
+			a.member_no as memberNo
+			,a.body_height as bodyHeight
+			,a.body_weight as bodyWeight
+			,a.body_waist_size as bodyWaistSize
+			,a.body_mass_index as bodyMassIndex
+ 			,a.body_date as bodyDate
+			,b.member_id as memberId
+		FROM  
+			body_mass_index a, member b
+		WHERE
+			a.member_no = b.member_no
+			AND b.member_id = #{memberId}
+		GROUP BY
+			a.member_no
+	</select>
+	<select id="selectGetCalorieBattleList"
+			resultType="com.cafe24.kyungsu93.diet.service.BodyMassIndexResponse">
+		SELECT 
+			member_no as memberNo
+			,body_height as bodyHeight
+			,body_weight as bodyWeight
+			,body_waist_size as bodyWaistSize
+			,body_mass_index as bodyMassIndex
+			,body_date as bodyDate
+			,member_id as memberId			
+		FROM 
+			(SELECT
+				a.member_no
+				,a.body_height
+				,a.body_weight
+				,a.body_waist_size
+				,a.body_mass_index
+				,a.body_date
+				,b.member_id
+			FROM  body_mass_index a, member b
+			WHERE
+				a.member_no = b.member_no
+			ORDER BY body_mass_index DESC) as a
+		GROUP BY 
+			a.member_no;			
+	</select>
 	<update id="updateCalorieBattle" 
 			parameterType="com.cafe24.kyungsu93.diet.service.CalorieBattle">
 		UPDATE calorie_battle 

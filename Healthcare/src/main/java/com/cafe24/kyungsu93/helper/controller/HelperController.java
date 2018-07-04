@@ -29,22 +29,28 @@ public class HelperController {
 	@Autowired
 	HelperService helperService;
 	
+	@RequestMapping(value="/removeSanction", method=RequestMethod.GET)
+	public String removeSanction(@RequestParam(value="sanctionNo") String sanctionNo) {
+		logger.debug("HelperController_removeSanction");
+		helperService.removeSanction(sanctionNo);
+		return "redirect:/getAllSanctionList";
+	}
 	@RequestMapping(value="/getAllSanctionList", method=RequestMethod.GET)
 	public String getAllSanctionList(Model model) {
-		logger.debug("DoctorFeedbackController_getAllSanctionList");
+		logger.debug("HelperController_getAllSanctionList");
 		List<Sanction> list = helperService.getAllSanctionList();
 		model.addAttribute("list", list);
 		return "helper/getAllSanctionList";
 	}
 	@RequestMapping(value="/addSanction", method=RequestMethod.POST)
 	public String addSanction(Sanction sanction) {
-		logger.debug("DoctorFeedbackController_addSanction_POST");
+		logger.debug("HelperController_addSanction_POST");
 		helperService.addSanction(sanction);
 		return "redirect:/getAllSanctionList";
 	}
 	@RequestMapping(value="/addSanction", method=RequestMethod.GET)
 	public String addSanction() {
-		logger.debug("DoctorFeedbackController_addSanction_GET");
+		logger.debug("HelperController_addSanction_GET");
 		return "helper/addSanction";
 	}
 	@RequestMapping(value="/removeComplain", method=RequestMethod.GET)

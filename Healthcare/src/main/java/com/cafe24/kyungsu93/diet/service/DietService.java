@@ -28,6 +28,19 @@ public class DietService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DietService.class);
 	
+	public CalorieBattle getCalorieInfo(String memberNo) {
+		logger.debug("DietService_getCalorieInfo");		
+		return dietDao.getCalorieInfo(memberNo);
+	}
+	public List<BodyMassIndexResponse> getCalorieBattleRankList(String memberId) {
+		logger.debug("DietService_getCalorieBattleRankList");
+		System.out.println("memberId : "+memberId);
+		if(memberId.equals("null")) {
+			return dietDao.getCalorieBattleRankList();
+		}
+		System.out.println("memberId : "+memberId);
+		return dietDao.getCalorieBattleRankleList(memberId);
+	}
 	public int addCalorieBattle(String memberNo) {
 		Date date = new Date();
 

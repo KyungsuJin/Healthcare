@@ -26,10 +26,31 @@
 				<td>차감포인트</td>
 				<td>시작</td>
 				<td>종료</td>
+				<td>삭제</td>
 			</tr>
 		</thead>
 		<tbody>
-			<
+			<c:forEach var="sanction" items="${list}" varStatus="status">
+				<tr>
+					<td>${status.count}</td>
+					<td>${sanction.memberId}</td>
+					<td>${sanction.sanctionTitle}</td>
+					<td>${sanction.sanctionContent}</td>
+					<td>${sanction.sanctionPoint}</td>
+					<td>	
+						<c:if test="${sanction.sanctionStartDate ne null}">
+							${sanction.sanctionStartDate}
+						</c:if>
+					</td>
+					<td>
+						<c:if test="${sanction.sanctionEndDate ne null}">
+							${sanction.sanctionEndDate}
+						</c:if>
+					</td>
+					
+					<td><a href="${pageContext.request.contextPath}/removeSanction?sanctionNo=${sanction.sanctionNo}">삭제</a></td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 </body>

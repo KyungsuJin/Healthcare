@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cafe24.kyungsu93.member.service.Member;
@@ -26,6 +27,10 @@ public class HelperService {
 	@Autowired
 	HttpSession session;
 	
+	public int removeSanction(String sanctionNo) {
+		logger.debug("HelperService_removeSanction");
+		return helperDao.removeSanction(sanctionNo);
+	}
 	public List<Sanction> getAllSanctionList() {
 		logger.debug("HelperService_getAllSanctionList");
 		return helperDao.getAllSanctionList();

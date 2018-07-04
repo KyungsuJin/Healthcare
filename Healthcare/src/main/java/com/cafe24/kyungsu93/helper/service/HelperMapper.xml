@@ -4,17 +4,26 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cafe24.kyungsu93.helper.service.HelperMapper">
+	<delete id="deleteSanction"
+			parameterType="String">
+		DELETE
+		FROM
+			sanction
+		WHERE
+			sanction_no = #{sanctionNo}
+	</delete>
 	<select id="selectGetAllSanctionList"
 			resultType="com.cafe24.kyungsu93.helper.service.Sanction">
 		SELECT
-			a.sanction_no
-			,a.sanction_member_no
-			,a.sanction_kind_no
-			,a.sanction_title
-			,a.sanction_content
-			,a.sanction_start_date
-			,a.sanction_end_date
-			,a.sanction_point
+			a.sanction_no as sanctionNo
+			,a.sanction_member_no as sanctionMemberNo
+			,a.sanction_kind_no as sanctionKindNo
+			,a.sanction_title as sanctionTitle
+			,a.sanction_content as sanctionContent
+			,a.sanction_start_date as sanctionStartDate
+			,a.sanction_end_date as sanctionEndDate
+			,a.sanction_date as sanctionDate
+			,a.sanction_point as sanctionPoint
 			,b.member_id as memberId
 		FROM
 			sanction a, member b

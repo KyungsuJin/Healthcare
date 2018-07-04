@@ -20,6 +20,22 @@ public class DietDao {
 	String NS = "com.cafe24.kyungsu93.diet.service.DietMapper.";
 	Logger logger =	LoggerFactory.getLogger(DietDao.class);
 	
+	//칼로리정보보기
+	public CalorieBattle getCalorieInfo(String memberNo) {
+		logger.debug("DietService_getCalorieInfo");		
+		return sqlSession.selectOne(NS+"selectGetCalorieInfo", memberNo);
+	}
+	//칼로리배틀 검색
+	public List<BodyMassIndexResponse> getCalorieBattleRankleList(String memberId) {
+		logger.debug("DietDao_selectGetCalorieBattleSearchList");	
+		return sqlSession.selectList(NS+"selectGetCalorieBattleSearchList", memberId);
+	}
+	//칼로리배틀 랭킹
+	public List<BodyMassIndexResponse> getCalorieBattleRankList() {
+		logger.debug("DietDao_getCalorieBattleRankList");	
+		return sqlSession.selectList(NS+"selectGetCalorieBattleList");
+	}
+	//소모,섭취칼로리를 새로등록하면 칼로리배틀의 내용이 업데이트 된다.
 	public int updateCalorieBattle(CalorieBattle calorieBattle) {
 		logger.debug("DietDao_updateCalorieBattle");
 		return sqlSession.update(NS+"updateCalorieBattle", calorieBattle);

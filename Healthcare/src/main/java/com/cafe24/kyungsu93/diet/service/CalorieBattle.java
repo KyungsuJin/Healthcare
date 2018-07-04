@@ -14,6 +14,14 @@ public class CalorieBattle {
 	private double cholesterol;
 	private double sfa;
 	private String calorieBattleDate;
+	private String memberId;
+		
+	public String getMemberId() {
+		return memberId;
+	}
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
 	public String getCalorieBattleNo() {
 		return calorieBattleNo;
 	}
@@ -99,7 +107,7 @@ public class CalorieBattle {
 				+ consumeCalorie + ", ingestCalorie=" + ingestCalorie + ", oneDayCalorie=" + oneDayCalorie
 				+ ", carbohydrate=" + carbohydrate + ", protein=" + protein + ", fat=" + fat + ", sugar=" + sugar
 				+ ", natrium=" + natrium + ", cholesterol=" + cholesterol + ", sfa=" + sfa + ", calorieBattleDate="
-				+ calorieBattleDate + "]";
+				+ calorieBattleDate + ", memberId=" + memberId + "]";
 	}
 	
 }

@@ -17,6 +17,11 @@ public class HelperDao {
 	@Autowired
 	SqlSessionTemplate sqlSession;
 	
+	//제재 삭제하기
+	public int removeSanction(String sanctionNo) {
+		logger.debug("HelperService_removeSanction");
+		return sqlSession.delete(NS+"deleteSanction", sanctionNo);
+	}
 	//제재 리스트
 	public List<Sanction> getAllSanctionList() {
 		logger.debug("HelperDao_selectGetAllSanctionList");

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cafe24.kyungsu93.diet.service.BodyMassIndexResponse;
+import com.cafe24.kyungsu93.diet.service.CalorieBattle;
 import com.cafe24.kyungsu93.diet.service.ConsumeCalorie;
 import com.cafe24.kyungsu93.diet.service.ConsumeCalorieRequest;
 import com.cafe24.kyungsu93.diet.service.DietService;
@@ -23,6 +25,23 @@ public class DietController {
 	DietService dietService;
 	private static final Logger logger = LoggerFactory.getLogger(DietController.class);
 	
+	@RequestMapping(value="/getCalorieInfo", method=RequestMethod.GET)
+	public String getCalorieBattleInfo(Model model, String memberNo) {
+		logger.debug("DietController_getCalorieInfo");
+		CalorieBattle calorieBattle = dietService.getCalorieInfo(memberNo);
+		model.addAttribute("calorieBattle", calorieBattle);
+		System.out.println(calorieBattle.getCalorieBattleNo());
+		System.out.println(calorieBattle.getCarbohydrate());
+		return "diet/getCalorieInfo";
+	}
+	@RequestMapping(value="/getCalorieBattleRankList", method=RequestMethod.GET)
+	public String getCalorieBattleRankleList(Model model
+										,@RequestParam(value="memberId", defaultValue="null") String memberId) {
+		logger.debug("getCalorieBattleRankList");
+		List<BodyMassIndexResponse> list = dietService.getCalorieBattleRankList(memberId);	
+		model.addAttribute("list", list);
+		return "diet/getCalorieBattleRankList";
+	}
 	@RequestMapping(value="/addCalorieBattle", method=RequestMethod.GET)
 	public String addCalorieBattle() {
 		logger.debug("DietController_addCalorieBattle_GET");
@@ -51,7 +70,6 @@ public class DietController {
 	@RequestMapping(value="/addConsumeCalorie", method=RequestMethod.GET)
 	public String addConsumeCalorie() {
 		logger.debug("DietController_addConsumeCalorie_GET");
-
 		return "diet/addConsumeCalorie";
 	}
 	@RequestMapping(value="/removeIngestCalorie", method=RequestMethod.GET)
