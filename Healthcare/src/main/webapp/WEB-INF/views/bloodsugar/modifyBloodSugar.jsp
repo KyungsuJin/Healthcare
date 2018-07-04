@@ -5,8 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>modifyBloodSugar</title>
-<jsp:include page="../include/header.jsp"></jsp:include>
-<style>
+<%-- <jsp:include page="../include/header.jsp"></jsp:include> --%>
+<!-- <style>
 #purple{
 color: #9c27b0;
 font-weight: bold;
@@ -15,10 +15,10 @@ h4{
 font-weight: bold;
 text-align:center;
 }
-</style>
+</style> -->
 </head>
 <body>
-	<div class="sidebar-wrapper">
+	<%-- <div class="sidebar-wrapper">
 			<jsp:include page="../include/left.jsp"></jsp:include>
 			<div class="main-panel">
 				<jsp:include page="../include/top.jsp"></jsp:include>
@@ -32,7 +32,7 @@ text-align:center;
 									<h4 class="title">혈당수정</h4>
 										</div>
 											<div class="card-content">
-											<%-- <form id="bloodPressureForm" onsubmit="return check()" action="${pageContext.request.contextPath}/modifyBloodPressure" method="post"> --%>
+											<form id="bloodPressureForm" onsubmit="return check()" action="${pageContext.request.contextPath}/modifyBloodPressure" method="post">
 											<form action="${pageContext.request.contextPath}/modifyBloodSugar" method="POST">
 									<div class="row">
 										<div class="col-md-2">
@@ -41,9 +41,9 @@ text-align:center;
 											<input type="hidden" name="bloodSugarNo" value="${bloodSugar.bloodSugarNo}">	
 											<input type="hidden" name="bloodPressureNo" value="${bloodPressure.bloodPressureNo }">
 											<div class="form-group">
-													<%-- <td><input type="text" name="memberNo" value="${bloodSugar.memberNo}"></td>
+													<td><input type="text" name="memberNo" value="${bloodSugar.memberNo}"></td>
 				<td><input type="text" name="fastingBloodSugar" value="${bloodSugar.fastingBloodSugar}"></td>
-				<td><input type="text" name="bloodSugarDate" value="${bloodSugar.bloodSugarDate}"></td> --%>
+				<td><input type="text" name="bloodSugarDate" value="${bloodSugar.bloodSugarDate}"></td>
 												<span><span id="purple" name="memberNo">등록번호 :</span> ${bloodSugar.memberNo}</span><br>
 												<span><span id="purple" name="bloodSugarDate">등록일 :</span> ${bloodSugar.bloodSugarDate}</span>
 											</div>
@@ -76,9 +76,9 @@ text-align:center;
 		</div>
 	</div>
 </body>
-</html> 
+</html>  --%>
 
-<%--  <table border="1">
+  <table border="1">
 	<thead>
 		<tr>
 			<td>혈당코드</td>
@@ -105,4 +105,4 @@ text-align:center;
 	</thead>
 </table>
 </body>
-</html> --%>
+</html> 
