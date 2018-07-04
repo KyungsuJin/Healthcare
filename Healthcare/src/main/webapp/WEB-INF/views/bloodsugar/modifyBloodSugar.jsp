@@ -56,7 +56,8 @@ text-align:center;
 											</div>
 											<div class="form-group">
 												<span><span id="purple">혈당</span>을 입력해주세요</span> 
-												<input class="form-control" type="text" id="fastingBloodSugar" name="fastingBloodSugar "placeholder="${bloodSugar.fastingBloodSugar}">
+												<input class="form-control" type="text" id="fastingBloodSugar" name="fastingBloodSugar" placeholder="${bloodSugar.fastingBloodSugar}">
+												<%-- <input class="form-control" type="text" id="systolicPressure" name="systolicPressure" placeholder="${bloodPressure.systolicPressure}"> --%>
 											</div>
 											<div class="form-group">
 												<span><span id="purple">공복여부</span>를 입력해주세요</span>
