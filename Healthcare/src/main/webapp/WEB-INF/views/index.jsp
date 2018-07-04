@@ -313,19 +313,19 @@
 									  </ol>
 									  <div class="carousel-inner" role="listbox">
 									    <div class="item active">
-									      <img src="./img/sample.JPG" alt="...">
+									      <img src="./img/mainImage3.png" alt="...">
 										      <div class="carousel-caption d-none d-md-block">
 											    <p><h5>캘린더로 자신의 건강을 체계적으로 관리해보세요!<h5></p>
 											  </div>
 									    </div>
 									    <div class="item">
-									      <img src="./img/sample.JPG" alt="...">
+									      <img src="./img/mainImage1.jpg" alt="...">
 										      <div class="carousel-caption">
 										        ...
 										      </div>
 									    </div>
 									     <div class="item">
-									      <img src="./img/sample.JPG" alt="...">
+									      <img src="./img/mainImage2.png" alt="...">
 										      <div class="carousel-caption">
 										        ...
 										      </div>

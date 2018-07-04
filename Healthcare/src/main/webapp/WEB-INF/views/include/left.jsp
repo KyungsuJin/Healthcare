@@ -34,7 +34,7 @@
 	<div class="sidebar" data-color="purple" data-image="${pageContext.request.contextPath}/templateimg1/sidebar-1.jpg">
             <div class="logo">
                 <a href="${pageContext.request.contextPath}/index" class="simple-text">
-                	<img src="./img/sampleTop.JPG"  width="150" height="80" alt="..">
+                	<img src="./img/healthTeam.png"  width="150" height="80" alt="..">
                 </a>
             </div>
             <div class="sidebar-wrapper"  style="overflow:auto; width:250px; height:800;">
