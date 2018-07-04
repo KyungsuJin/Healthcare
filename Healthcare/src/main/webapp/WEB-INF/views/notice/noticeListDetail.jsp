@@ -11,36 +11,18 @@
 </head>
 <body>
 <h1>공지사항 상세내용</h1>
-<style>
-/* h1 {
-    color: white;
-    text-align: center;
-     width: 80.5%; 
-     margin: auto;
-	} 
-div {
-    width: 80%; 
-    text-align: center;
-      .align-center { text-align: center; }
-    margin-left:auto;
-    margin-right:auto;
-    margin:0 auto;
-    border: 3px solid purple;
-    
-table {
-     text-align: center;
-    margin: auto;
-	margin-left:auto;
-    margin-right:auto;
-    
-}  */
-</style>
+
+
+
+
+
+
+
 
 <div>
 	<table>		
 		<thead>
 			<tr>
-				<th>제목</th>
 				<th>공지번호</th>
 				<th>멤버코드</th>
 				<th>제목</th>
@@ -52,7 +34,6 @@ table {
 		<tbody>
 		<c:forEach var = "notice" items = "${list}">
 			<tr>
-				<td><a href="${pageContext.request.contextPath}/noticelist?noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a></td>
 				<td>${notice.noticeNo}</td>
 				<td>${notice.memberNo}</td>
 				<td>${notice.noticeTitle}</td>
@@ -63,7 +44,7 @@ table {
 				<td><a type="button" href="${pageContext.request.contextPath}/modifyNotice?noticeNo=${notice.noticeNo}" id="modifyNotice">수정</a></td>
 			 	<td><a type="button" href="${pageContext.request.contextPath}/deleteNotice?noticeNo=${notice.noticeNo}"id="deleteNotice">삭제</a></td>
 			 	<td><a type="button" href="${pageContext.request.contextPath}/noticeCountUp?noticeCount=${notice.noticeCount}&noticeNo=${notice.noticeNo}" id="noticeCountUp">재실행(카운트)</a></td>
-				<%-- <td><a type="button" href="${pageContext.request.contextPath}/deleteNotice?noticeNo=${notice.noticeNo}" id="deleteNotice">삭제</a></td> --%> 
+				
 			</tr>
 		</c:forEach>
 		</tbody>
