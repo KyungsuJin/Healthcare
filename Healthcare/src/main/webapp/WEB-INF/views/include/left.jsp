@@ -507,6 +507,7 @@
  	                    		<a href="${pageContext.request.contextPath}/doctorRequestList">회원정보요청 리스트</a>
  				            </li>
  				        </ul>
+ 				        <li>
 	                    	<a href="#searchNotice" data-toggle="collapse">
  	                            <p>18.공지사항</p>
  	                        </a>
