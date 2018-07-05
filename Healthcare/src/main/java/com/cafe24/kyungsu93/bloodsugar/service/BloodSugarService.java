@@ -112,6 +112,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cafe24.kyungsu93.bloodpressure.service.BloodPressure;
+
 @Service
 public class BloodSugarService {
 	private static final Logger logger = LoggerFactory.getLogger(BloodSugarService.class);
@@ -196,6 +198,20 @@ public class BloodSugarService {
 		return bloodSugarDao.deleteSugarCount(bloodSugarNo);
 	
 	}
+	
+	public Map<String, Integer> bloodSugarNoCountToHealthScreen(String bloodSugarNo) {
+		Map<String,Integer> returnMap = new HashMap<String,Integer>();
+		int count = 0;
+		count = bloodSugarDao.bloodSugarNoCountToHealthScreen(bloodSugarNo);
+		returnMap.put("count", count);
+		return returnMap;
+	}
+	
+	public List<BloodSugar> selectBloodSugarChart(String memberNo) {
+		logger.debug("BloodPressureService - selectBloodPressureChart 실행");
+		return bloodSugarDao.selectBloodSugarChart(memberNo);
+	}	
+	
 }
 
 

@@ -77,6 +77,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cafe24.kyungsu93.bloodpressure.service.BloodPressure;
+
 @Repository
 public class BloodSugarDao {
 	private static final Logger logger = LoggerFactory.getLogger(BloodSugarDao.class);
@@ -119,5 +121,15 @@ public class BloodSugarDao {
 		logger.debug("BloodSugarDao - selectBloodSugarNo 실행");
 		int row = sqlSession.selectOne(NS+"bloodSugarNo");
 		return row;
+	}
+	
+	public int bloodSugarNoCountToHealthScreen(String bloodSugareNo) {
+		logger.debug("BloodPressureDao - bloodPressureNoCountToHealthScreen 실행");
+		return sqlSession.selectOne(NS+"bloodSugarNoCountToHealthScreen",bloodSugareNo);
+	}
+	public List<BloodSugar> selectBloodSugarChart(String memberNo) {
+		logger.debug("BloodPressureDao - selectBlppdPressureChart 실행");
+		List<BloodSugar> list = sqlSession.selectList(NS+"bloodSugarchart",memberNo);
+		return list;
 	}
 }

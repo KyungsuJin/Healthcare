@@ -103,5 +103,25 @@ blood_sugar_no의13번째를 잘라 형변환을 해주고 아니면 0이라고 
 		FROM blood_sugar
 	</select>
 	
+	<select id="bloodSugarNoCountToHealthScreen" parameterType="String" resultType="Integer">
+		SELECT 
+		count(*)
+		FROM health_screen
+		WHERE blood_sugar_no = #{bloodSugarNo}
+	</select>
+	
+	<select id="bloodSugarchart"
+		 parameterType="String"
+		resultType="com.cafe24.kyungsu93.bloodsugar.service.BloodSugar">
+		SELECT 
+			fasting_blood_sugar as fastingBloodSugar,
+			blood_sugar_date as bloodSugarDate
+		FROM blood_sugar
+		WHERE member_no = #{memberNo}
+		AND blood_sugar_date > (NOW() - INTERVAL 30 DAY)
+		ORDER BY blood_sugar_date ASC
+	 </select>
+	
+	
   
   </mapper>
