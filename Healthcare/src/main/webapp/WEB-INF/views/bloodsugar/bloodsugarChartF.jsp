@@ -22,7 +22,7 @@
 		console.log(memberNo);
 		var request = $.ajax({
 		type : "POST",
-		url : "${pageContext.request.contextPath}/bloodSugarChart?memberNo="+memberNo
+		url : "${pageContext.request.contextPath}/bloodSugarChartF?memberNo="+memberNo
         });   
 	//ajax 실행 값 확인
 	request.done(function( msg ) {
@@ -41,8 +41,7 @@
 		}else{
 			$('#addBtn').hide();
 		}
-		
-            	
+	
                 google.charts.load('current', {'packages':['line']}); //차트 스타일
                 google.charts.setOnLoadCallback(drawChart);
                 var chartDateformat = 'yy년MM월dd일';
@@ -109,9 +108,6 @@
                          chart.draw(data, google.charts.Line.convertOptions(options));
                          }
             	
-            	
-            	
-            
             	
 			if(msg.length> 0){
 	    		// 이완기,수축기 배열 평균 함수
@@ -201,6 +197,10 @@ h5{
 				<div id="addBtn">
 					<a href="${pageContext.request.contextPath}/addBloodSugar">혈당 등록하기</a>
 				</div>
+				<div class="card-content" style="text-align:center;">
+								<a href="#" id="bmiChart" class="btn btn-primary">공복 혈당 차트</a>
+								<a href="#"id="bodyWeightChart" class="btn btn-primary">식사후 혈당 차트</a>
+							</div>
 				<div class="col-sm-12" align="center">
 				<div class="row">
 					<div class='col-sm-8'>

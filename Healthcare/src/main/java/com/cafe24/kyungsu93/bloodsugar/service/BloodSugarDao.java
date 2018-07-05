@@ -123,13 +123,21 @@ public class BloodSugarDao {
 		return row;
 	}
 	
-	public int bloodSugarNoCountToHealthScreen(String bloodSugareNo) {
+	/*public int bloodSugarNoCountToHealthScreen(String bloodSugareNo) {
+		logger.debug(bloodSugareNo);
 		logger.debug("BloodPressureDao - bloodPressureNoCountToHealthScreen 실행");
 		return sqlSession.selectOne(NS+"bloodSugarNoCountToHealthScreen",bloodSugareNo);
-	}
+	}*/
 	public List<BloodSugar> selectBloodSugarChart(String memberNo) {
-		logger.debug("BloodPressureDao - selectBlppdPressureChart 실행");
+		logger.debug("BloodSugarDao - selectBlppdSugarChart 실행");
 		List<BloodSugar> list = sqlSession.selectList(NS+"bloodSugarchart",memberNo);
 		return list;
 	}
+	public List<BloodSugar> selectBloodSugarChartF(String memberNo) {
+		logger.debug("BloodSugarDao - selectBlppdSugarChartF 실행");
+		List<BloodSugar> list = sqlSession.selectList(NS+"bloodSugarchartF",memberNo);
+		return list;
+	}
+	
+	
 }

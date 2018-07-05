@@ -7,8 +7,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>bloodSugarList</title>
 <jsp:include page="../include/header.jsp"></jsp:include>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<!-- jQuery -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script type="text/javascript">
+var checkName = $.ajax({
+			type : 'GET',
+			data : {bloodSugarNo : bloodSugarNo},
+			url : '${pageContext.request.contextPath}/bloodSugarNoCountToHealthScreen',
+			dataType : 'json',
+			contentType: 'application/json; charset=UTF-8',
+			success : function(data){
+				console.log(data);
+			}
+		});
+</script>
 </head>
 
 <style>

@@ -199,19 +199,29 @@ public class BloodSugarService {
 	
 	}
 	
-	public Map<String, Integer> bloodSugarNoCountToHealthScreen(String bloodSugarNo) {
+/*	public Map<String, Integer> bloodSugarNoCountToHealthScreen(String bloodSugarNo) {
 		Map<String,Integer> returnMap = new HashMap<String,Integer>();
 		int count = 0;
+		logger.debug("8번"+bloodSugarNo);
 		count = bloodSugarDao.bloodSugarNoCountToHealthScreen(bloodSugarNo);
+		logger.debug(bloodSugarNo);
 		returnMap.put("count", count);
 		return returnMap;
-	}
+	}*/
 	
-	public List<BloodSugar> selectBloodSugarChart(String memberNo) {
+	/*public List<BloodSugar> selectBloodSugarChart(String memberNo) {
 		logger.debug("BloodPressureService - selectBloodPressureChart 실행");
 		return bloodSugarDao.selectBloodSugarChart(memberNo);
-	}	
+	}	*/
 	
+	   public List<BloodSugar> selectBloodSugarChart(String memberNo) {
+		      logger.debug("BloodSugarService - selectBloodSugarChart 실행");
+		      return bloodSugarDao.selectBloodSugarChart(memberNo);
+	   }   
+	   public List<BloodSugar> selectBloodSugarChartF(String memberNo) {
+		      logger.debug("BloodSugarService - selectBloodSugarChart 실행");
+		      return bloodSugarDao.selectBloodSugarChartF(memberNo);
+	   }   
 }
 
 

@@ -1,4 +1,5 @@
 package com.cafe24.kyungsu93.bloodsugar.controller.rest;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -12,23 +13,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cafe24.kyungsu93.bloodsugar.controller.rest.BloodsugarRestController;
 import com.cafe24.kyungsu93.bloodsugar.service.BloodSugar;
 import com.cafe24.kyungsu93.bloodsugar.service.BloodSugarService;
 import com.google.gson.Gson;
 
 @RestController
-public class BloodsugarRestController {
+public class BloodSugarRestFController {
 
 	@Autowired
 	private BloodSugarService bloodSugarService;
 	private static final Logger logger = LoggerFactory.getLogger(BloodsugarRestController.class);
-
-
-	@RequestMapping(value="/bloodSugarChart", method=RequestMethod.POST)
+	
+	
+	@RequestMapping(value="/bloodSugarChartF", method=RequestMethod.POST)
 	@ResponseBody
-	public void chartData(HttpServletResponse response, @RequestParam(value="memberNo")String memberNo){
+	public void chartDataF(HttpServletResponse response,@RequestParam(value="memberNo")String memberNo){
 	   logger.debug("BloodSugarRestController - bloodSugarChart chartData ajax 실행");
-	   List<BloodSugar>  list = bloodSugarService.selectBloodSugarChart(memberNo);
+	   List<BloodSugar>  list = bloodSugarService.selectBloodSugarChartF(memberNo);
 	  logger.debug("memberNo : " + memberNo);
 	  //배열값 확인
 	  logger.debug("list : " +list);
