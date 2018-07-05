@@ -55,8 +55,7 @@
                          console.log(msg.length);
 
                          for(var i=0; i < msg.length; i++){
-                         console.log("1:"+msg[i].systolicPressure);
-                         console.log("2:"+msg[i].diastolicPressure);
+                         console.log("1:"+msg[i].fastingBloodSugar);
                          }
                       }else{
                          console.log('데이터 없음');
@@ -66,18 +65,25 @@
                       //하단의 등록일을 표시해 줄 컬럼
                       data.addColumn('datetime', '등록일[day]');
                       //데이터값(그래프 수치)
-                      data.addColumn('number', '공복혈당');  
-                      data.addColumn('number', '식사후혈당');
-
+                      data.addColumn('number', '공복혈당'); 
+                      //정상범위
+                      data.addColumn('number', '정상');
+                      //위험범위
+                      data.addColumn('number', '위험');
+                      //당뇨병
+                      data.addColumn('number', '당뇨병');
+                      var nomal = 100;
+                      var dangerous group = 125;
+                      var diabetes = 126;
                       //열 추가 (컬럼 등록순으로 추가 등록일,수축기혈압,이완기혈압)
                       for(var i=0; i < msg.length; i++){
-                         data.addRow([new Date(msg[i].bloodSugarDate),parseInt(msg[i].fastingBloodSugar),parseInt(msg[i].fastingBloodSugar)]);
+                         data.addRow([new Date(msg[i].bloodSugarDate),parseInt(msg[i].fastingBloodSugar)]);
                       }
                       //그래프 옵션 설정
                       var options = {
                          //차트 상단의 제목 설정
-                         chart:{title : '혈압 그래프',
-                            subtitle: '최근 한달 동안의 혈압 수치 그래프'
+                         chart:{title : '혈당 그래프',
+                            subtitle: '최근 한달 동안의 혈당 수치 그래프'
                          },
                          //차트 크기 설정
                          width: 900, // 넓이 옵션
@@ -109,6 +115,75 @@
                          chart.draw(data, google.charts.Line.convertOptions(options));
                          }
             	
+                   
+                   
+                   
+                   function ajaxData() {
+                	      var memberNo = $('#memberNoSession').val();
+                	      console.log(memberNo);
+                	      var request = $.ajax({
+                	      type : "POST",
+                	      url : "${pageContext.request.contextPath}/bloodSugarChartF?memberNo="+memberNo
+                	        });   
+                	   //ajax 실행 값 확인
+                	   request.done(function( msg ) {
+                	              
+                	                google.charts.load('current', {'packages':['line']}); //차트 스타일
+                	                google.charts.setOnLoadCallback(drawChart);
+                	                var chartDateformat = 'yy년MM월dd일';
+                	                var chartLineCount = 10;
+                	                   function drawChart() {
+
+                	                      var data = new google.visualization.DataTable();
+                	                      //하단의 등록일을 표시해 줄 컬럼
+                	                      data.addColumn('datetime', '등록일[day]');
+                	                      //데이터값(그래프 수치)
+                	                      data.addColumn('number', '공복혈당');  
+                	                      data.addColumn('number', '식사후혈당');
+
+                	                      //열 추가 (컬럼 등록순으로 추가 등록일,수축기혈압,이완기혈압)
+                	                      for(var i=0; i < msg.length; i++){
+                	                    	  data.addRow([new Date(msg[i].bloodSugarDate),parseInt(msg[i].fastingBloodSugar)]);
+                	                      }
+                	                      //그래프 옵션 설정
+                	                      var options = {
+                	                         //차트 상단의 제목 설정
+                	                         chart:{title : '혈당 그래프',
+                	                            subtitle: '최근 한달 동안의 혈당 수치 그래프'
+                	                         },
+                	                         //차트 크기 설정
+                	                         width: 900, // 넓이 옵션
+                	                         height: 500, // 높이 옵션
+                	                         //차트의 양옆 y축 설정 series, 라벨 axes ※3개 이상의 데이터값을 넣어줄 경우 겹치기때문에 제거..
+                	                                series: {
+                	                                   0: {axis: 'fastingBloodSugar'},
+                	                            },
+                	                         axes: {
+                	                            y: {
+                	                            	fastingBloodSugar: {label: '식사후혈당[fastingBloodSugar]'},
+                	                            }
+                	                         },
+                	                                hAxis: {
+                	                            format: chartDateformat, 
+                	                            gridlines:{
+                	                               count:chartLineCount,
+                	                               units: {                      
+                	                                  years : {format: ['yyyy년']},
+                	                                  months: {format: ['MM월']},
+                	                                  days  : {format: ['dd일']},
+                	                                  hours : {format: ['HH시']}
+                	                                  }
+                	                               }
+                	                            }
+                	                         };
+                	                        //입력값을 화면에 뿌려주는 역할.
+                	                         var chart = new google.charts.Line(document.getElementById('linechart_material'));
+                	                         chart.draw(data, google.charts.Line.convertOptions(options));
+                	                       }
+                	      });  
+                	   request.fail(function( jqXHR, textStatus ) {
+                	        alert( "Request failed: " + textStatus );
+                	      });
             	
             	
             
@@ -132,38 +207,22 @@
 	      		} */
 	    		console.log("평균값:"+Math.round(average(msg))+","+Math.round(averages(msg)));
 	    		$('#fastingBloodSugar').html('혈당의 평균은<span id="purple"> '+Math.round(average(msg))+'mgdl</span>입니다');
-	    		/*
-	    		평균치 고혈압,저혈압 체크. 
-	    		수축기 혈압(최고혈압)이 140 mmHg 이상이거나 이완기 혈압(확장기 혈압 혹은 최저혈압)이 90 mmHg 이상
-	    		정상	120 미만	80미만
-	    		고혈압 전단계 120-139	80-89
-	    		1기	140-159	90-99
-	    		2기	160 또는 그 이상	100 또는 그 이상
-	    		*/
+	    		/* 공복시 혈당
+	    		100미만
+	    		100~125이하
+	    		125이상 */
 	    		var diastolic = Math.round(average(msg));
-				if(90<systolic){
-					if(fastingBloodSugar<100){
+				if(90<fastingBloodSugar){
+					if(fastingBloodSugar<200){
 						$('#fastingBloodSugar').html('혈당이 정상입니다.');
-					}else if(fastingBloodSugar<=125){
+					}else if(fastingBloodSugar<=250){
 						$('#fastingBloodSugar').html('당뇨병이 의심됩니다. 병원을 방문해주세요.');
-					}else if(126<fastingBloodSugar){
+					}else if(251<fastingBloodSugar){
 						$('#fastingBloodSugar').html('당뇨병 단계입니다. 병원을 방문해주세요.');
 					}
 				}else{
 					$('#fastingBloodSugar').html('저혈당이 의심됩니다.');
 				}
-				
-			/* 		 if(60<diastolic){
-					if(diastolic<80){
-						$('#diastolicresult').html('정상입니다.');
-					}else if(diastolic<90){
-						$('#diastolicresult').html('고혈압이 의심됩니다. 병원을 방문해주세요.');
-					}else if(79<diastolic){
-						$('#diastolicresult').html('고혈압 전 단계입니다. 병원을 방문해주세요.');
-					}
-				}else{
-					$('#diastolicresult').html('저혈압이 의심됩니다.');
-				} */
 			}
 	});
 
@@ -206,6 +265,7 @@ h5{
 					<div class='col-sm-8'>
 						<!-- 차트가 그려지는 위치 -->
 						<div id="linechart_material"></div>
+						<div id="linechart_materialF"></div>
 						</div>
 				 	<div class='col-sm-3' align="center">			 	
 						<table class="table table-hober">

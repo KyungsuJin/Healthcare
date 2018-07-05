@@ -42,7 +42,31 @@ public class BloodsugarRestController {
 	     response.getWriter().print(json);
 	  } catch (IOException e) {
 	     // TODO Auto-generated catch block
-	     e.printStackTrace();
+		  e.printStackTrace();
 	  }
 	}
+	  @RequestMapping(value="/bloodSugarChartF", method=RequestMethod.POST)
+		@ResponseBody
+		public void chartDataF(HttpServletResponse response,@RequestParam(value="memberNo")String memberNo){
+		   logger.debug("BloodSugarRestController - bloodSugarChart chartData ajax 실행");
+		   List<BloodSugar>  list = bloodSugarService.selectBloodSugarChartF(memberNo);
+		  logger.debug("memberNo : " + memberNo);
+		  //배열값 확인
+		  logger.debug("list : " +list);
+		  //javaScript 타입을 gson을 이용해 ajax에서 사용가능하게 데이터 타입을 변환.
+		  Gson gson = new Gson();
+		  String json = "";
+		  json = gson.toJson(list);
+		  response.setContentType("application/json");
+		  response.setCharacterEncoding("utf-8");
+		  try {
+		     response.getWriter().print(json);
+		  } catch (IOException e) {
+		     // TODO Auto-generated catch block
+		     e.printStackTrace();
+	  }
+  }
 }
+
+
+
