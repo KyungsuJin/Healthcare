@@ -2,6 +2,8 @@ package com.cafe24.kyungsu93.disease.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +16,29 @@ import org.springframework.transaction.annotation.Transactional;
 public class DiseaseService {
 	@Autowired
 	DiseaseDao diseaseDao;
+	@Autowired
+	HttpSession session;
+	
 	private static final Logger logger = LoggerFactory.getLogger(DiseaseService.class);
 	
-	
+	public int removeDisease(String diseaseNo) {
+		logger.debug("DiseaseService_removeDisease");
+		List<DiseaseSubCategory> list = getDiseaseDetail(diseaseNo);
+		System.out.println("diseaseNo :" + diseaseNo);
+		for(DiseaseSubCategory subCategory:list) {
+			System.out.println("질병삭제전 소분류질병 모두삭제");
+			diseaseDao.removeDiseaseSubCategory(subCategory.getDiseaseSubCategoryNo());
+		}
+		return diseaseDao.removeDisease(diseaseNo);
+	}
 	public int removeMyDisease(String myDiseaseDetailNo) {
 		logger.debug("DiseaseService_removeMyDisease");
 		System.out.println("myDiseaseDetailNo : " + myDiseaseDetailNo);
 		return diseaseDao.removeMyDisease(myDiseaseDetailNo);
 	}
-	public List<MyDiseaseDetail> getMyDiseaseLsit(String memberNo) {
+	public List<MyDiseaseDetail> getMyDiseaseLsit() {
 		logger.debug("DiseaseService_getMyDiseaseLsit");
+		String memberNo = (String)session.getAttribute("memberSessionNo");
 		MyDisease myDisease =  diseaseDao.selectDiseaseNoForGetMyDiseaseList(memberNo);
 		List<MyDiseaseDetail>list = diseaseDao.getMyDiseaseLsit(myDisease.getMyDiseaseNo());
 		return list;

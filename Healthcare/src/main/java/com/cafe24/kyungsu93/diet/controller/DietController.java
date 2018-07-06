@@ -65,7 +65,7 @@ public class DietController {
 	public String addConsumeCalorie(ConsumeCalorieRequest consumeCalorieRequest) {
 		logger.debug("DietController_addConsumeCalorie_POST");
 		dietService.addConsumeCalorie(consumeCalorieRequest);
-		return "/";
+		return "redirect:/getConsumeCalorie";
 	}
 	@RequestMapping(value="/addConsumeCalorie", method=RequestMethod.GET)
 	public String addConsumeCalorie() {
@@ -96,7 +96,7 @@ public class DietController {
 	public String addIngestCalorie(IngestCalorieRequest ingestCalorieRequest) {
 		logger.debug("DietController_addIngestCalorie_POST");
 		dietService.addIngestCalorie(ingestCalorieRequest);
-		return "redirect:/";
+		return "redirect:/getIngestCalorie";
 	}
 	@RequestMapping(value="/addIngestCalorie", method=RequestMethod.GET)
 	public String addIngestCalorie() {

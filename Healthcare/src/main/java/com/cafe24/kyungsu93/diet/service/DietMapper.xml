@@ -69,7 +69,7 @@
 			FROM  body_mass_index a, member b
 			WHERE
 				a.member_no = b.member_no
-			ORDER BY body_mass_index DESC) as a
+			ORDER BY body_mass_index ASC) as a
 		GROUP BY 
 			a.member_no;			
 	</select>
@@ -87,13 +87,12 @@
 			,natrium = #{natrium}
 			,cholesterol = #{cholesterol}
 			,sfa = #{sfa}
-			,calorie_battle_date = now()
-		
+			,calorie_battle_date = now()		
 		WHERE
-			member_no = #{memberNo}
-	
+			member_no = #{memberNo}	
 	</update>
 	<select id="selectCalorieBattleNoCount" 
+			parameterType="java.util.Map"
 			resultType="Integer">
 		SELECT
 			count(*) as cnt

@@ -42,6 +42,7 @@ public class DietService {
 		return dietDao.getCalorieBattleRankleList(memberId);
 	}
 	public int addCalorieBattle(String memberNo) {
+		logger.debug("DietService_addCalorieBattle");	
 		Date date = new Date();
 
 		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy");
@@ -114,7 +115,7 @@ public class DietService {
 		System.out.println("cnt : " + cnt);
 		if(cnt == 0) {
 			int result = dietDao.selectCalorieBattleNo()+1;
-			String temp = "2018_06_19_calorie_battle_";
+			String temp = today+"_calorie_battle_";
 			String calorieBattleNo = temp+result;
 			calorieBattle.setCalorieBattleNo(calorieBattleNo);
 			dietDao.addCalorieBattle(calorieBattle);
@@ -172,9 +173,9 @@ public class DietService {
 		ConsumeCalorie consumeCalorie = new ConsumeCalorie();
 		consumeCalorie.setMemberNo(consumecalorieRequest.getMemberNo());
 		
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!"+ consumecalorieRequest.getExerciseNo().size());
 		int addConsumeCalroie=0;
-		for(int i=0; i<consumecalorieRequest.getExerciseNo().size(); i++) {
+		for(int i=0; i < consumecalorieRequest.getExerciseNo().size(); i++) {
+			System.out.println("for문시작");
 			consumeCalorie.setExerciseNo(consumecalorieRequest.getExerciseNo().get(i));
 			consumeCalorie.setConsumeTime(consumecalorieRequest.getConsumeTime().get(i));
 			
@@ -186,7 +187,9 @@ public class DietService {
 			consumeCalorie.setConsumeCalorieNo(consumeCalorieNo);
 			
 			addConsumeCalroie = dietDao.addConsumeCalorie(consumeCalorie);
+			System.out.println("addConsumeCalroie : "+ addConsumeCalroie);
 		}
+		System.out.println("컨슘칼로리등록완료");
 		addCalorieBattle(memberNo);
 		
 		return addConsumeCalroie;
@@ -256,11 +259,13 @@ public class DietService {
 		return dietDao.getIngestCalorie(memberNo);
 	}
 	public int addIngestCalorie(IngestCalorieRequest ingestCalorieRequest) {
-		logger.debug("DietService_ingestCalorie");
+		logger.debug("DietService_addIngestCalorie");
+		System.out.println("아시발:"+ingestCalorieRequest.toString());
 		String memberNo = ingestCalorieRequest.getMemberNo();
 		IngestCalorie ingestCalorie = new IngestCalorie();
 		ingestCalorie.setIngestCalorieNo(ingestCalorieRequest.getIngestCalorieNo());
 		ingestCalorie.setMemberNo(ingestCalorieRequest.getMemberNo());
+		System.out.println("시발로미:"+ingestCalorieRequest.getFoodNo().size());
 		int addIngestCalorie = 0;
 		for(int i=0; i <ingestCalorieRequest.getFoodNo().size();i++) {
 			ingestCalorie.setFoodNo(ingestCalorieRequest.getFoodNo().get(i));

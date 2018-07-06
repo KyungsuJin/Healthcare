@@ -17,6 +17,11 @@ public class DiseaseDao {
 	SqlSessionTemplate sqlSession;
 	final String NS = "com.cafe24.kyungsu93.disease.serivce.DiseaseMapper.";
 	
+	//대분류 질병 삭제
+	public int removeDisease(String diseaseNo) {
+		logger.debug("DiseaseDao_removeDisease");
+		return sqlSession.delete(NS+"deleteDisease", diseaseNo);
+	}
 	//나의 질병정보를 삭제하기 위한 delete
 	public int removeMyDisease(String myDiseaseDetailNo) {
 		logger.debug("DiseaseDao_removeMyDisease");

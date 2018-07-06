@@ -3,16 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<!-- 합쳐지고 최소화된 최신 CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">	
-	<!-- 부가적인 테마 -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">	
-	<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-	<!-- 제이쿼리 -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<title>Insert title here</title>
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<script>
 		$(document).ready(function(){
 			$('#addDiseaseSubCategory').click(function() {								
@@ -22,35 +13,38 @@
 	</script>
 </head>
 <body>
-
-	<div align="center">
-		<h1>DiseaseList</h1>
-		<table border="1" class="table">
-			<thead>
-				<tr>
-					<th>No</th>
-					<th>질병명</th>
-					<th>질병소분류</th>
-					<th>가족력</th>
-					<th>등록일</th>
-					<th>삭제하기</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${list}" var="diseaseSubCategory" varStatus="status">
-					<tr>
-						<td>${status.count}</td>
-						<td>${diseaseSubCategory.diseaseNo}</td>
-						<td>${diseaseSubCategory.diseaseSubCategoryName}</td>
-						<td>${diseaseSubCategory.familyHistory}</td>
-						<td>${diseaseSubCategory.diseaseSubCategoryDate}</td>
-						<td><a href="${pageContext.request.contextPath}/removeDiseaseSubCategory?diseaseSubCategoryNo=${diseaseSubCategory.diseaseSubCategoryNo}&diseaseNo=${diseaseSubCategory.diseaseNo}">삭제하기</a></td>
-					</tr>	
-				</c:forEach>		
-			</tbody>
-		</table>
-		<div>
-			<input type="button" id="addDiseaseSubCategory" value="소분류질병등록">
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<h1>소분류 질병 리스트</h1>
+				<table  class="table table-hover">
+					<thead>
+						<tr>
+							<th>No</th>
+							<th>질병명</th>
+							<th>질병소분류</th>
+							<th>가족력</th>
+							<th>등록일</th>
+							<th>삭제하기</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${list}" var="diseaseSubCategory" varStatus="status">
+							<tr>
+								<td>${status.count}</td>
+								<td>${diseaseSubCategory.diseaseNo}</td>
+								<td>${diseaseSubCategory.diseaseSubCategoryName}</td>
+								<td>${diseaseSubCategory.familyHistory}</td>
+								<td>${diseaseSubCategory.diseaseSubCategoryDate}</td>
+								<td><a href="${pageContext.request.contextPath}/removeDiseaseSubCategory?diseaseSubCategoryNo=${diseaseSubCategory.diseaseSubCategoryNo}&diseaseNo=${diseaseSubCategory.diseaseNo}">삭제하기</a></td>
+							</tr>	
+						</c:forEach>		
+					</tbody>
+				</table>
+				<button type="button" class="btn btn-primary pull-right" id="addDiseaseSubCategory">소분류질병등록</button>
+			</div>
 		</div>
 	</div>
 </body>

@@ -23,24 +23,23 @@ public class DiseaseController {
 	@Autowired
 	DiseaseService diseaseService;
 	
+	@RequestMapping(value="/removeDisease", method=RequestMethod.GET)
+	public String removeDisease(@RequestParam(value="diseaseNo") String diseaseNo) {
+		logger.debug("DiseaseController_removeDisease");
+		diseaseService.removeDisease(diseaseNo);
+		return "redirect:/getDiseaseList";
+	}
 	@RequestMapping(value="removeMyDieseaseDetail", method=RequestMethod.GET)
-	public String removeMyDisease(@RequestParam(value="myDiseaseDetailNo") String myDiseaseDetailNo) {
-		/*
-		 * 세션 맴버 아이디 받아와서  getMyDiseaseList로 리다이렉트 시키기
-		 */
+	public String removeMyDisease(@RequestParam(value="myDiseaseDetailNo") String myDiseaseDetailNo
+									,@RequestParam(value="memberNo") String memberNo) {
 		logger.debug("DiseaseController_removeMyDisease");
 		diseaseService.removeMyDisease(myDiseaseDetailNo);
-		return "redirect:/";
+		return "redirect:/getMyDiseaseList?memberNo="+memberNo;
 	}
 	@RequestMapping(value="/getMyDiseaseList", method=RequestMethod.GET)
-	public String getMyDiseaseList(Model model
-									,@RequestParam(value="memberNo") String memberNo) {
+	public String getMyDiseaseList(Model model) {
 		logger.debug("DiseaseController_myDiseaseDetailList");
-		/*
-		 * 세션아이디를 받아와서 memberNo처리 하기
-		 */
-		System.out.println("3dfgdfgfgdfg : " +memberNo);
-		List<MyDiseaseDetail> list = diseaseService.getMyDiseaseLsit(memberNo);
+		List<MyDiseaseDetail> list = diseaseService.getMyDiseaseLsit();
 		model.addAttribute("list", list);
 		return "disease/getMyDiseaseList";
 	}
@@ -99,7 +98,7 @@ public class DiseaseController {
 	public String addDisease(Disease disease) {
 		logger.debug("DiseaseController_addDisease_POST");
 		diseaseService.addDisease(disease);
-		return "redirect:/";
+		return "redirect:/getDiseaseList";
 	}
 	@RequestMapping(value="/addDisease", method=RequestMethod.GET)
 	public String addDisease() {

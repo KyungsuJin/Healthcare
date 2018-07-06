@@ -3,19 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<!-- 합쳐지고 최소화된 최신 CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">	
-	<!-- 부가적인 테마 -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">	
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<!-- 제이쿼리 -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<!-- 달력 -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<title>Insert title here</title>
 	<script>
 		$(document).ready(function() {
 			$(function() {
@@ -33,7 +23,7 @@
 					,success : function(result) {
 						alert('성공');
 						console.log(result.totalExerciseCalorie);
-						$('.divConsumeCalorie').append(result.totalExerciseCalorie);
+						$('#divConsumeCalorie').append(result.totalExerciseCalorie);
 					}
 					,error:function(request, status, error){
 						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -44,58 +34,46 @@
 	</script>
 </head>
 <body>
-	<h1>getConsumeCalorie.jsp</h1>
-	<table class="table">
-		<thead>
-			<tr>
-				<th>NO</th>
-				<th>운동명</th>
-				<th>운동시간(1시간 기준)</th>
-				<th>등록일</th>
-				<th>수정</th>
-				<th>삭제</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="consumeCalorie" items="${list}" varStatus="status">
-				<input type="hidden" class="memberNo" value="${consumeCalorie.memberNo}">
-				<tr>
-					<td>${status.count}</td>
-					<td>${consumeCalorie.exerciseName}</td>
-					<td>${consumeCalorie.consumeTime}</td>
-					<td>${consumeCalorie.consumeCalorieDate}</td>
-					<td><a href="">수정</a></td>
-					<td><a href="${pageContext.request.contextPath}/removeConsumeCalorie?consumeCalorieNo=${consumeCalorie.consumeCalorieNo}&memberNo=${consumeCalorie.memberNo}">삭제</a></td>
-				</tr>
-			</c:forEach>
-
-		</tbody>
-	</table>
-	<button type="button" class="btnA">ssibal</button>
-		<div class="row">
-			<div class="col-sm-3"></div>
-			<div class="col-sm-6">
-				<div class="panel panel-defult" >
-					<div class="pd panel-body form-horizontal">
-						<div class="form-group">
-							<label class="col-sm-3 control-label">오늘총소모칼로리</label>
-							<div class="col-sm-9">
-								<div style="margin-top: 4px">날짜선택 : <input type="text" id="datePicker"></div>
-							</div>
-						</div>
-						<div class="form-group" style="margin-top: 4px;">
-							<div class="form-group">
-								<label class="col-sm-3 control-label">오늘 총소모칼로리</label>
-								<div class="col-sm-9">
-									<div class="divConsumeCalorie"></div>
-								</div>
-							</div>			
-						</div>
-						
+	<div class="sidebar-wrapper">
+		<jsp:include page="../include/left.jsp"></jsp:include>
+		<div class="main-panel">
+			<jsp:include page="../include/top.jsp"></jsp:include>
+			<div class="content">
+				<h1>소모 칼로리 리스트</h1>
+				<div>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>NO</th>
+								<th>운동명</th>
+								<th>운동시간(시간)</th>
+								<th>등록일</th>
+								<th>수정</th>
+								<th>삭제</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="consumeCalorie" items="${list}" varStatus="status">
+								<input type="hidden" class="memberNo" value="${consumeCalorie.memberNo}">
+								<tr>
+									<td>${status.count}</td>
+									<td>${consumeCalorie.exerciseName}</td>
+									<td>${consumeCalorie.consumeTime}</td>
+									<td>${consumeCalorie.consumeCalorieDate}</td>
+									<td><a href="">수정</a></td>
+									<td><a href="${pageContext.request.contextPath}/removeConsumeCalorie?consumeCalorieNo=${consumeCalorie.consumeCalorieNo}&memberNo=${consumeCalorie.memberNo}">삭제</a></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+					<div class="form-group">
+						<label class="control-label">날짜선택</label>
+						<input type="text" id="datePicker">
 					</div>
+					<div id="divConsumeCalorie" class="form-control"></div>	
 				</div>
 			</div>
-			<div class="col-sm-3"></div>	
 		</div>
+	</div>
 </body>
 </html>

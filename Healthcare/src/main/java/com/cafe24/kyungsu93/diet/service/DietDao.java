@@ -40,6 +40,7 @@ public class DietDao {
 		logger.debug("DietDao_updateCalorieBattle");
 		return sqlSession.update(NS+"updateCalorieBattle", calorieBattle);
 	}
+	//오늘일자에 칼로리배틀이 등록되있나 안되있나 확인하기위함
 	public int selectCalorieBattleNoCount(Map<String, String> map) {
 		logger.debug("DietDao_selectCalorieBattleNoCount");
 		return sqlSession.selectOne(NS+"selectCalorieBattleNoCount", map);
@@ -53,6 +54,7 @@ public class DietDao {
 		logger.debug("DietDao_getIngestCalorieForBattle");
 		return sqlSession.selectList(NS+"selectIngestForBattle", memberNo);
 	}
+	//calorieBattle에 섭취,소모칼로리 등록
 	public int addCalorieBattle(CalorieBattle calorieBattle) {
 		logger.debug("DietDao_addCalorieBattle");
 		return sqlSession.insert(NS+"insertCalorieBattle", calorieBattle);
